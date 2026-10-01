@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{8E
 		Database\Patients & Insurance.png = Database\Patients & Insurance.png
 		Database\People, Staff & Personal Information.png = Database\People, Staff & Personal Information.png
 		Database\Policies, Penalties & Payments.png = Database\Policies, Penalties & Payments.png
+		Database\Seed.sql = Database\Seed.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{3172D115-FF02-409A-BCA0-153957901DC6}"
