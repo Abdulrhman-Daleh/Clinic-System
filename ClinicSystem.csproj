@@ -63,6 +63,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="AppExample.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -77,6 +78,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="AppEnums.cs\AppEnums.cs.csproj">
+      <Project>{4c0b89eb-27e3-4a89-ab2b-887587b2fac4}</Project>
+      <Name>AppEnums.cs</Name>
+    </ProjectReference>
     <ProjectReference Include="Business\Business.csproj">
       <Project>{3172d115-ff02-409a-bca0-153957901dc6}</Project>
       <Name>Business</Name>

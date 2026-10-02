@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,10 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessString.cs" />
+    <Compile Include="DTOs\PersonContactDto.cs" />
     <Compile Include="DTOs\PersonDto.cs" />
-    <Compile Include="PeopleData.cs" />
+    <Compile Include="PersonData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AppEnums.cs\AppEnums.cs.csproj">
+      <Project>{4c0b89eb-27e3-4a89-ab2b-887587b2fac4}</Project>
+      <Name>AppEnums.cs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
