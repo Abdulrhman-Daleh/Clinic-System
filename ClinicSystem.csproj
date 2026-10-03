@@ -52,6 +52,7 @@
     <Compile Include="FormsDefaultSettings.Designer.cs">
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="People\AddUpdatePerson.cs">
       <SubType>Form</SubType>
     </Compile>
