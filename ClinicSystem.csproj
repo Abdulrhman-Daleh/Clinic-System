@@ -78,6 +78,9 @@
     <EmbeddedResource Include="People\AddUpdatePerson.resx">
       <DependentUpon>AddUpdatePerson.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="People\Controls\PersonalInfoCtrl.resx">
+      <DependentUpon>PersonalInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -86,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="AppExample.config" />
     <None Include="Properties\Settings.settings">
@@ -110,6 +114,45 @@
       <Project>{3172d115-ff02-409a-bca0-153957901dc6}</Project>
       <Name>Business</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\male_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\x_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\key_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hash_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\calendar_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clock_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shield_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\email_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\female_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\badge_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
