@@ -1,5 +1,4 @@
 ﻿using ClinicSystem.Helpers;
-using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -19,7 +18,6 @@ namespace ClinicSystem.Staff.Controls
             txtUsername.Text = string.Empty;
             cbSchedules.Items.Add("None");
             cbRoles.Items.Add("None");
-            dtpHireDate.Value = DateTime.Now;
             lblStaffNumber.Text = "[Not Set]";
             cbSchedules.SelectedIndex = 0;
             cbRoles.SelectedIndex = 0;

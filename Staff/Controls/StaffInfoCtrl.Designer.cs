@@ -33,11 +33,8 @@
             this.lblStaffNumber = new System.Windows.Forms.Label();
             this.cbSchedules = new System.Windows.Forms.ComboBox();
             this.cbRoles = new System.Windows.Forms.ComboBox();
-            this.dtpHireDate = new System.Windows.Forms.DateTimePicker();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,7 +48,6 @@
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -64,11 +60,8 @@
             this.groupBox1.Controls.Add(this.lblStaffNumber);
             this.groupBox1.Controls.Add(this.cbSchedules);
             this.groupBox1.Controls.Add(this.cbRoles);
-            this.groupBox1.Controls.Add(this.dtpHireDate);
             this.groupBox1.Controls.Add(this.pictureBox6);
             this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.pictureBox5);
-            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.txtPassword);
             this.groupBox1.Controls.Add(this.label4);
@@ -84,7 +77,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(556, 374);
+            this.groupBox1.Size = new System.Drawing.Size(556, 339);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Staff Info";
@@ -108,22 +101,15 @@
             // cbRoles
             // 
             this.cbRoles.FormattingEnabled = true;
-            this.cbRoles.Location = new System.Drawing.Point(327, 297);
+            this.cbRoles.Location = new System.Drawing.Point(328, 194);
             this.cbRoles.Name = "cbRoles";
             this.cbRoles.Size = new System.Drawing.Size(205, 33);
             this.cbRoles.TabIndex = 34;
             // 
-            // dtpHireDate
-            // 
-            this.dtpHireDate.Location = new System.Drawing.Point(328, 192);
-            this.dtpHireDate.Name = "dtpHireDate";
-            this.dtpHireDate.Size = new System.Drawing.Size(210, 30);
-            this.dtpHireDate.TabIndex = 33;
-            // 
             // pictureBox6
             // 
             this.pictureBox6.Image = global::ClinicSystem.Properties.Resources.shield_32;
-            this.pictureBox6.Location = new System.Drawing.Point(327, 251);
+            this.pictureBox6.Location = new System.Drawing.Point(328, 148);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(41, 38);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -133,30 +119,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(374, 258);
+            this.label6.Location = new System.Drawing.Point(375, 155);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 25);
             this.label6.TabIndex = 29;
             this.label6.Text = "Role:";
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.calendar_32;
-            this.pictureBox5.Location = new System.Drawing.Point(328, 146);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 28;
-            this.pictureBox5.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(375, 153);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(93, 25);
-            this.label5.TabIndex = 26;
-            this.label5.Text = "Hire Date";
             // 
             // pictureBox4
             // 
@@ -263,11 +230,10 @@
             this.Controls.Add(this.groupBox1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "StaffInfoCtrl";
-            this.Size = new System.Drawing.Size(556, 374);
+            this.Size = new System.Drawing.Size(556, 339);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -285,8 +251,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label4;
@@ -295,7 +259,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbRoles;
-        private System.Windows.Forms.DateTimePicker dtpHireDate;
         private System.Windows.Forms.Label lblStaffNumber;
         private System.Windows.Forms.ComboBox cbSchedules;
         private System.Windows.Forms.ErrorProvider errors;
