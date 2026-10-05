@@ -73,6 +73,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Staff\Controls\StaffInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Staff\Controls\StaffInfoCtrl.Designer.cs">
+      <DependentUpon>StaffInfoCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserCtrlDefaultSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -101,6 +107,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Staff\Controls\StaffInfoCtrl.resx">
+      <DependentUpon>StaffInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="AppExample.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -170,5 +179,6 @@
   <ItemGroup>
     <None Include="Resources\mobile_32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
