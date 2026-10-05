@@ -65,7 +65,7 @@
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(206, 30);
             this.txtPhoneNumber.TabIndex = 12;
-            this.txtPhoneNumber.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNumber_Validating);
+            this.txtPhoneNumber.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxInput_Validating);
             // 
             // label2
             // 
@@ -84,6 +84,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(279, 44);
             this.txtEmail.TabIndex = 15;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.TextBoxInput_Validating);
             // 
             // label3
             // 

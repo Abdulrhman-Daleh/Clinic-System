@@ -21,7 +21,8 @@ namespace ClinicSystem.People.Controls
             txtEmail.Text = string.Empty;
             lblContactId.Text = "[Not Set]";
         }
-        private void txtPhoneNumber_Validating(object sender, CancelEventArgs e)
+
+        private void TextBoxInput_Validating(object sender, CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
