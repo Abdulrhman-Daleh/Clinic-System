@@ -45,8 +45,8 @@
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.Errors = new System.Windows.Forms.ErrorProvider(this.components);
-            this.FileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.errors = new System.Windows.Forms.ErrorProvider(this.components);
+            this.fileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -54,7 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pcImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Errors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -85,6 +85,8 @@
             // lblPersonId
             // 
             this.lblPersonId.AutoSize = true;
+            this.lblPersonId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPersonId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.lblPersonId.Location = new System.Drawing.Point(440, 252);
             this.lblPersonId.Name = "lblPersonId";
             this.lblPersonId.Size = new System.Drawing.Size(0, 25);
@@ -162,6 +164,7 @@
             this.pcImage.Location = new System.Drawing.Point(32, 41);
             this.pcImage.Name = "pcImage";
             this.pcImage.Size = new System.Drawing.Size(168, 149);
+            this.pcImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pcImage.TabIndex = 9;
             this.pcImage.TabStop = false;
             // 
@@ -192,7 +195,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(206, 30);
             this.txtFirstName.TabIndex = 1;
-            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this._ValidateInputValues);
             // 
             // txtLastName
             // 
@@ -201,7 +204,7 @@
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(206, 30);
             this.txtLastName.TabIndex = 2;
-            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this._ValidateInputValues);
             // 
             // label2
             // 
@@ -221,13 +224,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "First Name";
             // 
-            // Errors
+            // errors
             // 
-            this.Errors.ContainerControl = this;
+            this.errors.ContainerControl = this;
             // 
-            // FileDialog
+            // fileDialog
             // 
-            this.FileDialog.FileName = "File";
+            this.fileDialog.FileName = "File";
             // 
             // PersonalInfoCtrl
             // 
@@ -244,7 +247,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pcImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Errors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -258,7 +261,7 @@
         private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ErrorProvider Errors;
+        private System.Windows.Forms.ErrorProvider errors;
         private System.Windows.Forms.LinkLabel LnkUploadPic;
         private System.Windows.Forms.PictureBox pcImage;
         private System.Windows.Forms.PictureBox pictureBox4;
@@ -268,6 +271,6 @@
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbGender;
-        private System.Windows.Forms.OpenFileDialog FileDialog;
+        private System.Windows.Forms.OpenFileDialog fileDialog;
     }
 }
