@@ -17,5 +17,25 @@ namespace ClinicSystem.Helpers
             return true;
         }
 
+        public static bool UserControlHasErrors(Control control, ErrorProvider errors)
+        {
+            foreach (Control c in control.Controls)
+            {
+                if (!string.IsNullOrWhiteSpace(errors.GetError(c)))
+                    return true;
+
+                foreach (Control child in control.Controls)
+                {
+                    if (UserControlHasErrors(child, errors))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public static bool IsValidEmptyOrNull<T>(T value) => string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
+
     }
 }

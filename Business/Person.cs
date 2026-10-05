@@ -5,7 +5,7 @@ namespace Business
 {
     public class Person
     {
-        
+
         public EnGender Gender { get; set; } = EnGender.Male;
         public int PersonId { get; set; }
         public string Firstname { get; set; } = string.Empty;
@@ -31,21 +31,18 @@ namespace Business
             };
         }
 
-        public static PersonContactDto Test = new PersonContactDto();
+        public PersonContact contactInfo;
 
         public Person()
         {
             PersonId = -1;
-            Test.Email = "";
-            Test.PhoneNumber = "12345";
-            Test.ContactTypeId = (int)EnContactTypes.Normal;
         }
 
-
-
-        public static int AddNewPerson()
+        public int AddNewPerson()
         {
-            return PersonData.AddNewPerson(ToDto(new Person()), Test);
+            PersonId = PersonData.AddNewPerson(ToDto(this), PersonContact.ToDto(contactInfo));
+
+            return PersonId;
         }
     }
 }
