@@ -1,4 +1,6 @@
-﻿using ClinicSystem.Helpers;
+﻿using AppEnums.cs;
+using Business;
+using ClinicSystem.Helpers;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -22,9 +24,29 @@ namespace ClinicSystem.People.Controls
             lblContactId.Text = "[Not Set]";
         }
 
-        private void TextBoxInput_Validating(object sender, CancelEventArgs e)
+        private void txtPhoneNumber_Validating(object sender, CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
+        }
+
+
+        public PersonContact GetContactInfo()
+        {
+            this.ValidateChildren(ValidationConstraints.Enabled);
+
+            if (ValidationHelper.UserControlHasErrors(this, errors))
+            {
+                MessageBox.Show("contact info could not be send to form check required fields.", "Invalid state", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+
+
+            return new PersonContact()
+            {
+                PhoneNumber = txtPhoneNumber.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
+                ContactTypeId = (EnContactTypes)cbContactType.SelectedIndex + 1
+            };
         }
     }
 }
