@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ClinicSystem.Helpers;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Staff.Controls
 {
@@ -22,5 +25,11 @@ namespace ClinicSystem.Staff.Controls
             cbRoles.SelectedIndex = 0;
             txtUsername.Focus();
         }
+
+        public void ValidateInputValues(object sender, CancelEventArgs e)
+        {
+            ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
+        }
+
     }
 }
