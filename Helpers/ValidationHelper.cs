@@ -35,17 +35,55 @@ namespace ClinicSystem.Helpers
         }
 
 
-        public static bool IsEmptyOrNull<T>(T value)
+        public static bool IsEmptyOrNull<T>(T value, string message)
         {
             bool result = string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
 
             if (result)
             {
-                MessageBox.Show("Passed object is empty or null", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (message != null)
+                    MessageBox.Show(message, "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
                 return result;
             }
 
             return false;
+        }
+
+
+        public static void LockComboBox(KeyPressEventArgs e) => e.Handled = true;
+
+
+        public static void HandleInputType(KeyPressEventArgs e, bool AllowDigit, bool AllowText)
+        {
+            if (AllowDigit && AllowText)
+            {
+                e.Handled = false;
+                return;
+            }
+
+            if (AllowDigit)
+            {
+                if (char.IsLetter(e.KeyChar))
+                    e.Handled = true;
+                else
+                    e.Handled = false;
+
+            }
+            else
+            {
+                if (char.IsDigit(e.KeyChar))
+                    e.Handled = true;
+                else
+                    e.Handled = false;
+            }
+        }
+
+
+        public static void ResetDefaultFilter(TextBox txtBox)
+        {
+            txtBox.Text = string.Empty;
+            txtBox.Focus();
         }
 
     }

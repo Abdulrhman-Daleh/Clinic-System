@@ -80,5 +80,10 @@ namespace Business
         {
             return FromDto(PersonData.FindPersonById(personId));
         }
+
+        public static Person FindPersonByFirstname(string Firstname)
+        {
+            return FromDto(PersonData.FindPersonByFirstname(Firstname));
+        }
     }
 }

@@ -101,5 +101,37 @@ namespace Data_Access
 
             return null;
         }
+
+        public static PersonDto FindPersonByFirstname(string Firstname)
+        {
+            string query = @"select PersonID, Lastname, Gender from People where Firstname = @Firstname";
+
+            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.Add("@Firstname", SqlDbType.VarChar, 30).Value = Firstname;
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            return new PersonDto()
+                            {
+                                Firstname = Firstname,
+                                Lastname = (string)reader["Lastname"],
+                                Gender = Convert.ToChar(reader["Gender"]),
+                                PersonId = (int)reader["PersonID"]
+                            };
+                        }
+                    }
+
+                }
+            }
+
+            return null;
+        }
+
     }
 }
