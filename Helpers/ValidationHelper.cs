@@ -35,7 +35,18 @@ namespace ClinicSystem.Helpers
         }
 
 
-        public static bool IsValidEmptyOrNull<T>(T value) => string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
+        public static bool IsEmptyOrNull<T>(T value)
+        {
+            bool result = string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
+
+            if (result)
+            {
+                MessageBox.Show("Passed object is empty or null", "Invalid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return result;
+            }
+
+            return false;
+        }
 
     }
 }

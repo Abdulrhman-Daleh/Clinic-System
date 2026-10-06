@@ -23,6 +23,9 @@ namespace Business
 
         public static PersonContactDto ToDto(PersonContact contact)
         {
+            if (contact == null)
+                return ToDto(new PersonContact());
+
             return new PersonContactDto()
             {
                 ContactId = contact.ContactId,
