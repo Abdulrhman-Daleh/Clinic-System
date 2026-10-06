@@ -13,6 +13,8 @@ namespace Business
         public string Lastname { get; set; } = string.Empty;
         public static Person FromDto(PersonDto personDto)
         {
+            if (personDto == null) return null;
+
             return new Person(personDto.PersonId)
             {
                 PersonId = personDto.PersonId,

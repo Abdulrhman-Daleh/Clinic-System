@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using ClinicSystem.Properties;
 using System.Drawing;
@@ -31,16 +32,6 @@ namespace ClinicSystem
                 personalInfoCtrl.Enabled = false;
                 return;
             }
-
-            personalInfoCtrl.LoadInfoToPage(_person);
-
-            if (ValidationHelper.IsEmptyOrNull(_person.contactInfo))
-            {
-                personContactCtrl.Enabled = false;
-                return;
-            }
-
-            personContactCtrl.LoadContactToPage(_person.contactInfo);
         }
 
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText, Image image)
@@ -49,6 +40,7 @@ namespace ClinicSystem
             this.Text = pageTitle;
             btnSave.Text = saveButtonText;
             pbModeImage.Image = image;
+            personalInfoCtrl.SendInfo += RecivePersonData;
         }
 
         private void PrintPersonId(int personId)
@@ -58,9 +50,20 @@ namespace ClinicSystem
 
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
 
+        private void RecivePersonData(string firstName, string lastName, EnGender gender)
+        {
+            if (_person == null)
+                _person = new Person();
+
+            _person.Firstname = firstName;
+            _person.Lastname = lastName;
+            _person.Gender = gender;
+        }
+
         private void btnSave_Click(object sender, System.EventArgs e)
         {
-            personalInfoCtrl.RefreshPersonInfo(_person);
+            if (!personalInfoCtrl.TrySendPersonInfo())
+                return;
 
             if (ValidationHelper.IsEmptyOrNull(_person))
                 return;
@@ -69,10 +72,10 @@ namespace ClinicSystem
             {
                 MessageBox.Show("data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrintPersonId(_person.PersonId);
+                personalInfoCtrl.PrintPersonId(_person.PersonId);
                 SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
-            else
-                MessageBox.Show("adding new person failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
         }
     }
 }

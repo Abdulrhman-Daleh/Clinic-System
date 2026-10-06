@@ -30,7 +30,6 @@
         {
             this.lblTitle = new System.Windows.Forms.Label();
             this.personalInfoCtrl = new ClinicSystem.People.Controls.PersonalInfoCtrl();
-            this.personContactCtrl = new ClinicSystem.People.Controls.PersonContactCtrl();
             this.label1 = new System.Windows.Forms.Label();
             this.lblPersonId = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
@@ -58,14 +57,6 @@
             this.personalInfoCtrl.Size = new System.Drawing.Size(597, 294);
             this.personalInfoCtrl.TabIndex = 2;
             // 
-            // personContactCtrl
-            // 
-            this.personContactCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.personContactCtrl.Location = new System.Drawing.Point(20, 418);
-            this.personContactCtrl.Name = "personContactCtrl";
-            this.personContactCtrl.Size = new System.Drawing.Size(597, 244);
-            this.personContactCtrl.TabIndex = 3;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -89,7 +80,7 @@
             // 
             this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(429, 668);
+            this.btnSave.Location = new System.Drawing.Point(429, 418);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(188, 66);
             this.btnSave.TabIndex = 5;
@@ -101,7 +92,7 @@
             // 
             this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(263, 668);
+            this.btnCancel.Location = new System.Drawing.Point(263, 418);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(160, 66);
             this.btnCancel.TabIndex = 4;
@@ -123,12 +114,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 742);
+            this.ClientSize = new System.Drawing.Size(625, 492);
             this.Controls.Add(this.lblPersonId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.personContactCtrl);
             this.Controls.Add(this.personalInfoCtrl);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pbModeImage);
@@ -147,7 +137,6 @@
         private System.Windows.Forms.PictureBox pbModeImage;
         private System.Windows.Forms.Label lblTitle;
         private People.Controls.PersonalInfoCtrl personalInfoCtrl;
-        private People.Controls.PersonContactCtrl personContactCtrl;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label1;

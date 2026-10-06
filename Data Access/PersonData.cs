@@ -11,28 +11,34 @@ namespace Data_Access
         {
             int personId = -1;
 
+            string query = @"insert into People
+            (
+            Firstname,
+            Lastname,
+            Gender
+            )
+        values
+        (@Firstname, @Lastname, @Gender); select scope_identity()";
+
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand("SP_AddNewPerson", connection))
+                try
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
+                        command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
+                        command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
 
-                    command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
-                    command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
-                    command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
-                    command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 30).Value = personalContact.PhoneNumber;
-                    command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = personalContact.Email;
-                    command.Parameters.Add("@ContactTypeId", SqlDbType.Int).Value = personalContact.ContactTypeId;
+                        object result = command.ExecuteScalar();
 
-                    SqlParameter outputParam = new SqlParameter("@personId", SqlDbType.Int);
-                    outputParam.Direction = ParameterDirection.Output;
-
-                    command.Parameters.Add(outputParam);
-
-                    command.ExecuteNonQuery();
-
-                    personId = (int)outputParam.Value;
+                        if (result != null && int.TryParse(result.ToString(), out personId)) ;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //log later
                 }
             }
 
@@ -43,30 +49,20 @@ namespace Data_Access
         {
             int affactedRows = -1;
 
+            string query = @" update People
+        set Firstname = @Firstname, Lastname = @Lastname, Gender = @Gender
+        where PersonID = @personId";
+
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SP_UpdatePerson", connection))
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
 
                     command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personInfo.PersonId;
-                    command.Parameters.Add("@ContactId", SqlDbType.Int).Value = personalContact.ContactId;
                     command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
                     command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
                     command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
-                    command.Parameters.Add("@ContactTypeId", SqlDbType.Int).Value = personalContact.ContactTypeId;
-
-                    if (personalContact.Email == null)
-                        command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                    else
-                        command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = personalContact.Email;
-
-                    if (personalContact.PhoneNumber == null)
-                        command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                    else
-                        command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 50).Value = personalContact.PhoneNumber;
-
 
                     affactedRows = command.ExecuteNonQuery();
                 }

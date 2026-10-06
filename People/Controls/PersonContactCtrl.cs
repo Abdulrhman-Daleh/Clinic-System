@@ -1,6 +1,6 @@
-﻿using AppEnums.cs;
-using Business;
+﻿using Business;
 using ClinicSystem.Helpers;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -14,6 +14,22 @@ namespace ClinicSystem.People.Controls
             _SetPage();
         }
 
+        public delegate void SendContactInfo(string email, string phoneNumber, int contactId, int contactTypeId);
+        public event SendContactInfo SendContact;
+
+        public void InvokeEvent()
+        {
+            this.ValidateChildren(ValidationConstraints.Enabled);
+
+            if (ValidationHelper.UserControlHasErrors(this, errors))
+            {
+                MessageBox.Show("contact info could not be send to form check required fields.", "Invalid state", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int contactId = lblContactId.Text == "[Not Set]" ? -1 : Convert.ToInt32(lblContactId.Text);
+            SendContact?.Invoke(txtEmail.Text.Trim(), txtPhoneNumber.Text.Trim(), contactId, cbContactType.SelectedIndex);
+        }
         private void _SetPage()
         {
             cbContactType.Items.Add("Normal");
@@ -29,33 +45,14 @@ namespace ClinicSystem.People.Controls
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
 
-
-        public PersonContact GetContactInfo()
-        {
-            this.ValidateChildren(ValidationConstraints.Enabled);
-
-            if (ValidationHelper.UserControlHasErrors(this, errors))
-            {
-                MessageBox.Show("contact info could not be send to form check required fields.", "Invalid state", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
-            }
-
-
-            return new PersonContact()
-            {
-                PhoneNumber = txtPhoneNumber.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                ContactTypeId = (EnContactTypes)cbContactType.SelectedIndex + 1
-            };
-        }
-
-
         public void LoadContactToPage(PersonContact contact)
         {
             txtEmail.Text = contact.Email;
             txtPhoneNumber.Text = contact.PhoneNumber;
-            lblContactId.Text = contact.ContactId.ToString();
             cbContactType.SelectedIndex = (int)contact.ContactTypeId;
+            PrintContactId(contact.ContactId);
         }
+
+        public void PrintContactId(int contactId) => lblContactId.Text = contactId != -1 ? $"C-{contactId}" : "[Not Set]";
     }
 }
