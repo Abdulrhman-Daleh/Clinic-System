@@ -36,19 +36,30 @@ namespace ClinicSystem.People.Controls
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
 
+        private void ResetControls()
+        {
+            cbGender.SelectedIndex = 0;
+            txtFirstName.Text = string.Empty;
+            txtLastName.Text = string.Empty;
+            lblPersonId.Text = "[Not Set]";
+        }
+
         private void SetUpUserCtrl()
         {
             cbGender.Items.Add("Male");
             cbGender.Items.Add("Female");
-            cbGender.SelectedIndex = 0;
-            txtFirstName.Text = string.Empty;
-            txtLastName.Text = string.Empty;
+            ResetControls();
             txtFirstName.Focus();
-            lblPersonId.Text = "[Not Set]";
         }
 
         public void LoadInfoToPage(Person person)
         {
+            if (ValidationHelper.IsEmptyOrNull(person, "Person is not found"))
+            {
+                ResetControls();
+                return;
+            }
+
             txtFirstName.Text = person.Firstname;
             txtLastName.Text = person.Lastname;
             cbGender.SelectedIndex = (int)person.Gender - 1;
@@ -56,5 +67,15 @@ namespace ClinicSystem.People.Controls
         }
 
         public void PrintPersonId(int personId) => lblPersonId.Text = personId != -1 ? $"P-{personId}" : "[Not Set]";
+
+        private void ValidateInputKeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidationHelper.HandleInputType(e, false, true);
+        }
+
+        private void cbGender_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            ValidationHelper.LockComboBox(e);
+        }
     }
 }

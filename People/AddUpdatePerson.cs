@@ -12,6 +12,9 @@ namespace ClinicSystem
         private Person _person;
         private int _personId;
 
+        public delegate void SendPersonInfoOnSave(Person person);
+        public event SendPersonInfoOnSave SendPersonInfo;
+
         public AddUpdatePerson()
         {
             InitializeComponent();
@@ -27,7 +30,7 @@ namespace ClinicSystem
             PrintPersonId(_personId);
             _person = Person.FindPersonById(_personId);
 
-            if (ValidationHelper.IsEmptyOrNull(_person))
+            if (ValidationHelper.IsEmptyOrNull(_person, "person with id does not exists"))
             {
                 personalInfoCtrl.Enabled = false;
                 return;
@@ -65,7 +68,7 @@ namespace ClinicSystem
             if (!personalInfoCtrl.TrySendPersonInfo())
                 return;
 
-            if (ValidationHelper.IsEmptyOrNull(_person))
+            if (ValidationHelper.IsEmptyOrNull(_person, "person is not valid to save"))
                 return;
 
             if (_person.Save())
@@ -73,6 +76,7 @@ namespace ClinicSystem
                 MessageBox.Show("data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrintPersonId(_person.PersonId);
                 personalInfoCtrl.PrintPersonId(_person.PersonId);
+                SendPersonInfo?.Invoke(_person);
                 SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
 

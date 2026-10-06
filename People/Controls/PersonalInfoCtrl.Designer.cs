@@ -109,6 +109,7 @@
             this.cbGender.Name = "cbGender";
             this.cbGender.Size = new System.Drawing.Size(121, 33);
             this.cbGender.TabIndex = 14;
+            this.cbGender.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbGender_KeyPress);
             // 
             // pictureBox5
             // 
@@ -152,19 +153,21 @@
             // txtFirstName
             // 
             this.txtFirstName.Location = new System.Drawing.Point(20, 88);
-            this.txtFirstName.MaxLength = 30;
+            this.txtFirstName.MaxLength = 20;
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(206, 30);
             this.txtFirstName.TabIndex = 1;
+            this.txtFirstName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ValidateInputKeyPress);
             this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
             // 
             // txtLastName
             // 
             this.txtLastName.Location = new System.Drawing.Point(324, 88);
-            this.txtLastName.MaxLength = 30;
+            this.txtLastName.MaxLength = 20;
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(206, 30);
             this.txtLastName.TabIndex = 2;
+            this.txtLastName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ValidateInputKeyPress);
             this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
             // 
             // label2

@@ -54,7 +54,7 @@
             this.personalInfoCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.personalInfoCtrl.Location = new System.Drawing.Point(20, 118);
             this.personalInfoCtrl.Name = "personalInfoCtrl";
-            this.personalInfoCtrl.Size = new System.Drawing.Size(597, 294);
+            this.personalInfoCtrl.Size = new System.Drawing.Size(597, 262);
             this.personalInfoCtrl.TabIndex = 2;
             // 
             // label1
@@ -80,7 +80,7 @@
             // 
             this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(429, 418);
+            this.btnSave.Location = new System.Drawing.Point(429, 386);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(188, 66);
             this.btnSave.TabIndex = 5;
@@ -92,7 +92,7 @@
             // 
             this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(263, 418);
+            this.btnCancel.Location = new System.Drawing.Point(263, 386);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(160, 66);
             this.btnCancel.TabIndex = 4;
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(625, 492);
+            this.ClientSize = new System.Drawing.Size(625, 460);
             this.Controls.Add(this.lblPersonId);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnSave);
