@@ -59,6 +59,12 @@
     <Compile Include="People\AddUpdatePerson.Designer.cs">
       <DependentUpon>AddUpdatePerson.cs</DependentUpon>
     </Compile>
+    <Compile Include="People\Controls\FindPersonCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="People\Controls\FindPersonCtrl.Designer.cs">
+      <DependentUpon>FindPersonCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\Controls\PersonalInfoCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,6 +96,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddUpdatePerson.resx">
       <DependentUpon>AddUpdatePerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\Controls\FindPersonCtrl.resx">
+      <DependentUpon>FindPersonCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\Controls\PersonalInfoCtrl.resx">
       <DependentUpon>PersonalInfoCtrl.cs</DependentUpon>
@@ -184,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\update_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
