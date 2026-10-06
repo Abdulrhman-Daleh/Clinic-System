@@ -48,5 +48,14 @@ namespace ClinicSystem.People.Controls
                 ContactTypeId = (EnContactTypes)cbContactType.SelectedIndex + 1
             };
         }
+
+
+        public void LoadContactToPage(PersonContact contact)
+        {
+            txtEmail.Text = contact.Email;
+            txtPhoneNumber.Text = contact.PhoneNumber;
+            lblContactId.Text = contact.ContactId.ToString();
+            cbContactType.SelectedIndex = (int)contact.ContactTypeId;
+        }
     }
 }

@@ -28,26 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.personalInfoCtrl = new ClinicSystem.People.Controls.PersonalInfoCtrl();
             this.personContactCtrl = new ClinicSystem.People.Controls.PersonContactCtrl();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lblPersonId = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.pbModeImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             this.SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ClinicSystem.Properties.Resources.plus_32;
-            this.pictureBox1.Location = new System.Drawing.Point(20, 17);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(65, 52);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // lblTitle
             // 
@@ -76,30 +66,6 @@
             this.personContactCtrl.Size = new System.Drawing.Size(597, 244);
             this.personContactCtrl.TabIndex = 3;
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
-            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(263, 668);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(160, 66);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
-            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(429, 668);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(188, 66);
-            this.btnSave.TabIndex = 5;
-            this.btnSave.Text = "Add Person";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -119,6 +85,40 @@
             this.lblPersonId.Size = new System.Drawing.Size(0, 25);
             this.lblPersonId.TabIndex = 7;
             // 
+            // btnSave
+            // 
+            this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
+            this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSave.Location = new System.Drawing.Point(429, 668);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(188, 66);
+            this.btnSave.TabIndex = 5;
+            this.btnSave.Text = "Add Person";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
+            this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCancel.Location = new System.Drawing.Point(263, 668);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(160, 66);
+            this.btnCancel.TabIndex = 4;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // pbModeImage
+            // 
+            this.pbModeImage.Image = global::ClinicSystem.Properties.Resources.plus_32;
+            this.pbModeImage.Location = new System.Drawing.Point(20, 17);
+            this.pbModeImage.Name = "pbModeImage";
+            this.pbModeImage.Size = new System.Drawing.Size(65, 52);
+            this.pbModeImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbModeImage.TabIndex = 0;
+            this.pbModeImage.TabStop = false;
+            // 
             // AddUpdatePerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -131,12 +131,12 @@
             this.Controls.Add(this.personContactCtrl);
             this.Controls.Add(this.personalInfoCtrl);
             this.Controls.Add(this.lblTitle);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pbModeImage);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "AddUpdatePerson";
             this.Text = "Add New Person";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,7 +144,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pbModeImage;
         private System.Windows.Forms.Label lblTitle;
         private People.Controls.PersonalInfoCtrl personalInfoCtrl;
         private People.Controls.PersonContactCtrl personContactCtrl;

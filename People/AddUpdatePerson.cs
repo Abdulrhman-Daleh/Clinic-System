@@ -1,5 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
+using ClinicSystem.Properties;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ClinicSystem
@@ -7,34 +9,67 @@ namespace ClinicSystem
     public partial class AddUpdatePerson : FormsDefaultSettings
     {
         private Person _person;
+        private int _personId;
+
         public AddUpdatePerson()
         {
             InitializeComponent();
             lblPersonId.Text = "[Not Set]";
+            SetFormTextBasedMode("Add new person", "Add new person", "Add Person", Resources.update_32);
+        }
+
+        public AddUpdatePerson(int personId)
+        {
+            InitializeComponent();
+            SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
+            _personId = personId;
+            PrintPersonId(_personId);
+            _person = Person.FindPersonById(_personId);
+
+            if (ValidationHelper.IsEmptyOrNull(_person))
+            {
+                personalInfoCtrl.Enabled = false;
+                return;
+            }
+
+            personalInfoCtrl.LoadInfoToPage(_person);
+
+            if (ValidationHelper.IsEmptyOrNull(_person.contactInfo))
+            {
+                personContactCtrl.Enabled = false;
+                return;
+            }
+
+            personContactCtrl.LoadContactToPage(_person.contactInfo);
+        }
+
+        private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText, Image image)
+        {
+            lblTitle.Text = labelTitle;
+            this.Text = pageTitle;
+            btnSave.Text = saveButtonText;
+            pbModeImage.Image = image;
+        }
+
+        private void PrintPersonId(int personId)
+        {
+            lblPersonId.Text = $"P-{personId}";
         }
 
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
 
         private void btnSave_Click(object sender, System.EventArgs e)
         {
+            personalInfoCtrl.RefreshPersonInfo(_person);
 
-            Person tempPerson = personalInfoCtrl.GetPersonInfo();
-            PersonContact tempContact = personContactCtrl.GetContactInfo();
-
-            if (tempPerson == null || tempContact == null)
+            if (ValidationHelper.IsEmptyOrNull(_person))
                 return;
 
-            _person = tempPerson;
-            _person.contactInfo = tempContact;
-
-            if (ValidationHelper.IsValidEmptyOrNull(_person) || ValidationHelper.IsValidEmptyOrNull(_person.contactInfo))
-                return;
-
-            _person.AddNewPerson();
-            if (_person.PersonId != -1)
+            if (_person.Save())
             {
-                MessageBox.Show("Person added successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                lblPersonId.Text = _person.PersonId.ToString();
+                MessageBox.Show("data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                PrintPersonId(_person.PersonId);
+                SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
             else
                 MessageBox.Show("adding new person failed", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -1,8 +1,7 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
-using System;
 using System.ComponentModel;
-using System.IO;
 using System.Windows.Forms;
 
 namespace ClinicSystem.People.Controls
@@ -12,16 +11,16 @@ namespace ClinicSystem.People.Controls
         public PersonalInfoCtrl()
         {
             InitializeComponent();
-            _SetUpUserCtrl();
+            SetUpUserCtrl();
         }
 
-        private void _ValidateInputValues(object sender, CancelEventArgs e)
+        private void ValidateInputValues(object sender, CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
 
 
-        private void _SetUpUserCtrl()
+        private void SetUpUserCtrl()
         {
             cbGender.Items.Add("Male");
             cbGender.Items.Add("Female");
@@ -32,41 +31,28 @@ namespace ClinicSystem.People.Controls
             lblPersonId.Text = "[Not Set]";
         }
 
-        private void LnkUploadPic_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            fileDialog.DefaultExt = ".png";
-            fileDialog.Filter = "PNG Files (*.png)|*.png|JPEG Files (*.jpeg)|*.jpeg";
-
-            if (fileDialog.ShowDialog() == DialogResult.No)
-                return;
-
-            if (File.Exists(fileDialog.FileName))
-            {
-                pcImage.ImageLocation = fileDialog.FileName;
-            }
-            else
-                MessageBox.Show("Image does not exists on local machine", "Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-
-        public Person GetPersonInfo()
+        public void RefreshPersonInfo(Person person)
         {
             this.ValidateChildren(ValidationConstraints.Enabled);
 
             if (ValidationHelper.UserControlHasErrors(this, errors))
             {
-                MessageBox.Show("personal info could not be send to form check required fields.", "Invalid state", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return null;
+                MessageBox.Show("personal info could not be refreshed check required fields.", "Invalid state", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
+            person.Firstname = txtFirstName.Text.Trim();
+            person.Lastname = txtLastName.Text.Trim();
+            person.Gender = cbGender.Text == "Male" ? EnGender.Male : EnGender.Female;
+        }
 
-            return new Person()
-            {
-                Firstname = txtFirstName.Text.Trim(),
-                Lastname = txtLastName.Text.Trim(),
-                Gender = cbGender.Text == "Male" ? AppEnums.cs.EnGender.Male : AppEnums.cs.EnGender.Female
-            };
+
+        public void LoadInfoToPage(Person person)
+        {
+            txtFirstName.Text = person.Firstname;
+            txtLastName.Text = person.Lastname;
+            cbGender.SelectedIndex = (int)person.Gender - 1;
+            lblPersonId.Text = $"P-{person.PersonId}";
         }
     }
 }
