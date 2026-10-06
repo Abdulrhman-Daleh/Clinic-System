@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{8E
 		Database\Clinical Records & Referrals.png = Database\Clinical Records & Referrals.png
 		Database\ClinicSystem.sql = Database\ClinicSystem.sql
 		Database\DatabaseRelationships.md = Database\DatabaseRelationships.md
+		Database\DatabaseStoredProcedures.sql = Database\DatabaseStoredProcedures.sql
 		Database\Laboratory & Prescriptions.png = Database\Laboratory & Prescriptions.png
 		Database\Patients & Insurance.png = Database\Patients & Insurance.png
 		Database\People, Staff & Personal Information.png = Database\People, Staff & Personal Information.png
