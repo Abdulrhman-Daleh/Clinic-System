@@ -1,7 +1,9 @@
 ﻿using Data_Access.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Data_Access
 {
@@ -55,16 +57,23 @@ namespace Data_Access
 
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+
+                        command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personInfo.PersonId;
+                        command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
+                        command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
+                        command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
+
+                        affactedRows = command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
                 {
 
-                    command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personInfo.PersonId;
-                    command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
-                    command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
-                    command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
-
-                    affactedRows = command.ExecuteNonQuery();
                 }
             }
 
@@ -77,24 +86,31 @@ namespace Data_Access
 
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personId;
-
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personId;
+
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            return new PersonDto()
+                            while (reader.Read())
                             {
-                                Firstname = (string)reader["Firstname"],
-                                Lastname = (string)reader["Lastname"],
-                                Gender = Convert.ToChar(reader["Gender"]),
-                                PersonId = personId
-                            };
+                                return new PersonDto()
+                                {
+                                    Firstname = (string)reader["Firstname"],
+                                    Lastname = (string)reader["Lastname"],
+                                    Gender = Convert.ToChar(reader["Gender"]),
+                                    PersonId = personId
+                                };
+                            }
                         }
+
                     }
+                }
+                catch (Exception ex)
+                {
 
                 }
             }
@@ -108,30 +124,77 @@ namespace Data_Access
 
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
-                connection.Open();
-                using (SqlCommand command = new SqlCommand(query, connection))
+                try
                 {
-                    command.Parameters.Add("@Firstname", SqlDbType.VarChar, 30).Value = Firstname;
-
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        while (reader.Read())
+                        command.Parameters.Add("@Firstname", SqlDbType.VarChar, 30).Value = Firstname;
+
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            return new PersonDto()
+                            while (reader.Read())
                             {
-                                Firstname = Firstname,
-                                Lastname = (string)reader["Lastname"],
-                                Gender = Convert.ToChar(reader["Gender"]),
-                                PersonId = (int)reader["PersonID"]
-                            };
+                                return new PersonDto()
+                                {
+                                    Firstname = Firstname,
+                                    Lastname = (string)reader["Lastname"],
+                                    Gender = Convert.ToChar(reader["Gender"]),
+                                    PersonId = (int)reader["PersonID"]
+                                };
+                            }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
 
                 }
             }
 
             return null;
         }
+
+        public static async Task<List<PersonDto>> GetPeople()
+        {
+            List<PersonDto> People = new List<PersonDto>();
+
+            string query = @"select PersonID, Firstname, Lastname, Gender from People";
+
+            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (await reader.ReadAsync())
+                            {
+                                PersonDto person = new PersonDto()
+                                {
+                                    PersonId = (int)reader["PersonID"],
+                                    Firstname = (string)reader["Firstname"],
+                                    Lastname = (string)reader["Lastname"],
+                                    Gender = Convert.ToChar(reader["Gender"])
+                                };
+
+                                People.Add(person);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return People;
+        }
+
 
     }
 }

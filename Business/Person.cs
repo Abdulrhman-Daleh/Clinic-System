@@ -1,16 +1,18 @@
 ﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 namespace Business
 {
     public class Person
     {
         private enum Mode { Add = 1, Update }
         private Mode _mode;
-        public EnGender Gender { get; set; } = EnGender.Male;
         public int PersonId { get; set; }
         public string Firstname { get; set; } = string.Empty;
         public string Lastname { get; set; } = string.Empty;
+        public EnGender Gender { get; set; } = EnGender.Male;
         public static Person FromDto(PersonDto personDto)
         {
             if (personDto == null) return null;
@@ -86,6 +88,19 @@ namespace Business
         public static Person FindPersonByFirstname(string Firstname)
         {
             return FromDto(PersonData.FindPersonByFirstname(Firstname));
+        }
+
+        public static async Task<List<Person>> GetPeople()
+        {
+            List<Person> people = new List<Person>();
+
+            List<PersonDto> peopleDto = await PersonData.GetPeople();
+            foreach (PersonDto row in peopleDto)
+            {
+                people.Add(FromDto(row));
+            }
+
+            return people;
         }
     }
 }

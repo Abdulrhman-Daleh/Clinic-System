@@ -34,7 +34,7 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
-        public static bool IsEmptyOrNull<T>(T value, string message)
+        public static bool IsEmptyOrNull<T>(T value, string message = null)
         {
             bool result = string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
 
