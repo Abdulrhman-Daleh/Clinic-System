@@ -52,6 +52,7 @@
     <Compile Include="FormsDefaultSettings.Designer.cs">
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="People\AddPersonContacts.cs">
       <SubType>Form</SubType>
@@ -82,6 +83,12 @@
     </Compile>
     <Compile Include="People\Controls\PersonContactCtrl.Designer.cs">
       <DependentUpon>PersonContactCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="People\ManagePeople.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="People\ManagePeople.Designer.cs">
+      <DependentUpon>ManagePeople.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +121,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\Controls\PersonContactCtrl.resx">
       <DependentUpon>PersonContactCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\ManagePeople.resx">
+      <DependentUpon>ManagePeople.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -205,6 +215,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\find_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\People_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

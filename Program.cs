@@ -14,7 +14,7 @@ namespace ClinicSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AddPersonContacts());
+            Application.Run(new ManagePeople());
         }
     }
 }
