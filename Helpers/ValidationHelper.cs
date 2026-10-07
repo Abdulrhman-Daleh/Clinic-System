@@ -1,22 +1,23 @@
 ﻿using Business;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Helpers
 {
     public class ValidationHelper
     {
-        public static bool ValidateRequiredTextBox(TextBox txtBox, ErrorProvider errors)
+        public static bool ValidateRequiredTextBox(Control control, ErrorProvider errors)
         {
-            if (Util.IsInputEmpty(txtBox.Text))
+            if (Util.IsInputEmpty(control.Text))
             {
-                errors.SetError(txtBox, "this field must be filled");
+                errors.SetError(control, "this field must be filled");
                 return false;
             }
 
-            errors.SetError(txtBox, null);
+            errors.SetError(control, null);
             return true;
         }
-
         public static bool UserControlHasErrors(Control control, ErrorProvider errors)
         {
             foreach (Control c in control.Controls)
@@ -33,8 +34,6 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
-
-
         public static bool IsEmptyOrNull<T>(T value, string message)
         {
             bool result = string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
@@ -49,11 +48,7 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
-
-
         public static void LockComboBox(KeyPressEventArgs e) => e.Handled = true;
-
-
         public static void HandleInputType(KeyPressEventArgs e, bool AllowDigit, bool AllowText)
         {
             if (AllowDigit && AllowText)
@@ -78,12 +73,28 @@ namespace ClinicSystem.Helpers
                     e.Handled = false;
             }
         }
-
-
         public static void ResetDefaultFilter(TextBox txtBox)
         {
             txtBox.Text = string.Empty;
             txtBox.Focus();
+        }
+        public static bool IsEmailValid(string email)
+        {
+            if (IsEmptyOrNull(email, null))
+                return true;
+
+            string strPattern = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$";
+            Regex rgx = new Regex(strPattern);
+
+            return rgx.IsMatch(email);
+        }
+        private static int CountPhoneDigits(string phoneNumber)
+        {
+            return phoneNumber.Count(char.IsDigit);
+        }
+        public static bool IsValidPhoneNumber(string phoneNumber)
+        {
+            return CountPhoneDigits(phoneNumber) == 10;
         }
 
     }

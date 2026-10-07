@@ -36,7 +36,7 @@ namespace Business
             };
         }
 
-        public PersonContact contactInfo;
+        public PersonContact contactInfo = new PersonContact();
 
         public Person()
         {
@@ -71,6 +71,8 @@ namespace Business
                     _mode = Mode.Update;
                     return true;
                 }
+                else
+                    return false;
             }
 
             return _UpdatePerson();

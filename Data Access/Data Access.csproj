@@ -45,6 +45,7 @@
     <Compile Include="AccessString.cs" />
     <Compile Include="DTOs\PersonContactDto.cs" />
     <Compile Include="DTOs\PersonDto.cs" />
+    <Compile Include="PersonContactData.cs" />
     <Compile Include="PersonData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
