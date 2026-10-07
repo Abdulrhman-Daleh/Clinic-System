@@ -11,17 +11,19 @@ namespace ClinicSystem.People.Controls
         {
             InitializeComponent();
             SetUp();
-
         }
 
+        public delegate void SendOnFind(Person person);
+        public event SendOnFind OnFind;
         private void SetUp()
         {
             txtFindBy.Text = string.Empty;
             txtFindBy.Focus();
             cbFindBy.Items.Add("PersonID");
             cbFindBy.Items.Add("Firstname");
-            cbFindBy.SelectedIndex = 0;
             txtFindBy.MaxLength = 5;
+            cbFindBy.SelectedIndex = 0;
+            personalInfoCtrl1.Enabled = false;
         }
 
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -64,6 +66,7 @@ namespace ClinicSystem.People.Controls
                     break;
             }
             personalInfoCtrl1.LoadInfoToPage(person);
+            OnFind?.Invoke(person);
 
         }
 
@@ -87,6 +90,7 @@ namespace ClinicSystem.People.Controls
             cbFindBy.SelectedIndex = 0;
             txtFindBy.Text = person.PersonId.ToString();
             personalInfoCtrl1.LoadInfoToPage(person);
+            OnFind?.Invoke(person);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)

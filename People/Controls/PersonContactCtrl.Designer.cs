@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtPhoneNumber = new System.Windows.Forms.MaskedTextBox();
             this.lblContactId = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.txtPhoneNumber = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -57,6 +57,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtPhoneNumber);
             this.groupBox1.Controls.Add(this.lblContactId);
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.label4);
@@ -65,7 +66,6 @@
             this.groupBox1.Controls.Add(this.txtEmail);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.pictureBox2);
-            this.groupBox1.Controls.Add(this.txtPhoneNumber);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.label1);
@@ -76,6 +76,16 @@
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contact";
+            // 
+            // txtPhoneNumber
+            // 
+            this.txtPhoneNumber.Location = new System.Drawing.Point(345, 83);
+            this.txtPhoneNumber.Mask = "(999) 000-0000";
+            this.txtPhoneNumber.Name = "txtPhoneNumber";
+            this.txtPhoneNumber.Size = new System.Drawing.Size(203, 30);
+            this.txtPhoneNumber.TabIndex = 1;
+            this.txtPhoneNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPhoneNumber_KeyPress);
+            this.txtPhoneNumber.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNumber_Validating);
             // 
             // lblContactId
             // 
@@ -112,7 +122,7 @@
             this.cbContactType.Location = new System.Drawing.Point(45, 85);
             this.cbContactType.Name = "cbContactType";
             this.cbContactType.Size = new System.Drawing.Size(199, 33);
-            this.cbContactType.TabIndex = 30;
+            this.cbContactType.TabIndex = 0;
             // 
             // pictureBox3
             // 
@@ -131,7 +141,8 @@
             this.txtEmail.Multiline = true;
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(279, 44);
-            this.txtEmail.TabIndex = 28;
+            this.txtEmail.TabIndex = 2;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
             // 
             // label3
             // 
@@ -151,15 +162,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 26;
             this.pictureBox2.TabStop = false;
-            // 
-            // txtPhoneNumber
-            // 
-            this.txtPhoneNumber.Location = new System.Drawing.Point(345, 85);
-            this.txtPhoneNumber.MaxLength = 30;
-            this.txtPhoneNumber.Name = "txtPhoneNumber";
-            this.txtPhoneNumber.Size = new System.Drawing.Size(206, 30);
-            this.txtPhoneNumber.TabIndex = 25;
-            this.txtPhoneNumber.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhoneNumber_Validating);
             // 
             // label2
             // 
@@ -218,9 +220,9 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.TextBox txtPhoneNumber;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.MaskedTextBox txtPhoneNumber;
     }
 }

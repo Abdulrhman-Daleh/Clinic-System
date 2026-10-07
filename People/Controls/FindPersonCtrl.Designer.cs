@@ -31,12 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.personalInfoCtrl1 = new ClinicSystem.People.Controls.PersonalInfoCtrl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnAddNew = new System.Windows.Forms.Button();
+            this.btnFind = new System.Windows.Forms.Button();
             this.txtFindBy = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFindBy = new System.Windows.Forms.ComboBox();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
-            this.btnFind = new System.Windows.Forms.Button();
-            this.btnAddNew = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             this.personalInfoCtrl1.Location = new System.Drawing.Point(0, 92);
             this.personalInfoCtrl1.Name = "personalInfoCtrl1";
             this.personalInfoCtrl1.Size = new System.Drawing.Size(594, 235);
-            this.personalInfoCtrl1.TabIndex = 0;
+            this.personalInfoCtrl1.TabIndex = 5;
             // 
             // groupBox1
             // 
@@ -65,13 +65,33 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Find By";
             // 
+            // btnAddNew
+            // 
+            this.btnAddNew.Image = global::ClinicSystem.Properties.Resources.plus_32;
+            this.btnAddNew.Location = new System.Drawing.Point(481, 26);
+            this.btnAddNew.Name = "btnAddNew";
+            this.btnAddNew.Size = new System.Drawing.Size(46, 45);
+            this.btnAddNew.TabIndex = 4;
+            this.btnAddNew.UseVisualStyleBackColor = true;
+            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
+            // 
+            // btnFind
+            // 
+            this.btnFind.Image = global::ClinicSystem.Properties.Resources.find_32;
+            this.btnFind.Location = new System.Drawing.Point(429, 25);
+            this.btnFind.Name = "btnFind";
+            this.btnFind.Size = new System.Drawing.Size(46, 45);
+            this.btnFind.TabIndex = 3;
+            this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
+            // 
             // txtFindBy
             // 
             this.txtFindBy.Location = new System.Drawing.Point(264, 33);
             this.txtFindBy.MaxLength = 20;
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(150, 30);
-            this.txtFindBy.TabIndex = 2;
+            this.txtFindBy.TabIndex = 0;
             this.txtFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFindBy_KeyPress);
             this.txtFindBy.Validating += new System.ComponentModel.CancelEventHandler(this.txtFindBy_Validating);
             // 
@@ -90,33 +110,13 @@
             this.cbFindBy.Location = new System.Drawing.Point(126, 32);
             this.cbFindBy.Name = "cbFindBy";
             this.cbFindBy.Size = new System.Drawing.Size(132, 33);
-            this.cbFindBy.TabIndex = 0;
+            this.cbFindBy.TabIndex = 1;
             this.cbFindBy.SelectedIndexChanged += new System.EventHandler(this.cbFindBy_SelectedIndexChanged);
             this.cbFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFindBy_KeyPress);
             // 
             // errors
             // 
             this.errors.ContainerControl = this;
-            // 
-            // btnFind
-            // 
-            this.btnFind.Image = global::ClinicSystem.Properties.Resources.find_32;
-            this.btnFind.Location = new System.Drawing.Point(429, 25);
-            this.btnFind.Name = "btnFind";
-            this.btnFind.Size = new System.Drawing.Size(46, 45);
-            this.btnFind.TabIndex = 5;
-            this.btnFind.UseVisualStyleBackColor = true;
-            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
-            // 
-            // btnAddNew
-            // 
-            this.btnAddNew.Image = global::ClinicSystem.Properties.Resources.plus_32;
-            this.btnAddNew.Location = new System.Drawing.Point(481, 26);
-            this.btnAddNew.Name = "btnAddNew";
-            this.btnAddNew.Size = new System.Drawing.Size(46, 45);
-            this.btnAddNew.TabIndex = 6;
-            this.btnAddNew.UseVisualStyleBackColor = true;
-            this.btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click);
             // 
             // FindPersonCtrl
             // 
