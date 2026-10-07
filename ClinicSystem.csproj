@@ -53,6 +53,12 @@
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="People\AddPersonContacts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="People\AddPersonContacts.Designer.cs">
+      <DependentUpon>AddPersonContacts.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\AddUpdatePerson.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     </Compile>
     <EmbeddedResource Include="FormsDefaultSettings.resx">
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\AddPersonContacts.resx">
+      <DependentUpon>AddPersonContacts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddUpdatePerson.resx">
       <DependentUpon>AddUpdatePerson.cs</DependentUpon>
