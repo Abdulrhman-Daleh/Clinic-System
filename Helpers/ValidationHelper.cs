@@ -1,4 +1,5 @@
 ﻿using Business;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -96,6 +97,14 @@ namespace ClinicSystem.Helpers
         {
             return CountPhoneDigits(phoneNumber) == 10;
         }
+        public static void SetApproperiteMaxLength(TextBox txtFilterBy, List<string> allowedIntColumns, string currentColumn,
+            int numAllowedLength, int textAllowedLength)
+        {
 
+            if (allowedIntColumns.Contains(currentColumn))
+                txtFilterBy.MaxLength = numAllowedLength;
+            else
+                txtFilterBy.MaxLength = textAllowedLength;
+        }
     }
 }
