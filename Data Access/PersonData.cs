@@ -157,7 +157,7 @@ namespace Data_Access
 
         public static async Task<List<PersonDto>> GetPeople()
         {
-            List<PersonDto> People = new List<PersonDto>();
+            List<PersonDto> people = new List<PersonDto>();
 
             string query = @"select PersonID, Firstname, Lastname, Gender from People";
 
@@ -181,7 +181,7 @@ namespace Data_Access
                                     Gender = Convert.ToChar(reader["Gender"])
                                 };
 
-                                People.Add(person);
+                                people.Add(person);
                             }
                         }
                     }
@@ -192,7 +192,7 @@ namespace Data_Access
                 }
             }
 
-            return People;
+            return people;
         }
 
 
