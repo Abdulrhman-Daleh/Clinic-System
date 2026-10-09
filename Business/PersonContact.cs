@@ -1,6 +1,8 @@
 ﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -18,9 +20,11 @@ namespace Business
         {
             return new PersonContact()
             {
-                Email = null,
-                PhoneNumber = null,
-                PersonId = -1
+                Email = contactDto.Email,
+                PhoneNumber = contactDto.PhoneNumber,
+                PersonId = contactDto.PersonId,
+                ContactId = contactDto.ContactId,
+                ContactTypeId = (EnContactTypes)contactDto.ContactTypeId
             };
         }
 
@@ -59,7 +63,6 @@ namespace Business
             return PersonContactData.UpdateContact(ToDto(this));
         }
 
-
         public bool Save()
         {
             switch (_mode)
@@ -78,6 +81,16 @@ namespace Business
             }
 
             return false;
+        }
+
+        public static async Task<List<PersonContact>> GetShortContactInfo(int personId)
+        {
+            List<PersonContact> contacts = new List<PersonContact>();
+
+            foreach (PersonContactDto c in await PersonContactData.GetShortContactInfo(personId))
+                contacts.Add(FromDto(c));
+
+            return contacts;
         }
 
     }

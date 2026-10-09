@@ -102,5 +102,7 @@ namespace Business
 
             return people;
         }
+
+        public string GetFullName() => Firstname + " " + Lastname;
     }
 }

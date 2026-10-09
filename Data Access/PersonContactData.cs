@@ -1,7 +1,9 @@
 ﻿using Data_Access.DTOs;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Data_Access
 {
@@ -82,6 +84,46 @@ namespace Data_Access
             return affectedRows > 0;
         }
 
+        public static async Task<List<PersonContactDto>> GetShortContactInfo(int personId)
+        {
+            List<PersonContactDto> contactDtos = new List<PersonContactDto>();
+            string query = @"select ContactID, PhoneNumber, Email, PersonID, ContactTypeID
+                from ContactInformations where PersonID = @personId";
+
+            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            {
+                try
+                {
+                    await connection.OpenAsync();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add("@personId", SqlDbType.Int).Value = personId;
+
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                        {
+                            while (reader.Read())
+                            {
+                                contactDtos.Add(new PersonContactDto
+                                {
+                                    ContactId = (int)reader["ContactID"],
+                                    ContactTypeId = (int)reader["ContactTypeID"],
+                                    PersonId = (int)reader["PersonID"],
+                                    PhoneNumber = (string)reader["PhoneNumber"],
+                                    Email = (string)reader["Email"] ?? "No Email"
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+
+            return contactDtos;
+        }
 
     }
 }
