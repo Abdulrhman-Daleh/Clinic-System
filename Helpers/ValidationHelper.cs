@@ -19,7 +19,7 @@ namespace ClinicSystem.Helpers
             errors.SetError(control, null);
             return true;
         }
-        public static bool UserControlHasErrors(Control control, ErrorProvider errors)
+        public static bool NotValidToSave(Control control, ErrorProvider errors)
         {
             foreach (Control c in control.Controls)
             {
@@ -28,7 +28,7 @@ namespace ClinicSystem.Helpers
 
                 foreach (Control child in control.Controls)
                 {
-                    if (UserControlHasErrors(child, errors))
+                    if (NotValidToSave(child, errors))
                         return true;
                 }
             }
@@ -60,7 +60,7 @@ namespace ClinicSystem.Helpers
 
             if (AllowDigit)
             {
-                if (char.IsLetter(e.KeyChar))
+                if (char.IsLetter(e.KeyChar) || char.IsPunctuation(e.KeyChar))
                     e.Handled = true;
                 else
                     e.Handled = false;

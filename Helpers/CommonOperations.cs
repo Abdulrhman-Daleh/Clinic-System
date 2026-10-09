@@ -116,5 +116,11 @@ namespace ClinicSystem.Helpers
 
             return temp;
         }
+
+        public static void SetUpDefaultControlsValue(List<Control> controls, string defaultValue)
+        {
+            foreach (Control c in controls)
+                c.Text = $"[{defaultValue}]";
+        }
     }
 }
