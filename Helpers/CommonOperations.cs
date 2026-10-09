@@ -122,5 +122,15 @@ namespace ClinicSystem.Helpers
             foreach (Control c in controls)
                 c.Text = $"[{defaultValue}]";
         }
+
+        public static void RefreshOnRecordInDGV(DataGridView dgv, List<object> values, int rowIndex)
+        {
+            for (int i = 0; i < values.Count; i++)
+            {
+                dgv.Rows[rowIndex].Cells[i].Value = values[i];
+            }
+
+            dgv.InvalidateRow(rowIndex);
+        }
     }
 }
