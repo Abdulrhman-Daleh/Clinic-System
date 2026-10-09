@@ -14,6 +14,8 @@ namespace ClinicSystem.People.Controls
             ResetEmptyControls();
         }
 
+        public delegate void delEditedInfo(Person person);
+        public event delEditedInfo OnEdit;
         private void ResetEmptyControls()
         {
             btnEdit.Enabled = false;
@@ -33,6 +35,7 @@ namespace ClinicSystem.People.Controls
             btnEdit.Enabled = true;
             pbGender.Image = this.person.Gender == AppEnums.cs.EnGender.Male ? Resources.male_32 : Resources.female_32;
             viewPersonContacts1.LoadUpPersonContact(person.PersonId);
+            findPersonCtrl1.RecivePersonInfo(person);
             lblName.Text = $"Person #{person.PersonId} - {this.person.GetFullName()}";
         }
 
@@ -49,6 +52,7 @@ namespace ClinicSystem.People.Controls
         private void btnEdit_Click(object sender, System.EventArgs e)
         {
             AddUpdatePerson updatePerson = new AddUpdatePerson(person.PersonId);
+            updatePerson.SendPersonInfo += RecivePersonObj;
             updatePerson.ShowDialog();
         }
 
@@ -61,6 +65,7 @@ namespace ClinicSystem.People.Controls
         {
             this.person = person;
             SetInfo(person);
+            OnEdit?.Invoke(person);
         }
     }
 }
