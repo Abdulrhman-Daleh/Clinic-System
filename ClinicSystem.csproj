@@ -72,23 +72,29 @@
     <Compile Include="People\Controls\FindPersonCtrl.Designer.cs">
       <DependentUpon>FindPersonCtrl.cs</DependentUpon>
     </Compile>
-    <Compile Include="People\Controls\PersonalInfoCtrl.cs">
+    <Compile Include="People\Controls\ViewPersonContacts.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="People\Controls\PersonalInfoCtrl.Designer.cs">
-      <DependentUpon>PersonalInfoCtrl.cs</DependentUpon>
+    <Compile Include="People\Controls\ViewPersonContacts.Designer.cs">
+      <DependentUpon>ViewPersonContacts.cs</DependentUpon>
     </Compile>
-    <Compile Include="People\Controls\PersonContactCtrl.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="People\ViewPerson.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="People\Controls\PersonContactCtrl.Designer.cs">
-      <DependentUpon>PersonContactCtrl.cs</DependentUpon>
+    <Compile Include="People\ViewPerson.Designer.cs">
+      <DependentUpon>ViewPerson.cs</DependentUpon>
     </Compile>
     <Compile Include="People\ManagePeople.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="People\ManagePeople.Designer.cs">
       <DependentUpon>ManagePeople.cs</DependentUpon>
+    </Compile>
+    <Compile Include="People\Controls\ViewPersonInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="People\Controls\ViewPersonInfoCtrl.Designer.cs">
+      <DependentUpon>ViewPersonInfoCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -116,14 +122,17 @@
     <EmbeddedResource Include="People\Controls\FindPersonCtrl.resx">
       <DependentUpon>FindPersonCtrl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="People\Controls\PersonalInfoCtrl.resx">
-      <DependentUpon>PersonalInfoCtrl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="People\Controls\PersonContactCtrl.resx">
-      <DependentUpon>PersonContactCtrl.cs</DependentUpon>
+    <EmbeddedResource Include="People\Controls\ViewPersonContacts.resx">
+      <DependentUpon>ViewPersonContacts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\ManagePeople.resx">
       <DependentUpon>ManagePeople.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\ViewPerson.resx">
+      <DependentUpon>ViewPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\Controls\ViewPersonInfoCtrl.resx">
+      <DependentUpon>ViewPersonInfoCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
