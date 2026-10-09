@@ -1,6 +1,7 @@
 ﻿using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
+using ClinicSystem.People.Controls;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -85,6 +86,23 @@ namespace ClinicSystem.People
             object value = cbGender.Text.Trim();
             List<object> temp = CommonOperations.FilterData(People, filterName, value.Equals("Male") ? EnGender.Male : EnGender.Female);
             CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
+        }
+
+        private void dgvPeople_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+
+            ViewPerson viewPerson = new ViewPerson(personId);
+            viewPerson.OnEdit += UpdateInfoListOnEdit;
+            viewPerson.ShowDialog();
+        }
+
+        private void UpdateInfoListOnEdit(Person person)
+        {
+            int index = People.FindIndex(x => x.PersonId == person.PersonId);
+            Util.RefreshRecordsList(People, person, index);
+
+            CommonOperations.RefreshOnRecordInDGV(dgvPeople, new List<object>() { person.PersonId, person.Firstname, person.Lastname, person.Gender.ToString() }, index);
         }
     }
 }
