@@ -15,6 +15,12 @@ namespace ClinicSystem.People.Controls
 
         public delegate void SendOnFind(Person person);
         public event SendOnFind OnFind;
+
+        public bool AllowFilter
+        {
+            get => gbFilter.Enabled;
+            set => gbFilter.Enabled = value;
+        }
         private void SetUp()
         {
             txtFindBy.Text = string.Empty;
@@ -23,7 +29,6 @@ namespace ClinicSystem.People.Controls
             cbFindBy.Items.Add("Firstname");
             txtFindBy.MaxLength = 5;
             cbFindBy.SelectedIndex = 0;
-            personalInfoCtrl1.Enabled = false;
         }
 
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -65,9 +70,10 @@ namespace ClinicSystem.People.Controls
                     txtFindBy.MaxLength = 30;
                     break;
             }
-            personalInfoCtrl1.LoadInfoToPage(person);
-            OnFind?.Invoke(person);
+            viewPersonInfoCtrl1.SetData(person);
 
+            if (AllowFilter)
+                OnFind?.Invoke(person);
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -85,12 +91,11 @@ namespace ClinicSystem.People.Controls
             ValidationHelper.ResetDefaultFilter(txtFindBy);
         }
 
-        private void RecivePersonInfo(Person person)
+        public void RecivePersonInfo(Person person)
         {
             cbFindBy.SelectedIndex = 0;
             txtFindBy.Text = person.PersonId.ToString();
-            personalInfoCtrl1.LoadInfoToPage(person);
-            OnFind?.Invoke(person);
+            Find();
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)

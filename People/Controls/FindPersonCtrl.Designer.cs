@@ -29,41 +29,32 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.personalInfoCtrl1 = new ClinicSystem.People.Controls.PersonalInfoCtrl();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbFilter = new System.Windows.Forms.GroupBox();
             this.btnAddNew = new System.Windows.Forms.Button();
             this.btnFind = new System.Windows.Forms.Button();
             this.txtFindBy = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFindBy = new System.Windows.Forms.ComboBox();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
-            this.groupBox1.SuspendLayout();
+            this.viewPersonInfoCtrl1 = new ClinicSystem.People.ViewPersonInfoCtrl();
+            this.gbFilter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.SuspendLayout();
             // 
-            // personalInfoCtrl1
+            // gbFilter
             // 
-            this.personalInfoCtrl1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.personalInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.personalInfoCtrl1.Location = new System.Drawing.Point(0, 92);
-            this.personalInfoCtrl1.Name = "personalInfoCtrl1";
-            this.personalInfoCtrl1.Size = new System.Drawing.Size(594, 235);
-            this.personalInfoCtrl1.TabIndex = 5;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnAddNew);
-            this.groupBox1.Controls.Add(this.btnFind);
-            this.groupBox1.Controls.Add(this.txtFindBy);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.cbFindBy);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(594, 82);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Find By";
+            this.gbFilter.Controls.Add(this.btnAddNew);
+            this.gbFilter.Controls.Add(this.btnFind);
+            this.gbFilter.Controls.Add(this.txtFindBy);
+            this.gbFilter.Controls.Add(this.label1);
+            this.gbFilter.Controls.Add(this.cbFindBy);
+            this.gbFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbFilter.Location = new System.Drawing.Point(0, 0);
+            this.gbFilter.Name = "gbFilter";
+            this.gbFilter.Size = new System.Drawing.Size(555, 82);
+            this.gbFilter.TabIndex = 1;
+            this.gbFilter.TabStop = false;
+            this.gbFilter.Text = "Find By";
             // 
             // btnAddNew
             // 
@@ -118,17 +109,27 @@
             // 
             this.errors.ContainerControl = this;
             // 
+            // viewPersonInfoCtrl1
+            // 
+            this.viewPersonInfoCtrl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.viewPersonInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.viewPersonInfoCtrl1.Location = new System.Drawing.Point(0, 82);
+            this.viewPersonInfoCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.viewPersonInfoCtrl1.Name = "viewPersonInfoCtrl1";
+            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(555, 205);
+            this.viewPersonInfoCtrl1.TabIndex = 2;
+            // 
             // FindPersonCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.personalInfoCtrl1);
+            this.Controls.Add(this.viewPersonInfoCtrl1);
+            this.Controls.Add(this.gbFilter);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FindPersonCtrl";
-            this.Size = new System.Drawing.Size(594, 327);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Size = new System.Drawing.Size(555, 287);
+            this.gbFilter.ResumeLayout(false);
+            this.gbFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
             this.ResumeLayout(false);
 
@@ -136,13 +137,13 @@
 
         #endregion
 
-        private PersonalInfoCtrl personalInfoCtrl1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbFilter;
         private System.Windows.Forms.TextBox txtFindBy;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbFindBy;
         private System.Windows.Forms.ErrorProvider errors;
         private System.Windows.Forms.Button btnAddNew;
         private System.Windows.Forms.Button btnFind;
+        private ViewPersonInfoCtrl viewPersonInfoCtrl1;
     }
 }
