@@ -228,5 +228,11 @@
   <ItemGroup>
     <None Include="Resources\People_32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_contact_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
