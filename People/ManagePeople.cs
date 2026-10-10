@@ -140,7 +140,9 @@ namespace ClinicSystem.People
         }
         private void addPersonContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddPersonContacts addContact = new AddPersonContacts();
+            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+
+            AddPersonContacts addContact = new AddPersonContacts(personId);
             addContact.ShowDialog();
         }
     }

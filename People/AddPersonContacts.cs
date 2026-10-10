@@ -14,6 +14,24 @@ namespace ClinicSystem.People
             SetFormTextBasedMode("Add Person Contact", "Add Person Contact", "Add Contact");
         }
 
+        public AddPersonContacts(int personId)
+        {
+            InitializeComponent();
+            SetFormTextBasedMode("Add Person Contact", "Add Person Contact", "Add Contact");
+
+            Person = Person.FindPersonById(personId);
+            SetUpdate(Person);
+        }
+
+        private void SetUpdate(Person person)
+        {
+            if (ValidationHelper.IsEmptyOrNull(person, "Person does not exists"))
+                return;
+
+            findPersonCtrl1.AllowFilter = false;
+            findPersonCtrl1.RecivePersonInfo(person);
+        }
+
         private void RecivePersonInfo(Person person)
         {
             Person = person;

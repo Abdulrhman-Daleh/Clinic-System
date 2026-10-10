@@ -1,4 +1,8 @@
-﻿namespace ClinicSystem.People.Controls
+﻿using Business;
+using ClinicSystem.Helpers;
+using System.ComponentModel;
+
+namespace ClinicSystem.People.Controls
 {
     public partial class ViewPersonContacts : UserCtrlDefaultSettings
     {
@@ -13,11 +17,11 @@
 
         private async void LoadContactData(int personId)
         {
-            //  BindingList<PersonContact> contacts = await PersonContact.GetShortContactInfo(personId);
-            //
-            //  CommonOperations.LoadDataToDGV(dgvContact, contacts, lblRecords);
-            //  dgvContact.Columns["ContactTypeID"].Visible = false;
-            //  dgvContact.Columns["ContactID"].Visible = false;
+            BindingList<PersonContact> contacts = await PersonContact.GetShortContactInfo(personId);
+
+            CommonOperations.LoadDataToDGV(dgvContact, contacts, lblRecords);
+            dgvContact.Columns["ContactTypeID"].Visible = false;
+            dgvContact.Columns["ContactID"].Visible = false;
         }
     }
 }
