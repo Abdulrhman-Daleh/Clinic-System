@@ -106,5 +106,14 @@ namespace ClinicSystem.Helpers
             else
                 txtFilterBy.MaxLength = textAllowedLength;
         }
+
+
+        public static bool IsDgvEmptyOrNull(DataGridView dgv)
+        {
+            if (IsEmptyOrNull(dgv))
+                return true;
+
+            return dgv.RowCount <= 0;
+        }
     }
 }

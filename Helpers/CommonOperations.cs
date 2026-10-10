@@ -1,6 +1,7 @@
 ﻿using Business;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -8,20 +9,20 @@ namespace ClinicSystem.Helpers
 {
     public class CommonOperations
     {
-        public static bool LoadDataToDGV<T>(DataGridView dgv, List<T> values, Label lblRecords)
+        public static bool LoadDataToDGV<T>(DataGridView dgv, T values, Label lblRecords)
         {
             dgv.DataSource = values;
-            lblRecords.Text = $"{values.Count} records";
+            lblRecords.Text = $"{dgv.Rows.Count} records";
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             return true;
         }
 
-        public static bool ResetDataGrid<T>(DataGridView dgv, List<T> values, Label lblRecords, string value)
+        public static bool ResetDataGrid<T>(DataGridView dgv, BindingList<T> values, Label lblRecords, string value)
         {
             if (ValidationHelper.IsEmptyOrNull(values) || values.Count == 0)
             {
-                values = new List<T>();
+                values = new BindingList<T>();
                 dgv.DataSource = values;
                 lblRecords.Text = $"{values.Count} records";
                 return true;
@@ -37,7 +38,7 @@ namespace ClinicSystem.Helpers
             return false;
         }
 
-        private static void SwitchingFilterHelper(DataGridView dgv, List<Person> people, Label lblRecords, ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, string combBoxFilterName)
+        private static void SwitchingFilterHelper(DataGridView dgv, BindingList<Person> people, Label lblRecords, ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, string combBoxFilterName)
         {
             txtFilterBy.Text = string.Empty;
             cbMisc.SelectedIndex = 0;
@@ -63,7 +64,7 @@ namespace ClinicSystem.Helpers
             txtFilterBy.Focus();
         }
 
-        public static void HandleSwitchingFilter(ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, DataGridView dgv, List<Person> people, Label lblRecords, string combBoxFilterName)
+        public static void HandleSwitchingFilter(ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, DataGridView dgv, BindingList<Person> people, Label lblRecords, string combBoxFilterName)
         {
             dgv.DataSource = people;
             lblRecords.Text = $"{dgv.Rows.Count} records";
@@ -75,7 +76,7 @@ namespace ClinicSystem.Helpers
             return cbFilterBy.Text;
         }
 
-        public static List<object> FilterData<T>(List<T> list, string columnName, object valueToCheck)
+        public static List<object> FilterData<T>(BindingList<T> list, string columnName, object valueToCheck)
         {
             List<object> temp = new List<object>();
 
@@ -123,14 +124,9 @@ namespace ClinicSystem.Helpers
                 c.Text = $"[{defaultValue}]";
         }
 
-        public static void RefreshOnRecordInDGV(DataGridView dgv, List<object> values, int rowIndex)
+        public static void UpdateAfterAdding<T>(BindingList<T> list, T obj, int targetIndex = -1)
         {
-            for (int i = 0; i < values.Count; i++)
-            {
-                dgv.Rows[rowIndex].Cells[i].Value = values[i];
-            }
-
-            dgv.InvalidateRow(rowIndex);
+            Util.RefreshRecordsList(list, obj, targetIndex);
         }
     }
 }
