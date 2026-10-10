@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel;
 
 namespace Business
 {
@@ -9,9 +9,14 @@ namespace Business
             return string.IsNullOrWhiteSpace(inputValue);
         }
 
-        public static void RefreshRecordsList<T>(List<T> records, T record, int recordIndex)
+        public static void RefreshRecordsList<T>(BindingList<T> records, T record, int recordIndex)
         {
-            records[recordIndex] = record;
+            if (recordIndex < records.Count && recordIndex != -1)
+            {
+                records[recordIndex] = record;
+            }
+            else
+                records.Add(record);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Data_Access.DTOs;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -155,9 +155,9 @@ namespace Data_Access
             return null;
         }
 
-        public static async Task<List<PersonDto>> GetPeople()
+        public static async Task<BindingList<PersonDto>> GetPeople()
         {
-            List<PersonDto> people = new List<PersonDto>();
+            BindingList<PersonDto> people = new BindingList<PersonDto>();
 
             string query = @"select PersonID, Firstname, Lastname, Gender from People";
 

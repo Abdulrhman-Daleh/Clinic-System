@@ -1,7 +1,7 @@
 ﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 namespace Business
 {
@@ -90,11 +90,11 @@ namespace Business
             return FromDto(PersonData.FindPersonByFirstname(Firstname));
         }
 
-        public static async Task<List<Person>> GetPeople()
+        public static async Task<BindingList<Person>> GetPeople()
         {
-            List<Person> people = new List<Person>();
+            BindingList<Person> people = new BindingList<Person>();
 
-            List<PersonDto> peopleDto = await PersonData.GetPeople();
+            BindingList<PersonDto> peopleDto = await PersonData.GetPeople();
             foreach (PersonDto row in peopleDto)
             {
                 people.Add(FromDto(row));
