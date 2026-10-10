@@ -124,23 +124,23 @@ SET Identity_Insert insuranceTypes OFF
 -- insuranceStatuses seed begins
 SET Identity_Insert insuranceStatuses ON
 if NOT EXISTS (select 1 from insuranceStatuses where insuranceStatusID=1)begin
-    insert into insuranceStatuses(insuranceStatusID, insuranceStatusID)
+    insert into insuranceStatuses(insuranceStatusID, insuranceStatusText)
     values(1, N'Active')
 end
 if NOT EXISTS (select 1 from insuranceStatuses where insuranceStatusID=2)begin
-    insert into insuranceStatuses(insuranceStatusID, insuranceStatusID)
+    insert into insuranceStatuses(insuranceStatusID, insuranceStatusText)
     values(2, N'Expired')
 end
 if NOT EXISTS (select 1 from insuranceStatuses where insuranceStatusID=3)begin
-    insert into insuranceStatuses(insuranceStatusID, insuranceStatusID)
+    insert into insuranceStatuses(insuranceStatusID, insuranceStatusText)
     values(3, N'Under Reviewing')
 end
 if NOT EXISTS (select 1 from insuranceStatuses where insuranceStatusID=4)begin
-    insert into insuranceStatuses(insuranceStatusID, insuranceStatusID)
+    insert into insuranceStatuses(insuranceStatusID, insuranceStatusText)
     values(4, N'Rejected')
 end
 if NOT EXISTS (select 1 from insuranceStatuses where insuranceStatusID=5)begin
-    insert into insuranceStatuses(insuranceStatusID, insuranceStatusID)
+    insert into insuranceStatuses(insuranceStatusID, insuranceStatusText)
     values(5, N'Submited')
 end
 SET Identity_Insert insuranceStatuses OFF
