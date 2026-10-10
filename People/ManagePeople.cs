@@ -4,13 +4,15 @@ using ClinicSystem.Helpers;
 using ClinicSystem.People.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.People
 {
     public partial class ManagePeople : FormsDefaultSettings
     {
-        private List<Person> People { get; set; }
+        private BindingList<Person> People { get; set; }
         public ManagePeople()
         {
             InitializeComponent();
@@ -87,22 +89,59 @@ namespace ClinicSystem.People
             List<object> temp = CommonOperations.FilterData(People, filterName, value.Equals("Male") ? EnGender.Male : EnGender.Female);
             CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
         }
-
+        private void SetControlEnableStatus(bool status)
+        {
+            updatePersonToolStripMenuItem.Enabled = status;
+            viewPersonToolStripMenuItem.Enabled = status;
+            addPersonContactToolStripMenuItem.Enabled = status;
+        }
+        private void cmsPeople_Opening(object sender, CancelEventArgs e)
+        {
+            SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPeople));
+        }
         private void dgvPeople_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
 
             ViewPerson viewPerson = new ViewPerson(personId);
-            viewPerson.OnEdit += UpdateInfoListOnEdit;
+            viewPerson.OnEdit += RefreshDgv;
             viewPerson.ShowDialog();
         }
-
-        private void UpdateInfoListOnEdit(Person person)
+        private void RefreshDgv(Person person)
         {
-            int index = People.FindIndex(x => x.PersonId == person.PersonId);
-            Util.RefreshRecordsList(People, person, index);
+            int targetIndex = -1;
 
-            CommonOperations.RefreshOnRecordInDGV(dgvPeople, new List<object>() { person.PersonId, person.Firstname, person.Lastname, person.Gender.ToString() }, index);
+            if (People.Any(x => x.PersonId == person.PersonId))
+                targetIndex = People.IndexOf(People.First(x => x.PersonId == person.PersonId));
+
+            CommonOperations.UpdateAfterAdding(People, person, targetIndex);
+        }
+        private void addNewPersonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddUpdatePerson addPerson = new AddUpdatePerson();
+            addPerson.SendPersonInfo += RefreshDgv;
+            addPerson.ShowDialog();
+        }
+        private void updatePersonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+
+            AddUpdatePerson updatePerson = new AddUpdatePerson(personId);
+            updatePerson.SendPersonInfo += RefreshDgv;
+            updatePerson.ShowDialog();
+        }
+        private void viewPersonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+
+            ViewPerson viewPerson = new ViewPerson(personId);
+            viewPerson.OnEdit += RefreshDgv;
+            viewPerson.ShowDialog();
+        }
+        private void addPersonContactToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddPersonContacts addContact = new AddPersonContacts();
+            addContact.ShowDialog();
         }
     }
 }

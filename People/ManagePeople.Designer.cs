@@ -34,17 +34,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.dgvPeople = new System.Windows.Forms.DataGridView();
-            this.lblRecords = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbGender = new System.Windows.Forms.ComboBox();
             this.cmsPeople = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.btnClose = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.addNewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updatePersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPersonContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblRecords = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbGender = new System.Windows.Forms.ComboBox();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pbModeImage = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).BeginInit();
             this.cmsPeople.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -109,6 +109,56 @@
             this.dgvPeople.TabIndex = 10;
             this.dgvPeople.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPeople_CellDoubleClick);
             // 
+            // cmsPeople
+            // 
+            this.cmsPeople.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmsPeople.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsPeople.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewPersonToolStripMenuItem,
+            this.updatePersonToolStripMenuItem,
+            this.viewPersonToolStripMenuItem,
+            this.addPersonContactToolStripMenuItem});
+            this.cmsPeople.Name = "cmsPeople";
+            this.cmsPeople.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsPeople.Size = new System.Drawing.Size(287, 184);
+            this.cmsPeople.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPeople_Opening);
+            // 
+            // addNewPersonToolStripMenuItem
+            // 
+            this.addNewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
+            this.addNewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addNewPersonToolStripMenuItem.Name = "addNewPersonToolStripMenuItem";
+            this.addNewPersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
+            this.addNewPersonToolStripMenuItem.Text = "Add New Person";
+            this.addNewPersonToolStripMenuItem.Click += new System.EventHandler(this.addNewPersonToolStripMenuItem_Click);
+            // 
+            // updatePersonToolStripMenuItem
+            // 
+            this.updatePersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
+            this.updatePersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.updatePersonToolStripMenuItem.Name = "updatePersonToolStripMenuItem";
+            this.updatePersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
+            this.updatePersonToolStripMenuItem.Text = "Update Person";
+            this.updatePersonToolStripMenuItem.Click += new System.EventHandler(this.updatePersonToolStripMenuItem_Click);
+            // 
+            // viewPersonToolStripMenuItem
+            // 
+            this.viewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_32;
+            this.viewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewPersonToolStripMenuItem.Name = "viewPersonToolStripMenuItem";
+            this.viewPersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
+            this.viewPersonToolStripMenuItem.Text = "View Person";
+            this.viewPersonToolStripMenuItem.Click += new System.EventHandler(this.viewPersonToolStripMenuItem_Click);
+            // 
+            // addPersonContactToolStripMenuItem
+            // 
+            this.addPersonContactToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_contact_32;
+            this.addPersonContactToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addPersonContactToolStripMenuItem.Name = "addPersonContactToolStripMenuItem";
+            this.addPersonContactToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
+            this.addPersonContactToolStripMenuItem.Text = "Add Person Contact";
+            this.addPersonContactToolStripMenuItem.Click += new System.EventHandler(this.addPersonContactToolStripMenuItem_Click);
+            // 
             // lblRecords
             // 
             this.lblRecords.AutoSize = true;
@@ -138,19 +188,6 @@
             this.cbGender.Visible = false;
             this.cbGender.SelectedIndexChanged += new System.EventHandler(this.cbGender_SelectedIndexChanged);
             this.cbGender.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
-            // 
-            // cmsPeople
-            // 
-            this.cmsPeople.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmsPeople.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsPeople.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewPersonToolStripMenuItem,
-            this.updatePersonToolStripMenuItem,
-            this.viewPersonToolStripMenuItem,
-            this.addPersonContactToolStripMenuItem});
-            this.cmsPeople.Name = "cmsPeople";
-            this.cmsPeople.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeople.Size = new System.Drawing.Size(287, 156);
             // 
             // btnClose
             // 
@@ -183,38 +220,6 @@
             this.pbModeImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbModeImage.TabIndex = 4;
             this.pbModeImage.TabStop = false;
-            // 
-            // addNewPersonToolStripMenuItem
-            // 
-            this.addNewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
-            this.addNewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addNewPersonToolStripMenuItem.Name = "addNewPersonToolStripMenuItem";
-            this.addNewPersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.addNewPersonToolStripMenuItem.Text = "Add New Person";
-            // 
-            // updatePersonToolStripMenuItem
-            // 
-            this.updatePersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
-            this.updatePersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.updatePersonToolStripMenuItem.Name = "updatePersonToolStripMenuItem";
-            this.updatePersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.updatePersonToolStripMenuItem.Text = "Update Person";
-            // 
-            // viewPersonToolStripMenuItem
-            // 
-            this.viewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_32;
-            this.viewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewPersonToolStripMenuItem.Name = "viewPersonToolStripMenuItem";
-            this.viewPersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.viewPersonToolStripMenuItem.Text = "View Person";
-            // 
-            // addPersonContactToolStripMenuItem
-            // 
-            this.addPersonContactToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_contact_32;
-            this.addPersonContactToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addPersonContactToolStripMenuItem.Name = "addPersonContactToolStripMenuItem";
-            this.addPersonContactToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.addPersonContactToolStripMenuItem.Text = "Add Person Contact";
             // 
             // ManagePeople
             // 
