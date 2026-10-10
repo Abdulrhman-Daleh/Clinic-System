@@ -1,6 +1,6 @@
 ﻿using Data_Access.DTOs;
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
@@ -84,9 +84,9 @@ namespace Data_Access
             return affectedRows > 0;
         }
 
-        public static async Task<List<PersonContactDto>> GetShortContactInfo(int personId)
+        public static async Task<BindingList<PersonContactDto>> GetShortContactInfo(int personId)
         {
-            List<PersonContactDto> contactDtos = new List<PersonContactDto>();
+            BindingList<PersonContactDto> contactDtos = new BindingList<PersonContactDto>();
             string query = @"select ContactID, PhoneNumber, Email, PersonID, ContactTypeID
                 from ContactInformations where PersonID = @personId";
 
@@ -102,7 +102,7 @@ namespace Data_Access
 
                         using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
-                            while (reader.Read())
+                            while (await reader.ReadAsync())
                             {
                                 contactDtos.Add(new PersonContactDto
                                 {
@@ -110,7 +110,7 @@ namespace Data_Access
                                     ContactTypeId = (int)reader["ContactTypeID"],
                                     PersonId = (int)reader["PersonID"],
                                     PhoneNumber = (string)reader["PhoneNumber"],
-                                    Email = (string)reader["Email"] ?? "No Email"
+                                    Email = (reader["Email"] == DBNull.Value) ? "No Email" : (string)reader["Email"]
                                 });
                             }
                         }

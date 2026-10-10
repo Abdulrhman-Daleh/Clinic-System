@@ -1,7 +1,7 @@
 ﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Business
@@ -83,9 +83,9 @@ namespace Business
             return false;
         }
 
-        public static async Task<List<PersonContact>> GetShortContactInfo(int personId)
+        public static async Task<BindingList<PersonContact>> GetShortContactInfo(int personId)
         {
-            List<PersonContact> contacts = new List<PersonContact>();
+            BindingList<PersonContact> contacts = new BindingList<PersonContact>();
 
             foreach (PersonContactDto c in await PersonContactData.GetShortContactInfo(personId))
                 contacts.Add(FromDto(c));
