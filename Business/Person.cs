@@ -13,6 +13,7 @@ namespace Business
         public string Firstname { get; set; } = string.Empty;
         public string Lastname { get; set; } = string.Empty;
         public EnGender Gender { get; set; } = EnGender.Male;
+        public BindingList<PersonContact> Contacts { get; set; }
         public static Person FromDto(PersonDto personDto)
         {
             if (personDto == null) return null;
@@ -44,13 +45,18 @@ namespace Business
         {
             PersonId = -1;
             _mode = Mode.Add;
+            Contacts = new BindingList<PersonContact>();
         }
 
-
+        private async void _LoadPersonContacts()
+        {
+            Contacts = await PersonContact.GetShortContactInfo(this.PersonId);
+        }
         public Person(int personId)
         {
             PersonId = personId;
             _mode = Mode.Update;
+            _LoadPersonContacts();
         }
 
         private int _AddNewPerson()
