@@ -1,6 +1,7 @@
 ﻿using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
+using ClinicSystem.People;
 using ClinicSystem.Properties;
 using System.ComponentModel;
 using System.Drawing;
@@ -22,6 +23,7 @@ namespace ClinicSystem
             SetFormTextBasedMode("Add new person", "Add new person", "Add Person", Resources.update_32);
             _person = new Person();
             SetControls();
+            lnkAddContact.Enabled = false;
         }
 
         private void SetControls(int selectedIndex = 0, string firstName = "", string lastName = "", int personId = -1)
@@ -46,6 +48,7 @@ namespace ClinicSystem
                 return;
 
             SetControls((int)_person.Gender - 1, _person.Firstname, _person.Lastname, _person.PersonId);
+            lnkAddContact.Enabled = true;
         }
 
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText, Image image)
@@ -89,6 +92,7 @@ namespace ClinicSystem
                 MessageBox.Show("data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrintPersonId(_person.PersonId);
                 SendPersonInfo?.Invoke(_person);
+                lnkAddContact.Enabled = true;
                 SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
         }
@@ -101,6 +105,13 @@ namespace ClinicSystem
         private void cbGender_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
+        }
+
+        private void lnkAddContact_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AddPersonContacts addContact = new AddPersonContacts(_person.PersonId);
+            addContact.ShowDialog();
+            SendPersonInfo?.Invoke(_person);
         }
     }
 }

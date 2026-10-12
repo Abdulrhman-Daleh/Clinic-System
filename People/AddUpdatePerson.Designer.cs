@@ -45,6 +45,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
+            this.lnkAddContact = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -206,11 +207,24 @@
             // 
             this.errors.ContainerControl = this;
             // 
+            // lnkAddContact
+            // 
+            this.lnkAddContact.AutoSize = true;
+            this.lnkAddContact.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lnkAddContact.Location = new System.Drawing.Point(432, 30);
+            this.lnkAddContact.Name = "lnkAddContact";
+            this.lnkAddContact.Size = new System.Drawing.Size(181, 32);
+            this.lnkAddContact.TabIndex = 24;
+            this.lnkAddContact.TabStop = true;
+            this.lnkAddContact.Text = "Add Contact";
+            this.lnkAddContact.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkAddContact_LinkClicked);
+            // 
             // AddUpdatePerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 312);
+            this.Controls.Add(this.lnkAddContact);
             this.Controls.Add(this.cbGender);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.label3);
@@ -258,6 +272,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ErrorProvider errors;
+        private System.Windows.Forms.LinkLabel lnkAddContact;
     }
 }
 

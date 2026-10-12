@@ -96,6 +96,7 @@ namespace ClinicSystem.People
                 SetFormTextBasedMode("Update Person Contact", "Update Person Contact", "Update");
                 MessageBox.Show("Data Saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrintContactId(Person.contactInfo.ContactId);
+                CommonOperations.UpdateAfterAdding(Person.Contacts, Person.contactInfo);
             }
             else
                 MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
