@@ -1,5 +1,6 @@
 ﻿using Data_Access.DTOs;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,10 +10,20 @@ namespace Data_Access
 {
     public class PersonData
     {
+        private static PersonDto PersonMapper(SqlDataReader reader)
+        {
+            return new PersonDto()
+            {
+                PersonId = (int)reader["PersonID"],
+                Firstname = (string)reader["Firstname"],
+                Lastname = (string)reader["Lastname"],
+                Gender = Convert.ToChar(reader["Gender"])
+            };
+        }
+
         public static int AddNewPerson(PersonDto personInfo, PersonContactDto personalContact)
         {
             int personId = -1;
-
             string query = @"insert into People
             (
             Firstname,
@@ -22,26 +33,21 @@ namespace Data_Access
         values
         (@Firstname, @Lastname, @Gender); select scope_identity()";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            List<SqlParameter> paramters = new List<SqlParameter>()
             {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
-                        command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
-                        command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
+                  new SqlParameter("@Firstname", SqlDbType.VarChar, 50){Value = personInfo.Firstname  },
+                  new SqlParameter("@Lastname", SqlDbType.VarChar, 50) { Value = personInfo.Lastname },
+                  new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = personInfo.Gender }
+            };
 
-                        object result = command.ExecuteScalar();
+            try
+            {
+                object result = DataAccessHelper.ExecuteScalar(query, paramters);
+                if (result != null && int.TryParse(result.ToString(), out personId)) { }
+            }
+            catch (Exception ex)
+            {
 
-                        if (result != null && int.TryParse(result.ToString(), out personId)) ;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //log later
-                }
             }
 
             return personId;
@@ -55,26 +61,21 @@ namespace Data_Access
         set Firstname = @Firstname, Lastname = @Lastname, Gender = @Gender
         where PersonID = @personId";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            List<SqlParameter> paramters = new List<SqlParameter>()
             {
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
+                new SqlParameter("@PersonId", SqlDbType.Int) {Value = personInfo.PersonId},
+                new SqlParameter("@Firstname", SqlDbType.VarChar, 50){Value = personInfo.Firstname},
+                new SqlParameter("@Lastname", SqlDbType.VarChar, 50){Value = personInfo.Lastname},
+                new SqlParameter("@Gender", SqlDbType.VarChar, 1){ Value = personInfo.Gender},
+            };
 
-                        command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personInfo.PersonId;
-                        command.Parameters.Add("@Firstname", SqlDbType.VarChar, 50).Value = personInfo.Firstname;
-                        command.Parameters.Add("@Lastname", SqlDbType.VarChar, 50).Value = personInfo.Lastname;
-                        command.Parameters.Add("@Gender", SqlDbType.VarChar, 1).Value = personInfo.Gender;
+            try
+            {
+                affactedRows = DataAccessHelper.ExecuteNonQuery(query, paramters);
+            }
+            catch (Exception ex)
+            {
 
-                        affactedRows = command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
             }
 
             return affactedRows > 0;
@@ -82,77 +83,46 @@ namespace Data_Access
 
         public static PersonDto FindPersonById(int personId)
         {
-            string query = @"select Firstname, Lastname, Gender from People where PersonID = @PersonId";
+            PersonDto person = null;
+            string query = @"select PersonID, Firstname, Lastname, Gender from People where PersonID = @PersonId";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            try
             {
-                try
+                List<SqlParameter> paramters = new List<SqlParameter>()
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.Add("@PersonId", SqlDbType.Int).Value = personId;
+                    new SqlParameter("@PersonId", SqlDbType.Int) {Value = personId},
+                };
 
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                return new PersonDto()
-                                {
-                                    Firstname = (string)reader["Firstname"],
-                                    Lastname = (string)reader["Lastname"],
-                                    Gender = Convert.ToChar(reader["Gender"]),
-                                    PersonId = personId
-                                };
-                            }
-                        }
-
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
+                person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
             }
+            catch (Exception ex)
+            {
 
-            return null;
+            }
+            return person;
         }
 
         public static PersonDto FindPersonByFirstname(string Firstname)
         {
+            PersonDto person = null;
             string query = @"select PersonID, Lastname, Gender from People where Firstname = @Firstname";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            try
             {
-                try
+                List<SqlParameter> paramters = new List<SqlParameter>()
                 {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.Add("@Firstname", SqlDbType.VarChar, 30).Value = Firstname;
+                    new SqlParameter("@Firstname", SqlDbType.VarChar, 50) {Value = Firstname},
+                };
 
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                return new PersonDto()
-                                {
-                                    Firstname = Firstname,
-                                    Lastname = (string)reader["Lastname"],
-                                    Gender = Convert.ToChar(reader["Gender"]),
-                                    PersonId = (int)reader["PersonID"]
-                                };
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
+                person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
 
-                }
+            }
+            catch (Exception ex)
+            {
+
             }
 
-            return null;
+            return person;
         }
 
         public static async Task<BindingList<PersonDto>> GetPeople()
@@ -161,35 +131,13 @@ namespace Data_Access
 
             string query = @"select PersonID, Firstname, Lastname, Gender from People";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            try
             {
-                try
-                {
-                    await connection.OpenAsync();
+                people = await DataAccessHelper.ExecuteObjectList(query, null, PersonMapper);
+            }
+            catch (Exception ex)
+            {
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                PersonDto person = new PersonDto()
-                                {
-                                    PersonId = (int)reader["PersonID"],
-                                    Firstname = (string)reader["Firstname"],
-                                    Lastname = (string)reader["Lastname"],
-                                    Gender = Convert.ToChar(reader["Gender"])
-                                };
-
-                                people.Add(person);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
             }
 
             return people;

@@ -1,5 +1,6 @@
 ﻿using Data_Access.DTOs;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,6 +10,18 @@ namespace Data_Access
 {
     public class PersonContactData
     {
+        private static PersonContactDto ContactMapper(SqlDataReader reader)
+        {
+            return new PersonContactDto()
+            {
+                ContactId = (int)reader["ContactID"],
+                PersonId = (int)reader["PersonID"],
+                Email = (reader["Email"] == DBNull.Value) ? "No Email" : (string)reader["Email"],
+                PhoneNumber = (string)reader["PhoneNumber"],
+                ContactTypeId = (int)reader["ContactTypeId"]
+            };
+        }
+
         public static int AddNewContact(PersonContactDto contactDto)
         {
             int contactId = -1;
@@ -16,32 +29,31 @@ namespace Data_Access
             string query = @"insert into ContactInformations (Email, PhoneNumber, PersonID, ContactTypeID) values
             (@Email, @PhoneNumber, @PersonID, @ContactTypeID); select scope_identity()";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            try
             {
-                try
+                SqlParameter emailParam = null;
+
+                if (string.IsNullOrEmpty(contactDto.Email))
+                    emailParam = new SqlParameter("@Email", DBNull.Value) { Value = DBNull.Value };
+                else
+                    emailParam = new SqlParameter("@Email", SqlDbType.VarChar, 50) { Value = contactDto.Email };
+
+                List<SqlParameter> parameters = new List<SqlParameter>()
                 {
-                    connection.Open();
+                    emailParam,
+                    new SqlParameter("@PhoneNumber", SqlDbType.VarChar, 20) {Value = contactDto.PhoneNumber },
+                    new SqlParameter("@PersonID", SqlDbType.Int) {Value = contactDto.PersonId},
+                    new SqlParameter("@ContactTypeID", SqlDbType.Int) {Value = contactDto.ContactTypeId},
+                };
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        if (string.IsNullOrEmpty(contactDto.Email))
-                            command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                        else
-                            command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = contactDto.Email;
+                object result = DataAccessHelper.ExecuteScalar(query, parameters);
 
-                        command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 20).Value = contactDto.PhoneNumber;
-                        command.Parameters.Add("@PersonID", SqlDbType.Int).Value = contactDto.PersonId;
-                        command.Parameters.Add("@ContactTypeID", SqlDbType.Int).Value = contactDto.ContactTypeId;
-
-                        object result = command.ExecuteScalar();
-
-                        if (result != null && int.TryParse(result.ToString(), out contactId)) ;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // log it later
-                }
+                if (result != null && int.TryParse(result.ToString(), out contactId)) { }
+                ;
+            }
+            catch (Exception ex)
+            {
+                // log it later
             }
 
             return contactId;
@@ -54,31 +66,29 @@ namespace Data_Access
             string query = @"update ContactInformations set Email = @Email, PhoneNumber = @PhoneNumber, PersonID = @PersonID,
             ContactTypeID = @ContactTypeID where ContactID = @ContactId";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            try
             {
-                try
+                SqlParameter emailParam = null;
+
+                if (string.IsNullOrEmpty(contactDto.Email))
+                    emailParam = new SqlParameter("@Email", DBNull.Value) { Value = DBNull.Value };
+                else
+                    emailParam = new SqlParameter("@Email", SqlDbType.VarChar, 50) { Value = contactDto.Email };
+
+                List<SqlParameter> parameters = new List<SqlParameter>()
                 {
-                    connection.Open();
+                    emailParam,
+                    new SqlParameter("@PhoneNumber", SqlDbType.VarChar, 20) {Value = contactDto.PhoneNumber },
+                    new SqlParameter("@PersonID", SqlDbType.Int) {Value = contactDto.PersonId},
+                    new SqlParameter("@ContactId", SqlDbType.Int) {Value = contactDto.ContactId},
+                    new SqlParameter("@ContactTypeID", SqlDbType.Int) {Value = contactDto.ContactTypeId},
+                };
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        if (string.IsNullOrEmpty(contactDto.Email))
-                            command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = DBNull.Value;
-                        else
-                            command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = contactDto.Email;
-
-                        command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 20).Value = contactDto.PhoneNumber;
-                        command.Parameters.Add("@PersonID", SqlDbType.Int).Value = contactDto.PersonId;
-                        command.Parameters.Add("@ContactTypeID", SqlDbType.Int).Value = contactDto.ContactTypeId;
-                        command.Parameters.Add("@ContactId", SqlDbType.Int).Value = contactDto.ContactId;
-
-                        affectedRows = command.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // log it later
-                }
+                affectedRows = DataAccessHelper.ExecuteNonQuery(query, parameters);
+            }
+            catch (Exception ex)
+            {
+                // log it later
             }
 
             return affectedRows > 0;
@@ -88,38 +98,17 @@ namespace Data_Access
         {
             BindingList<PersonContactDto> contactDtos = new BindingList<PersonContactDto>();
             string query = @"select ContactID, PhoneNumber, Email, PersonID, ContactTypeID
-                from ContactInformations where PersonID = @personId";
+                from ContactInformations where PersonID = @PersonID";
 
-            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            try
             {
-                try
-                {
-                    await connection.OpenAsync();
+                SqlParameter param = new SqlParameter("@PersonID", SqlDbType.Int) { Value = personId };
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.Add("@personId", SqlDbType.Int).Value = personId;
+                contactDtos = await DataAccessHelper.ExecuteObjectList(query, new List<SqlParameter>() { param }, ContactMapper);
+            }
+            catch (Exception ex)
+            {
 
-                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
-                        {
-                            while (await reader.ReadAsync())
-                            {
-                                contactDtos.Add(new PersonContactDto
-                                {
-                                    ContactId = (int)reader["ContactID"],
-                                    ContactTypeId = (int)reader["ContactTypeID"],
-                                    PersonId = (int)reader["PersonID"],
-                                    PhoneNumber = (string)reader["PhoneNumber"],
-                                    Email = (reader["Email"] == DBNull.Value) ? "No Email" : (string)reader["Email"]
-                                });
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-
-                }
             }
 
             return contactDtos;
