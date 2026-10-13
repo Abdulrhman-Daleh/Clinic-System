@@ -54,6 +54,12 @@
     </Compile>
     <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\AddPersonContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +118,9 @@
     </Compile>
     <EmbeddedResource Include="FormsDefaultSettings.resx">
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddPersonContacts.resx">
       <DependentUpon>AddPersonContacts.cs</DependentUpon>
@@ -236,6 +245,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Staff\Controls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manage_people_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clinic_background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

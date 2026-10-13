@@ -1,5 +1,4 @@
-﻿using ClinicSystem.People;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace ClinicSystem
@@ -14,7 +13,7 @@ namespace ClinicSystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ManagePeople());
+            Application.Run(new MainForm());
         }
     }
 }
