@@ -73,6 +73,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_staff_32 {
+            get {
+                object obj = ResourceManager.GetObject("add_staff_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap badge_32 {
             get {
                 object obj = ResourceManager.GetObject("badge_32", resourceCulture);
@@ -186,6 +196,16 @@ namespace ClinicSystem.Properties {
         internal static System.Drawing.Bitmap manage_people_64 {
             get {
                 object obj = ResourceManager.GetObject("manage_people_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap manage_staff_64 {
+            get {
+                object obj = ResourceManager.GetObject("manage_staff_64", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -252,5 +252,11 @@
   <ItemGroup>
     <None Include="Resources\clinic_background.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_staff_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manage_staff_64.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
