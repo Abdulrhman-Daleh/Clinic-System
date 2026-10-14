@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -121,5 +122,73 @@ namespace Data_Access
 
             return objs;
         }
+
+        public static List<object> ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters, List<SqlParameter> outputParamters)
+        {
+            List<object> objs = new List<object>();
+
+            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            {
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    if (paramters != null)
+                        command.Parameters.AddRange(paramters.ToArray());
+
+                    if (outputParamters != null)
+                        command.Parameters.AddRange(outputParamters.ToArray());
+
+                    try
+                    {
+                        connection.Open();
+                        command.ExecuteNonQuery();
+
+                        foreach (SqlParameter param in outputParamters)
+                        {
+                            objs.Add(command.Parameters[param.ParameterName].Value);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+
+                }
+            }
+
+            return objs;
+        }
+
+        public static int ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters)
+        {
+            int affectedRows = 0;
+
+            using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
+            {
+                using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    if (paramters != null)
+                        command.Parameters.AddRange(paramters.ToArray());
+
+                    try
+                    {
+                        connection.Open();
+                        affectedRows = command.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+
+                }
+            }
+
+            return affectedRows;
+        }
+
     }
 }
