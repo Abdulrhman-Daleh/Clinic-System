@@ -157,7 +157,7 @@
             this.txtUsername.Size = new System.Drawing.Size(206, 30);
             this.txtUsername.TabIndex = 15;
             this.txtUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ValidateInputKeyPress);
-            this.txtUsername.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
+            this.txtUsername.Validating += new System.ComponentModel.CancelEventHandler(this.txtUsername_Validating);
             // 
             // label2
             // 

@@ -1,5 +1,6 @@
 ﻿using AppEnums.cs;
 using ClinicSystem.Helpers;
+using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -58,6 +59,7 @@ namespace ClinicSystem.Staff
         {
             lblStaffId.Text = staffId != -1 ? $"STF-{staffId}" : "[Not Set]";
         }
+
         private void SetStaffNumber(string staffNumber)
         {
             lblStaffNumber.Text = ValidationHelper.IsEmptyOrNull(staffNumber) ? "[Not Set]" : staffNumber;
@@ -97,15 +99,36 @@ namespace ClinicSystem.Staff
 
             CollectData();
 
-            if (staff.Save())
+            try
             {
-                MessageBox.Show("Data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                SetStaffId(staff.StaffId);
-                SetStaffNumber(staff.StaffNumber);
-                SetFormTextBasedMode("update staff", "Update staff", "Update");
+                if (staff.Save())
+                {
+                    MessageBox.Show("Data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    SetStaffId(staff.StaffId);
+                    SetStaffNumber(staff.StaffNumber);
+                    SetFormTextBasedMode("update staff", "Update staff", "Update");
+                }
+                else
+                    MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else
-                MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Username already taken", "Taken", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txtUsername_Validating(object sender, CancelEventArgs e)
+        {
+            if (!ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors))
+                return;
+
+            if (Business.Staff.DoesExistsByUsername(txtUsername.Text))
+            {
+                errors.SetError(txtUsername, "User name is already taken");
+                return;
+            }
+
+            errors.SetError(txtUsername, null);
         }
     }
 }
