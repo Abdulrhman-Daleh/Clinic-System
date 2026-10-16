@@ -53,6 +53,7 @@
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CommonOperations.cs" />
+    <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
