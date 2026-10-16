@@ -69,7 +69,7 @@ namespace Business
             return PersonData.UpdatePerson(ToDto(this), PersonContact.ToDto(contactInfo));
         }
 
-        public bool Save()
+        public virtual bool Save()
         {
             if (_mode == Mode.Add)
             {

@@ -18,6 +18,7 @@ namespace Business
         public string HashedPassword { get; set; }
         public string StaffNumber { get; set; }
         public DateTime HireDate { get; set; }
+        public DateTime? UnlockAt { get; set; }
 
         private static StaffDto ToDto(Staff staff)
         {
@@ -30,7 +31,8 @@ namespace Business
                 Username = staff.Username,
                 HashedPassword = staff.HashedPassword,
                 StaffNumber = staff.StaffNumber,
-                HireDate = staff.HireDate
+                HireDate = staff.HireDate,
+                UnlockAt = staff.UnlockAt,
             };
         }
 
@@ -44,7 +46,8 @@ namespace Business
                 Username = staffDto.Username,
                 HashedPassword = staffDto.HashedPassword,
                 StaffNumber = staffDto.StaffNumber,
-                HireDate = staffDto.HireDate
+                HireDate = staffDto.HireDate,
+                UnlockAt = staffDto.UnlockAt
             };
         }
 
@@ -57,6 +60,7 @@ namespace Business
             Username = string.Empty;
             HashedPassword = string.Empty;
             StaffNumber = string.Empty;
+            UnlockAt = null;
             HireDate = DateTime.MinValue;
             Mode = EnMode.Add;
         }
@@ -65,6 +69,7 @@ namespace Business
         {
             StaffId = staffId;
         }
+
         public static async Task<BindingList<string>> GetSchedulesNames()
         {
             return await StaffData.GetSchedulesNames();
@@ -91,7 +96,7 @@ namespace Business
             return StaffData.UpdateStaff(ToDto(this), Person.ToDto(this));
         }
 
-        public bool Save()
+        public override bool Save()
         {
             switch (Mode)
             {
@@ -108,6 +113,11 @@ namespace Business
             }
 
             return false;
+        }
+
+        public static bool DoesExistsByUsername(string username)
+        {
+            return StaffData.DoesExistsByUsername(username);
         }
 
     }
