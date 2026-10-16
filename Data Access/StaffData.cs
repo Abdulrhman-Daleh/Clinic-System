@@ -36,7 +36,7 @@ namespace Data_Access
                     new SqlParameter(@"ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
                     new SqlParameter(@"RoleId", SqlDbType.Int) {Value = staffInfo.RoleId},
                     new SqlParameter(@"Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
-                    new SqlParameter(@"HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword},
+                    new SqlParameter(@"HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword}
                 };
 
                 List<SqlParameter> outputParams = new List<SqlParameter>()
@@ -75,7 +75,7 @@ namespace Data_Access
                     new SqlParameter(@"ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
                     new SqlParameter(@"RoleId", SqlDbType.Int) {Value = staffInfo.RoleId},
                     new SqlParameter(@"Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
-                    new SqlParameter(@"HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword},
+                    new SqlParameter(@"HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword}
                 };
 
                 affectedRows = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("UpdateStaff", inputParams);
@@ -124,6 +124,32 @@ namespace Data_Access
             }
 
             return roles;
+        }
+
+        public static bool DoesExistsByUsername(string username)
+        {
+            bool result = false;
+
+            string query = @"select Top 1 1 from Staff where Username = @Username";
+
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@Username", SqlDbType.VarChar, 40) {Value  = username}
+                };
+
+                object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+                if (obj != null)
+                    result = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return result;
         }
     }
 }

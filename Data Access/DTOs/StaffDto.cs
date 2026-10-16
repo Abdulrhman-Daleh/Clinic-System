@@ -12,5 +12,7 @@ namespace Data_Access.DTOs
         public string HashedPassword { get; set; }
         public string StaffNumber { get; set; }
         public DateTime HireDate { get; set; }
+        public DateTime? UnlockAt { get; set; }
+
     }
 }
