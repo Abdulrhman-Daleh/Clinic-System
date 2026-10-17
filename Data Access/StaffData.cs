@@ -10,6 +10,25 @@ namespace Data_Access
 {
     public class StaffData
     {
+        private static StaffDto staffMapper(SqlDataReader reader)
+        {
+            return new StaffDto()
+            {
+                StaffId = (int)reader["StaffID"],
+                ScheduleId = (int)reader["ScheduleID"],
+                RoleId = (int)reader["RoleID"],
+                PersonId = (int)reader["PersonID"],
+                Username = (string)reader["Username"],
+                HashedPassword = (string)reader["HashedPassword"],
+                StaffNumber = (string)reader["StaffNumber"],
+                HireDate = (DateTime)reader["HireDate"],
+                IsActive = (reader["IsActive"] == DBNull.Value) ? (bool?)null : (bool)reader["IsActive"],
+                Firstname = (string)reader["Firstname"],
+                Lastname = (string)reader["Lastname"],
+                Gender = Convert.ToChar(reader["Gender"])
+            };
+        }
+
         private static string MapStaffSchedule(SqlDataReader reader)
         {
             return (string)reader["ShiftName"];
@@ -20,7 +39,7 @@ namespace Data_Access
             return (string)reader["RoleName"];
         }
 
-        public static Tuple<int, int, string> AddNewStaff(StaffDto staffInfo, PersonDto personInfo)
+        public static Tuple<int, int, string> AddNewStaff(StaffDto staffInfo)
         {
             Tuple<int, int, string> result = new Tuple<int, int, string>(0, 0, "");
 
@@ -30,9 +49,9 @@ namespace Data_Access
             {
                 List<SqlParameter> inputParams = new List<SqlParameter>()
                 {
-                    new SqlParameter(@"Firstname", SqlDbType.VarChar, 40) {Value = personInfo.Firstname},
-                    new SqlParameter(@"Lastname", SqlDbType.VarChar, 40) {Value = personInfo.Lastname},
-                    new SqlParameter(@"Gender", SqlDbType.VarChar, 1) {Value = personInfo.Gender},
+                    new SqlParameter(@"Firstname", SqlDbType.VarChar, 40) {Value = staffInfo.Firstname},
+                    new SqlParameter(@"Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
+                    new SqlParameter(@"Gender", SqlDbType.VarChar, 1) {Value = staffInfo.Gender},
                     new SqlParameter(@"ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
                     new SqlParameter(@"RoleId", SqlDbType.Int) {Value = staffInfo.RoleId},
                     new SqlParameter(@"Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
@@ -61,7 +80,7 @@ namespace Data_Access
             return new Tuple<int, int, string>(-1, -1, "");
         }
 
-        public static bool UpdateStaff(StaffDto staffInfo, PersonDto personInfo)
+        public static bool UpdateStaff(StaffDto staffInfo)
         {
             int affectedRows = -1;
 
@@ -69,13 +88,14 @@ namespace Data_Access
             {
                 List<SqlParameter> inputParams = new List<SqlParameter>()
                 {
-                    new SqlParameter(@"Firstname", SqlDbType.VarChar, 40) {Value = personInfo.Firstname},
-                    new SqlParameter(@"Lastname", SqlDbType.VarChar, 40) {Value = personInfo.Lastname},
-                    new SqlParameter(@"Gender", SqlDbType.VarChar, 1) {Value = personInfo.Gender},
+                    new SqlParameter(@"Firstname", SqlDbType.VarChar, 40) {Value = staffInfo.Firstname},
+                    new SqlParameter(@"Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
+                    new SqlParameter(@"Gender", SqlDbType.VarChar, 1) {Value = staffInfo.Gender},
                     new SqlParameter(@"ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
                     new SqlParameter(@"RoleId", SqlDbType.Int) {Value = staffInfo.RoleId},
                     new SqlParameter(@"Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
-                    new SqlParameter(@"HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword}
+                    new SqlParameter(@"HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword},
+                    new SqlParameter(@"StaffId", SqlDbType.Int) {Value = staffInfo.StaffId}
                 };
 
                 affectedRows = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("UpdateStaff", inputParams);
@@ -150,6 +170,42 @@ namespace Data_Access
             }
 
             return result;
+        }
+
+        public static StaffDto FindStaffById(int staffId)
+        {
+            StaffDto staffDto = new StaffDto();
+
+            string query = @"select 
+            	StaffID,
+            	ScheduleID, 
+            	RoleID,
+            	s.PersonID, 
+            	Username, 
+            	HashedPassword, 
+            	StaffNumber,
+            	HireDate, 
+            	UnlockAt,
+                Firstname,
+                Lastname,
+                Gender
+            from Staff as s inner join People as p on s.PersonID = p.PersonID
+            	where StaffID = @staffId";
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@staffId", SqlDbType.VarChar, 50) {Value = staffId}
+                };
+
+                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return staffDto;
         }
     }
 }
