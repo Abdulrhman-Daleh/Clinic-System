@@ -18,7 +18,7 @@ namespace Business
         public string HashedPassword { get; set; }
         public string StaffNumber { get; set; }
         public DateTime HireDate { get; set; }
-        public DateTime? UnlockAt { get; set; }
+        public bool? IsActive { get; set; }
 
         private static StaffDto ToDto(Staff staff)
         {
@@ -32,7 +32,10 @@ namespace Business
                 HashedPassword = staff.HashedPassword,
                 StaffNumber = staff.StaffNumber,
                 HireDate = staff.HireDate,
-                UnlockAt = staff.UnlockAt,
+                IsActive = staff.IsActive,
+                Firstname = staff.Firstname,
+                Lastname = staff.Lastname,
+                Gender = staff.Gender == EnGender.Male ? 'M' : 'F'
             };
         }
 
@@ -47,7 +50,10 @@ namespace Business
                 HashedPassword = staffDto.HashedPassword,
                 StaffNumber = staffDto.StaffNumber,
                 HireDate = staffDto.HireDate,
-                UnlockAt = staffDto.UnlockAt
+                IsActive = staffDto.IsActive,
+                Firstname = staffDto.Firstname,
+                Lastname = staffDto.Lastname,
+                Gender = staffDto.Gender == 'M' ? EnGender.Male : EnGender.Female
             };
         }
 
@@ -60,14 +66,18 @@ namespace Business
             Username = string.Empty;
             HashedPassword = string.Empty;
             StaffNumber = string.Empty;
-            UnlockAt = null;
+            IsActive = null;
             HireDate = DateTime.MinValue;
+            Firstname = string.Empty;
+            Lastname = string.Empty;
+            Gender = EnGender.Male;
             Mode = EnMode.Add;
         }
 
         private Staff(int staffId)
         {
             StaffId = staffId;
+            Mode = EnMode.Update;
         }
 
         public static async Task<BindingList<string>> GetSchedulesNames()
@@ -82,7 +92,7 @@ namespace Business
 
         private bool AddNewStaff()
         {
-            Tuple<int, int, string> result = StaffData.AddNewStaff(ToDto(this), Person.ToDto(this));
+            Tuple<int, int, string> result = StaffData.AddNewStaff(ToDto(this));
 
             this.StaffId = result.Item1;
             this.PersonId = result.Item2;
@@ -93,7 +103,7 @@ namespace Business
 
         private bool UpdateStaff()
         {
-            return StaffData.UpdateStaff(ToDto(this), Person.ToDto(this));
+            return StaffData.UpdateStaff(ToDto(this));
         }
 
         public override bool Save()
@@ -118,6 +128,16 @@ namespace Business
         public static bool DoesExistsByUsername(string username)
         {
             return StaffData.DoesExistsByUsername(username);
+        }
+
+        public bool IsAddMode()
+        {
+            return Mode == EnMode.Add;
+        }
+
+        public static Staff FindStaffById(int staffId)
+        {
+            return FromDto(StaffData.FindStaffById(staffId));
         }
 
     }
