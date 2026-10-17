@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dgvContact = new System.Windows.Forms.DataGridView();
             this.lblRecords = new System.Windows.Forms.Label();
+            this.dgvContact = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContact)).BeginInit();
             this.SuspendLayout();
@@ -42,10 +42,18 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(518, 238);
+            this.groupBox1.Size = new System.Drawing.Size(518, 182);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contacts:";
+            // 
+            // lblRecords
+            // 
+            this.lblRecords.AutoSize = true;
+            this.lblRecords.Location = new System.Drawing.Point(26, 147);
+            this.lblRecords.Name = "lblRecords";
+            this.lblRecords.Size = new System.Drawing.Size(0, 25);
+            this.lblRecords.TabIndex = 1;
             // 
             // dgvContact
             // 
@@ -59,16 +67,8 @@
             this.dgvContact.ReadOnly = true;
             this.dgvContact.RowHeadersWidth = 51;
             this.dgvContact.RowTemplate.Height = 24;
-            this.dgvContact.Size = new System.Drawing.Size(473, 175);
+            this.dgvContact.Size = new System.Drawing.Size(473, 111);
             this.dgvContact.TabIndex = 0;
-            // 
-            // lblRecords
-            // 
-            this.lblRecords.AutoSize = true;
-            this.lblRecords.Location = new System.Drawing.Point(26, 212);
-            this.lblRecords.Name = "lblRecords";
-            this.lblRecords.Size = new System.Drawing.Size(0, 25);
-            this.lblRecords.TabIndex = 1;
             // 
             // ViewPersonContacts
             // 
@@ -76,7 +76,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ViewPersonContacts";
-            this.Size = new System.Drawing.Size(518, 238);
+            this.Size = new System.Drawing.Size(518, 182);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContact)).EndInit();

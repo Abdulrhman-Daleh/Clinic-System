@@ -13,6 +13,20 @@ namespace ClinicSystem.Staff
         {
             InitializeComponent();
             SetControls();
+            SetFormTextBasedMode("Add new staff", "Add Staff", "Add Staff");
+        }
+
+        public AddUpdateStaff(int staffId)
+        {
+            InitializeComponent();
+            staff = Business.Staff.FindStaffById(staffId);
+
+            if (ValidationHelper.IsEmptyOrNull(staff, "Staff is not found"))
+                return;
+
+            SetControls(staff.StaffId, staff.StaffNumber, staff.Firstname, staff.Lastname, staff.Username, "Not Allowed To Show", staff.PersonId);
+            SetFormTextBasedMode("Update staff", "Update Staff", "Update");
+            txtPassword.Enabled = false;
         }
 
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
@@ -22,7 +36,7 @@ namespace ClinicSystem.Staff
             btnSave.Text = saveButtonText;
         }
 
-        private void SetControls(string firstName = "", string lastName = "",
+        private void SetControls(int staffId = -1, string staffNumber = null, string firstName = "", string lastName = "",
             string userName = "", string password = "", int personId = -1)
         {
             txtFirstName.Focus();
@@ -30,9 +44,8 @@ namespace ClinicSystem.Staff
             txtLastName.Text = lastName;
             txtUsername.Text = userName;
             txtPassword.Text = password;
-            SetStaffId(-1);
-            SetStaffNumber(null);
-            SetFormTextBasedMode("Add new staff", "Add Staff", "Add Staff");
+            SetStaffId(staffId);
+            SetStaffNumber(staffNumber);
         }
 
         private async void LoadSchedules()
@@ -79,12 +92,14 @@ namespace ClinicSystem.Staff
         private void CollectData()
         {
             staff.Username = txtUsername.Text;
-            staff.HashedPassword = txtPassword.Text;
             staff.ScheduleId = (int)cbSchedules.SelectedIndex + 1;
             staff.Role = (EnRole)cbRoles.SelectedIndex + 1;
             staff.Firstname = txtFirstName.Text;
             staff.Lastname = txtLastName.Text;
             staff.Gender = (EnGender)cbGender.SelectedIndex + 1;
+
+            if (txtPassword.Enabled)
+                staff.HashedPassword = PasswordHasher.HashPassword(txtPassword.Text);
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)
@@ -122,7 +137,7 @@ namespace ClinicSystem.Staff
             if (!ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors))
                 return;
 
-            if (Business.Staff.DoesExistsByUsername(txtUsername.Text))
+            if (Business.Staff.DoesExistsByUsername(txtUsername.Text) && staff.IsAddMode())
             {
                 errors.SetError(txtUsername, "User name is already taken");
                 return;
