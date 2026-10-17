@@ -46,20 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormsDefaultSettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormsDefaultSettings.Designer.cs">
-      <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
-    <Compile Include="MainForm.cs">
+    <Compile Include="Main\FormsDefaultSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Main\FormsDefaultSettings.Designer.cs">
+      <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Main\Program.cs" />
+    <Compile Include="Main\UserCtrlDefaultSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Main\UserCtrlDefaultSettings.Designer.cs">
+      <DependentUpon>UserCtrlDefaultSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="People\AddPersonContacts.cs">
       <SubType>Form</SubType>
@@ -103,7 +110,6 @@
     <Compile Include="People\Controls\ViewPersonInfoCtrl.Designer.cs">
       <DependentUpon>ViewPersonInfoCtrl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Staff\AddUpdateStaff.cs">
       <SubType>Form</SubType>
@@ -111,16 +117,28 @@
     <Compile Include="Staff\AddUpdateStaff.Designer.cs">
       <DependentUpon>AddUpdateStaff.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserCtrlDefaultSettings.cs">
+    <Compile Include="Staff\Controls\FindStaffCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserCtrlDefaultSettings.Designer.cs">
-      <DependentUpon>UserCtrlDefaultSettings.cs</DependentUpon>
+    <Compile Include="Staff\Controls\FindStaffCtrl.Designer.cs">
+      <DependentUpon>FindStaffCtrl.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="FormsDefaultSettings.resx">
+    <Compile Include="Staff\Controls\ViewStaffInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Staff\Controls\ViewStaffInfoCtrl.Designer.cs">
+      <DependentUpon>ViewStaffInfoCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Staff\ViewStaffInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Staff\ViewStaffInfo.Designer.cs">
+      <DependentUpon>ViewStaffInfo.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Main\FormsDefaultSettings.resx">
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddPersonContacts.resx">
@@ -157,7 +175,17 @@
     <EmbeddedResource Include="Staff\AddUpdateStaff.resx">
       <DependentUpon>AddUpdateStaff.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="AppExample.config" />
+    <EmbeddedResource Include="Staff\Controls\FindStaffCtrl.resx">
+      <DependentUpon>FindStaffCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Staff\Controls\ViewStaffInfoCtrl.resx">
+      <DependentUpon>ViewStaffInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Staff\ViewStaffInfo.resx">
+      <DependentUpon>ViewStaffInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Main\App.config" />
+    <None Include="Main\AppExample.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -167,9 +195,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="AppEnums.cs\AppEnums.cs.csproj">
@@ -245,7 +270,7 @@
     <None Include="Resources\add_contact_32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Staff\Controls\" />
+    <None Include="Resources\update_staff_32.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\manage_people_64.png" />
@@ -258,6 +283,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\manage_staff_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deactivite_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

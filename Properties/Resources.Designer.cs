@@ -133,6 +133,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap deactivite_32 {
+            get {
+                object obj = ResourceManager.GetObject("deactivite_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap email_32 {
             get {
                 object obj = ResourceManager.GetObject("email_32", resourceCulture);
@@ -276,6 +286,16 @@ namespace ClinicSystem.Properties {
         internal static System.Drawing.Bitmap update_32 {
             get {
                 object obj = ResourceManager.GetObject("update_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap update_staff_32 {
+            get {
+                object obj = ResourceManager.GetObject("update_staff_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
