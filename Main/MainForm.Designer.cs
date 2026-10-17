@@ -30,13 +30,14 @@
         {
             this.MSOperations = new System.Windows.Forms.MenuStrip();
             this.managePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewAllPeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPersonContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.viewAllPeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -67,6 +68,15 @@
             this.managePeopleToolStripMenuItem.Name = "managePeopleToolStripMenuItem";
             this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(256, 68);
             this.managePeopleToolStripMenuItem.Text = "Manage People";
+            // 
+            // viewAllPeopleToolStripMenuItem
+            // 
+            this.viewAllPeopleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.People_32;
+            this.viewAllPeopleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewAllPeopleToolStripMenuItem.Name = "viewAllPeopleToolStripMenuItem";
+            this.viewAllPeopleToolStripMenuItem.Size = new System.Drawing.Size(325, 38);
+            this.viewAllPeopleToolStripMenuItem.Text = "View All People";
+            this.viewAllPeopleToolStripMenuItem.Click += new System.EventHandler(this.viewAllPeopleToolStripMenuItem_Click);
             // 
             // addNewPersonToolStripMenuItem
             // 
@@ -99,7 +109,8 @@
             // manageStaffToolStripMenuItem
             // 
             this.manageStaffToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewStaffToolStripMenuItem});
+            this.addNewStaffToolStripMenuItem,
+            this.updateStaffToolStripMenuItem});
             this.manageStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_staff_64;
             this.manageStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.manageStaffToolStripMenuItem.Name = "manageStaffToolStripMenuItem";
@@ -126,14 +137,13 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // viewAllPeopleToolStripMenuItem
+            // updateStaffToolStripMenuItem
             // 
-            this.viewAllPeopleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.People_32;
-            this.viewAllPeopleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewAllPeopleToolStripMenuItem.Name = "viewAllPeopleToolStripMenuItem";
-            this.viewAllPeopleToolStripMenuItem.Size = new System.Drawing.Size(325, 38);
-            this.viewAllPeopleToolStripMenuItem.Text = "View All People";
-            this.viewAllPeopleToolStripMenuItem.Click += new System.EventHandler(this.viewAllPeopleToolStripMenuItem_Click);
+            this.updateStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_staff_32;
+            this.updateStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.updateStaffToolStripMenuItem.Name = "updateStaffToolStripMenuItem";
+            this.updateStaffToolStripMenuItem.Size = new System.Drawing.Size(249, 38);
+            this.updateStaffToolStripMenuItem.Text = "Update Staff";
             // 
             // MainForm
             // 
@@ -164,5 +174,6 @@
         private System.Windows.Forms.ToolStripMenuItem manageStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addNewStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAllPeopleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updateStaffToolStripMenuItem;
     }
 }
