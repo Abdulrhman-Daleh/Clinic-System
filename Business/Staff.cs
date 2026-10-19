@@ -147,5 +147,12 @@ namespace Business
         {
             return FromDto(StaffData.FindStaffByPersonId(personId));
         }
+
+        public static Staff FindStaffByUsername(string userName)
+        {
+            return FromDto(StaffData.FindStaffByUsername(userName));
+        }
+
+        public bool DeactivateStaff() => StaffData.DeactivateStaff(this.StaffId);
     }
 }

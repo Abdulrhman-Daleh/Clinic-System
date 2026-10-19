@@ -195,7 +195,7 @@ namespace Data_Access
             {
                 List<SqlParameter> parameters = new List<SqlParameter>()
                 {
-                    new SqlParameter("@staffId", SqlDbType.VarChar, 50) {Value = staffId}
+                    new SqlParameter("@staffId", SqlDbType.Int ) {Value = staffId}
                 };
 
                 staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
@@ -231,7 +231,7 @@ namespace Data_Access
             {
                 List<SqlParameter> parameters = new List<SqlParameter>()
                 {
-                    new SqlParameter("@personId", SqlDbType.VarChar, 50) {Value = personId}
+                    new SqlParameter("@personId", SqlDbType.Int) {Value = personId}
                 };
 
                 staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
@@ -242,6 +242,65 @@ namespace Data_Access
             }
 
             return staffDto;
+        }
+
+        public static StaffDto FindStaffByUsername(string userName)
+        {
+            StaffDto staffDto = new StaffDto();
+
+            string query = @"select 
+            	StaffID,
+            	ScheduleID, 
+            	RoleID,
+            	s.PersonID, 
+            	Username, 
+            	HashedPassword, 
+            	StaffNumber,
+            	HireDate, 
+            	IsActive,
+                Firstname,
+                Lastname,
+                Gender
+            from Staff as s inner join People as p on s.PersonID = p.PersonID
+            	where s.Username = @userName";
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@userName", SqlDbType.VarChar, 50) {Value = userName}
+                };
+
+                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return staffDto;
+        }
+
+        public static bool DeactivateStaff(int staffId)
+        {
+            int affectedRows = -1;
+
+            string query = @"update Staff set IsActive = 0
+                    where StaffID = @staffId";
+            try
+            {
+                List<SqlParameter> inputParams = new List<SqlParameter>()
+                {
+                    new SqlParameter(@"StaffId", SqlDbType.Int) {Value = staffId}
+                };
+
+                affectedRows = DataAccessHelper.ExecuteNonQuery(query, inputParams);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return affectedRows > 0;
         }
     }
 }
