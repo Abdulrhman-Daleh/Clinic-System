@@ -22,7 +22,7 @@ namespace Data_Access
                 HashedPassword = (string)reader["HashedPassword"],
                 StaffNumber = (string)reader["StaffNumber"],
                 HireDate = (DateTime)reader["HireDate"],
-                IsActive = (reader["IsActive"] == DBNull.Value) ? (bool?)null : (bool)reader["IsActive"],
+                IsActive = (bool)reader["IsActive"],
                 Firstname = (string)reader["Firstname"],
                 Lastname = (string)reader["Lastname"],
                 Gender = Convert.ToChar(reader["Gender"])
@@ -185,7 +185,7 @@ namespace Data_Access
             	HashedPassword, 
             	StaffNumber,
             	HireDate, 
-            	UnlockAt,
+            	IsActive,
                 Firstname,
                 Lastname,
                 Gender
@@ -196,6 +196,42 @@ namespace Data_Access
                 List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@staffId", SqlDbType.VarChar, 50) {Value = staffId}
+                };
+
+                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return staffDto;
+        }
+
+        public static StaffDto FindStaffByPersonId(int personId)
+        {
+            StaffDto staffDto = new StaffDto();
+
+            string query = @"select 
+            	StaffID,
+            	ScheduleID, 
+            	RoleID,
+            	s.PersonID, 
+            	Username, 
+            	HashedPassword, 
+            	StaffNumber,
+            	HireDate, 
+            	IsActive,
+                Firstname,
+                Lastname,
+                Gender
+            from Staff as s inner join People as p on s.PersonID = p.PersonID
+            	where s.PersonID = @personId";
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@personId", SqlDbType.VarChar, 50) {Value = personId}
                 };
 
                 staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);

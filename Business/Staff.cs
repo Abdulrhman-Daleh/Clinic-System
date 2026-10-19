@@ -18,7 +18,7 @@ namespace Business
         public string HashedPassword { get; set; }
         public string StaffNumber { get; set; }
         public DateTime HireDate { get; set; }
-        public bool? IsActive { get; set; }
+        public bool IsActive { get; set; }
 
         private static StaffDto ToDto(Staff staff)
         {
@@ -41,6 +41,9 @@ namespace Business
 
         private static Staff FromDto(StaffDto staffDto)
         {
+            if (staffDto is null)
+                return null;
+
             return new Staff(staffDto.StaffId)
             {
                 ScheduleId = staffDto.ScheduleId,
@@ -66,7 +69,7 @@ namespace Business
             Username = string.Empty;
             HashedPassword = string.Empty;
             StaffNumber = string.Empty;
-            IsActive = null;
+            IsActive = false;
             HireDate = DateTime.MinValue;
             Firstname = string.Empty;
             Lastname = string.Empty;
@@ -140,5 +143,9 @@ namespace Business
             return FromDto(StaffData.FindStaffById(staffId));
         }
 
+        public static Staff FindStaffByPersonId(int personId)
+        {
+            return FromDto(StaffData.FindStaffByPersonId(personId));
+        }
     }
 }
