@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gbFindBy = new System.Windows.Forms.GroupBox();
             this.AddStaff = new System.Windows.Forms.Button();
             this.BtnFindStaff = new System.Windows.Forms.Button();
@@ -35,7 +36,9 @@
             this.cbFindBy = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.viewStaffInfoCtrl = new ClinicSystem.Staff.Controls.ViewStaffInfoCtrl();
+            this.errors = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbFindBy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.SuspendLayout();
             // 
             // gbFindBy
@@ -61,6 +64,7 @@
             this.AddStaff.Size = new System.Drawing.Size(60, 49);
             this.AddStaff.TabIndex = 4;
             this.AddStaff.UseVisualStyleBackColor = true;
+            this.AddStaff.Click += new System.EventHandler(this.AddStaff_Click);
             // 
             // BtnFindStaff
             // 
@@ -70,14 +74,17 @@
             this.BtnFindStaff.Size = new System.Drawing.Size(60, 49);
             this.BtnFindStaff.TabIndex = 3;
             this.BtnFindStaff.UseVisualStyleBackColor = true;
+            this.BtnFindStaff.Click += new System.EventHandler(this.BtnFindStaff_Click);
             // 
             // txtFindBy
             // 
             this.txtFindBy.Location = new System.Drawing.Point(307, 40);
+            this.txtFindBy.MaxLength = 5;
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(138, 30);
             this.txtFindBy.TabIndex = 2;
             this.txtFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFindBy_KeyPress);
+            this.txtFindBy.Validating += new System.ComponentModel.CancelEventHandler(this.txtFindBy_Validating);
             // 
             // cbFindBy
             // 
@@ -86,6 +93,7 @@
             this.cbFindBy.Name = "cbFindBy";
             this.cbFindBy.Size = new System.Drawing.Size(151, 33);
             this.cbFindBy.TabIndex = 1;
+            this.cbFindBy.SelectedIndexChanged += new System.EventHandler(this.cbFindBy_SelectedIndexChanged);
             this.cbFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFindBy_KeyPress);
             // 
             // label1
@@ -102,10 +110,15 @@
             // 
             this.viewStaffInfoCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.viewStaffInfoCtrl.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.viewStaffInfoCtrl.LoadedStaff = null;
             this.viewStaffInfoCtrl.Location = new System.Drawing.Point(0, 100);
             this.viewStaffInfoCtrl.Name = "viewStaffInfoCtrl";
             this.viewStaffInfoCtrl.Size = new System.Drawing.Size(596, 272);
             this.viewStaffInfoCtrl.TabIndex = 1;
+            // 
+            // errors
+            // 
+            this.errors.ContainerControl = this;
             // 
             // FindStaffCtrl
             // 
@@ -117,6 +130,7 @@
             this.Size = new System.Drawing.Size(596, 372);
             this.gbFindBy.ResumeLayout(false);
             this.gbFindBy.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -130,5 +144,6 @@
         private System.Windows.Forms.TextBox txtFindBy;
         private System.Windows.Forms.Button AddStaff;
         private ViewStaffInfoCtrl viewStaffInfoCtrl;
+        private System.Windows.Forms.ErrorProvider errors;
     }
 }

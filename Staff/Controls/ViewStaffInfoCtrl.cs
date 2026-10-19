@@ -6,19 +6,32 @@ namespace ClinicSystem.Staff.Controls
 {
     public partial class ViewStaffInfoCtrl : UserCtrlDefaultSettings
     {
+        public Business.Staff LoadedStaff { get; set; }
         public ViewStaffInfoCtrl()
         {
             InitializeComponent();
+            LoadStaffInfo(null);
         }
 
         public void LoadStaffInfo(Business.Staff staffInfo)
         {
+            LoadedStaff = staffInfo;
+
             if (ValidationHelper.IsEmptyOrNull(staffInfo))
             {
                 CommonOperations.SetUpDefaultControlsValue(new List<Control>() {lblUsername, lblStaffNumber, lblSchedule, lblRole,
-                lblHired, lblIsActive}, "[Not Set]");
+                lblHired, lblIsActive}, "Not Set");
                 return;
             }
+
+            lblHired.Text = staffInfo.HireDate.ToShortDateString();
+            lblIsActive.Text = staffInfo.IsActive ? "Active" : "InActive";
+            lblRole.Text = staffInfo.Role.ToString();
+            lblSchedule.Text = staffInfo.ScheduleId.ToString();
+            lblStaffNumber.Text = staffInfo.StaffNumber;
+            lblUsername.Text = $"{staffInfo.Username}.{staffInfo.Role.ToString()}";
         }
+
+
     }
 }
