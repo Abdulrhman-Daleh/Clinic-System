@@ -43,5 +43,11 @@ namespace ClinicSystem
             ManagePeople managePeople = new ManagePeople();
             managePeople.ShowDialog();
         }
+
+        private void updateStaffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewStaffInfo viewStaff = new ViewStaffInfo();
+            viewStaff.ShowDialog();
+        }
     }
 }

@@ -36,8 +36,8 @@
             this.addPersonContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.manageStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.updateStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -126,6 +126,15 @@
             this.addNewStaffToolStripMenuItem.Text = "Add New Staff";
             this.addNewStaffToolStripMenuItem.Click += new System.EventHandler(this.addNewStaffToolStripMenuItem_Click);
             // 
+            // updateStaffToolStripMenuItem
+            // 
+            this.updateStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_staff_32;
+            this.updateStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.updateStaffToolStripMenuItem.Name = "updateStaffToolStripMenuItem";
+            this.updateStaffToolStripMenuItem.Size = new System.Drawing.Size(249, 38);
+            this.updateStaffToolStripMenuItem.Text = "View Staff";
+            this.updateStaffToolStripMenuItem.Click += new System.EventHandler(this.updateStaffToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -136,14 +145,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // updateStaffToolStripMenuItem
-            // 
-            this.updateStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_staff_32;
-            this.updateStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.updateStaffToolStripMenuItem.Name = "updateStaffToolStripMenuItem";
-            this.updateStaffToolStripMenuItem.Size = new System.Drawing.Size(249, 38);
-            this.updateStaffToolStripMenuItem.Text = "Update Staff";
             // 
             // MainForm
             // 
