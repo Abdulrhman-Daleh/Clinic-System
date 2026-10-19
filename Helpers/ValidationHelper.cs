@@ -106,14 +106,37 @@ namespace ClinicSystem.Helpers
             else
                 txtFilterBy.MaxLength = textAllowedLength;
         }
-
-
         public static bool IsDgvEmptyOrNull(DataGridView dgv)
         {
             if (IsEmptyOrNull(dgv))
                 return true;
 
             return dgv.RowCount <= 0;
+        }
+        public static bool CheckAcceptablePasswordStrength(string password)
+        {
+            bool goodLength = false;
+            bool hasNum = false;
+            bool hasPunc = false;
+
+            goodLength = password.Length >= 10;
+
+            if (!goodLength)
+                return false;
+
+            foreach (char c in password)
+            {
+                if (char.IsDigit(c))
+                    hasNum = true;
+
+                if (char.IsPunctuation(c))
+                    hasPunc = true;
+
+                if (goodLength && hasNum && hasPunc)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -128,5 +129,34 @@ namespace ClinicSystem.Helpers
         {
             Util.RefreshRecordsList(list, obj, targetIndex);
         }
+
+        public static void SaveUsernameToFile(string fileName, string userName)
+        {
+            if (File.Exists(fileName))
+            {
+                using (StreamWriter sw = new StreamWriter(fileName, false))
+                    sw.WriteLine(userName);
+            }
+            else
+            {
+                using (var stream = File.Create(fileName))
+                {
+                    using (StreamWriter sw = new StreamWriter(stream))
+                        sw.WriteLine(userName);
+                }
+            }
+        }
+
+        public static string ReadRememberedUsername(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                using (StreamReader reader = new StreamReader(fileName))
+                    return reader.ReadLine();
+            }
+
+            return "";
+        }
+
     }
 }
