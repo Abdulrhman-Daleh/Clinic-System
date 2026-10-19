@@ -1,9 +1,12 @@
 ﻿using ClinicSystem.Helpers;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Staff
 {
     public partial class ViewStaffInfo : FormsDefaultSettings
     {
+
+        public Business.Staff ViewedStaff;
         public ViewStaffInfo()
         {
             InitializeComponent();
@@ -16,6 +19,7 @@ namespace ClinicSystem.Staff
 
         private void ReciveStaffInfo(Business.Staff staffInfo)
         {
+            ViewedStaff = staffInfo;
             if (ValidationHelper.IsEmptyOrNull(staffInfo))
             {
                 BtnDeactivate.Enabled = false;
@@ -29,6 +33,18 @@ namespace ClinicSystem.Staff
             viewPersonContacts1.LoadUpPersonContact(staffInfo.PersonId);
             btnEdit.Enabled = true;
             BtnDeactivate.Enabled = staffInfo.IsActive;
+        }
+
+        private void BtnDeactivate_Click(object sender, System.EventArgs e)
+        {
+            if (ViewedStaff.DeactivateStaff())
+            {
+                MessageBox.Show("Staff got deactivated", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                BtnDeactivate.Enabled = false;
+                return;
+            }
+
+            MessageBox.Show("Staff failed to get deactivate", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

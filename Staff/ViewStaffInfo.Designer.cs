@@ -52,6 +52,7 @@
             // 
             // findStaffCtrl1
             // 
+            this.findStaffCtrl1.AllowFind = true;
             this.findStaffCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findStaffCtrl1.Location = new System.Drawing.Point(12, 66);
             this.findStaffCtrl1.Name = "findStaffCtrl1";
@@ -85,6 +86,7 @@
             this.BtnDeactivate.TabIndex = 19;
             this.BtnDeactivate.Text = "Deactivate";
             this.BtnDeactivate.UseVisualStyleBackColor = true;
+            this.BtnDeactivate.Click += new System.EventHandler(this.BtnDeactivate_Click);
             // 
             // btnEdit
             // 
