@@ -49,6 +49,12 @@
     <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Login\SystemLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\SystemLogin.Designer.cs">
+      <DependentUpon>SystemLogin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main\FormsDefaultSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +141,9 @@
     <Compile Include="Staff\ViewStaffInfo.Designer.cs">
       <DependentUpon>ViewStaffInfo.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Login\SystemLogin.resx">
+      <DependentUpon>SystemLogin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main\FormsDefaultSettings.resx">
       <DependentUpon>FormsDefaultSettings.cs</DependentUpon>
     </EmbeddedResource>
@@ -286,6 +295,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\deactivite_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Scène clinique moderne et apaisante.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\password_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\show_password_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remember_me.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forgot-password_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
