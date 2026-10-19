@@ -95,6 +95,7 @@
             this.cbSchedules.Name = "cbSchedules";
             this.cbSchedules.Size = new System.Drawing.Size(205, 33);
             this.cbSchedules.TabIndex = 35;
+            this.cbSchedules.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LockComboFromEditing);
             // 
             // cbRoles
             // 
@@ -103,6 +104,7 @@
             this.cbRoles.Name = "cbRoles";
             this.cbRoles.Size = new System.Drawing.Size(205, 33);
             this.cbRoles.TabIndex = 34;
+            this.cbRoles.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LockComboFromEditing);
             // 
             // label6
             // 
@@ -333,6 +335,7 @@
             this.cbGender.Name = "cbGender";
             this.cbGender.Size = new System.Drawing.Size(121, 33);
             this.cbGender.TabIndex = 32;
+            this.cbGender.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LockComboFromEditing);
             // 
             // pictureBox5
             // 

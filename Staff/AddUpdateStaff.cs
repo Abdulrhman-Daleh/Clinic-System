@@ -16,6 +16,9 @@ namespace ClinicSystem.Staff
             SetFormTextBasedMode("Add new staff", "Add Staff", "Add Staff");
         }
 
+        public delegate void SendStaffInfo(int staffId);
+        public event SendStaffInfo SendStaffId;
+
         public AddUpdateStaff(int staffId)
         {
             InitializeComponent();
@@ -122,6 +125,7 @@ namespace ClinicSystem.Staff
                     SetStaffId(staff.StaffId);
                     SetStaffNumber(staff.StaffNumber);
                     SetFormTextBasedMode("update staff", "Update staff", "Update");
+                    SendStaffId?.Invoke(staff.StaffId);
                 }
                 else
                     MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -144,6 +148,11 @@ namespace ClinicSystem.Staff
             }
 
             errors.SetError(txtUsername, null);
+        }
+
+        private void LockComboFromEditing(object sender, KeyPressEventArgs e)
+        {
+            ValidationHelper.LockComboBox(e);
         }
     }
 }
