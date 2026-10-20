@@ -19,6 +19,7 @@ namespace Business
         public string StaffNumber { get; set; }
         public DateTime HireDate { get; set; }
         public bool IsActive { get; set; }
+        public Schedule Schedule { get; set; }
 
         private static StaffDto ToDto(Staff staff)
         {
@@ -81,11 +82,6 @@ namespace Business
         {
             StaffId = staffId;
             Mode = EnMode.Update;
-        }
-
-        public static async Task<BindingList<string>> GetSchedulesNames()
-        {
-            return await StaffData.GetSchedulesNames();
         }
 
         public static async Task<BindingList<string>> GetRolesNames()
