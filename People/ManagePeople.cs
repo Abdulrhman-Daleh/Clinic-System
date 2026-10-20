@@ -51,7 +51,6 @@ namespace ClinicSystem.People
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
-
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {

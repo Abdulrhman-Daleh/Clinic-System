@@ -9,8 +9,8 @@ namespace ClinicSystem.Staff.Controls
         public Business.Staff staff = new Business.Staff();
         public bool AllowFind
         {
-            get => cbFindBy.Enabled;
-            set => cbFindBy.Enabled = value;
+            get => gbFindBy.Enabled;
+            set => gbFindBy.Enabled = value;
         }
         public FindStaffCtrl()
         {
@@ -65,6 +65,13 @@ namespace ClinicSystem.Staff.Controls
                 OnFound?.Invoke(viewStaffInfoCtrl.LoadedStaff);
 
             staff = viewStaffInfoCtrl.LoadedStaff;
+        }
+
+        public void LoadData(Business.Staff st)
+        {
+            staff = st;
+            viewStaffInfoCtrl.LoadStaffInfo(staff);
+            txtFindBy.Text = staff.StaffId.ToString();
         }
         private void txtFindBy_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {

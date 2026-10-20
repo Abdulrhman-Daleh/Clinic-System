@@ -56,5 +56,17 @@ namespace ClinicSystem
             AddUpdateSchedule addSchedule = new AddUpdateSchedule();
             addSchedule.ShowDialog();
         }
+
+        private void manageStaffToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ManageStaff manageStaff = new ManageStaff();
+            manageStaff.ShowDialog();
+        }
+
+        private void manageSchedulesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageSchedules manageSchedules = new ManageSchedules();
+            manageSchedules.ShowDialog();
+        }
     }
 }

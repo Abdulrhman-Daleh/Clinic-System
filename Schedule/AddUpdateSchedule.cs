@@ -14,6 +14,26 @@ namespace ClinicSystem.Schedule
             SetFormTextBasedMode("Add New Schedule", "Add New Schedule", "Save Schedule");
         }
 
+        public AddUpdateSchedule(int scheduleId)
+        {
+            InitializeComponent();
+            SetFormTextBasedMode("Update Schedule", "Update Schedule", "Update");
+            schedule = Business.Schedule.FindScheduleByID(scheduleId);
+
+            if (ValidationHelper.IsEmptyOrNull(schedule))
+            {
+                lblScheduleId.Text = "[Not Set]";
+                return;
+            }
+
+            txtShiftName.Text = schedule.ShiftName;
+            dtpStart.Value = DateTime.Today.Add(new TimeSpan(schedule.WorkStartFrom.Hours, schedule.WorkStartFrom.Minutes, schedule.WorkStartFrom.Seconds));
+
+            dtpEnd.Value = DateTime.Today.Add(new TimeSpan(schedule.WorkEndAt.Hours, schedule.WorkEndAt.Minutes, schedule.WorkEndAt.Seconds));
+
+            lblDuration.Text = (schedule.WorkEndAt - schedule.WorkStartFrom).ToString();
+        }
+
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;

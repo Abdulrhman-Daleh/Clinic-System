@@ -15,6 +15,16 @@ namespace ClinicSystem.Staff
             BtnDeactivate.Enabled = false;
         }
 
+
+        public ViewStaffInfo(int staffId)
+        {
+            InitializeComponent();
+            findStaffCtrl1.AllowFind = false;
+            ReciveStaffInfo(Business.Staff.FindStaffById(staffId));
+            findStaffCtrl1.LoadData(ViewedStaff);
+        }
+
+
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
 
         private void ReciveStaffInfo(Business.Staff staffInfo)

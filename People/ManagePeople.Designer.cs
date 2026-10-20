@@ -120,7 +120,7 @@
             this.addPersonContactToolStripMenuItem});
             this.cmsPeople.Name = "cmsPeople";
             this.cmsPeople.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeople.Size = new System.Drawing.Size(287, 184);
+            this.cmsPeople.Size = new System.Drawing.Size(287, 156);
             this.cmsPeople.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPeople_Opening);
             // 
             // addNewPersonToolStripMenuItem
