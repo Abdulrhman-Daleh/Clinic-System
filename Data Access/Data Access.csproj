@@ -48,6 +48,7 @@
     <Compile Include="DTOs\PersonDto.cs" />
     <Compile Include="DTOs\ScheduleDto.cs" />
     <Compile Include="DTOs\StaffDto.cs" />
+    <Compile Include="ListingDTOs\StaffListingDto.cs" />
     <Compile Include="PersonContactData.cs" />
     <Compile Include="PersonData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,5 +61,6 @@
       <Name>AppEnums.cs</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

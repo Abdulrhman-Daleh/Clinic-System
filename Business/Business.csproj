@@ -44,6 +44,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="Staff.cs" />
+    <Compile Include="StaffList.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="PersonContact.cs" />
