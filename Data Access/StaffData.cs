@@ -29,11 +29,6 @@ namespace Data_Access
             };
         }
 
-        private static string MapStaffSchedule(SqlDataReader reader)
-        {
-            return (string)reader["ShiftName"];
-        }
-
         private static string MapStaffRole(SqlDataReader reader)
         {
             return (string)reader["RoleName"];
@@ -106,25 +101,6 @@ namespace Data_Access
             }
 
             return affectedRows > 0;
-        }
-
-        public static async Task<BindingList<string>> GetSchedulesNames()
-        {
-            BindingList<string> schedules = new BindingList<string>();
-
-            string query = @"select ShiftName from Schedules
-                order by ScheduleID asc";
-
-            try
-            {
-                schedules = await DataAccessHelper.ExecuteObjectList(query, null, MapStaffSchedule);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-
-            return schedules;
         }
 
         public static async Task<BindingList<string>> GetRolesNames()
