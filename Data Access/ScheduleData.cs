@@ -108,7 +108,7 @@ namespace Data_Access
         {
             BindingList<ScheduleDto> schedules = new BindingList<ScheduleDto>();
 
-            string query = @"select PersonID, Firstname, Lastname, Gender from People";
+            string query = @"select ScheduleID, WorkStartFrom, WorkEndAt, ShiftName from Schedules";
 
             try
             {
@@ -120,6 +120,30 @@ namespace Data_Access
             }
 
             return schedules;
+        }
+
+        public static ScheduleDto FindScheduleByID(int scheduleId)
+        {
+            ScheduleDto scheduleDto = new ScheduleDto();
+
+            string query = @"select ScheduleID, WorkStartFrom, WorkEndAt, ShiftName from Schedules
+                    where ScheduleID = @ScheduleId";
+
+            try
+            {
+                List<SqlParameter> paramters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = scheduleId}
+                };
+
+                scheduleDto = DataAccessHelper.ExecuteOneObject(query, paramters, ScheduleMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return scheduleDto;
         }
     }
 }

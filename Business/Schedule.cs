@@ -104,5 +104,10 @@ namespace Business
 
             return list;
         }
+
+        public static Schedule FindScheduleByID(int scheduleId)
+        {
+            return FromDto(ScheduleData.FindScheduleByID(scheduleId));
+        }
     }
 }

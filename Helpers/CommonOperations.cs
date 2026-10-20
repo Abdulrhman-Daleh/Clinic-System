@@ -16,6 +16,7 @@ namespace ClinicSystem.Helpers
             lblRecords.Text = $"{dgv.Rows.Count} records";
             dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgv.ScrollBars = ScrollBars.Both;
             return true;
         }
 
@@ -39,11 +40,15 @@ namespace ClinicSystem.Helpers
             return false;
         }
 
-        private static void SwitchingFilterHelper(DataGridView dgv, BindingList<Person> people, Label lblRecords, ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, string combBoxFilterName)
+        private static void SwitchingFilterHelper<T>(DataGridView dgv, BindingList<T> people, Label lblRecords, ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, string combBoxFilterName)
         {
             txtFilterBy.Text = string.Empty;
-            cbMisc.SelectedIndex = 0;
-            cbMisc.Visible = false;
+            if (cbMisc != null)
+            {
+                cbMisc.SelectedIndex = 0;
+                cbMisc.Visible = false;
+            }
+
             txtFilterBy.Visible = false;
             string filterName = GetFilterName(cbFilterBy);
 
@@ -56,8 +61,11 @@ namespace ClinicSystem.Helpers
 
             if (filterName == combBoxFilterName)
             {
-                cbMisc.Focus();
-                cbMisc.Visible = true;
+                if (cbMisc != null)
+                {
+                    cbMisc.Focus();
+                    cbMisc.Visible = true;
+                }
                 return;
             }
 
@@ -65,7 +73,7 @@ namespace ClinicSystem.Helpers
             txtFilterBy.Focus();
         }
 
-        public static void HandleSwitchingFilter(ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, DataGridView dgv, BindingList<Person> people, Label lblRecords, string combBoxFilterName)
+        public static void HandleSwitchingFilter<T>(ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, DataGridView dgv, BindingList<T> people, Label lblRecords, string combBoxFilterName)
         {
             dgv.DataSource = people;
             lblRecords.Text = $"{dgv.Rows.Count} records";

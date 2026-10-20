@@ -1,4 +1,5 @@
 ﻿using Data_Access.DTOs;
+using Data_Access.ListingDTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace Data_Access
 {
     public class StaffData
     {
-        private static StaffDto staffMapper(SqlDataReader reader)
+        private static StaffDto StaffMapper(SqlDataReader reader)
         {
             return new StaffDto()
             {
@@ -29,6 +30,21 @@ namespace Data_Access
             };
         }
 
+        private static StaffListingDto StaffListingMapper(SqlDataReader reader)
+        {
+            return new StaffListingDto()
+            {
+                StaffId = (int)reader["StaffID"],
+                HireDate = (DateTime)reader["HireDate"],
+                StaffNumber = (string)reader["StaffNumber"],
+                Status = (string)reader["Status"],
+                Username = (string)reader["Username"],
+                RoleName = (string)reader["RoleName"],
+                FullName = (string)reader["FullName"],
+                Gender = (string)reader["Gender"],
+                ShiftName = (string)reader["ShiftName"],
+            };
+        }
         private static string MapStaffRole(SqlDataReader reader)
         {
             return (string)reader["RoleName"];
@@ -174,7 +190,7 @@ namespace Data_Access
                     new SqlParameter("@staffId", SqlDbType.Int ) {Value = staffId}
                 };
 
-                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
+                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
             }
             catch (Exception ex)
             {
@@ -210,7 +226,7 @@ namespace Data_Access
                     new SqlParameter("@personId", SqlDbType.Int) {Value = personId}
                 };
 
-                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
+                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
             }
             catch (Exception ex)
             {
@@ -246,7 +262,7 @@ namespace Data_Access
                     new SqlParameter("@userName", SqlDbType.VarChar, 50) {Value = userName}
                 };
 
-                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, staffMapper);
+                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
             }
             catch (Exception ex)
             {
@@ -277,6 +293,24 @@ namespace Data_Access
             }
 
             return affectedRows > 0;
+        }
+
+        public static async Task<BindingList<StaffListingDto>> GetStaff()
+        {
+            BindingList<StaffListingDto> list = new BindingList<StaffListingDto>();
+
+            string query = @"select * from vw_StaffList";
+
+            try
+            {
+                list = await DataAccessHelper.ExecuteObjectList(query, null, StaffListingMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return list;
         }
     }
 }
