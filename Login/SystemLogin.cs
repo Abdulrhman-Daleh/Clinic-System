@@ -29,7 +29,7 @@ namespace ClinicSystem.Login
                 chkRememberMe.Checked = false;
             }
 
-            txtPassword.Text = string.Empty;
+            txtPassword.Text = "abdul";
             txtUsername.Focus();
             ChkShowPassword.Checked = false;
 

@@ -53,7 +53,7 @@ namespace ClinicSystem.Staff
 
         private async void LoadSchedules()
         {
-            cbSchedules.DataSource = await Business.Staff.GetSchedulesNames();
+            cbSchedules.DataSource = await Business.Schedule.GetSchedulesNames();
         }
 
         private async void LoadRoles()

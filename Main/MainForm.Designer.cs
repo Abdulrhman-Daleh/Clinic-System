@@ -37,7 +37,11 @@
             this.manageStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.schedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.manageSchedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageStaffToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +52,8 @@
             this.MSOperations.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MSOperations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePeopleToolStripMenuItem,
-            this.manageStaffToolStripMenuItem});
+            this.manageStaffToolStripMenuItem,
+            this.schedulesToolStripMenuItem});
             this.MSOperations.Location = new System.Drawing.Point(0, 0);
             this.MSOperations.Name = "MSOperations";
             this.MSOperations.Size = new System.Drawing.Size(1762, 72);
@@ -109,6 +114,7 @@
             // manageStaffToolStripMenuItem
             // 
             this.manageStaffToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manageStaffToolStripMenuItem1,
             this.addNewStaffToolStripMenuItem,
             this.updateStaffToolStripMenuItem});
             this.manageStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_staff_64;
@@ -135,6 +141,26 @@
             this.updateStaffToolStripMenuItem.Text = "View Staff";
             this.updateStaffToolStripMenuItem.Click += new System.EventHandler(this.updateStaffToolStripMenuItem_Click);
             // 
+            // schedulesToolStripMenuItem
+            // 
+            this.schedulesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manageSchedulesToolStripMenuItem,
+            this.addScheduleToolStripMenuItem});
+            this.schedulesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.schedule_64;
+            this.schedulesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.schedulesToolStripMenuItem.Name = "schedulesToolStripMenuItem";
+            this.schedulesToolStripMenuItem.Size = new System.Drawing.Size(184, 68);
+            this.schedulesToolStripMenuItem.Text = "Schedules";
+            // 
+            // addScheduleToolStripMenuItem
+            // 
+            this.addScheduleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_schedule_32;
+            this.addScheduleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addScheduleToolStripMenuItem.Name = "addScheduleToolStripMenuItem";
+            this.addScheduleToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
+            this.addScheduleToolStripMenuItem.Text = "Add Schedule";
+            this.addScheduleToolStripMenuItem.Click += new System.EventHandler(this.addScheduleToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -145,6 +171,22 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            // 
+            // manageSchedulesToolStripMenuItem
+            // 
+            this.manageSchedulesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.time_management_32;
+            this.manageSchedulesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageSchedulesToolStripMenuItem.Name = "manageSchedulesToolStripMenuItem";
+            this.manageSchedulesToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
+            this.manageSchedulesToolStripMenuItem.Text = "Manage Schedules";
+            // 
+            // manageStaffToolStripMenuItem1
+            // 
+            this.manageStaffToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.People_32;
+            this.manageStaffToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageStaffToolStripMenuItem1.Name = "manageStaffToolStripMenuItem1";
+            this.manageStaffToolStripMenuItem1.Size = new System.Drawing.Size(249, 38);
+            this.manageStaffToolStripMenuItem1.Text = "Manage Staff";
             // 
             // MainForm
             // 
@@ -176,5 +218,9 @@
         private System.Windows.Forms.ToolStripMenuItem addNewStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAllPeopleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateStaffToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem schedulesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addScheduleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageStaffToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem manageSchedulesToolStripMenuItem;
     }
 }

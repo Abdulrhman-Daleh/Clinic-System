@@ -1,5 +1,6 @@
 ﻿using ClinicSystem.People;
 using ClinicSystem.People.Controls;
+using ClinicSystem.Schedule;
 using ClinicSystem.Staff;
 using System;
 using System.Windows.Forms;
@@ -48,6 +49,12 @@ namespace ClinicSystem
         {
             ViewStaffInfo viewStaff = new ViewStaffInfo();
             viewStaff.ShowDialog();
+        }
+
+        private void addScheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddUpdateSchedule addSchedule = new AddUpdateSchedule();
+            addSchedule.ShowDialog();
         }
     }
 }

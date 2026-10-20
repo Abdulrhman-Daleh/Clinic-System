@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.BtnSignIn = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
@@ -39,7 +40,6 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtUsername = new System.Windows.Forms.TextBox();
             this.lnkForgetPassword = new System.Windows.Forms.LinkLabel();
-            this.BtnSignIn = new System.Windows.Forms.Button();
             this.ChkShowPassword = new System.Windows.Forms.CheckBox();
             this.chkRememberMe = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -58,6 +58,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.SuspendLayout();
+            // 
+            // BtnSignIn
+            // 
+            this.BtnSignIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.BtnSignIn.ForeColor = System.Drawing.Color.White;
+            this.BtnSignIn.Location = new System.Drawing.Point(93, 293);
+            this.BtnSignIn.Name = "BtnSignIn";
+            this.BtnSignIn.Size = new System.Drawing.Size(307, 65);
+            this.BtnSignIn.TabIndex = 5;
+            this.BtnSignIn.Text = "Sign In";
+            this.BtnSignIn.UseVisualStyleBackColor = false;
+            this.BtnSignIn.Click += new System.EventHandler(this.BtnSignIn_Click);
             // 
             // splitContainer1
             // 
@@ -175,18 +187,6 @@
             this.lnkForgetPassword.TabIndex = 6;
             this.lnkForgetPassword.TabStop = true;
             this.lnkForgetPassword.Text = "Forget Password?";
-            // 
-            // BtnSignIn
-            // 
-            this.BtnSignIn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.BtnSignIn.ForeColor = System.Drawing.Color.White;
-            this.BtnSignIn.Location = new System.Drawing.Point(93, 293);
-            this.BtnSignIn.Name = "BtnSignIn";
-            this.BtnSignIn.Size = new System.Drawing.Size(307, 65);
-            this.BtnSignIn.TabIndex = 5;
-            this.BtnSignIn.Text = "Sign In";
-            this.BtnSignIn.UseVisualStyleBackColor = false;
-            this.BtnSignIn.Click += new System.EventHandler(this.BtnSignIn_Click);
             // 
             // ChkShowPassword
             // 
