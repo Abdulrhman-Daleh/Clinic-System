@@ -198,7 +198,7 @@
             // 
             // managePatientsToolStripMenuItem
             // 
-            this.managePatientsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.mange_patient_32;
+            this.managePatientsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_patient_32;
             this.managePatientsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.managePatientsToolStripMenuItem.Name = "managePatientsToolStripMenuItem";
             this.managePatientsToolStripMenuItem.Size = new System.Drawing.Size(269, 38);
