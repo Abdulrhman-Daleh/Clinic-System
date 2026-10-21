@@ -10,7 +10,7 @@ namespace ClinicSystem.Patients
 {
     public partial class ManagePatient : FormsDefaultSettings
     {
-        private BindingList<Patient> Patients { get; set; }
+        private BindingList<PatientList> Patients { get; set; }
         public ManagePatient()
         {
             InitializeComponent();
@@ -70,12 +70,9 @@ namespace ClinicSystem.Patients
 
         private async void LoadPatientInfo()
         {
-            // People = await Person.GetPeople();
-            //
-            // if (CommonOperations.LoadDataToDGV(dgvPeople, People, lblRecords))
-            // {
-            //     dgvPeople.Columns["PersonID"].HeaderText = "#";
-            // }
+            Patients = await PatientList.GetPatientListingDatas();
+
+            CommonOperations.LoadDataToDGV(dgvPatients, Patients, lblRecords);
 
             RefreshFilter(0);
         }
@@ -87,5 +84,22 @@ namespace ClinicSystem.Patients
         }
 
         private void btnClose_Click(object sender, EventArgs e) => Close();
+
+        private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshFilter(cbFilterBy.SelectedIndex);
+        }
+        private void SetControlEnableStatus(bool status)
+        {
+            updatePatientToolStripMenuItem.Enabled = status;
+            viewPatientToolStripMenuItem.Enabled = status;
+            addNewPatientToolStripMenuItem.Enabled = status;
+        }
+
+
+        private void cmsPatient_Opening(object sender, CancelEventArgs e)
+        {
+            SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPatients));
+        }
     }
 }

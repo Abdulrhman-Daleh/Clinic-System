@@ -31,9 +31,9 @@
             this.components = new System.ComponentModel.Container();
             this.dgvPatients = new System.Windows.Forms.DataGridView();
             this.cmsPatient = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addNewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updatePersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updatePatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
@@ -69,36 +69,37 @@
             this.cmsPatient.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmsPatient.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsPatient.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewPersonToolStripMenuItem,
-            this.updatePersonToolStripMenuItem,
-            this.viewPersonToolStripMenuItem});
+            this.addNewPatientToolStripMenuItem,
+            this.updatePatientToolStripMenuItem,
+            this.viewPatientToolStripMenuItem});
             this.cmsPatient.Name = "cmsPeople";
             this.cmsPatient.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPatient.Size = new System.Drawing.Size(262, 118);
+            this.cmsPatient.Size = new System.Drawing.Size(262, 146);
+            this.cmsPatient.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPatient_Opening);
             // 
-            // addNewPersonToolStripMenuItem
+            // addNewPatientToolStripMenuItem
             // 
-            this.addNewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
-            this.addNewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addNewPersonToolStripMenuItem.Name = "addNewPersonToolStripMenuItem";
-            this.addNewPersonToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
-            this.addNewPersonToolStripMenuItem.Text = "Add New Patient";
+            this.addNewPatientToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
+            this.addNewPatientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addNewPatientToolStripMenuItem.Name = "addNewPatientToolStripMenuItem";
+            this.addNewPatientToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
+            this.addNewPatientToolStripMenuItem.Text = "Add New Patient";
             // 
-            // updatePersonToolStripMenuItem
+            // updatePatientToolStripMenuItem
             // 
-            this.updatePersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
-            this.updatePersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.updatePersonToolStripMenuItem.Name = "updatePersonToolStripMenuItem";
-            this.updatePersonToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
-            this.updatePersonToolStripMenuItem.Text = "Update Patient";
+            this.updatePatientToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
+            this.updatePatientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.updatePatientToolStripMenuItem.Name = "updatePatientToolStripMenuItem";
+            this.updatePatientToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
+            this.updatePatientToolStripMenuItem.Text = "Update Patient";
             // 
-            // viewPersonToolStripMenuItem
+            // viewPatientToolStripMenuItem
             // 
-            this.viewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_32;
-            this.viewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewPersonToolStripMenuItem.Name = "viewPersonToolStripMenuItem";
-            this.viewPersonToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
-            this.viewPersonToolStripMenuItem.Text = "View Patient";
+            this.viewPatientToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_32;
+            this.viewPatientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewPatientToolStripMenuItem.Name = "viewPatientToolStripMenuItem";
+            this.viewPatientToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
+            this.viewPatientToolStripMenuItem.Text = "View Patient";
             // 
             // txtFilter
             // 
@@ -127,6 +128,7 @@
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(132, 33);
             this.cbFilterBy.TabIndex = 20;
+            this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
             this.cbFilterBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
             // 
             // lblTitle
@@ -222,9 +224,9 @@
 
         private System.Windows.Forms.DataGridView dgvPatients;
         private System.Windows.Forms.ContextMenuStrip cmsPatient;
-        private System.Windows.Forms.ToolStripMenuItem addNewPersonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updatePersonToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewPersonToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewPatientToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem updatePatientToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewPatientToolStripMenuItem;
         private System.Windows.Forms.TextBox txtFilter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbFilterBy;
