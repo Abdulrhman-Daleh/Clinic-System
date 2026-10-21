@@ -74,6 +74,12 @@
     <Compile Include="Main\UserCtrlDefaultSettings.Designer.cs">
       <DependentUpon>UserCtrlDefaultSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Patients\ManagePatient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Patients\ManagePatient.Designer.cs">
+      <DependentUpon>ManagePatient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Patients\RegisterPatient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Patients\ManagePatient.resx">
+      <DependentUpon>ManagePatient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\RegisterPatient.resx">
       <DependentUpon>RegisterPatient.cs</DependentUpon>
