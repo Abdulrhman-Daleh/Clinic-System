@@ -24,6 +24,9 @@ namespace ClinicSystem.Patients
             btnRegister.Text = saveButtonText;
         }
 
+        public delegate void RegisterPatientData(int patientId);
+        public event RegisterPatientData OnRegisterSave;
+
         private void RecivePersonData(Person person)
         {
             if (ValidationHelper.IsEmptyOrNull(person, "person info does not exists"))
@@ -46,6 +49,8 @@ namespace ClinicSystem.Patients
 
             MessageBox.Show("Data saved succeesfullu", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             lblPatientId.Text = $"pat-{patient.PatientId}";
+            OnRegisterSave?.Invoke(patient.PatientId);
+            this.Close();
         }
     }
 }
