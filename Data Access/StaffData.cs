@@ -45,6 +45,7 @@ namespace Data_Access
                 ShiftName = (string)reader["ShiftName"],
             };
         }
+
         private static string MapStaffRole(SqlDataReader reader)
         {
             return (string)reader["RoleName"];
@@ -313,6 +314,40 @@ namespace Data_Access
             }
 
             return list;
+        }
+
+        public static StaffListingDto FindStaffByIdList(int staffId)
+        {
+            StaffListingDto staffList = new StaffListingDto();
+            string query = @"select 
+                	StaffID,
+                	StaffNumber,
+                	FullName,
+                	Gender,
+                	RoleName,
+                	ShiftName, 
+                	Username,
+                	HireDate,
+                	Status
+                from vw_StaffList
+                	where StaffID = @staffId;";
+
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@staffId", SqlDbType.Int) {Value = staffId},
+                };
+
+
+                staffList = DataAccessHelper.ExecuteOneObject(query, parameters, StaffListingMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return staffList;
         }
     }
 }

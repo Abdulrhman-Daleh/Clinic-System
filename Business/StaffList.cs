@@ -45,5 +45,10 @@ namespace Business
 
             return list;
         }
+
+        public static StaffList FindStaffById(int staffId)
+        {
+            return FromDto(StaffData.FindStaffByIdList(staffId));
+        }
     }
 }
