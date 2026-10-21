@@ -1,0 +1,67 @@
+﻿using AppEnums.cs;
+using Data_Access;
+using Data_Access.DTOs;
+using System;
+
+namespace Business
+{
+    public class Patient : Person
+    {
+        public int PatientId { get; set; }
+        public new int PersonId { get; set; }
+        public bool IsFrozen { get; set; }
+        public DateTime RegisterDate { get; set; }
+        public DateTime EndOfBookingFreeze { get; set; }
+        public bool HasUnPaidFees { get; set; }
+
+        private static PatientDto ToDto(Patient patient)
+        {
+            return new PatientDto()
+            {
+                PatientId = patient.PatientId,
+                PersonId = patient.PersonId,
+                IsFrozen = patient.IsFrozen,
+                RegisterDate = patient.RegisterDate,
+                EndOfBookingFreeze = patient.EndOfBookingFreeze,
+                HasUnPaidFees = patient.HasUnPaidFees,
+                Firstname = patient.Firstname,
+                Lastname = patient.Lastname,
+                Gender = patient.Gender == EnGender.Male ? 'M' : 'F',
+            };
+        }
+
+        private static Patient FromDto(PatientDto patientDto)
+        {
+            return new Patient()
+            {
+                PatientId = patientDto.PatientId,
+                PersonId = patientDto.PersonId,
+                IsFrozen = patientDto.IsFrozen,
+                RegisterDate = patientDto.RegisterDate,
+                EndOfBookingFreeze = patientDto.EndOfBookingFreeze,
+                HasUnPaidFees = patientDto.HasUnPaidFees,
+                Firstname = patientDto.Firstname,
+                Lastname = patientDto.Lastname,
+                Gender = patientDto.Gender == 'M' ? EnGender.Male : EnGender.Female
+            };
+        }
+
+        public Patient()
+        {
+            PatientId = -1;
+            PersonId = -1;
+            IsFrozen = false;
+            RegisterDate = DateTime.MinValue;
+            EndOfBookingFreeze = DateTime.MinValue;
+            HasUnPaidFees = false;
+        }
+
+        public bool AddNewPatient()
+        {
+            this.PatientId = PatientData.AddNewPatient(ToDto(this));
+
+            return this.PatientId > 0;
+        }
+
+    }
+}
