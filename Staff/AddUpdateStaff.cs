@@ -42,6 +42,8 @@ namespace ClinicSystem.Staff
 
             SetControls(staff.StaffId, staff.StaffNumber, staff.Username, "Not Allowed To Show");
             SetFormTextBasedMode("Update staff", "Update Staff", "Update");
+            findPersonCtrl1.AllowFilter = false;
+            findPersonCtrl1.RecivePersonInfo(staff);
             txtPassword.Enabled = false;
         }
 

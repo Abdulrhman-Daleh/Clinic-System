@@ -15,7 +15,6 @@ namespace ClinicSystem.Staff
             BtnDeactivate.Enabled = false;
         }
 
-
         public ViewStaffInfo(int staffId)
         {
             InitializeComponent();
@@ -24,6 +23,8 @@ namespace ClinicSystem.Staff
             findStaffCtrl1.LoadData(ViewedStaff);
         }
 
+        public delegate void SendStaffOnChange(int staffId);
+        public event SendStaffOnChange OnChange;
 
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
 
@@ -51,10 +52,24 @@ namespace ClinicSystem.Staff
             {
                 MessageBox.Show("Staff got deactivated", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 BtnDeactivate.Enabled = false;
+                OnChange?.Invoke(ViewedStaff.StaffId);
                 return;
             }
 
             MessageBox.Show("Staff failed to get deactivate", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void ReciveStaffId(int staffId)
+        {
+            OnChange?.Invoke(staffId);
+            findStaffCtrl1.LoadData(ViewedStaff);
+        }
+
+        private void btnEdit_Click(object sender, System.EventArgs e)
+        {
+            AddUpdateStaff updateStaff = new AddUpdateStaff(ViewedStaff.StaffId);
+            updateStaff.SendStaffId += ReciveStaffId;
+            updateStaff.ShowDialog();
         }
     }
 }

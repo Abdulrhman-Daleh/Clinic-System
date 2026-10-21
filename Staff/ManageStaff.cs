@@ -2,12 +2,13 @@
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace ClinicSystem.Staff
 {
     public partial class ManageStaff : FormsDefaultSettings
     {
-        BindingList<StaffList> Staff = new BindingList<StaffList>();
+        BindingList<StaffList> StaffList = new BindingList<StaffList>();
         public ManageStaff()
         {
             InitializeComponent();
@@ -16,7 +17,7 @@ namespace ClinicSystem.Staff
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
-            CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvStaff, Staff, lblRecords, null);
+            CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvStaff, StaffList, lblRecords, null);
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
@@ -34,9 +35,21 @@ namespace ClinicSystem.Staff
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
 
+        private void RefreshDgv(int staffId)
+        {
+            int targetIndex = -1;
+            StaffList staffList = Business.StaffList.FindStaffById(staffId);
+
+            if (StaffList.Any(x => x.StaffId == staffList.StaffId))
+                targetIndex = StaffList.IndexOf(StaffList.First(x => x.StaffId == staffList.StaffId));
+
+            CommonOperations.UpdateAfterAdding(StaffList, staffList, targetIndex);
+        }
+
         private void addNewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             AddUpdateStaff addStaff = new AddUpdateStaff();
+            addStaff.SendStaffId += RefreshDgv;
             addStaff.ShowDialog();
         }
 
@@ -44,8 +57,9 @@ namespace ClinicSystem.Staff
         {
             int staffId = (int)dgvStaff.CurrentRow.Cells["StaffID"].Value;
 
-            AddUpdateStaff addStaff = new AddUpdateStaff(staffId);
-            addStaff.ShowDialog();
+            AddUpdateStaff updateStaff = new AddUpdateStaff(staffId);
+            updateStaff.SendStaffId += RefreshDgv;
+            updateStaff.ShowDialog();
         }
 
         private void viewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
@@ -53,6 +67,7 @@ namespace ClinicSystem.Staff
             int staffId = (int)dgvStaff.CurrentRow.Cells["StaffID"].Value;
 
             ViewStaffInfo viewStaff = new ViewStaffInfo(staffId);
+            viewStaff.OnChange += RefreshDgv;
             viewStaff.ShowDialog();
         }
 
@@ -69,18 +84,18 @@ namespace ClinicSystem.Staff
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
             object value = txtFilter.Text.Trim();
 
-            if (CommonOperations.ResetDataGrid(dgvStaff, Staff, lblRecords, value.ToString()))
+            if (CommonOperations.ResetDataGrid(dgvStaff, StaffList, lblRecords, value.ToString()))
                 return;
 
-            List<object> temp = CommonOperations.FilterData(Staff, filterName, value);
+            List<object> temp = CommonOperations.FilterData(StaffList, filterName, value);
             CommonOperations.LoadDataToDGV(dgvStaff, temp, lblRecords);
         }
 
         private async void LoadStaffInfo()
         {
-            Staff = await StaffList.GetStaff();
+            StaffList = await Business.StaffList.GetStaff();
 
-            if (CommonOperations.LoadDataToDGV(dgvStaff, Staff, lblRecords))
+            if (CommonOperations.LoadDataToDGV(dgvStaff, StaffList, lblRecords))
             {
                 dgvStaff.Columns["StaffID"].HeaderText = "Staff no.";
             }
