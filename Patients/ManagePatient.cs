@@ -1,9 +1,9 @@
-﻿using AppEnums.cs;
-using Business;
+﻿using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Patients
@@ -19,16 +19,16 @@ namespace ClinicSystem.Patients
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
-            CommonOperations.HandleSwitchingFilter(cbFilterBy, cbStatus, txtFilter, dgvPatients, Patients, lblRecords, "Gender");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PersonID" }, CommonOperations.GetFilterName(cbFilterBy),
-                5, 10);
+            CommonOperations.HandleSwitchingFilter(cbFilterBy, cbStatus, txtFilter, dgvPatients, Patients, lblRecords, "Status");
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PatientID" }, CommonOperations.GetFilterName(cbFilterBy),
+                5, 30);
         }
         private void SetUp()
         {
-            cbStatus.Items.AddRange(new object[] { "None", "Active", "Not Active" });
+            cbStatus.Items.AddRange(new object[] { "Active", "Not Active" });
             cbStatus.SelectedIndex = 0;
 
-            cbFilterBy.Items.AddRange(new object[] { "None", "PatientID", "PhoneNumber", "Status" });
+            cbFilterBy.Items.AddRange(new object[] { "None", "PatientID", "FullName", "InsuranceName", "Status" });
         }
 
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -39,7 +39,7 @@ namespace ClinicSystem.Patients
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
 
-            if (filterName == "PersonID")
+            if (filterName == "PatientID")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
@@ -64,7 +64,7 @@ namespace ClinicSystem.Patients
                 return;
 
             object value = cbStatus.Text.Trim();
-            List<object> temp = CommonOperations.FilterData(Patients, filterName, value.Equals("Male") ? EnGender.Male : EnGender.Female);
+            List<object> temp = CommonOperations.FilterData(Patients, filterName, cbStatus.Text);
             CommonOperations.LoadDataToDGV(dgvPatients, temp, lblRecords);
         }
 
@@ -96,10 +96,27 @@ namespace ClinicSystem.Patients
             addNewPatientToolStripMenuItem.Enabled = status;
         }
 
-
         private void cmsPatient_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPatients));
+        }
+
+        private void RefreshDgv(int patientId)
+        {
+            int targetIndex = -1;
+            PatientList patient = PatientList.FindPatientByIdList(patientId);
+
+            if (Patients.Any(x => x.PatientId == patient.PatientId))
+                targetIndex = Patients.IndexOf(Patients.First(x => x.PatientId == patient.PatientId));
+
+            CommonOperations.UpdateAfterAdding(Patients, patient, targetIndex);
+        }
+
+        private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegisterPatient register = new RegisterPatient();
+            register.OnRegisterSave += RefreshDgv;
+            register.ShowDialog();
         }
     }
 }

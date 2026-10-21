@@ -32,7 +32,6 @@
             this.dgvPatients = new System.Windows.Forms.DataGridView();
             this.cmsPatient = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addNewPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updatePatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,11 +69,10 @@
             this.cmsPatient.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsPatient.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNewPatientToolStripMenuItem,
-            this.updatePatientToolStripMenuItem,
             this.viewPatientToolStripMenuItem});
             this.cmsPatient.Name = "cmsPeople";
             this.cmsPatient.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPatient.Size = new System.Drawing.Size(262, 146);
+            this.cmsPatient.Size = new System.Drawing.Size(262, 80);
             this.cmsPatient.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPatient_Opening);
             // 
             // addNewPatientToolStripMenuItem
@@ -84,14 +82,7 @@
             this.addNewPatientToolStripMenuItem.Name = "addNewPatientToolStripMenuItem";
             this.addNewPatientToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
             this.addNewPatientToolStripMenuItem.Text = "Add New Patient";
-            // 
-            // updatePatientToolStripMenuItem
-            // 
-            this.updatePatientToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
-            this.updatePatientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.updatePatientToolStripMenuItem.Name = "updatePatientToolStripMenuItem";
-            this.updatePatientToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
-            this.updatePatientToolStripMenuItem.Text = "Update Patient";
+            this.addNewPatientToolStripMenuItem.Click += new System.EventHandler(this.addNewPatientToolStripMenuItem_Click);
             // 
             // viewPatientToolStripMenuItem
             // 
@@ -225,7 +216,6 @@
         private System.Windows.Forms.DataGridView dgvPatients;
         private System.Windows.Forms.ContextMenuStrip cmsPatient;
         private System.Windows.Forms.ToolStripMenuItem addNewPatientToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updatePatientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewPatientToolStripMenuItem;
         private System.Windows.Forms.TextBox txtFilter;
         private System.Windows.Forms.Label label1;
