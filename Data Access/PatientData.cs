@@ -76,5 +76,29 @@ namespace Data_Access
 
             return list;
         }
+        public static PatientListingDto FindPatientByIdList(int staffId)
+        {
+            PatientListingDto patientListing = new PatientListingDto();
+
+            string query = @"select PatientID, Fullname, Gender, RegisterDate, Visits, PatientRelationship, Status from vw_PatientInfo
+            where PatientID = @patientId";
+
+            try
+            {
+
+                List<SqlParameter> paramters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@patientId", SqlDbType.Int) {Value = staffId}
+                };
+
+                patientListing = DataAccessHelper.ExecuteOneObject(query, paramters, PatientListMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return patientListing;
+        }
     }
 }

@@ -100,5 +100,7 @@ namespace Business
         }
 
         public string GetFullName() => Firstname + " " + Lastname;
+
+        public char GetGenderChar() => Gender == EnGender.Male ? 'M' : 'F';
     }
 }

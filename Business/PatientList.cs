@@ -31,6 +31,10 @@ namespace Business
             };
         }
 
+        public static PatientList FindPatientByIdList(int staffId)
+        {
+            return FromDto(PatientData.FindPatientByIdList(staffId));
+        }
         public static async Task<BindingList<PatientList>> GetPatientListingDatas()
         {
             BindingList<PatientList> list = new BindingList<PatientList>();
