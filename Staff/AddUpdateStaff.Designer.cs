@@ -52,16 +52,7 @@
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cbGender = new System.Windows.Forms.ComboBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.txtFirstName = new System.Windows.Forms.TextBox();
-            this.txtLastName = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.findPersonCtrl1 = new ClinicSystem.People.Controls.FindPersonCtrl();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -70,10 +61,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.SuspendLayout();
             // 
             // errors
@@ -187,7 +174,7 @@
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.txtUsername);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(11, 313);
+            this.groupBox1.Location = new System.Drawing.Point(8, 411);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -290,7 +277,7 @@
             // 
             this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(380, 636);
+            this.btnSave.Location = new System.Drawing.Point(378, 734);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(188, 66);
             this.btnSave.TabIndex = 15;
@@ -302,7 +289,7 @@
             // 
             this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(214, 636);
+            this.btnCancel.Location = new System.Drawing.Point(212, 734);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(160, 66);
             this.btnCancel.TabIndex = 14;
@@ -310,116 +297,22 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // groupBox2
+            // findPersonCtrl1
             // 
-            this.groupBox2.Controls.Add(this.cbGender);
-            this.groupBox2.Controls.Add(this.pictureBox5);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.pictureBox7);
-            this.groupBox2.Controls.Add(this.pictureBox8);
-            this.groupBox2.Controls.Add(this.txtFirstName);
-            this.groupBox2.Controls.Add(this.txtLastName);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Location = new System.Drawing.Point(11, 112);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(566, 193);
-            this.groupBox2.TabIndex = 16;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Personal Info";
-            // 
-            // cbGender
-            // 
-            this.cbGender.FormattingEnabled = true;
-            this.cbGender.Location = new System.Drawing.Point(169, 143);
-            this.cbGender.Name = "cbGender";
-            this.cbGender.Size = new System.Drawing.Size(121, 33);
-            this.cbGender.TabIndex = 32;
-            this.cbGender.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LockComboFromEditing);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.male_32;
-            this.pictureBox5.Location = new System.Drawing.Point(30, 138);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 31;
-            this.pictureBox5.TabStop = false;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(86, 145);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(77, 25);
-            this.label7.TabIndex = 30;
-            this.label7.Text = "Gender";
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = global::ClinicSystem.Properties.Resources.badge_32;
-            this.pictureBox7.Location = new System.Drawing.Point(339, 45);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox7.TabIndex = 29;
-            this.pictureBox7.TabStop = false;
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Image = global::ClinicSystem.Properties.Resources.user_32;
-            this.pictureBox8.Location = new System.Drawing.Point(31, 41);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox8.TabIndex = 28;
-            this.pictureBox8.TabStop = false;
-            // 
-            // txtFirstName
-            // 
-            this.txtFirstName.Location = new System.Drawing.Point(30, 87);
-            this.txtFirstName.MaxLength = 20;
-            this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(206, 30);
-            this.txtFirstName.TabIndex = 25;
-            this.txtFirstName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ValidateInputKeyPress);
-            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
-            // 
-            // txtLastName
-            // 
-            this.txtLastName.Location = new System.Drawing.Point(340, 87);
-            this.txtLastName.MaxLength = 20;
-            this.txtLastName.Name = "txtLastName";
-            this.txtLastName.Size = new System.Drawing.Size(206, 30);
-            this.txtLastName.TabIndex = 27;
-            this.txtLastName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ValidateInputKeyPress);
-            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(395, 52);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(106, 25);
-            this.label8.TabIndex = 26;
-            this.label8.Text = "Last Name";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(78, 48);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(106, 25);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "First Name";
+            this.findPersonCtrl1.AllowFilter = true;
+            this.findPersonCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.findPersonCtrl1.Location = new System.Drawing.Point(11, 114);
+            this.findPersonCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.findPersonCtrl1.Name = "findPersonCtrl1";
+            this.findPersonCtrl1.Size = new System.Drawing.Size(555, 287);
+            this.findPersonCtrl1.TabIndex = 33;
             // 
             // AddUpdateStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 710);
-            this.Controls.Add(this.groupBox2);
+            this.ClientSize = new System.Drawing.Size(580, 809);
+            this.Controls.Add(this.findPersonCtrl1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblStaffId);
@@ -439,11 +332,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -474,15 +362,6 @@
         private System.Windows.Forms.PictureBox pbModeImage;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox cbGender;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.TextBox txtFirstName;
-        private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private People.Controls.FindPersonCtrl findPersonCtrl1;
     }
 }

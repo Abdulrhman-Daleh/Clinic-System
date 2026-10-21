@@ -28,7 +28,7 @@ namespace ClinicSystem.People.Controls
             cbFindBy.Items.Add("PersonID");
             cbFindBy.Items.Add("Firstname");
             txtFindBy.MaxLength = 5;
-            cbFindBy.SelectedIndex = 0;
+            cbFindBy.SelectedIndex = 1;
         }
 
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -47,9 +47,16 @@ namespace ClinicSystem.People.Controls
             ValidationHelper.HandleInputType(e, false, true);
         }
 
-        private void Find()
+        private void Find(Person person = null)
         {
-            Person person = null;
+            if (person != null)
+            {
+                viewPersonInfoCtrl1.SetData(person);
+
+                if (AllowFilter)
+                    OnFind?.Invoke(person);
+                return;
+            }
 
             if (ValidationHelper.IsEmptyOrNull(txtFindBy.Text, "not allowed to search with empty value"))
             {
@@ -93,9 +100,9 @@ namespace ClinicSystem.People.Controls
 
         public void RecivePersonInfo(Person person)
         {
-            cbFindBy.SelectedIndex = 0;
-            txtFindBy.Text = person.PersonId.ToString();
-            Find();
+            cbFindBy.SelectedIndex = 1;
+            txtFindBy.Text = person.Firstname;
+            Find(person);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)

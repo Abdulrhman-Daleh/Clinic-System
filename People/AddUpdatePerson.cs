@@ -95,6 +95,8 @@ namespace ClinicSystem
                 lnkAddContact.Enabled = true;
                 SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
+            else
+                MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ValidateInputKeyPress(object sender, KeyPressEventArgs e)

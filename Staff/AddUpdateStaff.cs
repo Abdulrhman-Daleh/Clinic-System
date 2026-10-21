@@ -1,4 +1,5 @@
 ﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
@@ -14,6 +15,18 @@ namespace ClinicSystem.Staff
             InitializeComponent();
             SetControls();
             SetFormTextBasedMode("Add new staff", "Add Staff", "Add Staff");
+            findPersonCtrl1.OnFind += RecivePersonData;
+        }
+        private void RecivePersonData(Person person)
+        {
+            if (ValidationHelper.IsEmptyOrNull(person, "person info does not exists"))
+                return;
+
+            staff.Firstname = person.Firstname;
+            staff.Lastname = person.Lastname;
+            staff.Gender = person.Gender;
+            staff.PersonId = person.PersonId;
+            staff.contactInfo = person.contactInfo;
         }
 
         public delegate void SendStaffInfo(int staffId);
@@ -27,7 +40,7 @@ namespace ClinicSystem.Staff
             if (ValidationHelper.IsEmptyOrNull(staff, "Staff is not found"))
                 return;
 
-            SetControls(staff.StaffId, staff.StaffNumber, staff.Firstname, staff.Lastname, staff.Username, "Not Allowed To Show", staff.PersonId);
+            SetControls(staff.StaffId, staff.StaffNumber, staff.Username, "Not Allowed To Show");
             SetFormTextBasedMode("Update staff", "Update Staff", "Update");
             txtPassword.Enabled = false;
         }
@@ -39,12 +52,8 @@ namespace ClinicSystem.Staff
             btnSave.Text = saveButtonText;
         }
 
-        private void SetControls(int staffId = -1, string staffNumber = null, string firstName = "", string lastName = "",
-            string userName = "", string password = "", int personId = -1)
+        private void SetControls(int staffId = -1, string staffNumber = null, string userName = "", string password = "")
         {
-            txtFirstName.Focus();
-            txtFirstName.Text = firstName;
-            txtLastName.Text = lastName;
             txtUsername.Text = userName;
             txtPassword.Text = password;
             SetStaffId(staffId);
@@ -83,9 +92,6 @@ namespace ClinicSystem.Staff
 
         private void AddUpdateStaff_Load(object sender, System.EventArgs e)
         {
-            cbGender.Items.Add("Male");
-            cbGender.Items.Add("Female");
-            cbGender.SelectedIndex = (int)EnGender.Male - 1;
             LoadSchedules();
             LoadRoles();
         }
@@ -97,9 +103,6 @@ namespace ClinicSystem.Staff
             staff.Username = txtUsername.Text;
             staff.ScheduleId = (int)cbSchedules.SelectedIndex + 1;
             staff.Role = (EnRole)cbRoles.SelectedIndex + 1;
-            staff.Firstname = txtFirstName.Text;
-            staff.Lastname = txtLastName.Text;
-            staff.Gender = (EnGender)cbGender.SelectedIndex + 1;
 
             if (txtPassword.Enabled)
                 staff.HashedPassword = PasswordHasher.HashPassword(txtPassword.Text);

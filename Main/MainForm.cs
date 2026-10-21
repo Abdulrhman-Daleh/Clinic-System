@@ -1,4 +1,5 @@
-﻿using ClinicSystem.People;
+﻿using ClinicSystem.Patients;
+using ClinicSystem.People;
 using ClinicSystem.People.Controls;
 using ClinicSystem.Schedule;
 using ClinicSystem.Staff;
@@ -14,13 +15,6 @@ namespace ClinicSystem
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
         }
-
-        private void addNewPersonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddUpdatePerson addPerson = new AddUpdatePerson();
-            addPerson.ShowDialog();
-        }
-
         private void viewPersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ViewPerson viewPerson = new ViewPerson();
@@ -67,6 +61,12 @@ namespace ClinicSystem
         {
             ManageSchedules manageSchedules = new ManageSchedules();
             manageSchedules.ShowDialog();
+        }
+
+        private void registerPatientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RegisterPatient patient = new RegisterPatient();
+            patient.ShowDialog();
         }
     }
 }
