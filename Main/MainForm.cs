@@ -68,5 +68,11 @@ namespace ClinicSystem
             RegisterPatient patient = new RegisterPatient();
             patient.ShowDialog();
         }
+
+        private void managePatientsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManagePatient managePatient = new ManagePatient();
+            managePatient.ShowDialog();
+        }
     }
 }
