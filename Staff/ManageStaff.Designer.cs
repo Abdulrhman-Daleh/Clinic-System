@@ -76,7 +76,8 @@
             this.viewStaffToolStripMenuItem});
             this.cmsStaff.Name = "cmsPeople";
             this.cmsStaff.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsStaff.Size = new System.Drawing.Size(240, 118);
+            this.cmsStaff.Size = new System.Drawing.Size(240, 146);
+            this.cmsStaff.Opening += new System.ComponentModel.CancelEventHandler(this.cmsStaff_Opening);
             // 
             // addNewStaffToolStripMenuItem
             // 

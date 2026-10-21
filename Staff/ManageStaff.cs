@@ -123,5 +123,17 @@ namespace ClinicSystem.Staff
         {
             ValidationHelper.LockComboBox(e);
         }
+
+        private void SetControlEnableStatus(bool status)
+        {
+            updateStaffToolStripMenuItem.Enabled = status;
+            viewStaffToolStripMenuItem.Enabled = status;
+            addNewStaffToolStripMenuItem.Enabled = status;
+        }
+
+        private void cmsStaff_Opening(object sender, CancelEventArgs e)
+        {
+            SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvStaff));
+        }
     }
 }

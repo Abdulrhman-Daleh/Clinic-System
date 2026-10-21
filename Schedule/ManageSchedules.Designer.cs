@@ -74,7 +74,8 @@
             this.updateScheduleToolStripMenuItem});
             this.cmsSchedules.Name = "cmsPeople";
             this.cmsSchedules.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsSchedules.Size = new System.Drawing.Size(279, 80);
+            this.cmsSchedules.Size = new System.Drawing.Size(279, 108);
+            this.cmsSchedules.Opening += new System.ComponentModel.CancelEventHandler(this.cmsSchedules_Opening);
             // 
             // addNewScheduleToolStripMenuItem
             // 

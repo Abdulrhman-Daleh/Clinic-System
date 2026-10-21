@@ -84,5 +84,15 @@ namespace ClinicSystem.Schedule
             AddUpdateSchedule updateSchedule = new AddUpdateSchedule(scheduleId);
             updateSchedule.ShowDialog();
         }
+
+        private void SetControlEnableStatus(bool status)
+        {
+            updateScheduleToolStripMenuItem.Enabled = status;
+        }
+
+        private void cmsSchedules_Opening(object sender, CancelEventArgs e)
+        {
+            SetControlEnableStatus(false);
+        }
     }
 }
