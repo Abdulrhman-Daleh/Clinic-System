@@ -44,11 +44,13 @@
   <ItemGroup>
     <Compile Include="AccessString.cs" />
     <Compile Include="DataAccessHelper.cs" />
+    <Compile Include="DTOs\PatientDto.cs" />
     <Compile Include="DTOs\PersonContactDto.cs" />
     <Compile Include="DTOs\PersonDto.cs" />
     <Compile Include="DTOs\ScheduleDto.cs" />
     <Compile Include="DTOs\StaffDto.cs" />
     <Compile Include="ListingDTOs\StaffListingDto.cs" />
+    <Compile Include="PatientData.cs" />
     <Compile Include="PersonContactData.cs" />
     <Compile Include="PersonData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
