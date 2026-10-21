@@ -1,13 +1,29 @@
 ﻿using Data_Access.DTOs;
+using Data_Access.ListingDTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Data_Access
 {
     public class PatientData
     {
+        private static PatientListingDto PatientListMapper(SqlDataReader reader)
+        {
+            return new PatientListingDto()
+            {
+                PatientId = (int)reader["PatientID"],
+                FullName = (string)reader["FullName"],
+                Gender = Convert.ToChar(reader["Gender"]),
+                RegisterDate = (DateTime)reader["RegisterDate"],
+                Visits = (int)reader["Visits"],
+                InsuranceName = (reader["PatientRelationship"] == DBNull.Value) ? "No Insurance" : (string)reader["PatientRelationship"],
+                Status = (string)reader["Status"]
+            };
+        }
         public static int AddNewPatient(PatientDto patientDto)
         {
             int patientId = -1;
@@ -42,6 +58,23 @@ namespace Data_Access
             }
 
             return patientId;
+        }
+        public static async Task<BindingList<PatientListingDto>> GetPatientListingDatas()
+        {
+            BindingList<PatientListingDto> list = new BindingList<PatientListingDto>();
+
+            string query = @"select * from vw_PatientInfo";
+
+            try
+            {
+                list = await DataAccessHelper.ExecuteObjectList<PatientListingDto>(query, null, PatientListMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return list;
         }
     }
 }
