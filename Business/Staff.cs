@@ -74,6 +74,7 @@ namespace Business
             HireDate = DateTime.MinValue;
             Firstname = string.Empty;
             Lastname = string.Empty;
+            this.Schedule = new Schedule();
             Gender = EnGender.Male;
             Mode = EnMode.Add;
         }
@@ -81,6 +82,7 @@ namespace Business
         private Staff(int staffId)
         {
             StaffId = staffId;
+            this.Schedule = Schedule.FindScheduleByID(this.ScheduleId);
             Mode = EnMode.Update;
         }
 
@@ -91,11 +93,11 @@ namespace Business
 
         private bool AddNewStaff()
         {
-            Tuple<int, int, string> result = StaffData.AddNewStaff(ToDto(this));
+            (int staffId, int personId, string staffNumber) result = StaffData.AddNewStaff(ToDto(this));
 
-            this.StaffId = result.Item1;
-            this.PersonId = result.Item2;
-            this.StaffNumber = result.Item3;
+            this.StaffId = result.staffId;
+            this.PersonId = result.personId;
+            this.StaffNumber = result.staffNumber;
 
             return StaffId > 0;
         }

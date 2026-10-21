@@ -21,38 +21,6 @@ namespace Data_Access
             };
         }
 
-        public static int AddNewPerson(PersonDto personInfo, PersonContactDto personalContact)
-        {
-            int personId = -1;
-            string query = @"insert into People
-            (
-            Firstname,
-            Lastname,
-            Gender
-            )
-        values
-        (@Firstname, @Lastname, @Gender); select scope_identity()";
-
-            List<SqlParameter> paramters = new List<SqlParameter>()
-            {
-                  new SqlParameter("@Firstname", SqlDbType.VarChar, 50){Value = personInfo.Firstname  },
-                  new SqlParameter("@Lastname", SqlDbType.VarChar, 50) { Value = personInfo.Lastname },
-                  new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = personInfo.Gender }
-            };
-
-            try
-            {
-                object result = DataAccessHelper.ExecuteScalar(query, paramters);
-                if (result != null && int.TryParse(result.ToString(), out personId)) { }
-            }
-            catch (Exception ex)
-            {
-
-            }
-
-            return personId;
-        }
-
         public static bool UpdatePerson(PersonDto personInfo, PersonContactDto personalContact)
         {
             int affactedRows = -1;
@@ -105,7 +73,7 @@ namespace Data_Access
         public static PersonDto FindPersonByFirstname(string Firstname)
         {
             PersonDto person = null;
-            string query = @"select PersonID, Lastname, Gender from People where Firstname = @Firstname";
+            string query = @"select PersonID, Firstname, Lastname, Gender from People where Firstname = @Firstname";
 
             try
             {

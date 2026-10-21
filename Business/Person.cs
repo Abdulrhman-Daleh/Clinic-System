@@ -52,16 +52,12 @@ namespace Business
         {
             Contacts = await PersonContact.GetShortContactInfo(this.PersonId);
         }
+
         public Person(int personId)
         {
             PersonId = personId;
             _mode = Mode.Update;
             _LoadPersonContacts();
-        }
-
-        private int _AddNewPerson()
-        {
-            return PersonData.AddNewPerson(ToDto(this), PersonContact.ToDto(contactInfo));
         }
 
         private bool _UpdatePerson()
@@ -73,14 +69,8 @@ namespace Business
         {
             if (_mode == Mode.Add)
             {
-                PersonId = _AddNewPerson();
-                if (PersonId > 0)
-                {
-                    _mode = Mode.Update;
-                    return true;
-                }
-                else
-                    return false;
+                _mode = Mode.Update;
+                return true;
             }
 
             return _UpdatePerson();
