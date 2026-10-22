@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.lblName = new System.Windows.Forms.Label();
-            this.pbGender = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.viewPersonContacts1 = new ClinicSystem.People.Controls.ViewPersonContacts();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
             this.findPersonCtrl1 = new ClinicSystem.People.Controls.FindPersonCtrl();
-            ((System.ComponentModel.ISupportInitialize)(this.pbGender)).BeginInit();
+            this.pbGender = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbGender)).BeginInit();
             this.SuspendLayout();
             // 
             // lblName
@@ -48,15 +48,6 @@
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(0, 29);
             this.lblName.TabIndex = 9;
-            // 
-            // pbGender
-            // 
-            this.pbGender.Location = new System.Drawing.Point(523, 17);
-            this.pbGender.Name = "pbGender";
-            this.pbGender.Size = new System.Drawing.Size(41, 38);
-            this.pbGender.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbGender.TabIndex = 10;
-            this.pbGender.TabStop = false;
             // 
             // pictureBox1
             // 
@@ -110,6 +101,15 @@
             this.findPersonCtrl1.Size = new System.Drawing.Size(555, 315);
             this.findPersonCtrl1.TabIndex = 15;
             // 
+            // pbGender
+            // 
+            this.pbGender.Location = new System.Drawing.Point(523, 17);
+            this.pbGender.Name = "pbGender";
+            this.pbGender.Size = new System.Drawing.Size(41, 38);
+            this.pbGender.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbGender.TabIndex = 10;
+            this.pbGender.TabStop = false;
+            // 
             // ViewPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -125,8 +125,8 @@
             this.Name = "ViewPerson";
             this.Text = "View Person";
             this.Load += new System.EventHandler(this.ViewPerson_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pbGender)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbGender)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,10 +136,10 @@
 
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.PictureBox pbGender;
         private ViewPersonContacts viewPersonContacts1;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnEdit;
         private FindPersonCtrl findPersonCtrl1;
+        private System.Windows.Forms.PictureBox pbGender;
     }
 }

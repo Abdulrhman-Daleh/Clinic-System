@@ -72,7 +72,7 @@
             this.viewPatientToolStripMenuItem});
             this.cmsPatient.Name = "cmsPeople";
             this.cmsPatient.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPatient.Size = new System.Drawing.Size(262, 80);
+            this.cmsPatient.Size = new System.Drawing.Size(262, 108);
             this.cmsPatient.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPatient_Opening);
             // 
             // addNewPatientToolStripMenuItem
@@ -91,6 +91,7 @@
             this.viewPatientToolStripMenuItem.Name = "viewPatientToolStripMenuItem";
             this.viewPatientToolStripMenuItem.Size = new System.Drawing.Size(261, 38);
             this.viewPatientToolStripMenuItem.Text = "View Patient";
+            this.viewPatientToolStripMenuItem.Click += new System.EventHandler(this.viewPatientToolStripMenuItem_Click);
             // 
             // txtFilter
             // 

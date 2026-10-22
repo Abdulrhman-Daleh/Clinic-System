@@ -91,7 +91,6 @@ namespace ClinicSystem.Patients
         }
         private void SetControlEnableStatus(bool status)
         {
-            updatePatientToolStripMenuItem.Enabled = status;
             viewPatientToolStripMenuItem.Enabled = status;
             addNewPatientToolStripMenuItem.Enabled = status;
         }
@@ -117,6 +116,14 @@ namespace ClinicSystem.Patients
             RegisterPatient register = new RegisterPatient();
             register.OnRegisterSave += RefreshDgv;
             register.ShowDialog();
+        }
+
+        private void viewPatientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int patientId = (int)dgvPatients.CurrentRow.Cells[0].Value;
+
+            ViewPatient viewPatient = new ViewPatient(patientId);
+            viewPatient.ShowDialog();
         }
     }
 }
