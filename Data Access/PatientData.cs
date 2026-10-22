@@ -11,6 +11,21 @@ namespace Data_Access
 {
     public class PatientData
     {
+        private static PatientDto PatientMapper(SqlDataReader reader)
+        {
+            return new PatientDto()
+            {
+                PatientId = (int)reader["PatientID"],
+                PersonId = (int)reader["PersonID"],
+                RegisterDate = (DateTime)reader["RegisterDate"],
+                IsFrozen = (reader["IsFrozen"] == DBNull.Value) ? (bool?)null : (bool)reader["IsFrozen"],
+                EndOfBookingFreeze = (reader["EndOfBookingFreeze"] == DBNull.Value) ? (DateTime?)null : (DateTime)reader["EndOfBookingFreeze"],
+                HasUnPaidFees = (reader["HasUnPaidFees"] == DBNull.Value) ? (bool?)null : (bool)reader["HasUnPaidFees"],
+                Firstname = (string)reader["Firstname"],
+                Lastname = (string)reader["Lastname"],
+                Gender = Convert.ToChar(reader["Gender"])
+            };
+        }
         private static PatientListingDto PatientListMapper(SqlDataReader reader)
         {
             return new PatientListingDto()
@@ -76,7 +91,7 @@ namespace Data_Access
 
             return list;
         }
-        public static PatientListingDto FindPatientByIdList(int staffId)
+        public static PatientListingDto FindPatientByIdList(int patientId)
         {
             PatientListingDto patientListing = new PatientListingDto();
 
@@ -88,7 +103,7 @@ namespace Data_Access
 
                 List<SqlParameter> paramters = new List<SqlParameter>()
                 {
-                    new SqlParameter("@patientId", SqlDbType.Int) {Value = staffId}
+                    new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
                 };
 
                 patientListing = DataAccessHelper.ExecuteOneObject(query, paramters, PatientListMapper);
@@ -99,6 +114,31 @@ namespace Data_Access
             }
 
             return patientListing;
+        }
+        public static PatientDto FindPatientById(int patientId)
+        {
+            PatientDto patient = new PatientDto();
+
+
+            string query = @"select person.Firstname, person.Lastname, person.Gender, PatientID, p.PersonID, IsFrozen, RegisterDate, EndOfBookingFreeze, HasUnPaidFees from Patients as p
+	inner join People as person on person.PersonID = p.PersonID
+	where PatientID = @patientId";
+
+            try
+            {
+                List<SqlParameter> paramters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
+                };
+
+                patient = DataAccessHelper.ExecuteOneObject(query, paramters, PatientMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return patient;
         }
     }
 }

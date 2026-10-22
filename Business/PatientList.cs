@@ -27,13 +27,13 @@ namespace Business
                 RegisterDate = dto.RegisterDate,
                 Status = dto.Status,
                 Visits = dto.Visits,
-                InsuranceName = dto.InsuranceName
+                InsuranceName = dto.InsuranceName,
             };
         }
 
-        public static PatientList FindPatientByIdList(int staffId)
+        public static PatientList FindPatientByIdList(int patientId)
         {
-            return FromDto(PatientData.FindPatientByIdList(staffId));
+            return FromDto(PatientData.FindPatientByIdList(patientId));
         }
         public static async Task<BindingList<PatientList>> GetPatientListingDatas()
         {

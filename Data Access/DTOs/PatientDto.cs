@@ -6,9 +6,9 @@ namespace Data_Access.DTOs
     {
         public int PatientId { get; set; }
         public override int PersonId { get; set; }
-        public bool IsFrozen { get; set; }
+        public bool? IsFrozen { get; set; }
         public DateTime RegisterDate { get; set; }
-        public DateTime EndOfBookingFreeze { get; set; }
-        public bool HasUnPaidFees { get; set; }
+        public DateTime? EndOfBookingFreeze { get; set; }
+        public bool? HasUnPaidFees { get; set; }
     }
 }

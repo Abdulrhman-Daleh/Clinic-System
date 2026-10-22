@@ -9,10 +9,10 @@ namespace Business
     {
         public int PatientId { get; set; }
         public new int PersonId { get; set; }
-        public bool IsFrozen { get; set; }
+        public bool? IsFrozen { get; set; }
         public DateTime RegisterDate { get; set; }
-        public DateTime EndOfBookingFreeze { get; set; }
-        public bool HasUnPaidFees { get; set; }
+        public DateTime? EndOfBookingFreeze { get; set; }
+        public bool? HasUnPaidFees { get; set; }
 
         private static PatientDto ToDto(Patient patient)
         {
@@ -63,5 +63,25 @@ namespace Business
             return this.PatientId > 0;
         }
 
+        public static Patient FindPatientById(int patientId)
+        {
+            return FromDto(PatientData.FindPatientById(patientId));
+        }
+
+        public int FreezeUnlockDays()
+        {
+            if (EndOfBookingFreeze == null)
+                return 0;
+
+            return (EndOfBookingFreeze - DateTime.Now).Value.Days;
+        }
+
+        public string ISUnpaidText()
+        {
+            if (HasUnPaidFees == null)
+                return "No";
+
+            return HasUnPaidFees == true ? "Yes" : "No";
+        }
     }
 }
