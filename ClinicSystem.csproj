@@ -49,6 +49,12 @@
     <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Insurance\AddUpdateInsurance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Insurance\AddUpdateInsurance.Designer.cs">
+      <DependentUpon>AddUpdateInsurance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\SystemLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,12 @@
     </Compile>
     <Compile Include="Main\UserCtrlDefaultSettings.Designer.cs">
       <DependentUpon>UserCtrlDefaultSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patients\Controls\FindPatientCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Patients\Controls\FindPatientCtrl.Designer.cs">
+      <DependentUpon>FindPatientCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Patients\Controls\PatientInfoCtrl.cs">
       <SubType>UserControl</SubType>
@@ -140,6 +152,30 @@
     <Compile Include="People\Controls\ViewPersonInfoCtrl.Designer.cs">
       <DependentUpon>ViewPersonInfoCtrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Policies\AddUpdatePolicy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Policies\AddUpdatePolicy.Designer.cs">
+      <DependentUpon>AddUpdatePolicy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Policies\Controls\FindPolicyInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Policies\Controls\FindPolicyInfo.Designer.cs">
+      <DependentUpon>FindPolicyInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Policies\Controls\ViewPolicyInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Policies\Controls\ViewPolicyInfoCtrl.Designer.cs">
+      <DependentUpon>ViewPolicyInfoCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Policies\ViewPolicyInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Policies\ViewPolicyInfo.Designer.cs">
+      <DependentUpon>ViewPolicyInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -188,6 +224,9 @@
     <Compile Include="Staff\ViewStaffInfo.Designer.cs">
       <DependentUpon>ViewStaffInfo.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Insurance\AddUpdateInsurance.resx">
+      <DependentUpon>AddUpdateInsurance.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\SystemLogin.resx">
       <DependentUpon>SystemLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,6 +235,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Patients\Controls\FindPatientCtrl.resx">
+      <DependentUpon>FindPatientCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\Controls\PatientInfoCtrl.resx">
       <DependentUpon>PatientInfoCtrl.cs</DependentUpon>
@@ -229,6 +271,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\Controls\ViewPersonInfoCtrl.resx">
       <DependentUpon>ViewPersonInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Policies\AddUpdatePolicy.resx">
+      <DependentUpon>AddUpdatePolicy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Policies\Controls\FindPolicyInfo.resx">
+      <DependentUpon>FindPolicyInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Policies\Controls\ViewPolicyInfoCtrl.resx">
+      <DependentUpon>ViewPolicyInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Policies\ViewPolicyInfo.resx">
+      <DependentUpon>ViewPolicyInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -400,6 +454,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\visit_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Manage_Insurance_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\status_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_Insurance_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Manage_Policy_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_policy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find_policy_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

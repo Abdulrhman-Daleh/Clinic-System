@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.cs" />
+    <Compile Include="Insurance.cs" />
     <Compile Include="Patient.cs" />
     <Compile Include="PatientList.cs" />
+    <Compile Include="Policy.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="Staff.cs" />
     <Compile Include="StaffList.cs" />
