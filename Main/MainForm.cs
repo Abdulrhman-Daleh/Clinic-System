@@ -87,5 +87,11 @@ namespace ClinicSystem
             ViewPolicyInfo viewPolicy = new ViewPolicyInfo();
             viewPolicy.ShowDialog();
         }
+
+        private void managePoliciesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Managepolicies policies = new Managepolicies();
+            policies.ShowDialog();
+        }
     }
 }

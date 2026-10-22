@@ -52,9 +52,13 @@ namespace ClinicSystem.Policies
             updatePolicy.ShowDialog();
         }
 
+        public delegate void SendNotificationOnChange(int policyId);
+        public event SendNotificationOnChange OnChange;
+
         private void RecivePolicyId(int policyID)
         {
             findPolicyInfo1.LoadPolicyInfo(policyID);
+            OnChange?.Invoke(policyID);
         }
     }
 }
