@@ -170,6 +170,12 @@
     <Compile Include="Policies\Controls\ViewPolicyInfoCtrl.Designer.cs">
       <DependentUpon>ViewPolicyInfoCtrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Policies\Managepolicies.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Policies\Managepolicies.Designer.cs">
+      <DependentUpon>Managepolicies.cs</DependentUpon>
+    </Compile>
     <Compile Include="Policies\ViewPolicyInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -280,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Policies\Controls\ViewPolicyInfoCtrl.resx">
       <DependentUpon>ViewPolicyInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Policies\Managepolicies.resx">
+      <DependentUpon>Managepolicies.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Policies\ViewPolicyInfo.resx">
       <DependentUpon>ViewPolicyInfo.cs</DependentUpon>
