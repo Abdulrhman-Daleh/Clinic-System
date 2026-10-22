@@ -43,7 +43,11 @@
             this.patientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managePatientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.registerPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.policiesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addPolicyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.viewPolicyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -56,7 +60,9 @@
             this.managePeopleToolStripMenuItem,
             this.manageStaffToolStripMenuItem,
             this.schedulesToolStripMenuItem,
-            this.patientsToolStripMenuItem});
+            this.patientsToolStripMenuItem,
+            this.policiesToolStripMenuItem,
+            this.policiesToolStripMenuItem1});
             this.MSOperations.Location = new System.Drawing.Point(0, 0);
             this.MSOperations.Name = "MSOperations";
             this.MSOperations.Size = new System.Drawing.Size(1762, 72);
@@ -201,6 +207,31 @@
             this.registerPatientToolStripMenuItem.Text = "Register Patient";
             this.registerPatientToolStripMenuItem.Click += new System.EventHandler(this.registerPatientToolStripMenuItem_Click);
             // 
+            // policiesToolStripMenuItem
+            // 
+            this.policiesToolStripMenuItem.Name = "policiesToolStripMenuItem";
+            this.policiesToolStripMenuItem.Size = new System.Drawing.Size(14, 68);
+            // 
+            // policiesToolStripMenuItem1
+            // 
+            this.policiesToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addPolicyToolStripMenuItem,
+            this.viewPolicyToolStripMenuItem});
+            this.policiesToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.Manage_Policy_64;
+            this.policiesToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.policiesToolStripMenuItem1.Name = "policiesToolStripMenuItem1";
+            this.policiesToolStripMenuItem1.Size = new System.Drawing.Size(161, 68);
+            this.policiesToolStripMenuItem1.Text = "Policies";
+            // 
+            // addPolicyToolStripMenuItem
+            // 
+            this.addPolicyToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_policy_32;
+            this.addPolicyToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addPolicyToolStripMenuItem.Name = "addPolicyToolStripMenuItem";
+            this.addPolicyToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.addPolicyToolStripMenuItem.Text = "Add Policy";
+            this.addPolicyToolStripMenuItem.Click += new System.EventHandler(this.addPolicyToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -211,6 +242,15 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            // 
+            // viewPolicyToolStripMenuItem
+            // 
+            this.viewPolicyToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.find_policy_32;
+            this.viewPolicyToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewPolicyToolStripMenuItem.Name = "viewPolicyToolStripMenuItem";
+            this.viewPolicyToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.viewPolicyToolStripMenuItem.Text = "View Policy";
+            this.viewPolicyToolStripMenuItem.Click += new System.EventHandler(this.viewPolicyToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -248,5 +288,9 @@
         private System.Windows.Forms.ToolStripMenuItem patientsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managePatientsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registerPatientToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem policiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem policiesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addPolicyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewPolicyToolStripMenuItem;
     }
 }

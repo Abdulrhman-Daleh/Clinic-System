@@ -1,6 +1,7 @@
 ﻿using ClinicSystem.Patients;
 using ClinicSystem.People;
 using ClinicSystem.People.Controls;
+using ClinicSystem.Policies;
 using ClinicSystem.Schedule;
 using ClinicSystem.Staff;
 using System;
@@ -73,6 +74,18 @@ namespace ClinicSystem
         {
             ManagePatient managePatient = new ManagePatient();
             managePatient.ShowDialog();
+        }
+
+        private void addPolicyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddUpdatePolicy addPolicy = new AddUpdatePolicy();
+            addPolicy.ShowDialog();
+        }
+
+        private void viewPolicyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewPolicyInfo viewPolicy = new ViewPolicyInfo();
+            viewPolicy.ShowDialog();
         }
     }
 }

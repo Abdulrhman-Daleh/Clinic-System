@@ -152,5 +152,6 @@ namespace Business
         }
 
         public bool DeactivateStaff() => StaffData.DeactivateStaff(this.StaffId);
+        public bool IsOwner() => Role == EnRole.Owner;
     }
 }
