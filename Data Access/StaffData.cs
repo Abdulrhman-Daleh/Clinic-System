@@ -77,13 +77,13 @@ namespace Data_Access
                     new SqlParameter("@StaffNumber", SqlDbType.VarChar, 10) {Direction = ParameterDirection.Output},
                 };
 
-                List<object> objs = DataAccessHelper.ExecuteNonQueryStoredProcedure<object>(query, inputParams, outputParams);
+                bool r = DataAccessHelper.ExecuteNonQueryStoredProcedure<object>(query, inputParams, outputParams);
 
-                if (objs != null)
+                if (r == true)
                 {
-                    result.staffId = Convert.ToInt32(objs[0]);
-                    result.personId = Convert.ToInt32(objs[1]);
-                    result.staffNumber = Convert.ToString(objs[2]);
+                    result.staffId = Convert.ToInt32(outputParams[0]);
+                    result.personId = Convert.ToInt32(outputParams[1]);
+                    result.staffNumber = Convert.ToString(outputParams[2]);
                 }
             }
             catch (Exception ex)

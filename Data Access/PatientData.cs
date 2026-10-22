@@ -60,12 +60,10 @@ namespace Data_Access
                     }
                 };
 
-                List<object> values = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("AddPatient", parameters, outputParamters);
+                bool result = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("AddPatient", parameters, outputParamters);
 
-                if (values.Count > 0)
-                {
-                    patientId = Convert.ToInt32(values[0]);
-                }
+                if (result)
+                    patientId = Convert.ToInt32(outputParamters[0].Value ?? -1);
             }
             catch (Exception ex)
             {

@@ -123,10 +123,8 @@ namespace Data_Access
             return objs;
         }
 
-        public static List<object> ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters, List<SqlParameter> outputParamters)
+        public static bool ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters, List<SqlParameter> outputParamters)
         {
-            List<object> objs = new List<object>();
-
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
                 using (SqlCommand command = new SqlCommand(storedProcedureName, connection))
@@ -142,12 +140,10 @@ namespace Data_Access
                     try
                     {
                         connection.Open();
-                        command.ExecuteNonQuery();
+                        var affectedRows = command.ExecuteNonQuery();
 
-                        foreach (SqlParameter param in outputParamters)
-                        {
-                            objs.Add(command.Parameters[param.ParameterName].Value);
-                        }
+                        if (affectedRows > 0)
+                            return true;
                     }
                     catch (Exception ex)
                     {
@@ -157,7 +153,7 @@ namespace Data_Access
                 }
             }
 
-            return objs;
+            return false;
         }
 
         public static int ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters)
