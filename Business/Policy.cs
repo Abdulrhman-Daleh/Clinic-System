@@ -129,5 +129,15 @@ namespace Business
         {
             return ActiveTo > DateTime.Now;
         }
+
+        public static async Task<BindingList<Policy>> GetPolicies()
+        {
+            BindingList<Policy> list = new BindingList<Policy>();
+
+            foreach (PolicyDto p in await PolicyData.GetPolicies())
+                list.Add(FromDto(p));
+
+            return list;
+        }
     }
 }

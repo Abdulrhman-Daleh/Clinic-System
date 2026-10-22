@@ -151,5 +151,24 @@ namespace Data_Access
 
             return policyStatuses;
         }
+
+        public static async Task<BindingList<PolicyDto>> GetPolicies()
+        {
+            BindingList<PolicyDto> list = new BindingList<PolicyDto>();
+
+            string query = @"select PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom,
+            ActiveTo, PolicyStatusID from Policies";
+
+            try
+            {
+                list = await DataAccessHelper.ExecuteObjectList(query, null, PolicyMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return list;
+        }
     }
 }
