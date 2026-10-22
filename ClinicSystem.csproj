@@ -74,6 +74,12 @@
     <Compile Include="Main\UserCtrlDefaultSettings.Designer.cs">
       <DependentUpon>UserCtrlDefaultSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Patients\Controls\PatientInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Patients\Controls\PatientInfoCtrl.Designer.cs">
+      <DependentUpon>PatientInfoCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Patients\ManagePatient.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,6 +91,12 @@
     </Compile>
     <Compile Include="Patients\RegisterPatient.Designer.cs">
       <DependentUpon>RegisterPatient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patients\ViewPatient.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Patients\ViewPatient.Designer.cs">
+      <DependentUpon>ViewPatient.cs</DependentUpon>
     </Compile>
     <Compile Include="People\AddPersonContacts.cs">
       <SubType>Form</SubType>
@@ -185,11 +197,17 @@
     <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Patients\Controls\PatientInfoCtrl.resx">
+      <DependentUpon>PatientInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Patients\ManagePatient.resx">
       <DependentUpon>ManagePatient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\RegisterPatient.resx">
       <DependentUpon>RegisterPatient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Patients\ViewPatient.resx">
+      <DependentUpon>ViewPatient.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddPersonContacts.resx">
       <DependentUpon>AddPersonContacts.cs</DependentUpon>
@@ -376,6 +394,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\patient_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\visit_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
