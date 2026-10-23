@@ -1,4 +1,6 @@
-﻿using ClinicSystem.Patients;
+﻿using AppEnums.cs;
+using ClinicSystem.Insurance;
+using ClinicSystem.Patients;
 using ClinicSystem.People;
 using ClinicSystem.People.Controls;
 using ClinicSystem.Policies;
@@ -66,7 +68,7 @@ namespace ClinicSystem
 
         private void registerPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegisterPatient patient = new RegisterPatient();
+            RegisterPatient patient = new RegisterPatient(EnAddMode.AddImmediately);
             patient.ShowDialog();
         }
 
@@ -92,6 +94,12 @@ namespace ClinicSystem
         {
             Managepolicies policies = new Managepolicies();
             policies.ShowDialog();
+        }
+
+        private void addInsuranceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddUpdateInsurance addInsurance = new AddUpdateInsurance();
+            addInsurance.ShowDialog();
         }
     }
 }

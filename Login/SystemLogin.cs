@@ -1,4 +1,5 @@
-﻿using ClinicSystem.Helpers;
+﻿using Business;
+using ClinicSystem.Helpers;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -92,6 +93,7 @@ namespace ClinicSystem.Login
 
             this.Hide();
             RememberUsername();
+            Global.CurrentLoggedInStaff = foundStaff;
             MainForm main = new MainForm();
             main.ShowDialog();
         }
