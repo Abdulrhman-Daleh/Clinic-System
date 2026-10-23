@@ -26,7 +26,6 @@ namespace ClinicSystem.Policies
             RecivePolicyInfo(_policy);
         }
 
-
         private void RecivePolicyInfo(Policy policy)
         {
             if (ValidationHelper.IsEmptyOrNull(policy))
@@ -48,17 +47,17 @@ namespace ClinicSystem.Policies
         private void btnEdit_Click(object sender, EventArgs e)
         {
             AddUpdatePolicy updatePolicy = new AddUpdatePolicy(_policy.PolicyID);
-            updatePolicy.SendPolicyId += RecivePolicyId;
+            updatePolicy.SendPolicy += RecivePolicyId;
             updatePolicy.ShowDialog();
         }
 
-        public delegate void SendNotificationOnChange(int policyId);
+        public delegate void SendNotificationOnChange(Policy policy);
         public event SendNotificationOnChange OnChange;
 
-        private void RecivePolicyId(int policyID)
+        private void RecivePolicyId(Policy policy)
         {
-            findPolicyInfo1.LoadPolicyInfo(policyID);
-            OnChange?.Invoke(policyID);
+            findPolicyInfo1.LoadPolicyInfo(policy.PolicyID);
+            OnChange?.Invoke(_policy);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ClinicSystem.Helpers;
+﻿using Business;
+using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -8,7 +9,6 @@ namespace ClinicSystem.Policies
     public partial class AddUpdatePolicy : FormsDefaultSettings
     {
         Business.Policy policy = new Business.Policy();
-
         public AddUpdatePolicy()
         {
             InitializeComponent();
@@ -36,8 +36,8 @@ namespace ClinicSystem.Policies
             policy.OwnerID = owner.StaffId;
         }
 
-        public delegate void SendPolicyInfo(int policyID);
-        public event SendPolicyInfo SendPolicyId;
+        public delegate void SendPolicyInfo(Policy policy);
+        public event SendPolicyInfo SendPolicy;
 
         public AddUpdatePolicy(int policyID)
         {
@@ -205,7 +205,7 @@ namespace ClinicSystem.Policies
                     policy.LateFeesPerDay.HasValue,
                     policy.NoShowFreezeDays.HasValue);
 
-                SendPolicyId?.Invoke(policy.PolicyID);
+                SendPolicy?.Invoke(policy);
             }
             else
             {

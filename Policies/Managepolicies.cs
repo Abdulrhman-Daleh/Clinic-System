@@ -40,11 +40,9 @@ namespace ClinicSystem.Policies
             cbFilterBy.SelectedIndex = 0;
         }
 
-        private void RefreshDgv(int policyId)
+        private void RefreshDgv(Policy policy)
         {
             int targetIndex = -1;
-
-            Policy policy = Policy.FindPolicyByID(policyId);
 
             if (policy == null)
                 return;
@@ -63,7 +61,7 @@ namespace ClinicSystem.Policies
             object sender, System.EventArgs e)
         {
             AddUpdatePolicy addPolicy = new AddUpdatePolicy();
-            addPolicy.SendPolicyId += RefreshDgv;
+            addPolicy.SendPolicy += RefreshDgv;
             addPolicy.ShowDialog();
         }
 
@@ -73,7 +71,7 @@ namespace ClinicSystem.Policies
             int policyId = (int)dgvPolicies.CurrentRow.Cells["PolicyID"].Value;
 
             AddUpdatePolicy updatePolicy = new AddUpdatePolicy(policyId);
-            updatePolicy.SendPolicyId += RefreshDgv;
+            updatePolicy.SendPolicy += RefreshDgv;
             updatePolicy.ShowDialog();
         }
 

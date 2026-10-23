@@ -56,8 +56,9 @@ namespace ClinicSystem.Policies.Controls
 
             int policyId = -1;
             int.TryParse(txtFindBy.Text, out policyId);
+            if (policy == null)
+                policy = Policy.FindPolicyByID(policyId);
 
-            policy = Policy.FindPolicyByID(policyId);
             viewPolicyInfoCtrl1.LoadPolicyInfo(policy);
 
             if (AllowedFind)
@@ -81,13 +82,14 @@ namespace ClinicSystem.Policies.Controls
         private void btnAddNew_Click(object sender, System.EventArgs e)
         {
             AddUpdatePolicy addPolicy = new AddUpdatePolicy();
-            addPolicy.SendPolicyId += RecivePolicyId;
+            addPolicy.SendPolicy += RecivePolicyId;
             addPolicy.ShowDialog();
         }
 
-        private void RecivePolicyId(int policyId)
+        private void RecivePolicyId(Policy policy)
         {
-            txtFindBy.Text = policyId.ToString();
+            txtFindBy.Text = policy.PolicyID.ToString();
+            this.policy = policy;
             Find();
         }
     }
