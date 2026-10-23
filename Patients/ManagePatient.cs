@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
@@ -100,10 +101,10 @@ namespace ClinicSystem.Patients
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPatients));
         }
 
-        private void RefreshDgv(int patientId)
+        private void RefreshDgv(Patient p)
         {
             int targetIndex = -1;
-            PatientList patient = PatientList.FindPatientByIdList(patientId);
+            PatientList patient = PatientList.FindPatientByIdList(p.PatientId);
 
             if (Patients.Any(x => x.PatientId == patient.PatientId))
                 targetIndex = Patients.IndexOf(Patients.First(x => x.PatientId == patient.PatientId));
@@ -113,7 +114,7 @@ namespace ClinicSystem.Patients
 
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegisterPatient register = new RegisterPatient();
+            RegisterPatient register = new RegisterPatient(EnAddMode.AddImmediately);
             register.OnRegisterSave += RefreshDgv;
             register.ShowDialog();
         }

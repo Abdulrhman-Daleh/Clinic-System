@@ -1,5 +1,5 @@
-﻿using ClinicSystem.Helpers;
-using System;
+﻿using Business;
+using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -13,17 +13,23 @@ namespace ClinicSystem.Patients.Controls
             CommonOperations.SetUpDefaultControlsValue(new List<Control> { lblBookingfreeze, lblHasUnpaidFees, lblRegistered, lblTotalVisits }, "Not Set");
         }
 
-        public void LoadPatientInfo(DateTime RegisterDate, DateTime? EndOfBookingFreeze, int FreezeUnlockDays,
-            string IsUnPaidText, int TotalVisits)
+        public void LoadPatientInfo(Patient patient)
         {
-            if (EndOfBookingFreeze == null)
-                lblBookingfreeze.Text = $"Not frozen so ({FreezeUnlockDays}) days";
-            else
-                lblBookingfreeze.Text = $"Until {EndOfBookingFreeze.Value.ToShortDateString()} ({FreezeUnlockDays} days)";
 
-            lblRegistered.Text = RegisterDate.ToString();
-            lblHasUnpaidFees.Text = IsUnPaidText;
-            lblTotalVisits.Text = TotalVisits.ToString();
+            if (ValidationHelper.IsEmptyOrNull((patient), "patient is not found"))
+            {
+                CommonOperations.SetUpDefaultControlsValue(new List<Control> { lblBookingfreeze, lblHasUnpaidFees, lblRegistered, lblTotalVisits }, "Not Set");
+                return;
+            }
+
+            if (patient.EndOfBookingFreeze == null)
+                lblBookingfreeze.Text = $"Not frozen so ({patient.FreezeUnlockDays()}) days";
+            else
+                lblBookingfreeze.Text = $"Until {patient.EndOfBookingFreeze.Value.ToShortDateString()} ({patient.FreezeUnlockDays()} days)";
+
+            lblRegistered.Text = patient.RegisterDate.ToString();
+            lblHasUnpaidFees.Text = patient.ISUnpaidText();
+            lblTotalVisits.Text = patient.GetTotalVisits().ToString();
         }
 
 

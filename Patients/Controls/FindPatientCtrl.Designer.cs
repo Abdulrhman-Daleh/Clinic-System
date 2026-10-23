@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.gbFindBy = new System.Windows.Forms.GroupBox();
             this.AddPatient = new System.Windows.Forms.Button();
             this.BtnFindPatient = new System.Windows.Forms.Button();
@@ -35,7 +36,9 @@
             this.cbFindBy = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.patientInfoCtrl1 = new ClinicSystem.Patients.Controls.PatientInfoCtrl();
+            this.errors = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbFindBy.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
             this.SuspendLayout();
             // 
             // gbFindBy
@@ -61,6 +64,7 @@
             this.AddPatient.Size = new System.Drawing.Size(60, 49);
             this.AddPatient.TabIndex = 4;
             this.AddPatient.UseVisualStyleBackColor = true;
+            this.AddPatient.Click += new System.EventHandler(this.btnAddNew_Click);
             // 
             // BtnFindPatient
             // 
@@ -70,6 +74,7 @@
             this.BtnFindPatient.Size = new System.Drawing.Size(60, 49);
             this.BtnFindPatient.TabIndex = 3;
             this.BtnFindPatient.UseVisualStyleBackColor = true;
+            this.BtnFindPatient.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // txtFindBy
             // 
@@ -78,6 +83,8 @@
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(138, 30);
             this.txtFindBy.TabIndex = 2;
+            this.txtFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFindBy_KeyPress);
+            this.txtFindBy.Validating += new System.ComponentModel.CancelEventHandler(this.txtFindBy_Validating);
             // 
             // cbFindBy
             // 
@@ -86,6 +93,7 @@
             this.cbFindBy.Name = "cbFindBy";
             this.cbFindBy.Size = new System.Drawing.Size(151, 33);
             this.cbFindBy.TabIndex = 1;
+            this.cbFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFindBy_KeyPress);
             // 
             // label1
             // 
@@ -106,6 +114,10 @@
             this.patientInfoCtrl1.Size = new System.Drawing.Size(609, 210);
             this.patientInfoCtrl1.TabIndex = 2;
             // 
+            // errors
+            // 
+            this.errors.ContainerControl = this;
+            // 
             // FindPatientCtrl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -116,6 +128,7 @@
             this.Size = new System.Drawing.Size(609, 310);
             this.gbFindBy.ResumeLayout(false);
             this.gbFindBy.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -129,5 +142,6 @@
         private System.Windows.Forms.ComboBox cbFindBy;
         private System.Windows.Forms.Label label1;
         private PatientInfoCtrl patientInfoCtrl1;
+        private System.Windows.Forms.ErrorProvider errors;
     }
 }
