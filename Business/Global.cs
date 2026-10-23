@@ -2,6 +2,6 @@
 {
     public class Global
     {
-        Staff CurrentLoggedInStaff { get; set; }
+        public static Staff CurrentLoggedInStaff { get; set; }
     }
 }
