@@ -1,16 +1,18 @@
 ﻿using Data_Access.DTOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace Data_Access
 {
     public class InsuranceData
     {
-        public static (int InsuranceId, int PolicyId) AddNewInsurance(InsuranceDto insuranceDto)
+        public static (int InsuranceId, int PatientId) AddNewInsurance(InsuranceDto insuranceDto, PatientDto patientDto)
         {
-            (int InsuranceId, int PolicyId) result = (-1, -1);
+            (int InsuranceId, int PatientId) result = (-1, -1);
 
             try
             {
@@ -19,14 +21,24 @@ namespace Data_Access
                     new SqlParameter("@RecordedBy", insuranceDto.RecordedBy),
                     new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceTypeId),
                     new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatusId),
-                    new SqlParameter("@UploadedDate", insuranceDto.UploadedDate),
                     new SqlParameter("@InsuranceProvider", (object)insuranceDto.InsuranceProvider ?? DBNull.Value),
                     new SqlParameter("@PolicyNumber", (object)insuranceDto.PolicyNumber ?? DBNull.Value),
                     new SqlParameter("@CoverageStartDate", insuranceDto.CoverageStartDate),
                     new SqlParameter("@CoverageEndDate", insuranceDto.CoverageEndDate),
                     new SqlParameter("@PatientClaims", (object)insuranceDto.PatientClaims ?? DBNull.Value),
-                    new SqlParameter("@PolicyholderPatientId", insuranceDto.PolicyholderPatientId)
+                    new SqlParameter("@PolicyholderPatientId", insuranceDto.PolicyholderPatientId),
+                    new SqlParameter("@PersonID", patientDto.PersonId),
+                    new SqlParameter("@PolicyID", insuranceDto.PolicyId),
+                    new SqlParameter("@Firstname", patientDto.Firstname),
+                    new SqlParameter("@LastName", patientDto.Lastname),
+                    new SqlParameter("@Gender", patientDto.Gender),
+                    new SqlParameter("@PatientID", patientDto.PatientId),
+                    new SqlParameter("@IsFrozen", (object)patientDto.IsFrozen ?? DBNull.Value),
+                    new SqlParameter("@RegisterDate", patientDto.RegisterDate),
+                    new SqlParameter("@EndOfBookingFreeze", (object)patientDto.EndOfBookingFreeze ?? DBNull.Value),
+                    new SqlParameter("@HasUnPaidFees", (object)patientDto.HasUnPaidFees ?? DBNull.Value),
                 };
+
 
                 List<SqlParameter> outputParams = new List<SqlParameter>()
                 {
@@ -34,7 +46,7 @@ namespace Data_Access
                     {
                         Direction = ParameterDirection.Output
                     },
-                    new SqlParameter("@PolicyId", SqlDbType.Int)
+                    new SqlParameter("@AddedPatientID", SqlDbType.Int)
                     {
                         Direction = ParameterDirection.Output
                     }
@@ -46,7 +58,7 @@ namespace Data_Access
                 if (success)
                 {
                     result.InsuranceId = Convert.ToInt32(outputParams[0].Value);
-                    result.PolicyId = Convert.ToInt32(outputParams[1].Value);
+                    result.PatientId = Convert.ToInt32(outputParams[1].Value);
                 }
             }
             catch (Exception)
@@ -157,6 +169,50 @@ namespace Data_Access
             {
                 throw;
             }
+        }
+
+        private static string InsuranceTypeMapper(SqlDataReader reader)
+        {
+            return (string)reader["InsuranceTypeName"];
+        }
+
+        private static string InsuranceStatusMapper(SqlDataReader reader)
+        {
+            return (string)reader["insuranceStatusText"];
+        }
+
+        public static async Task<BindingList<string>> GetInsuranceTypesNames()
+        {
+            BindingList<string> types = new BindingList<string>();
+            string query = @"select InsuranceTypeName from insuranceTypes";
+
+            try
+            {
+                types = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceTypeMapper);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return types;
+        }
+
+        public static async Task<BindingList<string>> GetInsuranceStatusesNames()
+        {
+            BindingList<string> types = new BindingList<string>();
+            string query = @"select insuranceStatusText from insuranceStatuses";
+
+            try
+            {
+                types = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceStatusMapper);
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return types;
         }
     }
 }

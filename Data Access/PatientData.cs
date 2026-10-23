@@ -138,5 +138,33 @@ namespace Data_Access
 
             return patient;
         }
+        public static int GetTotalVisits(int patientId)
+        {
+            int totalVisits = 0;
+            string query = @"select 
+        	count(p.PatientID) as TotalVisits
+        from Patients as p
+        	inner join Appointments as app on app.PatientID = p.PatientID
+        	where p.PatientID = @patientId;";
+
+            try
+            {
+                List<SqlParameter> paramters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@patientId", SqlDbType.Int) { Value = patientId}
+                };
+
+                object obj = DataAccessHelper.ExecuteScalar(query, paramters);
+
+                if (obj != null && int.TryParse(obj.ToString(), out totalVisits)) { }
+                ;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return totalVisits;
+        }
     }
 }

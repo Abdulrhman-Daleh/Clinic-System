@@ -170,5 +170,31 @@ namespace Data_Access
 
             return list;
         }
+
+        private static (int policyID, string Display) PolicySimpleMapper(SqlDataReader reader)
+        {
+            return ((int)reader["policyId"], (string)reader["display"]);
+        }
+        public static async Task<BindingList<(int policyId, string ActiveDateRange)>> GetPoliciesRanges()
+        {
+            BindingList<(int policyId, string ActiveDateRange)> list = new BindingList<(int policyId, string ActiveDateRange)>();
+            string query = @"SELECT PolicyID,
+                   CONVERT(varchar(10), ActiveFrom, 6) + ' → ' +
+                   CONVERT(varchar(10), ActiveTo, 6) AS Display
+                      FROM Policies
+                      WHERE PolicyStatusID = (SELECT PolicyStatusID FROM PolicyStatuses WHERE PolicyStatusText = 'Active')
+                      ORDER BY ActiveFrom DESC";
+
+            try
+            {
+                list = await DataAccessHelper.ExecuteObjectList<(int policyId, string display)>(query, null, PolicySimpleMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return list;
+        }
     }
 }
