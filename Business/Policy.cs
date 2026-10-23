@@ -139,5 +139,10 @@ namespace Business
 
             return list;
         }
+
+        public static async Task<BindingList<(int policyId, string ActiveDateRange)>> GetPoliciesRanges()
+        {
+            return await PolicyData.GetPoliciesRanges();
+        }
     }
 }

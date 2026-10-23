@@ -1,6 +1,8 @@
 ﻿using Data_Access;
 using Data_Access.DTOs;
 using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -20,17 +22,25 @@ namespace Business
         public DateTime CoverageEndDate { get; set; }
         public string PatientClaims { get; set; }
         public int PolicyholderPatientId { get; set; }
-
+        public Policy Policy { get; set; }
+        public Patient PolicyPatientHolder { get; set; }
+        public Staff RecorderStaff { get; set; }
         public Insurance()
         {
             InsurenceId = -1;
             PolicyId = -1;
+            Policy = null;
+            PolicyPatientHolder = null;
+            RecorderStaff = null;
             _mode = Mode.Add;
         }
 
         public Insurance(int insuranceId)
         {
             InsurenceId = insuranceId;
+            Policy = Policy.FindPolicyByID(PolicyId);
+            PolicyPatientHolder = Patient.FindPatientById(PolicyholderPatientId);
+            RecorderStaff = Staff.FindStaffById(RecordedBy);
             _mode = Mode.Update;
         }
 
@@ -66,7 +76,7 @@ namespace Business
             {
                 InsurenceId = insurance.InsurenceId,
                 PolicyId = insurance.PolicyId,
-                RecordedBy = insurance.RecordedBy,
+                RecordedBy = insurance.RecorderStaff.StaffId,
                 InsuranceTypeId = insurance.InsuranceTypeId,
                 InsuranceStatusId = insurance.InsuranceStatusId,
                 UploadedDate = insurance.UploadedDate,
@@ -75,19 +85,19 @@ namespace Business
                 CoverageStartDate = insurance.CoverageStartDate,
                 CoverageEndDate = insurance.CoverageEndDate,
                 PatientClaims = insurance.PatientClaims,
-                PolicyholderPatientId = insurance.PolicyholderPatientId
+                PolicyholderPatientId = insurance.PolicyPatientHolder.PatientId
             };
         }
 
         private bool _AddNewInsurance()
         {
-            var result = InsuranceData.AddNewInsurance(ToDto(this));
+            var result = InsuranceData.AddNewInsurance(ToDto(this), Patient.ToDto(PolicyPatientHolder));
 
             if (result.InsuranceId == -1)
                 return false;
 
             InsurenceId = result.InsuranceId;
-            PolicyId = result.PolicyId;
+            PolicyholderPatientId = result.PatientId;
 
             return true;
         }
@@ -99,6 +109,9 @@ namespace Business
 
         public bool Save()
         {
+            if (NotValidToSave())
+                return false;
+
             if (_mode == Mode.Add)
             {
                 if (_AddNewInsurance())
@@ -113,6 +126,14 @@ namespace Business
             return _UpdateInsurance();
         }
 
+        private bool NotValidToSave()
+        {
+            if (Policy is null || PolicyPatientHolder is null || RecorderStaff is null)
+                return true;
+
+            return false;
+        }
+
         public static Insurance FindInsuranceByID(int insuranceId)
         {
             return FromDto(InsuranceData.FindInsuranceByID(insuranceId));
@@ -122,5 +143,18 @@ namespace Business
         {
             return FromDto(InsuranceData.FindInsuranceByPolicyID(policyId));
         }
+
+        public static async Task<BindingList<string>> GetInsuranceTypesNames()
+        {
+            return await InsuranceData.GetInsuranceTypesNames();
+        }
+
+        public static async Task<BindingList<string>> GetInsuranceStatusesNames()
+        {
+            return await InsuranceData.GetInsuranceStatusesNames();
+        }
+
+
     }
+
 }

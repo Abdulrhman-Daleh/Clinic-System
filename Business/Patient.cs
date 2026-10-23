@@ -14,7 +14,7 @@ namespace Business
         public DateTime? EndOfBookingFreeze { get; set; }
         public bool? HasUnPaidFees { get; set; }
 
-        private static PatientDto ToDto(Patient patient)
+        public static PatientDto ToDto(Patient patient)
         {
             return new PatientDto()
             {
@@ -32,6 +32,9 @@ namespace Business
 
         private static Patient FromDto(PatientDto patientDto)
         {
+            if (patientDto is null)
+                return null;
+
             return new Patient()
             {
                 PatientId = patientDto.PatientId,
@@ -50,10 +53,10 @@ namespace Business
         {
             PatientId = -1;
             PersonId = -1;
-            IsFrozen = false;
-            RegisterDate = DateTime.MinValue;
-            EndOfBookingFreeze = DateTime.MinValue;
-            HasUnPaidFees = false;
+            IsFrozen = null;
+            RegisterDate = DateTime.Now;
+            EndOfBookingFreeze = null;
+            HasUnPaidFees = null;
         }
 
         public bool AddNewPatient()
@@ -82,6 +85,11 @@ namespace Business
                 return "No";
 
             return HasUnPaidFees == true ? "Yes" : "No";
+        }
+
+        public int GetTotalVisits()
+        {
+            return PatientData.GetTotalVisits(PatientId);
         }
     }
 }
