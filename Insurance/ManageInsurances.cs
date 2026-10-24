@@ -178,6 +178,11 @@ namespace ClinicSystem.Insurance
             int insuranceId =
                 (int)dgvInsurances.CurrentRow.Cells["InsuranceID"].Value;
 
+
+            ViewInsuranceInfo viewInsurance = new ViewInsuranceInfo(insuranceId);
+            viewInsurance.OnChange += RefreshDgv;
+            viewInsurance.ShowDialog();
+
         }
 
         private void btnClose_Click(object sender, EventArgs e) => Close();
