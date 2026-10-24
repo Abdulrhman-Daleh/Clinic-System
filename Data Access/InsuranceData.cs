@@ -1,4 +1,5 @@
 ﻿using Data_Access.DTOs;
+using Data_Access.ListingDTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -37,6 +38,7 @@ namespace Data_Access
                     new SqlParameter("@RegisterDate", patientDto.RegisterDate),
                     new SqlParameter("@EndOfBookingFreeze", (object)patientDto.EndOfBookingFreeze ?? DBNull.Value),
                     new SqlParameter("@HasUnPaidFees", (object)patientDto.HasUnPaidFees ?? DBNull.Value),
+                    new SqlParameter("@Relationship", insuranceDto.Relationship)
                 };
 
 
@@ -75,19 +77,17 @@ namespace Data_Access
             {
                 List<SqlParameter> parameters = new List<SqlParameter>()
                 {
-                    new SqlParameter("@InsuranceId", insuranceDto.InsurenceId),
+                    new SqlParameter("@InsuranceId", insuranceDto.InsuranceID),
                     new SqlParameter("@PolicyId", insuranceDto.PolicyId),
-                    new SqlParameter("@RecordedBy", insuranceDto.RecordedBy),
                     new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceTypeId),
                     new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatusId),
-                    new SqlParameter("@UploadedDate", insuranceDto.UploadedDate),
                     new SqlParameter("@InsuranceProvider", (object)insuranceDto.InsuranceProvider ?? DBNull.Value),
-                    new SqlParameter("@PolicyNumber", (object)insuranceDto.PolicyNumber ?? DBNull.Value),
                     new SqlParameter("@CoverageStartDate", insuranceDto.CoverageStartDate),
                     new SqlParameter("@CoverageEndDate", insuranceDto.CoverageEndDate),
                     new SqlParameter("@PatientClaims", (object)insuranceDto.PatientClaims ?? DBNull.Value),
-                    new SqlParameter("@PolicyholderPatientId", insuranceDto.PolicyholderPatientId)
+                    new SqlParameter("@Relationship", insuranceDto.Relationship),
                 };
+
 
                 return DataAccessHelper.ExecuteNonQueryStoredProcedure<InsuranceDto>(
                     "UpdateInsurance", parameters, new List<SqlParameter>());
@@ -102,9 +102,10 @@ namespace Data_Access
         {
             try
             {
-                string query = @"SELECT *
-                                 FROM Insurances
-                                 WHERE InsuranceId = @InsuranceId";
+                string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
+            PatientClaims, PolicyholderPatientID, PolicyID
+                                 FROM Insurance
+                                 where InsuranceID = @InsuranceId;";
 
                 List<SqlParameter> parameters = new List<SqlParameter>()
                 {
@@ -124,8 +125,9 @@ namespace Data_Access
         {
             try
             {
-                string query = @"SELECT *
-                                 FROM Insurances
+                string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate,
+                PatientClaims, PolicyholderPatientID, PolicyID
+                                 FROM Insurance
                                  WHERE PolicyId = @PolicyId";
 
                 List<SqlParameter> parameters = new List<SqlParameter>()
@@ -148,7 +150,7 @@ namespace Data_Access
             {
                 return new InsuranceDto
                 {
-                    InsurenceId = Convert.ToInt32(reader["InsuranceId"]),
+                    InsuranceID = Convert.ToInt32(reader["InsuranceId"]),
                     PolicyId = Convert.ToInt32(reader["PolicyId"]),
                     RecordedBy = Convert.ToInt32(reader["RecordedBy"]),
                     InsuranceTypeId = Convert.ToInt32(reader["InsuranceTypeId"]),
@@ -213,6 +215,47 @@ namespace Data_Access
             }
 
             return types;
+        }
+
+        private static InsuranceListDto InsuranceListMapper(SqlDataReader reader)
+        {
+            try
+            {
+                return new InsuranceListDto
+                {
+                    InsuranceID = Convert.ToInt32(reader["InsuranceId"]),
+                    InsuranceType = Convert.ToString(reader["InsuranceType"]),
+                    HolderName = Convert.ToString(reader["HolderName"]),
+                    Members = Convert.ToInt32(reader["Members"]),
+                    StatusText = Convert.ToString(reader["StatusText"]),
+                    InsuranceProvider = reader["InsuranceProvider"] == DBNull.Value ? null : Convert.ToString(reader["InsuranceProvider"]),
+                    PolicyNumber = reader["PolicyNumber"] == DBNull.Value ? null : Convert.ToString(reader["PolicyNumber"]),
+                    CoverageStartDate = Convert.ToDateTime(reader["CoverageStart"]),
+                    CoverageEndDate = Convert.ToDateTime(reader["CoverageEnd"]),
+
+                };
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public static async Task<BindingList<InsuranceListDto>> GetInsurances()
+        {
+            BindingList<InsuranceListDto> list = new BindingList<InsuranceListDto>();
+            string query = @"select * from vw_InsuranceList";
+
+            try
+            {
+                list = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceListMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return list;
         }
     }
 }

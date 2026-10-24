@@ -10,7 +10,7 @@ namespace Business
     {
         private enum Mode { Add = 1, Update }
         private Mode _mode;
-        public int InsurenceId { get; set; }
+        public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
         public int InsuranceTypeId { get; set; }
@@ -22,12 +22,20 @@ namespace Business
         public DateTime CoverageEndDate { get; set; }
         public string PatientClaims { get; set; }
         public int PolicyholderPatientId { get; set; }
+        public string Relationship { get; set; }
         public Policy Policy { get; set; }
         public Patient PolicyPatientHolder { get; set; }
         public Staff RecorderStaff { get; set; }
         public Insurance()
         {
-            InsurenceId = -1;
+            InsuranceID = -1;
+            RecordedBy = -1;
+            InsuranceTypeId = -1;
+            PolicyNumber = string.Empty;
+            CoverageStartDate = DateTime.Now.AddYears(-1);
+            CoverageEndDate = DateTime.Now.AddYears(1);
+            PatientClaims = string.Empty;
+            PolicyholderPatientId = -1;
             PolicyId = -1;
             Policy = null;
             PolicyPatientHolder = null;
@@ -37,7 +45,7 @@ namespace Business
 
         public Insurance(int insuranceId)
         {
-            InsurenceId = insuranceId;
+            InsuranceID = insuranceId;
             Policy = Policy.FindPolicyByID(PolicyId);
             PolicyPatientHolder = Patient.FindPatientById(PolicyholderPatientId);
             RecorderStaff = Staff.FindStaffById(RecordedBy);
@@ -49,9 +57,9 @@ namespace Business
             if (insuranceDto == null)
                 return null;
 
-            return new Insurance(insuranceDto.InsurenceId)
+            return new Insurance(insuranceDto.InsuranceID)
             {
-                InsurenceId = insuranceDto.InsurenceId,
+                InsuranceID = insuranceDto.InsuranceID,
                 PolicyId = insuranceDto.PolicyId,
                 RecordedBy = insuranceDto.RecordedBy,
                 InsuranceTypeId = insuranceDto.InsuranceTypeId,
@@ -63,6 +71,7 @@ namespace Business
                 CoverageEndDate = insuranceDto.CoverageEndDate,
                 PatientClaims = insuranceDto.PatientClaims,
                 PolicyholderPatientId = insuranceDto.PolicyholderPatientId,
+                Relationship = insuranceDto.Relationship,
                 _mode = Mode.Update
             };
         }
@@ -74,7 +83,7 @@ namespace Business
 
             return new InsuranceDto
             {
-                InsurenceId = insurance.InsurenceId,
+                InsuranceID = insurance.InsuranceID,
                 PolicyId = insurance.PolicyId,
                 RecordedBy = insurance.RecorderStaff.StaffId,
                 InsuranceTypeId = insurance.InsuranceTypeId,
@@ -85,7 +94,8 @@ namespace Business
                 CoverageStartDate = insurance.CoverageStartDate,
                 CoverageEndDate = insurance.CoverageEndDate,
                 PatientClaims = insurance.PatientClaims,
-                PolicyholderPatientId = insurance.PolicyPatientHolder.PatientId
+                PolicyholderPatientId = insurance.PolicyPatientHolder.PatientId,
+                Relationship = insurance.Relationship
             };
         }
 
@@ -96,7 +106,7 @@ namespace Business
             if (result.InsuranceId == -1)
                 return false;
 
-            InsurenceId = result.InsuranceId;
+            InsuranceID = result.InsuranceId;
             PolicyholderPatientId = result.PatientId;
 
             return true;
@@ -153,7 +163,6 @@ namespace Business
         {
             return await InsuranceData.GetInsuranceStatusesNames();
         }
-
 
     }
 

@@ -4,7 +4,7 @@ namespace Data_Access.DTOs
 {
     public class InsuranceDto
     {
-        public int InsurenceId { get; set; }
+        public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
         public int InsuranceTypeId { get; set; }
@@ -16,5 +16,6 @@ namespace Data_Access.DTOs
         public DateTime CoverageEndDate { get; set; }
         public string PatientClaims { get; set; }
         public int PolicyholderPatientId { get; set; }
+        public string Relationship { get; set; }
     }
 }
