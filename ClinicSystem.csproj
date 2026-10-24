@@ -55,11 +55,23 @@
     <Compile Include="Insurance\AddUpdateInsurance.Designer.cs">
       <DependentUpon>AddUpdateInsurance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Insurance\Controls\ViewInsuranceInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Insurance\Controls\ViewInsuranceInfoCtrl.Designer.cs">
+      <DependentUpon>ViewInsuranceInfoCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Insurance\ManageInsurances.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Insurance\ManageInsurances.Designer.cs">
       <DependentUpon>ManageInsurances.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Insurance\ViewInsuranceInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Insurance\ViewInsuranceInfo.Designer.cs">
+      <DependentUpon>ViewInsuranceInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\SystemLogin.cs">
       <SubType>Form</SubType>
@@ -239,8 +251,14 @@
     <EmbeddedResource Include="Insurance\AddUpdateInsurance.resx">
       <DependentUpon>AddUpdateInsurance.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Insurance\Controls\ViewInsuranceInfoCtrl.resx">
+      <DependentUpon>ViewInsuranceInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Insurance\ManageInsurances.resx">
       <DependentUpon>ManageInsurances.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Insurance\ViewInsuranceInfo.resx">
+      <DependentUpon>ViewInsuranceInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\SystemLogin.resx">
       <DependentUpon>SystemLogin.cs</DependentUpon>
