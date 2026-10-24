@@ -52,6 +52,7 @@
     <Compile Include="DTOs\ScheduleDto.cs" />
     <Compile Include="DTOs\StaffDto.cs" />
     <Compile Include="InsuranceData.cs" />
+    <Compile Include="ListingDTOs\InsuranceListDto.cs" />
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
     <Compile Include="ListingDTOs\StaffListingDto.cs" />
     <Compile Include="PatientData.cs" />

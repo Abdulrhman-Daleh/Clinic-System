@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Global.cs" />
     <Compile Include="Insurance.cs" />
+    <Compile Include="InsuranceList.cs" />
     <Compile Include="Patient.cs" />
     <Compile Include="PatientList.cs" />
     <Compile Include="Policy.cs" />
