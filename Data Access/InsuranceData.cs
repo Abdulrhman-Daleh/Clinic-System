@@ -223,7 +223,7 @@ namespace Data_Access
             {
                 return new InsuranceListDto
                 {
-                    InsuranceID = Convert.ToInt32(reader["InsuranceId"]),
+                    InsuranceID = Convert.ToInt32(reader["InsuranceID"]),
                     InsuranceType = Convert.ToString(reader["InsuranceType"]),
                     HolderName = Convert.ToString(reader["HolderName"]),
                     Members = Convert.ToInt32(reader["Members"]),
@@ -256,6 +256,30 @@ namespace Data_Access
             }
 
             return list;
+        }
+
+        public static InsuranceListDto FindInsuranceListByID(int insuranceId)
+        {
+            InsuranceListDto insurance = new InsuranceListDto();
+            string query = @"select InsuranceID, PolicyNumber, InsuranceProvider, InsuranceType, HolderName, Members, CoverageStart, CoverageEnd, StatusText from vw_InsuranceList
+	        where InsuranceID = @InsuranceId";
+
+
+            try
+            {
+                List<SqlParameter> parameters = new List<SqlParameter>()
+                {
+                    new SqlParameter("@InsuranceId", SqlDbType.Int) { Value = insuranceId },
+                };
+
+                insurance = DataAccessHelper.ExecuteOneObject(query, parameters, InsuranceListMapper);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return insurance;
         }
     }
 }

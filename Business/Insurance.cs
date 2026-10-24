@@ -46,9 +46,6 @@ namespace Business
         public Insurance(int insuranceId)
         {
             InsuranceID = insuranceId;
-            Policy = Policy.FindPolicyByID(PolicyId);
-            PolicyPatientHolder = Patient.FindPatientById(PolicyholderPatientId);
-            RecorderStaff = Staff.FindStaffById(RecordedBy);
             _mode = Mode.Update;
         }
 
@@ -72,6 +69,9 @@ namespace Business
                 PatientClaims = insuranceDto.PatientClaims,
                 PolicyholderPatientId = insuranceDto.PolicyholderPatientId,
                 Relationship = insuranceDto.Relationship,
+                Policy = Policy.FindPolicyByID(insuranceDto.PolicyId),
+                PolicyPatientHolder = Patient.FindPatientById(insuranceDto.PolicyholderPatientId),
+                RecorderStaff = Staff.FindStaffById(insuranceDto.RecordedBy),
                 _mode = Mode.Update
             };
         }

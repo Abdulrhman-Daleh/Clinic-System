@@ -43,9 +43,9 @@ namespace Business
             return list;
         }
 
-        public static async InsuranceList FindInsurancebyID(int InsuranceId)
+        public static InsuranceList FindInsurancebyID(int InsuranceId)
         {
-            return InsuranceData.FindInsuranceListByID(InsuranceId);
+            return FromDto(InsuranceData.FindInsuranceListByID(InsuranceId));
         }
     }
 }
