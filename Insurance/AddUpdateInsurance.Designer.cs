@@ -32,6 +32,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AddUpdateInsurance));
             this.lblTitle = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtRelationship = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.cbPolicies = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.dtpCoverageEnd = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
@@ -58,10 +64,9 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cbPolicies = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -71,7 +76,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -87,6 +91,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtRelationship);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.pictureBox9);
             this.groupBox1.Controls.Add(this.cbPolicies);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.pictureBox2);
@@ -111,6 +118,60 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Insurance Info";
+            // 
+            // txtRelationship
+            // 
+            this.txtRelationship.Location = new System.Drawing.Point(615, 173);
+            this.txtRelationship.MaxLength = 50;
+            this.txtRelationship.Name = "txtRelationship";
+            this.txtRelationship.Size = new System.Drawing.Size(157, 30);
+            this.txtRelationship.TabIndex = 53;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(495, 176);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(118, 25);
+            this.label6.TabIndex = 52;
+            this.label6.Text = "Relationship";
+            // 
+            // pictureBox9
+            // 
+            this.pictureBox9.Image = global::ClinicSystem.Properties.Resources.shield_32;
+            this.pictureBox9.Location = new System.Drawing.Point(448, 167);
+            this.pictureBox9.Name = "pictureBox9";
+            this.pictureBox9.Size = new System.Drawing.Size(40, 43);
+            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox9.TabIndex = 51;
+            this.pictureBox9.TabStop = false;
+            // 
+            // cbPolicies
+            // 
+            this.cbPolicies.FormattingEnabled = true;
+            this.cbPolicies.Location = new System.Drawing.Point(202, 232);
+            this.cbPolicies.Name = "cbPolicies";
+            this.cbPolicies.Size = new System.Drawing.Size(504, 33);
+            this.cbPolicies.TabIndex = 50;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(73, 235);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(123, 25);
+            this.label2.TabIndex = 49;
+            this.label2.Text = "Clinic Policy:";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.Manage_Insurance_64;
+            this.pictureBox2.Location = new System.Drawing.Point(23, 223);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(40, 43);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 48;
+            this.pictureBox2.TabStop = false;
             // 
             // dtpCoverageEnd
             // 
@@ -356,33 +417,6 @@
             // 
             this.errors.ContainerControl = this;
             // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.Manage_Insurance_64;
-            this.pictureBox2.Location = new System.Drawing.Point(23, 223);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 43);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 48;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(73, 235);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 25);
-            this.label2.TabIndex = 49;
-            this.label2.Text = "Clinic Policy:";
-            // 
-            // cbPolicies
-            // 
-            this.cbPolicies.FormattingEnabled = true;
-            this.cbPolicies.Location = new System.Drawing.Point(202, 232);
-            this.cbPolicies.Name = "cbPolicies";
-            this.cbPolicies.Size = new System.Drawing.Size(504, 33);
-            this.cbPolicies.TabIndex = 50;
-            // 
             // AddUpdateInsurance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -400,9 +434,10 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "AddUpdateInsurance";
             this.Text = "Add Update Insurance";
-            this.Load += new System.EventHandler(this.AddUpdateInsurance_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -413,7 +448,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -452,5 +486,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.ComboBox cbPolicies;
+        private System.Windows.Forms.TextBox txtRelationship;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox pictureBox9;
     }
 }

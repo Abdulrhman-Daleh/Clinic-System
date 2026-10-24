@@ -101,5 +101,11 @@ namespace ClinicSystem
             AddUpdateInsurance addInsurance = new AddUpdateInsurance();
             addInsurance.ShowDialog();
         }
+
+        private void manageInsuranceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageInsurances manageInsurances = new ManageInsurances();
+            manageInsurances.ShowDialog();
+        }
     }
 }

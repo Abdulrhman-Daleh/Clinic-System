@@ -2,6 +2,7 @@
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Insurance
@@ -48,7 +49,6 @@ namespace ClinicSystem.Insurance
             findPatientCtrl1.AllowedFind = false;
 
             findPatientCtrl1.LoadPatientInfo(insurance.PolicyId);
-
             SetControls();
 
             lblInsuranceId.Text = $"Ins-{insuranceId}";
@@ -68,7 +68,7 @@ namespace ClinicSystem.Insurance
             btnSave.Text = saveButtonText;
         }
 
-        private void SetControls()
+        private async void SetControls()
         {
             txtProviderName.Text = insurance.InsuranceProvider;
             txtPatientClaims.Text = insurance.PatientClaims;
@@ -76,33 +76,36 @@ namespace ClinicSystem.Insurance
             dtpCoverageStart.Value = insurance.CoverageStartDate;
             dtpCoverageEnd.Value = insurance.CoverageEndDate;
 
+            await LoadInsuranceTypes();
+            await LoadInsuranceStatuses();
+            await LoadPolicies();
+
             cbTypes.SelectedIndex = insurance.InsuranceTypeId - 1;
             cbStatuses.SelectedIndex = insurance.InsuranceStatusId - 1;
+            txtRelationship.Text = insurance.Relationship;
         }
 
-        private async void LoadInsuranceTypes()
+        private async Task<bool> LoadInsuranceTypes()
         {
             cbTypes.DataSource = await Business.Insurance.GetInsuranceTypesNames();
+            return true;
         }
 
-        private async void LoadInsuranceStatuses()
+        private async Task<bool> LoadInsuranceStatuses()
         {
             cbStatuses.DataSource = await Business.Insurance.GetInsuranceStatusesNames();
+            return true;
         }
 
-        private async void LoadPolicies()
+        private async Task<bool> LoadPolicies()
         {
             cbPolicies.DisplayMember = "Display";
             cbPolicies.ValueMember = "PolicyID";
             cbPolicies.DataSource = await Policy.GetPoliciesRanges();
+
+            return true;
         }
 
-        private void AddUpdateInsurance_Load(object sender, EventArgs e)
-        {
-            LoadInsuranceTypes();
-            LoadInsuranceStatuses();
-            LoadPolicies();
-        }
 
         private void ValidateRequiredInput(object sender, CancelEventArgs e)
         {
@@ -125,6 +128,7 @@ namespace ClinicSystem.Insurance
 
             insurance.PolicyId = po.policyId;
             insurance.Policy = Policy.FindPolicyByID(po.policyId);
+            insurance.Relationship = txtRelationship.Text;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -152,13 +156,13 @@ namespace ClinicSystem.Insurance
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                lblInsuranceId.Text = $"Ins-{insurance.InsurenceId}";
+                lblInsuranceId.Text = $"Ins-{insurance.InsuranceID}";
                 findPatientCtrl1.LoadPatientInfo(insurance.PolicyholderPatientId);
                 SetUpdateMode();
 
                 findPatientCtrl1.AllowedFind = false;
 
-                SendInsuranceId?.Invoke(insurance.InsurenceId);
+                SendInsuranceId?.Invoke(insurance.InsuranceID);
             }
             else
             {

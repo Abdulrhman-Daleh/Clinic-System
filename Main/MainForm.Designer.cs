@@ -50,6 +50,7 @@
             this.insurancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addInsuranceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.manageInsuranceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -251,6 +252,7 @@
             // insurancesToolStripMenuItem
             // 
             this.insurancesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manageInsuranceToolStripMenuItem,
             this.addInsuranceToolStripMenuItem});
             this.insurancesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.Manage_Insurance_64;
             this.insurancesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -263,7 +265,7 @@
             this.addInsuranceToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_Insurance_32;
             this.addInsuranceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.addInsuranceToolStripMenuItem.Name = "addInsuranceToolStripMenuItem";
-            this.addInsuranceToolStripMenuItem.Size = new System.Drawing.Size(245, 38);
+            this.addInsuranceToolStripMenuItem.Size = new System.Drawing.Size(283, 38);
             this.addInsuranceToolStripMenuItem.Text = "Add Insurance";
             this.addInsuranceToolStripMenuItem.Click += new System.EventHandler(this.addInsuranceToolStripMenuItem_Click);
             // 
@@ -277,6 +279,15 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            // 
+            // manageInsuranceToolStripMenuItem
+            // 
+            this.manageInsuranceToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.note_32;
+            this.manageInsuranceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageInsuranceToolStripMenuItem.Name = "manageInsuranceToolStripMenuItem";
+            this.manageInsuranceToolStripMenuItem.Size = new System.Drawing.Size(283, 38);
+            this.manageInsuranceToolStripMenuItem.Text = "Manage Insurance";
+            this.manageInsuranceToolStripMenuItem.Click += new System.EventHandler(this.manageInsuranceToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -320,5 +331,6 @@
         private System.Windows.Forms.ToolStripMenuItem viewPolicyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem insurancesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addInsuranceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageInsuranceToolStripMenuItem;
     }
 }
