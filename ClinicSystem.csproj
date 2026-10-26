@@ -61,6 +61,12 @@
     <Compile Include="Insurance\Controls\ViewInsuranceInfoCtrl.Designer.cs">
       <DependentUpon>ViewInsuranceInfoCtrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Insurance\Controls\ViewPatientsUnderInsurance.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Insurance\Controls\ViewPatientsUnderInsurance.Designer.cs">
+      <DependentUpon>ViewPatientsUnderInsurance.cs</DependentUpon>
+    </Compile>
     <Compile Include="Insurance\ManageInsurances.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Insurance\Controls\ViewInsuranceInfoCtrl.resx">
       <DependentUpon>ViewInsuranceInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Insurance\Controls\ViewPatientsUnderInsurance.resx">
+      <DependentUpon>ViewPatientsUnderInsurance.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Insurance\ManageInsurances.resx">
       <DependentUpon>ManageInsurances.cs</DependentUpon>

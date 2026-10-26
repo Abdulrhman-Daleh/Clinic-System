@@ -46,6 +46,7 @@
     <Compile Include="DataAccessHelper.cs" />
     <Compile Include="DTOs\InsuranceDto.cs" />
     <Compile Include="DTOs\PatientDto.cs" />
+    <Compile Include="DTOs\PatientInsuranceInfoDto.cs" />
     <Compile Include="DTOs\PersonContactDto.cs" />
     <Compile Include="DTOs\PersonDto.cs" />
     <Compile Include="DTOs\PolicyDto.cs" />
