@@ -8,8 +8,8 @@ namespace Business
 {
     public class Insurance
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
+        public enum Mode { Add = 1, Update }
+        public Mode mode;
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
@@ -40,13 +40,13 @@ namespace Business
             Policy = null;
             PolicyPatientHolder = null;
             RecorderStaff = null;
-            _mode = Mode.Add;
+            mode = Mode.Add;
         }
 
         public Insurance(int insuranceId)
         {
             InsuranceID = insuranceId;
-            _mode = Mode.Update;
+            mode = Mode.Update;
         }
 
         public static Insurance FromDto(InsuranceDto insuranceDto)
@@ -72,7 +72,7 @@ namespace Business
                 Policy = Policy.FindPolicyByID(insuranceDto.PolicyId),
                 PolicyPatientHolder = Patient.FindPatientById(insuranceDto.PolicyholderPatientId),
                 RecorderStaff = Staff.FindStaffById(insuranceDto.RecordedBy),
-                _mode = Mode.Update
+                mode = Mode.Update
             };
         }
 
@@ -122,11 +122,11 @@ namespace Business
             if (NotValidToSave())
                 return false;
 
-            if (_mode == Mode.Add)
+            if (mode == Mode.Add)
             {
                 if (_AddNewInsurance())
                 {
-                    _mode = Mode.Update;
+                    mode = Mode.Update;
                     return true;
                 }
 

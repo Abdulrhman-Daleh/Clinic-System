@@ -17,13 +17,13 @@ namespace ClinicSystem.Insurance
         public AddUpdateInsurance()
         {
             InitializeComponent();
-
+            SetControls();
             insurance = new Business.Insurance();
 
             SetFormTextBasedMode(
                 "Add New Insurance", "Add Insurance", "Add Insurance");
-
             lblInsuranceId.Text = "[Not Set]";
+
             findPatientCtrl1.SendPatient += RecivePatient;
             insurance.RecorderStaff = Global.CurrentLoggedInStaff;
             insurance.RecordedBy = insurance.RecorderStaff.StaffId;
@@ -68,17 +68,25 @@ namespace ClinicSystem.Insurance
             btnSave.Text = saveButtonText;
         }
 
+        private async Task SetNeededComboBoxes()
+        {
+            await LoadInsuranceTypes();
+            await LoadInsuranceStatuses();
+            await LoadPolicies();
+        }
+
         private async void SetControls()
         {
+            await SetNeededComboBoxes();
+
+            if (insurance.mode == Business.Insurance.Mode.Add)
+                return;
+
             txtProviderName.Text = insurance.InsuranceProvider;
             txtPatientClaims.Text = insurance.PatientClaims;
 
             dtpCoverageStart.Value = insurance.CoverageStartDate;
             dtpCoverageEnd.Value = insurance.CoverageEndDate;
-
-            await LoadInsuranceTypes();
-            await LoadInsuranceStatuses();
-            await LoadPolicies();
 
             cbTypes.SelectedIndex = insurance.InsuranceTypeId - 1;
             cbStatuses.SelectedIndex = insurance.InsuranceStatusId - 1;
