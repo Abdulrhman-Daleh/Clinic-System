@@ -139,7 +139,7 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
-        public static bool Date1ThenDate2(DateTime date1, DateTime date2)
+        public static bool Date1BeforeDate2(DateTime date1, DateTime date2)
         {
             return date1.Date < date2.Date;
         }
