@@ -124,18 +124,27 @@ namespace Business
             if (NotValidToSave())
                 return false;
 
-            if (mode == Mode.Add)
+            switch (mode)
             {
-                if (_AddNewInsurance())
-                {
-                    mode = Mode.Update;
-                    return true;
-                }
+                case Mode.Add:
+                    if (_AddNewInsurance())
+                    {
+                        mode = Mode.Update;
+                        Auditor.Log("Insurance Added", $"Insurance type '{InsuranceType.InsuranceTypeName}' for PatientID {PolicyholderPatientId} (Provider: {InsuranceProvider}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"InsuranceID {InsuranceID}");
+                        return true;
+                    }
+                    return false;
 
-                return false;
+                case Mode.Update:
+                    if (_UpdateInsurance())
+                    {
+                        Auditor.Log("Insurance Updated", $"Insurance type '{InsuranceType.InsuranceTypeName}' for PatientID {PolicyholderPatientId} (Provider: {InsuranceProvider}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"InsuranceID {InsuranceID}");
+                        return true;
+                    }
+                    return false;
             }
 
-            return _UpdateInsurance();
+            return false;
         }
 
         private bool NotValidToSave()

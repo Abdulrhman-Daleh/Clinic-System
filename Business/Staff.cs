@@ -115,12 +115,19 @@ namespace Business
                     if (AddNewStaff())
                     {
                         Mode = EnMode.Update;
+                        Auditor.Log("Staff Added", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"StaffID {StaffId}");
                         return true;
                     }
                     return false;
 
                 case EnMode.Update:
-                    return UpdateStaff();
+                    if (UpdateStaff())
+                    {
+                        Auditor.Log("Staff Updated", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"StaffID {StaffId}");
+                        return true;
+                    }
+
+                    return false;
             }
 
             return false;

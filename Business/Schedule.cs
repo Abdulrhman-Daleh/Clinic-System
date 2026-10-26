@@ -81,13 +81,19 @@ namespace Business
                     if (AddNewSchedule())
                     {
                         Mode = EnMode.Update;
+                        Auditor.Log("Schedule Added", $"Shift '{ShiftName}' ({WorkStartFrom:hh\\:mm}–{WorkEndAt:hh\\:mm}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ScheduleID {ScheduleId}");
                         return true;
                     }
                     return false;
 
                 case EnMode.Update:
+                    if (UpdateSchedule())
+                    {
+                        Auditor.Log("Schedule Updated", $"Shift '{ShiftName}' ({WorkStartFrom:hh\\:mm}–{WorkEndAt:hh\\:mm}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ScheduleID {ScheduleId}");
+                        return true;
+                    }
 
-                    return UpdateSchedule();
+                    return false;
             }
 
             return false;

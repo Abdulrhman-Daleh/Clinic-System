@@ -73,7 +73,13 @@ namespace Business
                 return true;
             }
 
-            return _UpdatePerson();
+            if (_UpdatePerson())
+            {
+                Auditor.Log("Person Updated", $"Person: {Firstname} {Lastname} (PersonID {PersonId}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PersonID {PersonId}");
+                return true;
+            }
+
+            return false;
         }
 
         public static Person FindPersonById(int personId)

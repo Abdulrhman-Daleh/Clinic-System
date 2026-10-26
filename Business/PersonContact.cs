@@ -71,13 +71,19 @@ namespace Business
                     if (AddNewContact())
                     {
                         _mode = Mode.Update;
+                        Auditor.Log("Contact Added", $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ContactID {ContactId}");
                         return true;
                     }
                     else
                         return false;
 
                 case Mode.Update:
-                    return UpdateContact();
+                    if (UpdateContact())
+                    {
+                        Auditor.Log("Contact Updated", $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ContactID {ContactId}");
+                        return true;
+                    }
+                    return false;
             }
 
             return false;

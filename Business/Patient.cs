@@ -63,7 +63,13 @@ namespace Business
         {
             this.PatientId = PatientData.AddNewPatient(ToDto(this));
 
-            return this.PatientId > 0;
+            if (this.PatientId > 0)
+            {
+                Auditor.Log("Patient Added", $"Patient linked to PersonID {PersonId} was registered by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PatientID {PatientId}");
+                return true;
+            }
+
+            return false;
         }
 
         public static Patient FindPatientById(int patientId)

@@ -96,18 +96,27 @@ namespace Business
 
         public bool Save()
         {
-            if (_mode == Mode.Add)
+            switch (_mode)
             {
-                if (_AddNewPolicy())
-                {
-                    _mode = Mode.Update;
-                    return true;
-                }
+                case Mode.Add:
+                    if (_AddNewPolicy())
+                    {
+                        _mode = Mode.Update;
+                        Auditor.Log("Policy Added", $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PolicyID {PolicyID}");
+                        return true;
+                    }
+                    return false;
 
-                return false;
+                case Mode.Update:
+                    if (_UpdatePolicy())
+                    {
+                        Auditor.Log("Policy Updated", $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PolicyID {PolicyID}");
+                        return true;
+                    }
+                    return false;
             }
 
-            return _UpdatePolicy();
+            return false;
         }
 
         public static Policy FindPolicyByID(int policyID)
