@@ -10,7 +10,7 @@ namespace Business
     {
         private enum Mode { Add = 1, Update = 2 };
         private Mode _mode;
-        public EnContactTypes ContactTypeId { get; set; }
+        public (EnContactTypes ContactTypeId, string ContactTypeName) ContactType { get; set; }
         public int ContactId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -24,7 +24,7 @@ namespace Business
                 PhoneNumber = contactDto.PhoneNumber,
                 PersonId = contactDto.PersonId,
                 ContactId = contactDto.ContactId,
-                ContactTypeId = (EnContactTypes)contactDto.ContactTypeId
+                ContactType = (contactDto.ContactType.ContactTypeId, contactDto.ContactType.ContactTypeName)
             };
         }
 
@@ -39,7 +39,7 @@ namespace Business
                 Email = contact.Email,
                 PhoneNumber = contact.PhoneNumber,
                 PersonId = contact.PersonId,
-                ContactTypeId = (int)contact.ContactTypeId
+                ContactType = (contact.ContactType.ContactTypeId, contact.ContactType.ContactTypeName)
             };
 
         }
@@ -47,7 +47,7 @@ namespace Business
         public PersonContact()
         {
             ContactId = -1;
-            ContactTypeId = EnContactTypes.Normal;
+            ContactType = ((EnContactTypes)0, "None");
             _mode = Mode.Add;
         }
 

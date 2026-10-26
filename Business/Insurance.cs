@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.DTOs;
 using System;
 using System.ComponentModel;
@@ -13,8 +14,8 @@ namespace Business
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
-        public int InsuranceTypeId { get; set; }
-        public int InsuranceStatusId { get; set; }
+        public (EnInsuranceTypes InsuranceTypeId, string InsuranceTypeName) InsuranceType { get; set; }
+        public (EnInsuranceStatuses InsuranceStatusId, string InsuranceStatusName) InsuranceStatus { get; set; }
         public DateTime UploadedDate { get; set; }
         public string InsuranceProvider { get; set; }
         public string PolicyNumber { get; set; }
@@ -30,7 +31,8 @@ namespace Business
         {
             InsuranceID = -1;
             RecordedBy = -1;
-            InsuranceTypeId = -1;
+            InsuranceType = ((EnInsuranceTypes)0, "None");
+            InsuranceStatus = ((EnInsuranceStatuses)0, "None");
             PolicyNumber = string.Empty;
             CoverageStartDate = DateTime.Now.AddYears(-1);
             CoverageEndDate = DateTime.Now.AddYears(1);
@@ -59,8 +61,8 @@ namespace Business
                 InsuranceID = insuranceDto.InsuranceID,
                 PolicyId = insuranceDto.PolicyId,
                 RecordedBy = insuranceDto.RecordedBy,
-                InsuranceTypeId = insuranceDto.InsuranceTypeId,
-                InsuranceStatusId = insuranceDto.InsuranceStatusId,
+                InsuranceType = insuranceDto.InsuranceType,
+                InsuranceStatus = insuranceDto.InsuranceStatus,
                 UploadedDate = insuranceDto.UploadedDate,
                 InsuranceProvider = insuranceDto.InsuranceProvider,
                 PolicyNumber = insuranceDto.PolicyNumber,
@@ -86,8 +88,8 @@ namespace Business
                 InsuranceID = insurance.InsuranceID,
                 PolicyId = insurance.PolicyId,
                 RecordedBy = insurance.RecorderStaff.StaffId,
-                InsuranceTypeId = insurance.InsuranceTypeId,
-                InsuranceStatusId = insurance.InsuranceStatusId,
+                InsuranceType = insurance.InsuranceType,
+                InsuranceStatus = insurance.InsuranceStatus,
                 UploadedDate = insurance.UploadedDate,
                 InsuranceProvider = insurance.InsuranceProvider,
                 PolicyNumber = insurance.PolicyNumber,

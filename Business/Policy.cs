@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.DTOs;
 using System;
 using System.ComponentModel;
@@ -10,10 +11,9 @@ namespace Business
     {
         private enum Mode { Add = 1, Update }
         private Mode _mode;
-
         public int PolicyID { get; set; }
         public int OwnerID { get; set; }
-        public int PolicyStatusID { get; set; }
+        public (EnPolicyStatuses PolicyStatusID, string PolicyStatusText) PolicyStatus { get; set; }
         public DateTime ActiveFrom { get; set; }
         public DateTime ActiveTo { get; set; }
         public short? NoShowFreezeDays { get; set; }
@@ -30,7 +30,7 @@ namespace Business
             {
                 PolicyID = policyDto.PolicyID,
                 OwnerID = policyDto.OwnerID,
-                PolicyStatusID = policyDto.PolicyStatusID,
+                PolicyStatus = policyDto.PolicyStatus,
                 ActiveFrom = policyDto.ActiveFrom,
                 ActiveTo = policyDto.ActiveTo,
                 NoShowFreezeDays = policyDto.NoShowFreezeDays,
@@ -47,7 +47,7 @@ namespace Business
             {
                 PolicyID = policy.PolicyID,
                 OwnerID = policy.OwnerID,
-                PolicyStatusID = policy.PolicyStatusID,
+                PolicyStatus = policy.PolicyStatus,
                 ActiveFrom = policy.ActiveFrom,
                 ActiveTo = policy.ActiveTo,
                 NoShowFreezeDays = policy.NoShowFreezeDays,
