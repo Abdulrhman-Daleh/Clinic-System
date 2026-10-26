@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
@@ -88,8 +89,8 @@ namespace ClinicSystem.Insurance
             dtpCoverageStart.Value = insurance.CoverageStartDate;
             dtpCoverageEnd.Value = insurance.CoverageEndDate;
 
-            cbTypes.SelectedIndex = insurance.InsuranceTypeId - 1;
-            cbStatuses.SelectedIndex = insurance.InsuranceStatusId - 1;
+            cbTypes.SelectedIndex = (int)insurance.InsuranceType.InsuranceTypeId - 1;
+            cbStatuses.SelectedIndex = (int)insurance.InsuranceStatus.InsuranceStatusId - 1;
             txtRelationship.Text = insurance.Relationship;
         }
 
@@ -128,8 +129,8 @@ namespace ClinicSystem.Insurance
             insurance.CoverageStartDate = dtpCoverageStart.Value;
             insurance.CoverageEndDate = dtpCoverageEnd.Value;
 
-            insurance.InsuranceTypeId = cbTypes.SelectedIndex + 1;
-            insurance.InsuranceStatusId = cbStatuses.SelectedIndex + 1;
+            insurance.InsuranceType = ((EnInsuranceTypes)cbTypes.SelectedIndex + 1, cbTypes.SelectedItem.ToString());
+            insurance.InsuranceStatus = ((EnInsuranceStatuses)cbStatuses.SelectedIndex + 1, cbTypes.SelectedItem.ToString());
 
             insurance.UploadedDate = DateTime.Now;
             (int policyId, string display) po = ((int policyId, string display))cbPolicies.SelectedValue;

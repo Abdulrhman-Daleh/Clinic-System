@@ -116,7 +116,7 @@
             // lblRecordedBy
             // 
             this.lblRecordedBy.AutoSize = true;
-            this.lblRecordedBy.Location = new System.Drawing.Point(609, 145);
+            this.lblRecordedBy.Location = new System.Drawing.Point(522, 145);
             this.lblRecordedBy.Name = "lblRecordedBy";
             this.lblRecordedBy.Size = new System.Drawing.Size(0, 25);
             this.lblRecordedBy.TabIndex = 79;
@@ -140,7 +140,7 @@
             // lblType
             // 
             this.lblType.AutoSize = true;
-            this.lblType.Location = new System.Drawing.Point(574, 39);
+            this.lblType.Location = new System.Drawing.Point(487, 39);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(0, 25);
             this.lblType.TabIndex = 75;
@@ -156,7 +156,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(480, 144);
+            this.label6.Location = new System.Drawing.Point(393, 144);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(128, 25);
             this.label6.TabIndex = 73;
@@ -165,7 +165,7 @@
             // pictureBox9
             // 
             this.pictureBox9.Image = global::ClinicSystem.Properties.Resources.user_32;
-            this.pictureBox9.Location = new System.Drawing.Point(433, 135);
+            this.pictureBox9.Location = new System.Drawing.Point(346, 135);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(40, 43);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -213,7 +213,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(509, 38);
+            this.label4.Location = new System.Drawing.Point(422, 38);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 25);
             this.label4.TabIndex = 58;
@@ -222,7 +222,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.time_management_32;
-            this.pictureBox3.Location = new System.Drawing.Point(463, 29);
+            this.pictureBox3.Location = new System.Drawing.Point(376, 29);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(40, 43);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

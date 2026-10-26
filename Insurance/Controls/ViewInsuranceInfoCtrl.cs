@@ -30,7 +30,7 @@ namespace ClinicSystem.Insurance.Controls
             lblProvider.Text = insurance.InsuranceProvider;
             lblCoverage.Text = insurance.CoverageStartDate.ToShortDateString();
             lblPolicy.Text = insurance.PolicyNumber;
-            lblType.Text = insurance.InsuranceTypeId.ToString();
+            lblType.Text = insurance.InsuranceType.InsuranceTypeName;
             lblRecordedBy.Text = insurance.RecorderStaff.GetFullName();
             lblPatientClaims.Text = insurance.PatientClaims;
         }

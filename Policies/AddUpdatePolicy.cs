@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
@@ -50,7 +51,7 @@ namespace ClinicSystem.Policies
 
             SetControls(
                 policy.PolicyID,
-                policy.PolicyStatusID,
+                (int)policy.PolicyStatus.PolicyStatusID,
                 policy.ActiveFrom,
                 policy.ActiveTo,
                 policy.NoShowFreezeDays,
@@ -130,8 +131,8 @@ namespace ClinicSystem.Policies
             cbPolicyStatus.DataSource =
                 await Business.Policy.GetPolicyStatusesNames();
 
-            if (policy.PolicyStatusID > 0)
-                cbPolicyStatus.SelectedIndex = policy.PolicyStatusID - 1;
+            if (policy.PolicyStatus.PolicyStatusID > 0)
+                cbPolicyStatus.SelectedIndex = (int)policy.PolicyStatus.PolicyStatusID - 1;
             else
                 cbPolicyStatus.SelectedIndex = 0;
         }
@@ -145,7 +146,7 @@ namespace ClinicSystem.Policies
 
         private void CollectData()
         {
-            policy.PolicyStatusID = cbPolicyStatus.SelectedIndex + 1;
+            policy.PolicyStatus = ((EnPolicyStatuses)cbPolicyStatus.SelectedIndex + 1, cbPolicyStatus.SelectedItem.ToString());
             policy.ActiveFrom = dtpActiveFrom.Value;
             policy.ActiveTo = dtpActiveTo.Value;
 

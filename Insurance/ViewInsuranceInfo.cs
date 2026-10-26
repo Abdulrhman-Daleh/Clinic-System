@@ -23,7 +23,7 @@ namespace ClinicSystem.Insurance
             }
 
             btnEdit.Enabled = true;
-            lblInsuranceId.Text = $"{viewInsuranceInfoCtrl1.LoadedInsurance.InsuranceProvider} — {viewInsuranceInfoCtrl1.LoadedInsurance.PolicyNumber}";
+            lblInsuranceId.Text = $"{viewInsuranceInfoCtrl1.LoadedInsurance.InsuranceProvider} — {viewInsuranceInfoCtrl1.LoadedInsurance.PolicyNumber} - {viewInsuranceInfoCtrl1.LoadedInsurance.InsuranceType.InsuranceTypeName}";
         }
 
         private void btnEdit_Click(object sender, System.EventArgs e)
