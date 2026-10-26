@@ -260,5 +260,36 @@ namespace Data_Access
 
             return insurance;
         }
+
+        private static PatientInsuranceInfoDto PatientInsuranceMapper(SqlDataReader reader)
+        {
+            return new PatientInsuranceInfoDto
+            {
+                Name = (string)reader["Name"],
+                Relationship = (string)reader["Relationship"],
+                PatientSince = (DateTime)reader["PatientSince"]
+            };
+        }
+
+        public static async Task<BindingList<PatientInsuranceInfoDto>> GetPatientsUnderInsurance(int insuranceId)
+        {
+            BindingList<PatientInsuranceInfoDto> list = new BindingList<PatientInsuranceInfoDto>();
+
+            string query = @"select 
+                    	person.Firstname + ' ' + person.Lastname as Name,
+                    	PatientRelationship as Relationship,
+                    	p.RegisterDate as PatientSince
+                    from Patient_Insurance as i inner join Patients as p on i.PatientID = p.PatientID
+                    	inner join People as person on person.PersonID = p.PersonID where i.InsuranceID = @InsuranceId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@InsuranceId", SqlDbType.Int) {Value = insuranceId}
+            };
+
+            list = await DataAccessHelper.ExecuteObjectList(query, parameters, PatientInsuranceMapper);
+
+            return list;
+        }
     }
 }

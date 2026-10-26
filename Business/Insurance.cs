@@ -166,6 +166,11 @@ namespace Business
             return await InsuranceData.GetInsuranceStatusesNames();
         }
 
+        public static async Task<BindingList<PatientInsuranceInfoDto>> GetPatientsUnderInsurance(int insuranceId)
+        {
+            return await InsuranceData.GetPatientsUnderInsurance(insuranceId);
+        }
+
     }
 
 }
