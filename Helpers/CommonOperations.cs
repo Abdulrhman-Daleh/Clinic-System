@@ -1,7 +1,9 @@
 ﻿using Business;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -120,6 +122,7 @@ namespace ClinicSystem.Helpers
                 }
                 catch (Exception ex)
                 {
+                    Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "CommonOperations", "Application", EventLogEntryType.Error));
                     return null;
                 }
             }

@@ -48,7 +48,7 @@ namespace ClinicSystem.Insurance
 
             findPatientCtrl1.AllowedFind = false;
 
-            findPatientCtrl1.LoadPatientInfo(insurance.PolicyId);
+            findPatientCtrl1.LoadPatientInfo(insurance.PolicyholderPatientId);
             SetControls();
 
             lblInsuranceId.Text = $"Ins-{insuranceId}";

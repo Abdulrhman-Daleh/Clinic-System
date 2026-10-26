@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Log;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -48,7 +50,7 @@ namespace ClinicSystem.Helpers
             }
             catch (Exception ex)
             {
-                // log later
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "PasswordHasher", "Application", EventLogEntryType.Error));
                 return false;
             }
 

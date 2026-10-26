@@ -1,6 +1,7 @@
 ﻿using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
+using Log;
 using System;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -137,7 +138,7 @@ namespace ClinicSystem.Staff
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Username already taken", "Taken", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "AddUpdateStaff", "Application", System.Diagnostics.EventLogEntryType.Error));
             }
         }
 

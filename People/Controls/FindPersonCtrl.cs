@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ClinicSystem.People.Controls
@@ -27,8 +28,7 @@ namespace ClinicSystem.People.Controls
             txtFindBy.Focus();
             cbFindBy.Items.Add("PersonID");
             cbFindBy.Items.Add("Firstname");
-            txtFindBy.MaxLength = 5;
-            cbFindBy.SelectedIndex = 1;
+            cbFindBy.SelectedIndex = 0;
         }
 
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -69,12 +69,10 @@ namespace ClinicSystem.People.Controls
             {
                 case "PersonID":
                     person = Person.FindPersonById(Convert.ToInt32(txtFindBy.Text));
-                    txtFindBy.MaxLength = 5;
                     break;
 
                 default:
                     person = Person.FindPersonByFirstname(txtFindBy.Text);
-                    txtFindBy.MaxLength = 30;
                     break;
             }
             viewPersonInfoCtrl1.SetData(person);
@@ -96,6 +94,7 @@ namespace ClinicSystem.People.Controls
         private void cbFindBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             ValidationHelper.ResetDefaultFilter(txtFindBy);
+            ValidationHelper.SetApproperiteMaxLength(txtFindBy, new List<string>() { "PersonID" }, CommonOperations.GetFilterName(cbFindBy), 5, 30);
         }
 
         public void RecivePersonInfo(Person person)
