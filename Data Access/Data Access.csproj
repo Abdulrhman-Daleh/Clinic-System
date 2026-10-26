@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessString.cs" />
+    <Compile Include="AuditorData.cs" />
     <Compile Include="DataAccessHelper.cs" />
+    <Compile Include="DTOs\AuditTrailDto.cs" />
     <Compile Include="DTOs\InsuranceDto.cs" />
     <Compile Include="DTOs\PatientDto.cs" />
     <Compile Include="DTOs\PatientInsuranceInfoDto.cs" />
