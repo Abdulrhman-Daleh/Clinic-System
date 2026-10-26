@@ -1,4 +1,5 @@
-﻿using Data_Access.DTOs;
+﻿using AppEnums.cs;
+using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
 using Log;
 using System;
@@ -20,8 +21,8 @@ namespace Data_Access
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@RecordedBy", insuranceDto.RecordedBy),
-                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceTypeId),
-                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatusId),
+                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceType.InsuranceTypeId),
+                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatus.InsuranceStatusId),
                     new SqlParameter("@InsuranceProvider", (object)insuranceDto.InsuranceProvider ?? DBNull.Value),
                     new SqlParameter("@PolicyNumber", (object)insuranceDto.PolicyNumber ?? DBNull.Value),
                     new SqlParameter("@CoverageStartDate", insuranceDto.CoverageStartDate),
@@ -72,8 +73,8 @@ namespace Data_Access
                 {
                     new SqlParameter("@InsuranceId", insuranceDto.InsuranceID),
                     new SqlParameter("@PolicyId", insuranceDto.PolicyId),
-                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceTypeId),
-                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatusId),
+                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceType.InsuranceTypeId),
+                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatus.InsuranceStatusId),
                     new SqlParameter("@InsuranceProvider", (object)insuranceDto.InsuranceProvider ?? DBNull.Value),
                     new SqlParameter("@CoverageStartDate", insuranceDto.CoverageStartDate),
                     new SqlParameter("@CoverageEndDate", insuranceDto.CoverageEndDate),
@@ -88,9 +89,11 @@ namespace Data_Access
 
         public static InsuranceDto FindInsuranceByID(int insuranceId)
         {
-            string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
-            PatientClaims, PolicyholderPatientID, PolicyID
-                                 FROM Insurance
+            string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InStatus.insuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
+                PatientClaims, PolicyholderPatientID, PolicyID, InsuranceTypeName, insuranceStatusText
+                                 FROM Insurance as I 
+                    inner join insuranceTypes as InType on I.InsuranceTypeID = InType.InsurenceTypeID
+                    inner join insuranceStatuses as InStatus on I.InsuranceStatusID = InStatus.insuranceStatusID
                                  where InsuranceID = @InsuranceId;";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
@@ -104,9 +107,11 @@ namespace Data_Access
 
         public static InsuranceDto FindInsuranceByPolicyID(int policyId)
         {
-            string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate,
-                PatientClaims, PolicyholderPatientID, PolicyID
-                                 FROM Insurance
+            string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InStatus.InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
+                PatientClaims, PolicyholderPatientID, PolicyID, InsuranceTypeName, insuranceStatusText
+                                 FROM Insurance as I 
+                    inner join insuranceTypes as InType on I.InsuranceTypeID = InType.InsurenceTypeID
+                    inner join insuranceStatuses as InStatus on I.InsuranceStatusID = InStatus.insuranceStatusID
                                  WHERE PolicyId = @PolicyId";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
@@ -124,21 +129,26 @@ namespace Data_Access
             {
                 return new InsuranceDto
                 {
-                    InsuranceID = Convert.ToInt32(reader["InsuranceId"]),
-                    PolicyId = Convert.ToInt32(reader["PolicyId"]),
-                    RecordedBy = Convert.ToInt32(reader["RecordedBy"]),
-                    InsuranceTypeId = Convert.ToInt32(reader["InsuranceTypeId"]),
-                    InsuranceStatusId = Convert.ToInt32(reader["InsuranceStatusId"]),
-                    UploadedDate = Convert.ToDateTime(reader["UploadedDate"]),
+                    InsuranceID = (int)reader["InsuranceID"],
+                    PolicyId = (int)reader["PolicyID"],
+                    RecordedBy = (int)reader["RecordedBy"],
+                    InsuranceType = ((EnInsuranceTypes)reader["InsuranceTypeID"], (string)reader["InsuranceTypeName"]),
+                    InsuranceStatus = ((EnInsuranceStatuses)reader["InsuranceStatusID"], (string)reader["insuranceStatusText"]),
+                    UploadedDate = (DateTime)reader["UploadedDate"],
+
                     InsuranceProvider = reader["InsuranceProvider"] == DBNull.Value
-                        ? null : Convert.ToString(reader["InsuranceProvider"]),
+                 ? null : (string)reader["InsuranceProvider"],
+
                     PolicyNumber = reader["PolicyNumber"] == DBNull.Value
-                        ? null : Convert.ToString(reader["PolicyNumber"]),
-                    CoverageStartDate = Convert.ToDateTime(reader["CoverageStartDate"]),
-                    CoverageEndDate = Convert.ToDateTime(reader["CoverageEndDate"]),
+                 ? null : (string)reader["PolicyNumber"],
+
+                    CoverageStartDate = (DateTime)reader["CoverageStartDate"],
+                    CoverageEndDate = (DateTime)reader["CoverageEndDate"],
+
                     PatientClaims = reader["PatientClaims"] == DBNull.Value
-                        ? null : Convert.ToString(reader["PatientClaims"]),
-                    PolicyholderPatientId = Convert.ToInt32(reader["PolicyholderPatientId"])
+                     ? null : (string)reader["PatientClaims"],
+
+                    PolicyholderPatientId = (int)reader["PolicyholderPatientID"]
                 };
             }
             catch (Exception ex)
@@ -200,15 +210,20 @@ namespace Data_Access
             {
                 return new InsuranceListDto
                 {
-                    InsuranceID = Convert.ToInt32(reader["InsuranceID"]),
-                    InsuranceType = Convert.ToString(reader["InsuranceType"]),
-                    HolderName = Convert.ToString(reader["HolderName"]),
-                    Members = Convert.ToInt32(reader["Members"]),
-                    StatusText = Convert.ToString(reader["StatusText"]),
-                    InsuranceProvider = reader["InsuranceProvider"] == DBNull.Value ? null : Convert.ToString(reader["InsuranceProvider"]),
-                    PolicyNumber = reader["PolicyNumber"] == DBNull.Value ? null : Convert.ToString(reader["PolicyNumber"]),
-                    CoverageStartDate = Convert.ToDateTime(reader["CoverageStart"]),
-                    CoverageEndDate = Convert.ToDateTime(reader["CoverageEnd"]),
+                    InsuranceID = (int)reader["InsuranceID"],
+                    InsuranceType = (string)reader["InsuranceType"],
+                    HolderName = (string)reader["HolderName"],
+                    Members = (int)reader["Members"],
+                    StatusText = (string)reader["StatusText"],
+
+                    InsuranceProvider = reader["InsuranceProvider"] == DBNull.Value
+                        ? null : (string)reader["InsuranceProvider"],
+
+                    PolicyNumber = reader["PolicyNumber"] == DBNull.Value
+                     ? null : (string)reader["PolicyNumber"],
+
+                    CoverageStartDate = (DateTime)reader["CoverageStart"],
+                    CoverageEndDate = (DateTime)reader["CoverageEnd"],
 
                 };
             }

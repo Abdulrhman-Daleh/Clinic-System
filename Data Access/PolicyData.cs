@@ -1,4 +1,5 @@
-﻿using Data_Access.DTOs;
+﻿using AppEnums.cs;
+using Data_Access.DTOs;
 using Log;
 using LoggerMessage;
 using System;
@@ -20,7 +21,7 @@ namespace Data_Access
                 {
                     PolicyID = (int)reader["PolicyID"],
                     OwnerID = (int)reader["OwnerID"],
-                    PolicyStatusID = (int)reader["PolicyStatusID"],
+                    PolicyStatus = ((EnPolicyStatuses)reader["PolicyStatusID"], (string)reader["PolicyStatusText"]),
                     ActiveFrom = (DateTime)reader["ActiveFrom"],
                     ActiveTo = (DateTime)reader["ActiveTo"],
                     NoShowFreezeDays = reader["NoShowFreezeDays"] == DBNull.Value ? (byte?)null : (byte)reader["NoShowFreezeDays"],
@@ -79,7 +80,7 @@ namespace Data_Access
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
                 new SqlParameter("@OwnerID", policy.OwnerID),
-                new SqlParameter("@PolicyStatusID", policy.PolicyStatusID),
+                new SqlParameter("@PolicyStatusID", policy.PolicyStatus.PolicyStatusID),
                 new SqlParameter("@ActiveFrom", policy.ActiveFrom),
                 new SqlParameter("@ActiveTo", policy.ActiveTo),
                 new SqlParameter("@NoShowFreezeDays", (object)policy.NoShowFreezeDays ?? DBNull.Value),
@@ -116,7 +117,7 @@ namespace Data_Access
             {
                 new SqlParameter("@PolicyID", policy.PolicyID),
                 new SqlParameter("@OwnerID", policy.OwnerID),
-                new SqlParameter("@PolicyStatusID", policy.PolicyStatusID),
+                new SqlParameter("@PolicyStatusID", policy.PolicyStatus.PolicyStatusID),
                 new SqlParameter("@ActiveFrom", policy.ActiveFrom),
                 new SqlParameter("@ActiveTo", policy.ActiveTo),
                 new SqlParameter("@NoShowFreezeDays", (object)policy.NoShowFreezeDays ?? DBNull.Value),
@@ -129,9 +130,9 @@ namespace Data_Access
 
         public static PolicyDto FindPolicyByID(int policyID)
         {
-            string query = @"
-                SELECT *
-                FROM Policies
+            string query = @"SELECT PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom, ActiveTo,
+                    ps.PolicyStatusID, ps.PolicyStatusText
+                FROM Policies as policy inner join PolicyStatuses as ps on policy.PolicyStatusID = ps.PolicyStatusID
                 WHERE PolicyID = @PolicyID";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
@@ -145,9 +146,9 @@ namespace Data_Access
 
         public static PolicyDto FindPolicyByOwnerID(int ownerID)
         {
-            string query = @"
-                SELECT *
-                FROM Policies
+            string query = @"SELECT PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom, ActiveTo,
+                    ps.PolicyStatusID, ps.PolicyStatusText
+                FROM Policies as policy inner join PolicyStatuses as ps on policy.PolicyStatusID = ps.PolicyStatusID
                 WHERE OwnerID = @OwnerID";
 
             List<SqlParameter> parameters = new List<SqlParameter>()

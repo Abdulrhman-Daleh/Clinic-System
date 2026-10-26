@@ -1,4 +1,6 @@
-﻿namespace Data_Access.DTOs
+﻿using AppEnums.cs;
+
+namespace Data_Access.DTOs
 {
     public class PersonContactDto
     {
@@ -6,6 +8,6 @@
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int PersonId { get; set; }
-        public int ContactTypeId { get; set; }
+        public (EnContactTypes ContactTypeId, string ContactTypeName) ContactType { get; set; }
     }
 }

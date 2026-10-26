@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppEnums.cs;
+using System;
 
 namespace Data_Access.DTOs
 {
@@ -7,8 +8,8 @@ namespace Data_Access.DTOs
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
-        public int InsuranceTypeId { get; set; }
-        public int InsuranceStatusId { get; set; }
+        public (EnInsuranceTypes InsuranceTypeId, string InsuranceTypeName) InsuranceType { get; set; }
+        public (EnInsuranceStatuses InsuranceStatusId, string InsuranceStatusName) InsuranceStatus { get; set; }
         public DateTime UploadedDate { get; set; }
         public string InsuranceProvider { get; set; }
         public string PolicyNumber { get; set; }

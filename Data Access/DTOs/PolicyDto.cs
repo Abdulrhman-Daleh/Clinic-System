@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppEnums.cs;
+using System;
 
 namespace Data_Access.DTOs
 {
@@ -6,7 +7,7 @@ namespace Data_Access.DTOs
     {
         public int PolicyID { get; set; }
         public int OwnerID { get; set; }
-        public int PolicyStatusID { get; set; }
+        public (EnPolicyStatuses PolicyStatusID, string PolicyStatusText) PolicyStatus { get; set; }
         public DateTime ActiveFrom { get; set; }
         public DateTime ActiveTo { get; set; }
         public short? NoShowFreezeDays { get; set; }

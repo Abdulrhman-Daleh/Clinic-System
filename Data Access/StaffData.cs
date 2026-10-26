@@ -1,4 +1,5 @@
-﻿using Data_Access.DTOs;
+﻿using AppEnums.cs;
+using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
 using Log;
 using LoggerMessage;
@@ -22,7 +23,7 @@ namespace Data_Access
                 {
                     StaffId = (int)reader["StaffID"],
                     ScheduleId = (int)reader["ScheduleID"],
-                    RoleId = (int)reader["RoleID"],
+                    RoleInfo = ((EnRole)reader["RoleID"], (string)reader["RoleName"]),
                     PersonId = (int)reader["PersonID"],
                     Username = (string)reader["Username"],
                     HashedPassword = (string)reader["HashedPassword"],
@@ -31,7 +32,7 @@ namespace Data_Access
                     IsActive = (bool)reader["IsActive"],
                     Firstname = (string)reader["Firstname"],
                     Lastname = (string)reader["Lastname"],
-                    Gender = Convert.ToChar(reader["Gender"])
+                    Gender = Convert.ToChar(reader["Gender"]),
                 };
             }
             catch (Exception ex)
@@ -82,7 +83,7 @@ namespace Data_Access
                     new SqlParameter("@Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
                     new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = staffInfo.Gender},
                     new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
-                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.RoleId},
+                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.RoleInfo.RoleId},
                     new SqlParameter("@Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
                     new SqlParameter("@HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword}
                 };
@@ -108,7 +109,7 @@ namespace Data_Access
 
         public static bool UpdateStaff(StaffDto staffInfo)
         {
-            int affectedRows = -1;
+            int affectedRows;
 
             List<SqlParameter> inputParams = new List<SqlParameter>()
                 {
@@ -116,7 +117,7 @@ namespace Data_Access
                     new SqlParameter("@Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
                     new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = staffInfo.Gender},
                     new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
-                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.RoleId},
+                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.RoleInfo.RoleId},
                     new SqlParameter("@Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
                     new SqlParameter("@HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword},
                     new SqlParameter("@StaffId", SqlDbType.Int) {Value = staffInfo.StaffId}
@@ -165,7 +166,8 @@ namespace Data_Access
             string query = @"select 
             	StaffID,
             	ScheduleID, 
-            	RoleID,
+            	r.RoleID,
+                r.RoleName,
             	s.PersonID, 
             	Username, 
             	HashedPassword, 
@@ -176,6 +178,7 @@ namespace Data_Access
                 Lastname,
                 Gender
             from Staff as s inner join People as p on s.PersonID = p.PersonID
+                inner join StaffRoles as r on r.RoleID = s.RoleID
             	where StaffID = @staffId";
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
@@ -194,7 +197,8 @@ namespace Data_Access
             string query = @"select 
             	StaffID,
             	ScheduleID, 
-            	RoleID,
+            	r.RoleID,
+                r.RoleName,
             	s.PersonID, 
             	Username, 
             	HashedPassword, 
@@ -205,6 +209,7 @@ namespace Data_Access
                 Lastname,
                 Gender
             from Staff as s inner join People as p on s.PersonID = p.PersonID
+                inner join StaffRoles as r on r.RoleID = s.RoleID
             	where s.PersonID = @personId";
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
@@ -223,7 +228,8 @@ namespace Data_Access
             string query = @"select 
             	StaffID,
             	ScheduleID, 
-            	RoleID,
+            	r.RoleID,
+                r.RoleName,
             	s.PersonID, 
             	Username, 
             	HashedPassword, 
@@ -234,6 +240,7 @@ namespace Data_Access
                 Lastname,
                 Gender
             from Staff as s inner join People as p on s.PersonID = p.PersonID
+                inner join StaffRoles as r on r.RoleID = s.RoleID
             	where s.Username = @userName";
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
@@ -262,7 +269,7 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "ClinicSystem", "Application", EventLogEntryType.Error));
             }
 
             return affectedRows > 0;
