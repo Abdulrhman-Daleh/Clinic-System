@@ -64,6 +64,10 @@
       <Project>{73e0849c-7e9a-45ec-a73a-69f840d769ea}</Project>
       <Name>Data Access</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logger.cs\Logger.cs.csproj">
+      <Project>{41e30799-72aa-4f7d-9795-6b5613c0757d}</Project>
+      <Name>Logger.cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

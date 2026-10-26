@@ -68,6 +68,10 @@
       <Project>{4c0b89eb-27e3-4a89-ab2b-887587b2fac4}</Project>
       <Name>AppEnums.cs</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logger.cs\Logger.cs.csproj">
+      <Project>{41e30799-72aa-4f7d-9795-6b5613c0757d}</Project>
+      <Name>Logger.cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

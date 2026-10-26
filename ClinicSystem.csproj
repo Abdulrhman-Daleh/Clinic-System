@@ -367,6 +367,10 @@
       <Project>{3172d115-ff02-409a-bca0-153957901dc6}</Project>
       <Name>Business</Name>
     </ProjectReference>
+    <ProjectReference Include="Logger.cs\Logger.cs.csproj">
+      <Project>{41e30799-72aa-4f7d-9795-6b5613c0757d}</Project>
+      <Name>Logger.cs</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\user_32.png" />
