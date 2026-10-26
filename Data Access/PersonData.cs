@@ -1,9 +1,12 @@
 ﻿using Data_Access.DTOs;
+using Log;
+using LoggerMessage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Data_Access
@@ -12,13 +15,21 @@ namespace Data_Access
     {
         private static PersonDto PersonMapper(SqlDataReader reader)
         {
-            return new PersonDto()
+            try
             {
-                PersonId = (int)reader["PersonID"],
-                Firstname = (string)reader["Firstname"],
-                Lastname = (string)reader["Lastname"],
-                Gender = Convert.ToChar(reader["Gender"])
-            };
+                return new PersonDto()
+                {
+                    PersonId = (int)reader["PersonID"],
+                    Firstname = (string)reader["Firstname"],
+                    Lastname = (string)reader["Lastname"],
+                    Gender = Convert.ToChar(reader["Gender"])
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "PersonData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         public static bool UpdatePerson(PersonDto personInfo, PersonContactDto personalContact)
@@ -37,14 +48,7 @@ namespace Data_Access
                 new SqlParameter("@Gender", SqlDbType.VarChar, 1){ Value = personInfo.Gender},
             };
 
-            try
-            {
-                affactedRows = DataAccessHelper.ExecuteNonQuery(query, paramters);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            affactedRows = DataAccessHelper.ExecuteNonQuery(query, paramters);
 
             return affactedRows > 0;
         }
@@ -54,19 +58,12 @@ namespace Data_Access
             PersonDto person = null;
             string query = @"select PersonID, Firstname, Lastname, Gender from People where PersonID = @PersonId";
 
-            try
-            {
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@PersonId", SqlDbType.Int) {Value = personId},
                 };
 
-                person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
             return person;
         }
 
@@ -75,20 +72,12 @@ namespace Data_Access
             PersonDto person = null;
             string query = @"select PersonID, Firstname, Lastname, Gender from People where Firstname = @Firstname";
 
-            try
-            {
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@Firstname", SqlDbType.VarChar, 50) {Value = Firstname},
                 };
 
-                person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
-
-            }
-            catch (Exception ex)
-            {
-
-            }
+            person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
 
             return person;
         }
@@ -98,19 +87,9 @@ namespace Data_Access
             BindingList<PersonDto> people = new BindingList<PersonDto>();
 
             string query = @"select PersonID, Firstname, Lastname, Gender from People";
-
-            try
-            {
-                people = await DataAccessHelper.ExecuteObjectList(query, null, PersonMapper);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            people = await DataAccessHelper.ExecuteObjectList(query, null, PersonMapper);
 
             return people;
         }
-
-
     }
 }

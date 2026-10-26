@@ -1,10 +1,13 @@
 ﻿using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
+using Log;
+using LoggerMessage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Data_Access
@@ -13,37 +16,53 @@ namespace Data_Access
     {
         private static StaffDto StaffMapper(SqlDataReader reader)
         {
-            return new StaffDto()
+            try
             {
-                StaffId = (int)reader["StaffID"],
-                ScheduleId = (int)reader["ScheduleID"],
-                RoleId = (int)reader["RoleID"],
-                PersonId = (int)reader["PersonID"],
-                Username = (string)reader["Username"],
-                HashedPassword = (string)reader["HashedPassword"],
-                StaffNumber = (string)reader["StaffNumber"],
-                HireDate = (DateTime)reader["HireDate"],
-                IsActive = (bool)reader["IsActive"],
-                Firstname = (string)reader["Firstname"],
-                Lastname = (string)reader["Lastname"],
-                Gender = Convert.ToChar(reader["Gender"])
-            };
+                return new StaffDto()
+                {
+                    StaffId = (int)reader["StaffID"],
+                    ScheduleId = (int)reader["ScheduleID"],
+                    RoleId = (int)reader["RoleID"],
+                    PersonId = (int)reader["PersonID"],
+                    Username = (string)reader["Username"],
+                    HashedPassword = (string)reader["HashedPassword"],
+                    StaffNumber = (string)reader["StaffNumber"],
+                    HireDate = (DateTime)reader["HireDate"],
+                    IsActive = (bool)reader["IsActive"],
+                    Firstname = (string)reader["Firstname"],
+                    Lastname = (string)reader["Lastname"],
+                    Gender = Convert.ToChar(reader["Gender"])
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "StaffData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         private static StaffListingDto StaffListingMapper(SqlDataReader reader)
         {
-            return new StaffListingDto()
+            try
             {
-                StaffId = (int)reader["StaffID"],
-                HireDate = (DateTime)reader["HireDate"],
-                StaffNumber = (string)reader["StaffNumber"],
-                Status = (string)reader["Status"],
-                Username = (string)reader["Username"],
-                RoleName = (string)reader["RoleName"],
-                FullName = (string)reader["FullName"],
-                Gender = (string)reader["Gender"],
-                ShiftName = (string)reader["ShiftName"],
-            };
+                return new StaffListingDto()
+                {
+                    StaffId = (int)reader["StaffID"],
+                    HireDate = (DateTime)reader["HireDate"],
+                    StaffNumber = (string)reader["StaffNumber"],
+                    Status = (string)reader["Status"],
+                    Username = (string)reader["Username"],
+                    RoleName = (string)reader["RoleName"],
+                    FullName = (string)reader["FullName"],
+                    Gender = (string)reader["Gender"],
+                    ShiftName = (string)reader["ShiftName"],
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "StaffData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         private static string MapStaffRole(SqlDataReader reader)
@@ -57,9 +76,7 @@ namespace Data_Access
 
             string query = "AddStaff";
 
-            try
-            {
-                List<SqlParameter> inputParams = new List<SqlParameter>()
+            List<SqlParameter> inputParams = new List<SqlParameter>()
                 {
                     new SqlParameter("@Firstname", SqlDbType.VarChar, 40) {Value = staffInfo.Firstname},
                     new SqlParameter("@Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
@@ -70,25 +87,20 @@ namespace Data_Access
                     new SqlParameter("@HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword}
                 };
 
-                List<SqlParameter> outputParams = new List<SqlParameter>()
+            List<SqlParameter> outputParams = new List<SqlParameter>()
                 {
                     new SqlParameter("@StaffId", SqlDbType.Int) {Direction = ParameterDirection.Output},
                     new SqlParameter("@PersonId", SqlDbType.Int) {Direction = ParameterDirection.Output},
                     new SqlParameter("@StaffNumber", SqlDbType.VarChar, 10) {Direction = ParameterDirection.Output},
                 };
 
-                bool r = DataAccessHelper.ExecuteNonQueryStoredProcedure<object>(query, inputParams, outputParams);
+            bool r = DataAccessHelper.ExecuteNonQueryStoredProcedure<object>(query, inputParams, outputParams);
 
-                if (r == true)
-                {
-                    result.staffId = Convert.ToInt32(outputParams[0]);
-                    result.personId = Convert.ToInt32(outputParams[1]);
-                    result.staffNumber = Convert.ToString(outputParams[2]);
-                }
-            }
-            catch (Exception ex)
+            if (r == true)
             {
-
+                result.staffId = Convert.ToInt32(outputParams[0]);
+                result.personId = Convert.ToInt32(outputParams[1]);
+                result.staffNumber = Convert.ToString(outputParams[2]);
             }
 
             return result;
@@ -98,9 +110,7 @@ namespace Data_Access
         {
             int affectedRows = -1;
 
-            try
-            {
-                List<SqlParameter> inputParams = new List<SqlParameter>()
+            List<SqlParameter> inputParams = new List<SqlParameter>()
                 {
                     new SqlParameter("@Firstname", SqlDbType.VarChar, 40) {Value = staffInfo.Firstname},
                     new SqlParameter("@Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
@@ -112,12 +122,7 @@ namespace Data_Access
                     new SqlParameter("@StaffId", SqlDbType.Int) {Value = staffInfo.StaffId}
                 };
 
-                affectedRows = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("UpdateStaff", inputParams);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            affectedRows = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("UpdateStaff", inputParams);
 
             return affectedRows > 0;
         }
@@ -129,14 +134,7 @@ namespace Data_Access
             string query = @"select RoleName from StaffRoles
             order by RoleID asc";
 
-            try
-            {
-                roles = await DataAccessHelper.ExecuteObjectList(query, null, MapStaffRole);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            roles = await DataAccessHelper.ExecuteObjectList(query, null, MapStaffRole);
 
             return roles;
         }
@@ -147,22 +145,15 @@ namespace Data_Access
 
             string query = @"select Top 1 1 from Staff where Username = @Username";
 
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@Username", SqlDbType.VarChar, 40) {Value  = username}
                 };
 
-                object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
 
-                if (obj != null)
-                    result = true;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            if (obj != null)
+                result = true;
 
             return result;
         }
@@ -186,19 +177,12 @@ namespace Data_Access
                 Gender
             from Staff as s inner join People as p on s.PersonID = p.PersonID
             	where StaffID = @staffId";
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@staffId", SqlDbType.Int ) {Value = staffId}
                 };
 
-                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
 
             return staffDto;
         }
@@ -222,19 +206,12 @@ namespace Data_Access
                 Gender
             from Staff as s inner join People as p on s.PersonID = p.PersonID
             	where s.PersonID = @personId";
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@personId", SqlDbType.Int) {Value = personId}
                 };
 
-                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
 
             return staffDto;
         }
@@ -258,19 +235,12 @@ namespace Data_Access
                 Gender
             from Staff as s inner join People as p on s.PersonID = p.PersonID
             	where s.Username = @userName";
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@userName", SqlDbType.VarChar, 50) {Value = userName}
                 };
 
-                staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
 
             return staffDto;
         }
@@ -304,14 +274,7 @@ namespace Data_Access
 
             string query = @"select * from vw_StaffList";
 
-            try
-            {
-                list = await DataAccessHelper.ExecuteObjectList(query, null, StaffListingMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            list = await DataAccessHelper.ExecuteObjectList(query, null, StaffListingMapper);
 
             return list;
         }
@@ -332,20 +295,13 @@ namespace Data_Access
                 from vw_StaffList
                 	where StaffID = @staffId;";
 
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@staffId", SqlDbType.Int) {Value = staffId},
                 };
 
 
-                staffList = DataAccessHelper.ExecuteOneObject(query, parameters, StaffListingMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            staffList = DataAccessHelper.ExecuteOneObject(query, parameters, StaffListingMapper);
 
             return staffList;
         }

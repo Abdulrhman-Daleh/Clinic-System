@@ -1,9 +1,12 @@
 ﻿using Data_Access.DTOs;
+using Log;
+using LoggerMessage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Data_Access
@@ -12,18 +15,34 @@ namespace Data_Access
     {
         private static ScheduleDto ScheduleMapper(SqlDataReader reader)
         {
-            return new ScheduleDto()
+            try
             {
-                ScheduleId = (int)reader["ScheduleID"],
-                WorkStartFrom = (TimeSpan)reader["WorkStartFrom"],
-                WorkEndAt = (TimeSpan)reader["WorkEndAt"],
-                ShiftName = (string)reader["ShiftName"],
-            };
+                return new ScheduleDto()
+                {
+                    ScheduleId = (int)reader["ScheduleID"],
+                    WorkStartFrom = (TimeSpan)reader["WorkStartFrom"],
+                    WorkEndAt = (TimeSpan)reader["WorkEndAt"],
+                    ShiftName = (string)reader["ShiftName"],
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "ScheduleData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         private static string MapStaffSchedule(SqlDataReader reader)
         {
-            return (string)reader["ShiftName"];
+            try
+            {
+                return (string)reader["ShiftName"];
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "ScheduleData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         public static async Task<BindingList<string>> GetSchedulesNames()
@@ -33,14 +52,7 @@ namespace Data_Access
             string query = @"select ShiftName from Schedules
                 order by ScheduleID asc";
 
-            try
-            {
-                schedules = await DataAccessHelper.ExecuteObjectList(query, null, MapStaffSchedule);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            schedules = await DataAccessHelper.ExecuteObjectList(query, null, MapStaffSchedule);
 
             return schedules;
         }
@@ -54,25 +66,18 @@ namespace Data_Access
 	            values
 	            (@WorkStartFrom, @WorkEndAt, @ShiftName); select Scope_Identity()";
 
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@WorkStartFrom", SqlDbType.Time) {Value = scheduleDto.WorkStartFrom },
                     new SqlParameter("@WorkEndAt", SqlDbType.Time) {Value = scheduleDto.WorkEndAt },
                     new SqlParameter("@ShiftName", SqlDbType.VarChar, 40) {Value = scheduleDto.ShiftName }
                 };
 
-                object result = DataAccessHelper.ExecuteScalar(query, parameters);
+            object result = DataAccessHelper.ExecuteScalar(query, parameters);
 
-                if (result != null)
-                    scheduleId = Convert.ToInt32(result);
+            if (result != null)
+                scheduleId = Convert.ToInt32(result);
 
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
 
             return scheduleId;
         }
@@ -84,9 +89,7 @@ namespace Data_Access
             set WorkStartFrom = @WorkStartFrom, WorkEndAt = @WorkEndAt, ShiftName = @ShiftName
             where ScheduleID = @scheduleId";
 
-            try
-            {
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@scheduleId", SqlDbType.Int) {Value = scheduleDto.ScheduleId },
                     new SqlParameter("@WorkStartFrom", SqlDbType.Time) {Value = scheduleDto.WorkStartFrom },
@@ -94,12 +97,7 @@ namespace Data_Access
                     new SqlParameter("@ShiftName", SqlDbType.VarChar, 40) {Value = scheduleDto.ShiftName },
                 };
 
-                affectedRows = DataAccessHelper.ExecuteNonQuery(query, paramters);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            affectedRows = DataAccessHelper.ExecuteNonQuery(query, paramters);
 
             return affectedRows > 0;
         }
@@ -110,14 +108,7 @@ namespace Data_Access
 
             string query = @"select ScheduleID, WorkStartFrom, WorkEndAt, ShiftName from Schedules";
 
-            try
-            {
-                schedules = await DataAccessHelper.ExecuteObjectList(query, null, ScheduleMapper);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            schedules = await DataAccessHelper.ExecuteObjectList(query, null, ScheduleMapper);
 
             return schedules;
         }
@@ -129,19 +120,12 @@ namespace Data_Access
             string query = @"select ScheduleID, WorkStartFrom, WorkEndAt, ShiftName from Schedules
                     where ScheduleID = @ScheduleId";
 
-            try
-            {
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = scheduleId}
                 };
 
-                scheduleDto = DataAccessHelper.ExecuteOneObject(query, paramters, ScheduleMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            scheduleDto = DataAccessHelper.ExecuteOneObject(query, paramters, ScheduleMapper);
 
             return scheduleDto;
         }

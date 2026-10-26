@@ -1,8 +1,11 @@
 ﻿using Data_Access.DTOs;
+using Log;
+using LoggerMessage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Data_Access
@@ -11,22 +14,38 @@ namespace Data_Access
     {
         private static PolicyDto PolicyMapper(SqlDataReader reader)
         {
-            return new PolicyDto()
+            try
             {
-                PolicyID = (int)reader["PolicyID"],
-                OwnerID = (int)reader["OwnerID"],
-                PolicyStatusID = (int)reader["PolicyStatusID"],
-                ActiveFrom = (DateTime)reader["ActiveFrom"],
-                ActiveTo = (DateTime)reader["ActiveTo"],
-                NoShowFreezeDays = reader["NoShowFreezeDays"] == DBNull.Value ? (byte?)null : (byte)reader["NoShowFreezeDays"],
-                LateFeesPerDay = reader["LateFeesPerDay"] == DBNull.Value ? (decimal?)null : (decimal)reader["LateFeesPerDay"],
-                NoShowFee = reader["NoShowFee"] == DBNull.Value ? (decimal?)null : (decimal)reader["NoShowFee"]
-            };
+                return new PolicyDto()
+                {
+                    PolicyID = (int)reader["PolicyID"],
+                    OwnerID = (int)reader["OwnerID"],
+                    PolicyStatusID = (int)reader["PolicyStatusID"],
+                    ActiveFrom = (DateTime)reader["ActiveFrom"],
+                    ActiveTo = (DateTime)reader["ActiveTo"],
+                    NoShowFreezeDays = reader["NoShowFreezeDays"] == DBNull.Value ? (byte?)null : (byte)reader["NoShowFreezeDays"],
+                    LateFeesPerDay = reader["LateFeesPerDay"] == DBNull.Value ? (decimal?)null : (decimal)reader["LateFeesPerDay"],
+                    NoShowFee = reader["NoShowFee"] == DBNull.Value ? (decimal?)null : (decimal)reader["NoShowFee"]
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "PolicyData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         private static string StatusMapper(SqlDataReader reader)
         {
-            return (string)reader["PolicyStatusText"];
+            try
+            {
+                return (string)reader["PolicyStatusText"];
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "PolicyData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
 
         public static int AddNewPolicy(PolicyDto policy)
@@ -159,14 +178,7 @@ namespace Data_Access
             string query = @"select PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom,
             ActiveTo, PolicyStatusID from Policies";
 
-            try
-            {
-                list = await DataAccessHelper.ExecuteObjectList(query, null, PolicyMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            list = await DataAccessHelper.ExecuteObjectList(query, null, PolicyMapper);
 
             return list;
         }
@@ -185,14 +197,7 @@ namespace Data_Access
                       WHERE PolicyStatusID = (SELECT PolicyStatusID FROM PolicyStatuses WHERE PolicyStatusText = 'Active')
                       ORDER BY ActiveFrom DESC";
 
-            try
-            {
-                list = await DataAccessHelper.ExecuteObjectList<(int policyId, string display)>(query, null, PolicySimpleMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            list = await DataAccessHelper.ExecuteObjectList<(int policyId, string display)>(query, null, PolicySimpleMapper);
 
             return list;
         }

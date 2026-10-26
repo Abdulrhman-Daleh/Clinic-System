@@ -1,10 +1,13 @@
 ﻿using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
+using Log;
+using LoggerMessage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Data_Access
@@ -13,38 +16,52 @@ namespace Data_Access
     {
         private static PatientDto PatientMapper(SqlDataReader reader)
         {
-            return new PatientDto()
+            try
             {
-                PatientId = (int)reader["PatientID"],
-                PersonId = (int)reader["PersonID"],
-                RegisterDate = (DateTime)reader["RegisterDate"],
-                IsFrozen = (reader["IsFrozen"] == DBNull.Value) ? (bool?)null : (bool)reader["IsFrozen"],
-                EndOfBookingFreeze = (reader["EndOfBookingFreeze"] == DBNull.Value) ? (DateTime?)null : (DateTime)reader["EndOfBookingFreeze"],
-                HasUnPaidFees = (reader["HasUnPaidFees"] == DBNull.Value) ? (bool?)null : (bool)reader["HasUnPaidFees"],
-                Firstname = (string)reader["Firstname"],
-                Lastname = (string)reader["Lastname"],
-                Gender = Convert.ToChar(reader["Gender"])
-            };
+                return new PatientDto()
+                {
+                    PatientId = (int)reader["PatientID"],
+                    PersonId = (int)reader["PersonID"],
+                    RegisterDate = (DateTime)reader["RegisterDate"],
+                    IsFrozen = (reader["IsFrozen"] == DBNull.Value) ? (bool?)null : (bool)reader["IsFrozen"],
+                    EndOfBookingFreeze = (reader["EndOfBookingFreeze"] == DBNull.Value) ? (DateTime?)null : (DateTime)reader["EndOfBookingFreeze"],
+                    HasUnPaidFees = (reader["HasUnPaidFees"] == DBNull.Value) ? (bool?)null : (bool)reader["HasUnPaidFees"],
+                    Firstname = (string)reader["Firstname"],
+                    Lastname = (string)reader["Lastname"],
+                    Gender = Convert.ToChar(reader["Gender"])
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "PatientData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
         private static PatientListingDto PatientListMapper(SqlDataReader reader)
         {
-            return new PatientListingDto()
+            try
             {
-                PatientId = (int)reader["PatientID"],
-                FullName = (string)reader["FullName"],
-                Gender = Convert.ToChar(reader["Gender"]),
-                RegisterDate = (DateTime)reader["RegisterDate"],
-                Visits = (int)reader["Visits"],
-                InsuranceName = (reader["PatientRelationship"] == DBNull.Value) ? "No Insurance" : (string)reader["PatientRelationship"],
-                Status = (string)reader["Status"]
-            };
+                return new PatientListingDto()
+                {
+                    PatientId = (int)reader["PatientID"],
+                    FullName = (string)reader["FullName"],
+                    Gender = Convert.ToChar(reader["Gender"]),
+                    RegisterDate = (DateTime)reader["RegisterDate"],
+                    Visits = (int)reader["Visits"],
+                    InsuranceName = (reader["PatientRelationship"] == DBNull.Value) ? "No Insurance" : (string)reader["PatientRelationship"],
+                    Status = (string)reader["Status"]
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(ex.Message, "PatientData", "Application", EventLogEntryType.Error));
+                return null;
+            }
         }
         public static int AddNewPatient(PatientDto patientDto)
         {
             int patientId = -1;
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@PersonId", SqlDbType.Int) {Value = patientDto.PersonId},
                     new SqlParameter("@Firstname", SqlDbType.VarChar, 40) {Value = patientDto.Firstname},
@@ -52,7 +69,7 @@ namespace Data_Access
                     new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = patientDto.Gender},
                 };
 
-                List<SqlParameter> outputParamters = new List<SqlParameter>()
+            List<SqlParameter> outputParamters = new List<SqlParameter>()
                 {
                     new SqlParameter("@PatientId", SqlDbType.Int)
                     {
@@ -60,15 +77,10 @@ namespace Data_Access
                     }
                 };
 
-                bool result = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("AddPatient", parameters, outputParamters);
+            bool result = DataAccessHelper.ExecuteNonQueryStoredProcedure<int>("AddPatient", parameters, outputParamters);
 
-                if (result)
-                    patientId = Convert.ToInt32(outputParamters[0].Value ?? -1);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            if (result)
+                patientId = Convert.ToInt32(outputParamters[0].Value ?? -1);
 
             return patientId;
         }
@@ -78,15 +90,7 @@ namespace Data_Access
 
             string query = @"select * from vw_PatientInfo";
 
-            try
-            {
-                list = await DataAccessHelper.ExecuteObjectList<PatientListingDto>(query, null, PatientListMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-
+            list = await DataAccessHelper.ExecuteObjectList<PatientListingDto>(query, null, PatientListMapper);
             return list;
         }
         public static PatientListingDto FindPatientByIdList(int patientId)
@@ -96,20 +100,12 @@ namespace Data_Access
             string query = @"select PatientID, Fullname, Gender, RegisterDate, Visits, PatientRelationship, Status from vw_PatientInfo
             where PatientID = @patientId";
 
-            try
-            {
-
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
                 };
 
-                patientListing = DataAccessHelper.ExecuteOneObject(query, paramters, PatientListMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            patientListing = DataAccessHelper.ExecuteOneObject(query, paramters, PatientListMapper);
 
             return patientListing;
         }
@@ -122,19 +118,12 @@ namespace Data_Access
 	inner join People as person on person.PersonID = p.PersonID
 	where PatientID = @patientId";
 
-            try
-            {
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
                 };
 
-                patient = DataAccessHelper.ExecuteOneObject(query, paramters, PatientMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            patient = DataAccessHelper.ExecuteOneObject(query, paramters, PatientMapper);
 
             return patient;
         }
@@ -147,22 +136,15 @@ namespace Data_Access
         	inner join Appointments as app on app.PatientID = p.PatientID
         	where p.PatientID = @patientId;";
 
-            try
-            {
-                List<SqlParameter> paramters = new List<SqlParameter>()
+            List<SqlParameter> paramters = new List<SqlParameter>()
                 {
                     new SqlParameter("@patientId", SqlDbType.Int) { Value = patientId}
                 };
 
-                object obj = DataAccessHelper.ExecuteScalar(query, paramters);
+            object obj = DataAccessHelper.ExecuteScalar(query, paramters);
 
-                if (obj != null && int.TryParse(obj.ToString(), out totalVisits)) { }
+            if (obj != null && int.TryParse(obj.ToString(), out totalVisits)) { }
                 ;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
 
             return totalVisits;
         }

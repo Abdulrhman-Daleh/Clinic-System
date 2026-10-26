@@ -1,15 +1,19 @@
-﻿using System;
+﻿using Log;
+using LoggerMessage;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Data_Access
 {
     public class DataAccessHelper
     {
-        public static object ExecuteScalar(string query, List<SqlParameter> paramters)
+        public static object ExecuteScalar(string query, List<SqlParameter> paramters, [CallerMemberName] string callerName = "")
         {
             object result = null;
 
@@ -27,7 +31,9 @@ namespace Data_Access
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        var logInfo = new LogMessageInformation($"{callerName} failed: {ex.Message}", "ClinicSystem", "Application",
+                     EventLogEntryType.Error);
+                        Logger.LogMessage(logInfo);
                     }
 
                 }
@@ -36,7 +42,7 @@ namespace Data_Access
             return result;
         }
 
-        public static int ExecuteNonQuery(string query, List<SqlParameter> paramters)
+        public static int ExecuteNonQuery(string query, List<SqlParameter> paramters, [CallerMemberName] string callerName = "")
         {
             int affactedRows = -1;
 
@@ -54,7 +60,9 @@ namespace Data_Access
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        var logInfo = new LogMessageInformation($"{callerName} failed: {ex.Message}", "ClinicSystem", "Application",
+                     EventLogEntryType.Error);
+                        Logger.LogMessage(logInfo);
                     }
 
                 }
@@ -63,7 +71,7 @@ namespace Data_Access
             return affactedRows;
         }
 
-        public static T ExecuteOneObject<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map)
+        public static T ExecuteOneObject<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map, [CallerMemberName] string callerName = "")
         {
             try
             {
@@ -86,13 +94,16 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                throw;
+                var logInfo = new LogMessageInformation($"{callerName} failed: {ex.Message}", "ClinicSystem", "Application",
+                    EventLogEntryType.Error);
+                Logger.LogMessage(logInfo);
             }
 
             return default(T);
         }
 
-        public static async Task<BindingList<T>> ExecuteObjectList<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map)
+        public static async Task<BindingList<T>> ExecuteObjectList<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map,
+            [CallerMemberName] string callerName = "")
         {
             BindingList<T> objs = new BindingList<T>();
 
@@ -117,13 +128,15 @@ namespace Data_Access
             }
             catch (Exception ex)
             {
-                throw;
+                var logInfo = new LogMessageInformation($"{callerName} failed: {ex.Message}", "ClinicSystem", "Application",
+                    EventLogEntryType.Error);
+                Logger.LogMessage(logInfo);
             }
 
             return objs;
         }
 
-        public static bool ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters, List<SqlParameter> outputParamters)
+        public static bool ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters, List<SqlParameter> outputParamters, [CallerMemberName] string callerName = "")
         {
             using (SqlConnection connection = new SqlConnection(AccessString.ConnectionString()))
             {
@@ -147,7 +160,9 @@ namespace Data_Access
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        var logInfo = new LogMessageInformation($"{callerName} failed: {ex.Message}", "ClinicSystem", "Application",
+                    EventLogEntryType.Error);
+                        Logger.LogMessage(logInfo);
                     }
 
                 }
@@ -156,7 +171,7 @@ namespace Data_Access
             return false;
         }
 
-        public static int ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters)
+        public static int ExecuteNonQueryStoredProcedure<T>(string storedProcedureName, List<SqlParameter> paramters, [CallerMemberName] string callerName = "")
         {
             int affectedRows = 0;
 
@@ -177,7 +192,9 @@ namespace Data_Access
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        var logInfo = new LogMessageInformation($"{callerName} failed: {ex.Message}", "ClinicSystem", "Application",
+                    EventLogEntryType.Error);
+                        Logger.LogMessage(logInfo);
                     }
 
                 }

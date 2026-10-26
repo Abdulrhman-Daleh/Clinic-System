@@ -1,10 +1,12 @@
 ﻿using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Data_Access
@@ -15,9 +17,7 @@ namespace Data_Access
         {
             (int InsuranceId, int PatientId) result = (-1, -1);
 
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@RecordedBy", insuranceDto.RecordedBy),
                     new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceTypeId),
@@ -42,7 +42,7 @@ namespace Data_Access
                 };
 
 
-                List<SqlParameter> outputParams = new List<SqlParameter>()
+            List<SqlParameter> outputParams = new List<SqlParameter>()
                 {
                     new SqlParameter("@InsuranceId", SqlDbType.Int)
                     {
@@ -54,18 +54,13 @@ namespace Data_Access
                     }
                 };
 
-                bool success = DataAccessHelper.ExecuteNonQueryStoredProcedure<InsuranceDto>(
-                    "AddNewInsurance", parameters, outputParams);
+            bool success = DataAccessHelper.ExecuteNonQueryStoredProcedure<InsuranceDto>(
+                "AddNewInsurance", parameters, outputParams);
 
-                if (success)
-                {
-                    result.InsuranceId = Convert.ToInt32(outputParams[0].Value);
-                    result.PatientId = Convert.ToInt32(outputParams[1].Value);
-                }
-            }
-            catch (Exception)
+            if (success)
             {
-                throw;
+                result.InsuranceId = Convert.ToInt32(outputParams[0].Value);
+                result.PatientId = Convert.ToInt32(outputParams[1].Value);
             }
 
             return result;
@@ -73,9 +68,7 @@ namespace Data_Access
 
         public static bool UpdateInsurance(InsuranceDto insuranceDto)
         {
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@InsuranceId", insuranceDto.InsuranceID),
                     new SqlParameter("@PolicyId", insuranceDto.PolicyId),
@@ -89,59 +82,40 @@ namespace Data_Access
                 };
 
 
-                return DataAccessHelper.ExecuteNonQueryStoredProcedure<InsuranceDto>(
-                    "UpdateInsurance", parameters, new List<SqlParameter>());
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return DataAccessHelper.ExecuteNonQueryStoredProcedure<InsuranceDto>(
+                "UpdateInsurance", parameters, new List<SqlParameter>());
         }
 
         public static InsuranceDto FindInsuranceByID(int insuranceId)
         {
-            try
-            {
-                string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
+            string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
             PatientClaims, PolicyholderPatientID, PolicyID
                                  FROM Insurance
                                  where InsuranceID = @InsuranceId;";
 
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@InsuranceId", insuranceId)
                 };
 
-                return DataAccessHelper.ExecuteOneObject(
-                    query, parameters, InsuranceMapper);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return DataAccessHelper.ExecuteOneObject(
+                query, parameters, InsuranceMapper);
         }
 
         public static InsuranceDto FindInsuranceByPolicyID(int policyId)
         {
-            try
-            {
-                string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate,
+            string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate,
                 PatientClaims, PolicyholderPatientID, PolicyID
                                  FROM Insurance
                                  WHERE PolicyId = @PolicyId";
 
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@PolicyId", policyId)
                 };
 
-                return DataAccessHelper.ExecuteOneObject(
-                    query, parameters, InsuranceMapper);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return DataAccessHelper.ExecuteOneObject(
+                query, parameters, InsuranceMapper);
         }
 
         private static InsuranceDto InsuranceMapper(SqlDataReader reader)
@@ -167,20 +141,37 @@ namespace Data_Access
                     PolicyholderPatientId = Convert.ToInt32(reader["PolicyholderPatientId"])
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "InsuranceData", "Application", EventLogEntryType.Error));
+                return null;
             }
         }
 
         private static string InsuranceTypeMapper(SqlDataReader reader)
         {
-            return (string)reader["InsuranceTypeName"];
+            try
+            {
+                return (string)reader["InsuranceTypeName"];
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "InsuranceData", "Application", EventLogEntryType.Error));
+                return string.Empty;
+            }
         }
 
         private static string InsuranceStatusMapper(SqlDataReader reader)
         {
-            return (string)reader["insuranceStatusText"];
+            try
+            {
+                return (string)reader["insuranceStatusText"];
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "InsuranceData", "Application", EventLogEntryType.Error));
+                return string.Empty;
+            }
         }
 
         public static async Task<BindingList<string>> GetInsuranceTypesNames()
@@ -188,14 +179,7 @@ namespace Data_Access
             BindingList<string> types = new BindingList<string>();
             string query = @"select InsuranceTypeName from insuranceTypes";
 
-            try
-            {
-                types = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceTypeMapper);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            types = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceTypeMapper);
 
             return types;
         }
@@ -205,14 +189,7 @@ namespace Data_Access
             BindingList<string> types = new BindingList<string>();
             string query = @"select insuranceStatusText from insuranceStatuses";
 
-            try
-            {
-                types = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceStatusMapper);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            types = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceStatusMapper);
 
             return types;
         }
@@ -235,9 +212,10 @@ namespace Data_Access
 
                 };
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "InsuranceData", "Application", EventLogEntryType.Error));
+                return null;
             }
         }
 
@@ -246,14 +224,7 @@ namespace Data_Access
             BindingList<InsuranceListDto> list = new BindingList<InsuranceListDto>();
             string query = @"select * from vw_InsuranceList";
 
-            try
-            {
-                list = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceListMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            list = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceListMapper);
 
             return list;
         }
@@ -265,19 +236,12 @@ namespace Data_Access
 	        where InsuranceID = @InsuranceId";
 
 
-            try
-            {
-                List<SqlParameter> parameters = new List<SqlParameter>()
+            List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@InsuranceId", SqlDbType.Int) { Value = insuranceId },
                 };
 
-                insurance = DataAccessHelper.ExecuteOneObject(query, parameters, InsuranceListMapper);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            insurance = DataAccessHelper.ExecuteOneObject(query, parameters, InsuranceListMapper);
 
             return insurance;
         }
