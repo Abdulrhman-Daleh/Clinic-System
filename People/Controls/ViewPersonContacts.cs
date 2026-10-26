@@ -20,8 +20,6 @@ namespace ClinicSystem.People.Controls
             BindingList<PersonContact> contacts = await PersonContact.GetShortContactInfo(personId);
 
             CommonOperations.LoadDataToDGV(dgvContact, contacts, lblRecords);
-            dgvContact.Columns["ContactTypeID"].Visible = false;
-            dgvContact.Columns["ContactID"].Visible = false;
         }
     }
 }

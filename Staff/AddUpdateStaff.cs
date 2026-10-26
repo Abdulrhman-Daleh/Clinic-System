@@ -105,7 +105,7 @@ namespace ClinicSystem.Staff
         {
             staff.Username = txtUsername.Text;
             staff.ScheduleId = (int)cbSchedules.SelectedIndex + 1;
-            staff.Role = (EnRole)cbRoles.SelectedIndex + 1;
+            staff.RoleInfo = ((EnRole)cbRoles.SelectedIndex + 1, cbRoles.SelectedItem.ToString());
 
             if (txtPassword.Enabled)
                 staff.HashedPassword = PasswordHasher.HashPassword(txtPassword.Text);

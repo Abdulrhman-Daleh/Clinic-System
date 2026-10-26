@@ -92,7 +92,7 @@ namespace ClinicSystem.Schedule
 
         private void cmsSchedules_Opening(object sender, CancelEventArgs e)
         {
-            SetControlEnableStatus(false);
+            SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvSchedules));
         }
     }
 }

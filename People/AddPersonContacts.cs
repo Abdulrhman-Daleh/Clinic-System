@@ -60,9 +60,10 @@ namespace ClinicSystem.People
         {
             Person.contactInfo.Email = txtEmail.Text.Trim();
             Person.contactInfo.PhoneNumber = txtPhoneNumber.Text.Trim();
-            Person.contactInfo.ContactTypeId = (EnContactTypes)cbContactType.SelectedIndex + 1;
+            Person.contactInfo.ContactType = ((EnContactTypes)cbContactType.SelectedIndex + 1, cbContactType.SelectedItem.ToString());
             Person.contactInfo.PersonId = Person.PersonId;
         }
+
         private bool IsPersonSelected()
         {
             if (ValidationHelper.IsEmptyOrNull(Person, "Person is not selected"))
@@ -101,7 +102,9 @@ namespace ClinicSystem.People
             else
                 MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
         public void PrintContactId(int contactId) => lblContactId.Text = contactId != -1 ? $"C-{contactId}" : "[Not Set]";
+
         private void txtPhoneNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((MaskedTextBox)sender, errors);
