@@ -33,13 +33,15 @@
             this.viewInsuranceInfoCtrl1 = new ClinicSystem.Insurance.Controls.ViewInsuranceInfoCtrl();
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.viewPatientsUnderInsurance = new ClinicSystem.Insurance.Controls.ViewPatientsUnderInsurance();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.Manage_Insurance_64;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 2);
+            this.pictureBox2.Location = new System.Drawing.Point(23, 2);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(65, 52);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -51,7 +53,7 @@
             this.lblInsuranceId.AutoSize = true;
             this.lblInsuranceId.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblInsuranceId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblInsuranceId.Location = new System.Drawing.Point(74, 14);
+            this.lblInsuranceId.Location = new System.Drawing.Point(95, 14);
             this.lblInsuranceId.Name = "lblInsuranceId";
             this.lblInsuranceId.Size = new System.Drawing.Size(0, 29);
             this.lblInsuranceId.TabIndex = 71;
@@ -68,7 +70,7 @@
             // 
             this.btnEdit.Image = global::ClinicSystem.Properties.Resources.update_32;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(606, 319);
+            this.btnEdit.Location = new System.Drawing.Point(606, 495);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(160, 66);
             this.btnEdit.TabIndex = 74;
@@ -80,7 +82,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(439, 319);
+            this.btnClose.Location = new System.Drawing.Point(439, 495);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 73;
@@ -88,11 +90,31 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.lblStatus.Location = new System.Drawing.Point(623, 14);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 29);
+            this.lblStatus.TabIndex = 75;
+            // 
+            // viewPatientsUnderInsurance
+            // 
+            this.viewPatientsUnderInsurance.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.viewPatientsUnderInsurance.Location = new System.Drawing.Point(12, 324);
+            this.viewPatientsUnderInsurance.Name = "viewPatientsUnderInsurance";
+            this.viewPatientsUnderInsurance.Size = new System.Drawing.Size(633, 165);
+            this.viewPatientsUnderInsurance.TabIndex = 76;
+            // 
             // ViewInsuranceInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 392);
+            this.ClientSize = new System.Drawing.Size(774, 570);
+            this.Controls.Add(this.viewPatientsUnderInsurance);
+            this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.viewInsuranceInfoCtrl1);
@@ -113,5 +135,7 @@
         private Controls.ViewInsuranceInfoCtrl viewInsuranceInfoCtrl1;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lblStatus;
+        private Controls.ViewPatientsUnderInsurance viewPatientsUnderInsurance;
     }
 }

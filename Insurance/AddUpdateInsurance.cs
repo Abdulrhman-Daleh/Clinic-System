@@ -185,7 +185,7 @@ namespace ClinicSystem.Insurance
 
         private void dtpCoverageEndDate_Validating(object sender, CancelEventArgs e)
         {
-            if (ValidationHelper.Date1ThenDate2(dtpCoverageEnd.Value.Date, dtpCoverageStart.Value.Date))
+            if (ValidationHelper.Date1BeforeDate2(dtpCoverageEnd.Value.Date, dtpCoverageStart.Value.Date))
             {
                 errors.SetError(
                     dtpCoverageEnd,

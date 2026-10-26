@@ -1,4 +1,6 @@
 ﻿using ClinicSystem.Helpers;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Insurance
 {
@@ -9,6 +11,7 @@ namespace ClinicSystem.Insurance
             InitializeComponent();
             btnEdit.Enabled = false;
             viewInsuranceInfoCtrl1.LoadInsuranceInfo(insuranceId);
+            viewPatientsUnderInsurance.LoadUpPatientsInsurance(insuranceId);
             SetForm();
         }
 
@@ -18,12 +21,16 @@ namespace ClinicSystem.Insurance
             if (ValidationHelper.IsEmptyOrNull(viewInsuranceInfoCtrl1.LoadedInsurance))
             {
                 btnEdit.Enabled = false;
-                lblInsuranceId.Text = "Not Set";
+                CommonOperations.SetUpDefaultControlsValue(new List<Control>()
+                { lblInsuranceId, lblStatus}, "Not Set");
                 return;
             }
 
+            var InsuranceObj = viewInsuranceInfoCtrl1.LoadedInsurance;
             btnEdit.Enabled = true;
-            lblInsuranceId.Text = $"{viewInsuranceInfoCtrl1.LoadedInsurance.InsuranceProvider} — {viewInsuranceInfoCtrl1.LoadedInsurance.PolicyNumber} - {viewInsuranceInfoCtrl1.LoadedInsurance.InsuranceType.InsuranceTypeName}";
+            lblStatus.Text = ValidationHelper.Date1BeforeDate2(InsuranceObj.CoverageStartDate, InsuranceObj.CoverageEndDate) ? "Active" : "Not Active";
+
+            lblInsuranceId.Text = $"{InsuranceObj.InsuranceProvider} — {InsuranceObj.PolicyNumber} - {InsuranceObj.InsuranceType.InsuranceTypeName}";
         }
 
         private void btnEdit_Click(object sender, System.EventArgs e)
