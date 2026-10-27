@@ -208,6 +208,7 @@
             this.manageMedicalRecordsToolStripMenuItem.Name = "manageMedicalRecordsToolStripMenuItem";
             this.manageMedicalRecordsToolStripMenuItem.Size = new System.Drawing.Size(348, 38);
             this.manageMedicalRecordsToolStripMenuItem.Text = "Manage Medical Records";
+            this.manageMedicalRecordsToolStripMenuItem.Click += new System.EventHandler(this.manageMedicalRecordsToolStripMenuItem_Click);
             // 
             // addMedicalRecordToolStripMenuItem
             // 
@@ -233,7 +234,7 @@
             this.policiesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.note_32;
             this.policiesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.policiesToolStripMenuItem.Name = "policiesToolStripMenuItem";
-            this.policiesToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.policiesToolStripMenuItem.Size = new System.Drawing.Size(210, 38);
             this.policiesToolStripMenuItem.Text = "Policies";
             this.policiesToolStripMenuItem.Click += new System.EventHandler(this.policiesToolStripMenuItem_Click);
             // 
@@ -242,7 +243,7 @@
             this.insurancesToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.shield_32;
             this.insurancesToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.insurancesToolStripMenuItem1.Name = "insurancesToolStripMenuItem1";
-            this.insurancesToolStripMenuItem1.Size = new System.Drawing.Size(236, 38);
+            this.insurancesToolStripMenuItem1.Size = new System.Drawing.Size(210, 38);
             this.insurancesToolStripMenuItem1.Text = "Insurances";
             this.insurancesToolStripMenuItem1.Click += new System.EventHandler(this.insurancesToolStripMenuItem1_Click);
             // 
@@ -261,7 +262,7 @@
             this.exitToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.logout_32;
             this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 38);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

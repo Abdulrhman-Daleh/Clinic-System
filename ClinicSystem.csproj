@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -109,6 +112,12 @@
     </Compile>
     <Compile Include="MedicalRecord\AddUpdateMedicalRecord.Designer.cs">
       <DependentUpon>AddUpdateMedicalRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalRecord\ManageMedicalRecords.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MedicalRecord\ManageMedicalRecords.Designer.cs">
+      <DependentUpon>ManageMedicalRecords.cs</DependentUpon>
     </Compile>
     <Compile Include="Patients\Controls\FindPatientCtrl.cs">
       <SubType>UserControl</SubType>
@@ -287,6 +296,9 @@
     <EmbeddedResource Include="MedicalRecord\AddUpdateMedicalRecord.resx">
       <DependentUpon>AddUpdateMedicalRecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MedicalRecord\ManageMedicalRecords.resx">
+      <DependentUpon>ManageMedicalRecords.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Patients\Controls\FindPatientCtrl.resx">
       <DependentUpon>FindPatientCtrl.cs</DependentUpon>
     </EmbeddedResource>
@@ -364,6 +376,7 @@
     <EmbeddedResource Include="Staff\ViewStaffInfo.resx">
       <DependentUpon>ViewStaffInfo.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Main\App.config" />
     <None Include="Main\AppExample.config" />
     <None Include="Properties\Settings.settings">

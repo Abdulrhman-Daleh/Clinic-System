@@ -99,5 +99,11 @@ namespace ClinicSystem
             SystemLogin login = new SystemLogin();
             login.ShowDialog();
         }
+
+        private void manageMedicalRecordsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageMedicalRecord manageMedical = new ManageMedicalRecord();
+            manageMedical.ShowDialog();
+        }
     }
 }

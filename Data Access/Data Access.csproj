@@ -48,6 +48,7 @@
     <Compile Include="DTOs\AuditTrailDto.cs" />
     <Compile Include="DTOs\InsuranceDto.cs" />
     <Compile Include="DTOs\MedicalRecordDto.cs" />
+    <Compile Include="DTOs\MedicalRecordListDto.cs" />
     <Compile Include="DTOs\PatientDto.cs" />
     <Compile Include="DTOs\PatientInsuranceInfoDto.cs" />
     <Compile Include="DTOs\PersonContactDto.cs" />
