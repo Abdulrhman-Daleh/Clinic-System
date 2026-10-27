@@ -3,9 +3,11 @@ using Log;
 using LoggerMessage;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Data_Access
 {
@@ -160,6 +162,57 @@ namespace Data_Access
              };
 
             return DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
+        }
+
+        private static MedicalRecordListDto MedicalRecordListMapper(SqlDataReader reader)
+        {
+            try
+            {
+                return new MedicalRecordListDto()
+                {
+                    MedicalRecordID = (int)reader["MedicalRecordID"],
+                    MedicalNumber = reader["MedicalNumber"] == DBNull.Value
+                        ? null : (string)reader["MedicalNumber"],
+                    PatientName = (string)reader["PatientName"],
+                    Classification = reader["Classification"] == DBNull.Value
+                        ? null : (string)reader["Classification"],
+                    CreatedDate = (DateTime)reader["CreatedDate"],
+                    ConsentToCare = (bool)reader["ConsentToCare"]
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(
+                    ex.Message,
+                    "MedicalRecordData",
+                    "Application",
+                    EventLogEntryType.Error));
+
+                return null;
+            }
+        }
+
+        public static async Task<BindingList<MedicalRecordListDto>> GetMedicalRecords()
+        {
+            string query = @"
+        SELECT
+            MR.MedicalRecordID,
+            MR.MedicalNumber,
+            CONCAT(P.Firstname, ' ', P.Lastname) AS PatientName,
+            MR.Classification,
+            MR.CreatedDate,
+            MR.ConcentToCare AS ConsentToCare
+        FROM MedicalRecords MR
+        INNER JOIN Patients PA
+            ON MR.PatientID = PA.PatientID
+        INNER JOIN People P
+            ON PA.PersonID = P.PersonID
+        ORDER BY MR.MedicalRecordID DESC;";
+
+            return await DataAccessHelper.ExecuteObjectList(
+                query,
+                new List<SqlParameter>(),
+                MedicalRecordListMapper);
         }
     }
 }
