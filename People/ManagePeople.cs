@@ -37,7 +37,7 @@ namespace ClinicSystem.People
         }
         private void SetUp()
         {
-            cbGender.Items.AddRange(new object[] { "None", "Male", "Female" });
+            cbGender.Items.AddRange(new object[] { "Both", "Male", "Female" });
             cbGender.SelectedIndex = 0;
 
             cbFilterBy.Items.AddRange(new object[] { "None", "PersonID", "Firstname", "Lastname", "Gender" });
@@ -80,6 +80,12 @@ namespace ClinicSystem.People
         private void cbGender_SelectedIndexChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy).ToLower();
+
+            if (cbGender.Text == "Both")
+            {
+                CommonOperations.LoadDataToDGV(dgvPeople, People, lblRecords);
+                return;
+            }
 
             if (CommonOperations.ResetDataGrid(dgvPeople, People, lblRecords, cbGender.Text.ToLower()))
                 return;

@@ -18,6 +18,9 @@ namespace Business
 
         public static PersonContact FromDto(PersonContactDto contactDto)
         {
+            if (contactDto == null)
+                return null;
+
             return new PersonContact()
             {
                 Email = contactDto.Email,

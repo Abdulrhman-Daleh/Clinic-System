@@ -67,8 +67,8 @@ namespace ClinicSystem.Helpers
                 {
                     cbMisc.Focus();
                     cbMisc.Visible = true;
+                    return;
                 }
-                return;
             }
 
             txtFilterBy.Visible = true;
@@ -105,10 +105,10 @@ namespace ClinicSystem.Helpers
 
                 object currentValue = prop.GetValue(item);
 
-                if (currentValue == null && valueToCheck == null)
+                if (ValidationHelper.IsEmptyOrNull(currentValue) && ValidationHelper.IsEmptyOrNull(valueToCheck))
                     return null;
 
-                if (currentValue == null || valueToCheck == null)
+                if (ValidationHelper.IsEmptyOrNull(currentValue) || ValidationHelper.IsEmptyOrNull(valueToCheck))
                     return null;
 
                 try

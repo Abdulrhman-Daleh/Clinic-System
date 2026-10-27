@@ -55,7 +55,7 @@
             this.dgvPatients.BackgroundColor = System.Drawing.Color.White;
             this.dgvPatients.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvPatients.ContextMenuStrip = this.cmsPatient;
-            this.dgvPatients.Location = new System.Drawing.Point(12, 129);
+            this.dgvPatients.Location = new System.Drawing.Point(12, 118);
             this.dgvPatients.Name = "dgvPatients";
             this.dgvPatients.ReadOnly = true;
             this.dgvPatients.RowHeadersWidth = 51;
@@ -72,7 +72,7 @@
             this.viewPatientToolStripMenuItem});
             this.cmsPatient.Name = "cmsPeople";
             this.cmsPatient.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPatient.Size = new System.Drawing.Size(262, 108);
+            this.cmsPatient.Size = new System.Drawing.Size(262, 80);
             this.cmsPatient.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPatient_Opening);
             // 
             // addNewPatientToolStripMenuItem
@@ -95,7 +95,7 @@
             // 
             // txtFilter
             // 
-            this.txtFilter.Location = new System.Drawing.Point(214, 82);
+            this.txtFilter.Location = new System.Drawing.Point(214, 77);
             this.txtFilter.MaxLength = 6;
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(150, 30);
@@ -107,7 +107,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 85);
+            this.label1.Location = new System.Drawing.Point(10, 80);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 25);
             this.label1.TabIndex = 19;
@@ -116,7 +116,7 @@
             // cbFilterBy
             // 
             this.cbFilterBy.FormattingEnabled = true;
-            this.cbFilterBy.Location = new System.Drawing.Point(74, 81);
+            this.cbFilterBy.Location = new System.Drawing.Point(74, 76);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(132, 33);
             this.cbFilterBy.TabIndex = 20;
@@ -139,7 +139,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label2.Location = new System.Drawing.Point(284, 503);
+            this.label2.Location = new System.Drawing.Point(284, 492);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(210, 25);
             this.label2.TabIndex = 24;
@@ -149,7 +149,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(639, 482);
+            this.btnClose.Location = new System.Drawing.Point(639, 471);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 23;
@@ -178,7 +178,7 @@
             // cbStatus
             // 
             this.cbStatus.FormattingEnabled = true;
-            this.cbStatus.Location = new System.Drawing.Point(216, 79);
+            this.cbStatus.Location = new System.Drawing.Point(216, 74);
             this.cbStatus.Name = "cbStatus";
             this.cbStatus.Size = new System.Drawing.Size(106, 33);
             this.cbStatus.TabIndex = 25;
