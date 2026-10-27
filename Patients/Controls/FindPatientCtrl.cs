@@ -7,7 +7,7 @@ namespace ClinicSystem.Patients.Controls
 {
     public partial class FindPatientCtrl : UserCtrlDefaultSettings
     {
-        private Patient patient = new Patient();
+        private Patient patient = null;
         public FindPatientCtrl()
         {
             InitializeComponent();
@@ -22,6 +22,11 @@ namespace ClinicSystem.Patients.Controls
         public delegate void SendPatientInfo(Patient patient);
         public event SendPatientInfo SendPatient;
 
+        public bool AllowAddNew
+        {
+            get => AddPatient.Enabled;
+            set => AddPatient.Enabled = value;
+        }
         private void DefaultForm()
         {
             cbFindBy.Items.Add("PatientID");
@@ -55,8 +60,7 @@ namespace ClinicSystem.Patients.Controls
 
             int.TryParse(txtFindBy.Text, out int patientId);
 
-            if (patient == null)
-                patient = Patient.FindPatientById(patientId);
+            patient = Patient.FindPatientById(patientId);
 
             patientInfoCtrl1.LoadPatientInfo(patient);
 
