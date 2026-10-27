@@ -104,6 +104,12 @@
     <Compile Include="Main\UserCtrlDefaultSettings.Designer.cs">
       <DependentUpon>UserCtrlDefaultSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="MedicalRecord\AddUpdateMedicalRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MedicalRecord\AddUpdateMedicalRecord.Designer.cs">
+      <DependentUpon>AddUpdateMedicalRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Patients\Controls\FindPatientCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -277,6 +283,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MedicalRecord\AddUpdateMedicalRecord.resx">
+      <DependentUpon>AddUpdateMedicalRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\Controls\FindPatientCtrl.resx">
       <DependentUpon>FindPatientCtrl.cs</DependentUpon>
@@ -521,6 +530,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\find_policy_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\login_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\administration_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manage_medical_records_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view_record_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

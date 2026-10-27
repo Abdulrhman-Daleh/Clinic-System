@@ -47,6 +47,7 @@
     <Compile Include="DataAccessHelper.cs" />
     <Compile Include="DTOs\AuditTrailDto.cs" />
     <Compile Include="DTOs\InsuranceDto.cs" />
+    <Compile Include="DTOs\MedicalRecordDto.cs" />
     <Compile Include="DTOs\PatientDto.cs" />
     <Compile Include="DTOs\PatientInsuranceInfoDto.cs" />
     <Compile Include="DTOs\PersonContactDto.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="ListingDTOs\InsuranceListDto.cs" />
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
     <Compile Include="ListingDTOs\StaffListingDto.cs" />
+    <Compile Include="MedicalRecordData.cs" />
     <Compile Include="PatientData.cs" />
     <Compile Include="PersonContactData.cs" />
     <Compile Include="PersonData.cs" />

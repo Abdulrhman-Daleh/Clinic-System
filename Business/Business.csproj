@@ -45,6 +45,7 @@
     <Compile Include="Global.cs" />
     <Compile Include="Insurance.cs" />
     <Compile Include="InsuranceList.cs" />
+    <Compile Include="MedicalRecord.cs" />
     <Compile Include="Patient.cs" />
     <Compile Include="PatientInsuranceInfo.cs" />
     <Compile Include="PatientList.cs" />

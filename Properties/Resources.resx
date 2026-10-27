@@ -118,23 +118,23 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="add_contact_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_contact_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="find_policy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\find_policy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="patient_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\patient_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="note_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\note_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="female_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\female_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="badge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\badge_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="add_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="user_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\user_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_mdeical_record_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_mdeical_record_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="add_Insurance_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_Insurance_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -145,26 +145,44 @@
   <data name="clinic_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clinic_background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="visit_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\visit_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ring_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ring_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="time-management_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\time-management_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="calendar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calendar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Manage_Insurance_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Manage_Insurance_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="manage_medical_records_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\manage_medical_records_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shield_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shield_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="add_schedule_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_schedule_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="manage_people_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\manage_people_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="forgot-password_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\forgot-password_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="note_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\note_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="logout_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logout_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="check_mark_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\check_mark_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="add_contact_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_contact_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="update_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\update_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="add_schedule_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_schedule_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="male_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\male_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,11 +199,17 @@
   <data name="manage_patient_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\manage_patient_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="patient_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\patient_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="allergy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\allergy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stethoscope_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\stethoscope_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="save_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="view_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="refresh_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -193,23 +217,20 @@
   <data name="status_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\status_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Scène clinique moderne et apaisante" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Scène clinique moderne et apaisante.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="add_policy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_policy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="manage_staff_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\manage_staff_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="patient_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\patient_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="hash_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\hash_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="camera_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\camera_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="visit_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\visit_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="shield_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\shield_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="update_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\update_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="patient_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\patient_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="email_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\email_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -217,8 +238,11 @@
   <data name="find_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\find_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="camera_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\camera_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="badge_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\badge_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Manage_Insurance_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Manage_Insurance_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="plus_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\plus_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -229,6 +253,12 @@
   <data name="update_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\update_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="administration_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\administration_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="manage_staff_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\manage_staff_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="money_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\money_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -238,25 +268,28 @@
   <data name="mobile_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mobile_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="time-management_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\time-management_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="manage_people_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\manage_people_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="schedule_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\schedule_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\view_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Scène clinique moderne et apaisante" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Scène clinique moderne et apaisante.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pill_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pill_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hash_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\hash_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="clock_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clock_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="login_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\login_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="remember_me" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\remember_me.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="find_policy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\find_policy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="view_record_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view_record_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
