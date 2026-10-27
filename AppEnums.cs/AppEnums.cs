@@ -7,5 +7,5 @@
     public enum EnPolicyStatuses { Draft = 1, AwaitingApprovel, Active, Archived, Suspended }
     public enum EnInsuranceStatuses { Active = 1, Expired, UnderReviewing, Rejected, Submited }
     public enum EnInsuranceTypes { GovernmentInsurance = 1, Private, FamilyDeductible }
-
+    public enum EnMode { Add = 1, Update = 2 }
 }
