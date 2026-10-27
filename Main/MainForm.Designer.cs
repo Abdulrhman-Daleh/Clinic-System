@@ -37,20 +37,19 @@
             this.manageStaffToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.schedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.manageSchedulesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addScheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.schedulesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.patientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managePatientsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.registerPatientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.managePoliciesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addPolicyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewPolicyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.insurancesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addInsuranceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addMedicalRecordToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageMedicalRecordsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addMedicalRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.manageInsuranceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -62,10 +61,9 @@
             this.MSOperations.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePeopleToolStripMenuItem,
             this.manageStaffToolStripMenuItem,
-            this.schedulesToolStripMenuItem,
             this.patientsToolStripMenuItem,
-            this.toolStripMenuItem1,
-            this.insurancesToolStripMenuItem});
+            this.administrationToolStripMenuItem,
+            this.fileToolStripMenuItem});
             this.MSOperations.Location = new System.Drawing.Point(0, 0);
             this.MSOperations.Name = "MSOperations";
             this.MSOperations.Size = new System.Drawing.Size(1762, 72);
@@ -82,8 +80,8 @@
             this.managePeopleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_people_64;
             this.managePeopleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.managePeopleToolStripMenuItem.Name = "managePeopleToolStripMenuItem";
-            this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(256, 68);
-            this.managePeopleToolStripMenuItem.Text = "Manage People";
+            this.managePeopleToolStripMenuItem.Size = new System.Drawing.Size(164, 68);
+            this.managePeopleToolStripMenuItem.Text = "People";
             // 
             // viewAllPeopleToolStripMenuItem
             // 
@@ -118,12 +116,13 @@
             this.manageStaffToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageStaffToolStripMenuItem1,
             this.addNewStaffToolStripMenuItem,
-            this.updateStaffToolStripMenuItem});
+            this.updateStaffToolStripMenuItem,
+            this.schedulesToolStripMenuItem1});
             this.manageStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_staff_64;
             this.manageStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.manageStaffToolStripMenuItem.Name = "manageStaffToolStripMenuItem";
-            this.manageStaffToolStripMenuItem.Size = new System.Drawing.Size(218, 68);
-            this.manageStaffToolStripMenuItem.Text = "Manage Staff";
+            this.manageStaffToolStripMenuItem.Size = new System.Drawing.Size(136, 68);
+            this.manageStaffToolStripMenuItem.Text = "Staff";
             // 
             // manageStaffToolStripMenuItem1
             // 
@@ -152,40 +151,23 @@
             this.updateStaffToolStripMenuItem.Text = "View Staff";
             this.updateStaffToolStripMenuItem.Click += new System.EventHandler(this.updateStaffToolStripMenuItem_Click);
             // 
-            // schedulesToolStripMenuItem
+            // schedulesToolStripMenuItem1
             // 
-            this.schedulesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manageSchedulesToolStripMenuItem,
-            this.addScheduleToolStripMenuItem});
-            this.schedulesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.schedule_64;
-            this.schedulesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.schedulesToolStripMenuItem.Name = "schedulesToolStripMenuItem";
-            this.schedulesToolStripMenuItem.Size = new System.Drawing.Size(184, 68);
-            this.schedulesToolStripMenuItem.Text = "Schedules";
-            // 
-            // manageSchedulesToolStripMenuItem
-            // 
-            this.manageSchedulesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.time_management_32;
-            this.manageSchedulesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.manageSchedulesToolStripMenuItem.Name = "manageSchedulesToolStripMenuItem";
-            this.manageSchedulesToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.manageSchedulesToolStripMenuItem.Text = "Manage Schedules";
-            this.manageSchedulesToolStripMenuItem.Click += new System.EventHandler(this.manageSchedulesToolStripMenuItem_Click);
-            // 
-            // addScheduleToolStripMenuItem
-            // 
-            this.addScheduleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_schedule_32;
-            this.addScheduleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addScheduleToolStripMenuItem.Name = "addScheduleToolStripMenuItem";
-            this.addScheduleToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.addScheduleToolStripMenuItem.Text = "Add Schedule";
-            this.addScheduleToolStripMenuItem.Click += new System.EventHandler(this.addScheduleToolStripMenuItem_Click);
+            this.schedulesToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.time_management_32;
+            this.schedulesToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.schedulesToolStripMenuItem1.Name = "schedulesToolStripMenuItem1";
+            this.schedulesToolStripMenuItem1.Size = new System.Drawing.Size(249, 38);
+            this.schedulesToolStripMenuItem1.Text = "Schedules";
+            this.schedulesToolStripMenuItem1.Click += new System.EventHandler(this.schedulesToolStripMenuItem1_Click);
             // 
             // patientsToolStripMenuItem
             // 
             this.patientsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.managePatientsToolStripMenuItem,
-            this.registerPatientToolStripMenuItem});
+            this.registerPatientToolStripMenuItem,
+            this.addMedicalRecordToolStripMenuItem1,
+            this.manageMedicalRecordsToolStripMenuItem,
+            this.addMedicalRecordToolStripMenuItem});
             this.patientsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.patient_64;
             this.patientsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.patientsToolStripMenuItem.Name = "patientsToolStripMenuItem";
@@ -197,7 +179,7 @@
             this.managePatientsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_patient_32;
             this.managePatientsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.managePatientsToolStripMenuItem.Name = "managePatientsToolStripMenuItem";
-            this.managePatientsToolStripMenuItem.Size = new System.Drawing.Size(269, 38);
+            this.managePatientsToolStripMenuItem.Size = new System.Drawing.Size(348, 38);
             this.managePatientsToolStripMenuItem.Text = "Manage Patients";
             this.managePatientsToolStripMenuItem.Click += new System.EventHandler(this.managePatientsToolStripMenuItem_Click);
             // 
@@ -206,68 +188,82 @@
             this.registerPatientToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.patient_32;
             this.registerPatientToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.registerPatientToolStripMenuItem.Name = "registerPatientToolStripMenuItem";
-            this.registerPatientToolStripMenuItem.Size = new System.Drawing.Size(269, 38);
+            this.registerPatientToolStripMenuItem.Size = new System.Drawing.Size(348, 38);
             this.registerPatientToolStripMenuItem.Text = "Register Patient";
             this.registerPatientToolStripMenuItem.Click += new System.EventHandler(this.registerPatientToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
+            // addMedicalRecordToolStripMenuItem1
             // 
-            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.managePoliciesMenuItem,
-            this.addPolicyMenuItem,
-            this.viewPolicyMenuItem});
-            this.toolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.Manage_Policy_64;
-            this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(161, 68);
-            this.toolStripMenuItem1.Text = "Policies";
+            this.addMedicalRecordToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.add_mdeical_record_32;
+            this.addMedicalRecordToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addMedicalRecordToolStripMenuItem1.Name = "addMedicalRecordToolStripMenuItem1";
+            this.addMedicalRecordToolStripMenuItem1.Size = new System.Drawing.Size(348, 38);
+            this.addMedicalRecordToolStripMenuItem1.Text = "Add Medical Record";
+            this.addMedicalRecordToolStripMenuItem1.Click += new System.EventHandler(this.addMedicalRecordToolStripMenuItem1_Click);
             // 
-            // managePoliciesMenuItem
+            // manageMedicalRecordsToolStripMenuItem
             // 
-            this.managePoliciesMenuItem.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.managePoliciesMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.managePoliciesMenuItem.Name = "managePoliciesMenuItem";
-            this.managePoliciesMenuItem.Size = new System.Drawing.Size(263, 38);
-            this.managePoliciesMenuItem.Text = "Manage Policies";
-            this.managePoliciesMenuItem.Click += new System.EventHandler(this.managePoliciesToolStripMenuItem_Click);
+            this.manageMedicalRecordsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.manage_medical_records_32;
+            this.manageMedicalRecordsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageMedicalRecordsToolStripMenuItem.Name = "manageMedicalRecordsToolStripMenuItem";
+            this.manageMedicalRecordsToolStripMenuItem.Size = new System.Drawing.Size(348, 38);
+            this.manageMedicalRecordsToolStripMenuItem.Text = "Manage Medical Records";
             // 
-            // addPolicyMenuItem
+            // addMedicalRecordToolStripMenuItem
             // 
-            this.addPolicyMenuItem.Image = global::ClinicSystem.Properties.Resources.add_policy_32;
-            this.addPolicyMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addPolicyMenuItem.Name = "addPolicyMenuItem";
-            this.addPolicyMenuItem.Size = new System.Drawing.Size(263, 38);
-            this.addPolicyMenuItem.Text = "Add Policy";
-            this.addPolicyMenuItem.Click += new System.EventHandler(this.addPolicyToolStripMenuItem_Click);
+            this.addMedicalRecordToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_record_32;
+            this.addMedicalRecordToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addMedicalRecordToolStripMenuItem.Name = "addMedicalRecordToolStripMenuItem";
+            this.addMedicalRecordToolStripMenuItem.Size = new System.Drawing.Size(348, 38);
+            this.addMedicalRecordToolStripMenuItem.Text = "View Medical Record";
             // 
-            // viewPolicyMenuItem
+            // administrationToolStripMenuItem
             // 
-            this.viewPolicyMenuItem.Image = global::ClinicSystem.Properties.Resources.find_policy_32;
-            this.viewPolicyMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewPolicyMenuItem.Name = "viewPolicyMenuItem";
-            this.viewPolicyMenuItem.Size = new System.Drawing.Size(263, 38);
-            this.viewPolicyMenuItem.Text = "View Policy";
-            this.viewPolicyMenuItem.Click += new System.EventHandler(this.viewPolicyToolStripMenuItem_Click);
+            this.administrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.policiesToolStripMenuItem,
+            this.insurancesToolStripMenuItem1});
+            this.administrationToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.administration_64;
+            this.administrationToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.administrationToolStripMenuItem.Name = "administrationToolStripMenuItem";
+            this.administrationToolStripMenuItem.Size = new System.Drawing.Size(232, 68);
+            this.administrationToolStripMenuItem.Text = "Administration";
             // 
-            // insurancesToolStripMenuItem
+            // policiesToolStripMenuItem
             // 
-            this.insurancesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.manageInsuranceToolStripMenuItem,
-            this.addInsuranceToolStripMenuItem});
-            this.insurancesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.Manage_Insurance_64;
-            this.insurancesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.insurancesToolStripMenuItem.Name = "insurancesToolStripMenuItem";
-            this.insurancesToolStripMenuItem.Size = new System.Drawing.Size(190, 68);
-            this.insurancesToolStripMenuItem.Text = "Insurances";
+            this.policiesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.note_32;
+            this.policiesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.policiesToolStripMenuItem.Name = "policiesToolStripMenuItem";
+            this.policiesToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.policiesToolStripMenuItem.Text = "Policies";
+            this.policiesToolStripMenuItem.Click += new System.EventHandler(this.policiesToolStripMenuItem_Click);
             // 
-            // addInsuranceToolStripMenuItem
+            // insurancesToolStripMenuItem1
             // 
-            this.addInsuranceToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_Insurance_32;
-            this.addInsuranceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addInsuranceToolStripMenuItem.Name = "addInsuranceToolStripMenuItem";
-            this.addInsuranceToolStripMenuItem.Size = new System.Drawing.Size(283, 38);
-            this.addInsuranceToolStripMenuItem.Text = "Add Insurance";
-            this.addInsuranceToolStripMenuItem.Click += new System.EventHandler(this.addInsuranceToolStripMenuItem_Click);
+            this.insurancesToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.shield_32;
+            this.insurancesToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.insurancesToolStripMenuItem1.Name = "insurancesToolStripMenuItem1";
+            this.insurancesToolStripMenuItem1.Size = new System.Drawing.Size(236, 38);
+            this.insurancesToolStripMenuItem1.Text = "Insurances";
+            this.insurancesToolStripMenuItem1.Click += new System.EventHandler(this.insurancesToolStripMenuItem1_Click);
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.login_64;
+            this.fileToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(123, 68);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.logout_32;
+            this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -279,15 +275,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // manageInsuranceToolStripMenuItem
-            // 
-            this.manageInsuranceToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.manageInsuranceToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.manageInsuranceToolStripMenuItem.Name = "manageInsuranceToolStripMenuItem";
-            this.manageInsuranceToolStripMenuItem.Size = new System.Drawing.Size(283, 38);
-            this.manageInsuranceToolStripMenuItem.Text = "Manage Insurance";
-            this.manageInsuranceToolStripMenuItem.Click += new System.EventHandler(this.manageInsuranceToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -318,19 +305,18 @@
         private System.Windows.Forms.ToolStripMenuItem addNewStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAllPeopleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateStaffToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem schedulesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addScheduleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageStaffToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem manageSchedulesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem patientsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem managePatientsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem registerPatientToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem managePoliciesMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addPolicyMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewPolicyMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem insurancesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addInsuranceToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem manageInsuranceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addMedicalRecordToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem schedulesToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem manageMedicalRecordsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addMedicalRecordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem administrationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem policiesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insurancesToolStripMenuItem1;
     }
 }
