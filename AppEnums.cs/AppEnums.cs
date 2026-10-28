@@ -8,4 +8,6 @@
     public enum EnInsuranceStatuses { Active = 1, Expired, UnderReviewing, Rejected, Submited }
     public enum EnInsuranceTypes { GovernmentInsurance = 1, Private, FamilyDeductible }
     public enum EnMode { Add = 1, Update = 2 }
+    public enum EnAppointmentStatuses { Scheduled = 1, ReminderSent, RemainderViewed, Arrived, InRoom, Completed, Cancelled, NoShow, Rescheduled }
+    public enum EnAppointmentTypes { NewRegister = 1, RoutineTest, RoutineCare, ChronicCare, Treatment }
 }

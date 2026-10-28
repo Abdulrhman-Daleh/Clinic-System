@@ -160,5 +160,10 @@ namespace Business
 
         public bool DeactivateStaff() => StaffData.DeactivateStaff(this.StaffId);
         public bool IsOwner() => RoleInfo.RoleId == EnRole.Owner;
+
+        public bool IsRoleApplicableForAppointment()
+        {
+            return RoleInfo.RoleId == EnRole.Nurse || RoleInfo.RoleId == EnRole.Doctor;
+        }
     }
 }
