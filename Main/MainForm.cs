@@ -105,5 +105,11 @@ namespace ClinicSystem
             ManageMedicalRecord manageMedical = new ManageMedicalRecord();
             manageMedical.ShowDialog();
         }
+
+        private void addMedicalRecordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewMedicalRecord viewMRecord = new ViewMedicalRecord();
+            viewMRecord.ShowDialog();
+        }
     }
 }

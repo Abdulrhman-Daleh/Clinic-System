@@ -101,6 +101,7 @@
             // 
             // findPatientCtrl1
             // 
+            this.findPatientCtrl1.AllowAddNew = true;
             this.findPatientCtrl1.AllowedFind = true;
             this.findPatientCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPatientCtrl1.Location = new System.Drawing.Point(11, 83);

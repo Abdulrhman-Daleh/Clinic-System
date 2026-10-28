@@ -75,7 +75,7 @@
             this.viewToolStripMenuItem});
             this.cmsRecord.Name = "cmsPeople";
             this.cmsRecord.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsRecord.Size = new System.Drawing.Size(322, 118);
+            this.cmsRecord.Size = new System.Drawing.Size(322, 146);
             this.cmsRecord.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMedicalRecords_Opening);
             // 
             // addMedicalRecordToolStripMenuItem
@@ -103,6 +103,7 @@
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(321, 38);
             this.viewToolStripMenuItem.Text = "View Medical Record";
+            this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // txtFilter
             // 

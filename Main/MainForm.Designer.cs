@@ -217,6 +217,7 @@
             this.addMedicalRecordToolStripMenuItem.Name = "addMedicalRecordToolStripMenuItem";
             this.addMedicalRecordToolStripMenuItem.Size = new System.Drawing.Size(348, 38);
             this.addMedicalRecordToolStripMenuItem.Text = "View Medical Record";
+            this.addMedicalRecordToolStripMenuItem.Click += new System.EventHandler(this.addMedicalRecordToolStripMenuItem_Click);
             // 
             // administrationToolStripMenuItem
             // 

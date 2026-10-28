@@ -185,6 +185,12 @@ namespace ClinicSystem.MedicalRecord
                 sender, EventArgs.Empty);
         }
 
+        private void viewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int medicalRecordId = (int)dgvMedicalRecords.CurrentRow.Cells["MedicalRecordID"].Value;
 
+            ViewMedicalRecord viewMedicalRecord = new ViewMedicalRecord(medicalRecordId);
+            viewMedicalRecord.ShowDialog();
+        }
     }
 }
