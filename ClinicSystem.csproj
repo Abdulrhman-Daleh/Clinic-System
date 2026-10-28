@@ -113,11 +113,29 @@
     <Compile Include="MedicalRecord\AddUpdateMedicalRecord.Designer.cs">
       <DependentUpon>AddUpdateMedicalRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="MedicalRecord\Controls\FindMRecord.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MedicalRecord\Controls\FindMRecord.Designer.cs">
+      <DependentUpon>FindMRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalRecord\Controls\ViewMRecordInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MedicalRecord\Controls\ViewMRecordInfo.Designer.cs">
+      <DependentUpon>ViewMRecordInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="MedicalRecord\ManageMedicalRecords.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MedicalRecord\ManageMedicalRecords.Designer.cs">
       <DependentUpon>ManageMedicalRecords.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MedicalRecord\ViewMedicalRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MedicalRecord\ViewMedicalRecord.Designer.cs">
+      <DependentUpon>ViewMedicalRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="Patients\Controls\FindPatientCtrl.cs">
       <SubType>UserControl</SubType>
@@ -296,8 +314,17 @@
     <EmbeddedResource Include="MedicalRecord\AddUpdateMedicalRecord.resx">
       <DependentUpon>AddUpdateMedicalRecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MedicalRecord\Controls\FindMRecord.resx">
+      <DependentUpon>FindMRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MedicalRecord\Controls\ViewMRecordInfo.resx">
+      <DependentUpon>ViewMRecordInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MedicalRecord\ManageMedicalRecords.resx">
       <DependentUpon>ManageMedicalRecords.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MedicalRecord\ViewMedicalRecord.resx">
+      <DependentUpon>ViewMedicalRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\Controls\FindPatientCtrl.resx">
       <DependentUpon>FindPatientCtrl.cs</DependentUpon>
@@ -558,6 +585,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\view_record_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\surgery_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manage_medical_records_64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
