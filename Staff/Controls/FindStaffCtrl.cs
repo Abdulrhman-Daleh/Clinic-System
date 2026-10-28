@@ -12,6 +12,12 @@ namespace ClinicSystem.Staff.Controls
             get => gbFindBy.Enabled;
             set => gbFindBy.Enabled = value;
         }
+
+        public bool AllowAddNew
+        {
+            get => AddStaff.Enabled;
+            set => AddStaff.Enabled = value;
+        }
         public FindStaffCtrl()
         {
             InitializeComponent();
