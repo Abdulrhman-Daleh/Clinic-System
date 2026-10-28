@@ -1,4 +1,5 @@
 ﻿using AppEnums.cs;
+using ClinicSystem.Appointments;
 using ClinicSystem.Insurance;
 using ClinicSystem.Login;
 using ClinicSystem.MedicalRecord;
@@ -110,6 +111,12 @@ namespace ClinicSystem
         {
             ViewMedicalRecord viewMRecord = new ViewMedicalRecord();
             viewMRecord.ShowDialog();
+        }
+
+        private void bookAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BookAppointment bookAppointment = new BookAppointment(EnAppointmentStatuses.Scheduled);
+            bookAppointment.ShowDialog();
         }
     }
 }
