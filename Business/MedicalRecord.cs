@@ -127,5 +127,10 @@ namespace Business
         {
             return FromDto(MedicalRecordData.FindMedicalRecordByID(medicalRecordID));
         }
+
+        public string GetCareText()
+        {
+            return ConcentToCare ? "Care" : "No Care";
+        }
     }
 }
