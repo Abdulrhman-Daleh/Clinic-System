@@ -49,6 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appointments\BookAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Appointments\BookAppointment.Designer.cs">
+      <DependentUpon>BookAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
@@ -287,6 +293,9 @@
     <Compile Include="Staff\ViewStaffInfo.Designer.cs">
       <DependentUpon>ViewStaffInfo.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Appointments\BookAppointment.resx">
+      <DependentUpon>BookAppointment.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Insurance\AddUpdateInsurance.resx">
       <DependentUpon>AddUpdateInsurance.cs</DependentUpon>
     </EmbeddedResource>
@@ -591,6 +600,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\manage_medical_records_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Appointment_64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manage_appointment_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_appointment.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
