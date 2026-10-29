@@ -18,6 +18,8 @@ namespace ClinicSystem.Appointments
             SetFormTextBasedMode("Add Appointment", "Add Appointment", "Add Appointment");
         }
 
+        public delegate void SendAppointmentOnSave(Appointment appointment);
+        public event SendAppointmentOnSave OnSave;
         private void SetFormTextBasedMode(
             string labelTitle, string pageTitle, string saveButtonText)
         {
@@ -124,6 +126,12 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
+            if (!appointment.NoOverlapWithLastAppointment())
+            {
+                MessageBox.Show("Staff has an overlap in appointment date", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (!appointment.Save())
             {
                 MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -135,6 +143,7 @@ namespace ClinicSystem.Appointments
             SetFormTextBasedMode("Update Appointment", "Update Appointment", "Update");
             findPatientCtrl1.AllowedFind = false;
             findStaffCtrl1.AllowFind = false;
+            OnSave?.Invoke(appointment);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
