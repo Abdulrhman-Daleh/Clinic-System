@@ -49,6 +49,25 @@ namespace Business
                 AppointmentEndTime = appointment.AppointmentEndTime
             };
         }
+
+        private static Appointment FromDto(AppointmentDto appointment)
+        {
+            return new Appointment()
+            {
+                AppointmentID = appointment.AppointmentID,
+                PatientID = appointment.PatientID,
+                StaffID = appointment.StaffID,
+                AppointmentStatuses = appointment.AppointmentStatuses,
+                AppointmentTypes = appointment.AppointmentTypes,
+                AppointmentDate = appointment.AppointmentDate,
+                AppointmentTime = appointment.AppointmentTime,
+                AppointmentEndTime = appointment.AppointmentEndTime,
+                _mode = EnMode.Update,
+
+                Staff = Staff.FindStaffById(appointment.StaffID),
+                Patient = Patient.FindPatientById(appointment.PatientID)
+            };
+        }
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
             return await AppointmentData.GetAppointmentTypesNames();
@@ -90,5 +109,16 @@ namespace Business
 
             return false;
         }
+
+        public bool NoOverlapWithLastAppointment()
+        {
+            return AppointmentData.NoOverlapWithLastAppointment(ToDto(this));
+        }
+
+        public static Appointment FindAppointmentByID(int appointmentId)
+        {
+            return FromDto(AppointmentData.FindAppointmentByID(appointmentId));
+        }
+
     }
 }
