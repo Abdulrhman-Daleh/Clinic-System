@@ -55,6 +55,24 @@
     <Compile Include="Appointments\BookAppointment.Designer.cs">
       <DependentUpon>BookAppointment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Appointments\Controls\ViewAppointmentInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Appointments\Controls\ViewAppointmentInfoCtrl.Designer.cs">
+      <DependentUpon>ViewAppointmentInfoCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Appointments\ManageAppointments.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Appointments\ManageAppointments.Designer.cs">
+      <DependentUpon>ManageAppointments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Appointments\ViewAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Appointments\ViewAppointment.Designer.cs">
+      <DependentUpon>ViewAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CommonOperations.cs" />
     <Compile Include="Helpers\PasswordHasher.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
@@ -295,6 +313,15 @@
     </Compile>
     <EmbeddedResource Include="Appointments\BookAppointment.resx">
       <DependentUpon>BookAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\Controls\ViewAppointmentInfoCtrl.resx">
+      <DependentUpon>ViewAppointmentInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\ManageAppointments.resx">
+      <DependentUpon>ManageAppointments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\ViewAppointment.resx">
+      <DependentUpon>ViewAppointment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Insurance\AddUpdateInsurance.resx">
       <DependentUpon>AddUpdateInsurance.cs</DependentUpon>
@@ -610,5 +637,9 @@
   <ItemGroup>
     <None Include="Resources\add_appointment.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\reschedule_32.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
