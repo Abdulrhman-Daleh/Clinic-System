@@ -118,5 +118,11 @@ namespace ClinicSystem
             BookAppointment bookAppointment = new BookAppointment(EnAppointmentStatuses.Scheduled);
             bookAppointment.ShowDialog();
         }
+
+        private void manageAppointmentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageAppointments manageAppointments = new ManageAppointments();
+            manageAppointments.ShowDialog();
+        }
     }
 }

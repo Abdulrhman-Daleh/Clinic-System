@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.MSOperations = new System.Windows.Forms.MenuStrip();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.managePeopleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -54,6 +53,7 @@
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -74,17 +74,6 @@
             this.MSOperations.Size = new System.Drawing.Size(1762, 72);
             this.MSOperations.TabIndex = 0;
             this.MSOperations.Text = "menuStrip1";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::ClinicSystem.Properties.Resources.clinic_background;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 72);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1762, 774);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
             // 
             // fileToolStripMenuItem
             // 
@@ -273,6 +262,7 @@
             this.manageAppointmentsToolStripMenuItem.Name = "manageAppointmentsToolStripMenuItem";
             this.manageAppointmentsToolStripMenuItem.Size = new System.Drawing.Size(326, 38);
             this.manageAppointmentsToolStripMenuItem.Text = "Manage Appointments";
+            this.manageAppointmentsToolStripMenuItem.Click += new System.EventHandler(this.manageAppointmentsToolStripMenuItem_Click);
             // 
             // bookAppointmentToolStripMenuItem
             // 
@@ -319,6 +309,17 @@
             this.insurancesToolStripMenuItem1.Size = new System.Drawing.Size(210, 38);
             this.insurancesToolStripMenuItem1.Text = "Insurances";
             this.insurancesToolStripMenuItem1.Click += new System.EventHandler(this.insurancesToolStripMenuItem1_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::ClinicSystem.Properties.Resources.clinic_background;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 72);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1762, 774);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
