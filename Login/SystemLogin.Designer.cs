@@ -46,6 +46,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.lnkSignUp = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -57,6 +59,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnSignIn
@@ -83,6 +86,8 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.pictureBox7);
+            this.splitContainer1.Panel2.Controls.Add(this.lnkSignUp);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox6);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox5);
             this.splitContainer1.Panel2.Controls.Add(this.pictureBox4);
@@ -115,7 +120,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = global::ClinicSystem.Properties.Resources.forgot_password_32;
-            this.pictureBox6.Location = new System.Drawing.Point(252, 429);
+            this.pictureBox6.Location = new System.Drawing.Point(18, 378);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(41, 38);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -181,7 +186,7 @@
             // lnkForgetPassword
             // 
             this.lnkForgetPassword.AutoSize = true;
-            this.lnkForgetPassword.Location = new System.Drawing.Point(299, 436);
+            this.lnkForgetPassword.Location = new System.Drawing.Point(65, 385);
             this.lnkForgetPassword.Name = "lnkForgetPassword";
             this.lnkForgetPassword.Size = new System.Drawing.Size(170, 25);
             this.lnkForgetPassword.TabIndex = 6;
@@ -242,6 +247,27 @@
             // 
             this.errors.ContainerControl = this;
             // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::ClinicSystem.Properties.Resources.forgot_password_32;
+            this.pictureBox7.Location = new System.Drawing.Point(304, 378);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox7.TabIndex = 15;
+            this.pictureBox7.TabStop = false;
+            // 
+            // lnkSignUp
+            // 
+            this.lnkSignUp.AutoSize = true;
+            this.lnkSignUp.Location = new System.Drawing.Point(351, 385);
+            this.lnkSignUp.Name = "lnkSignUp";
+            this.lnkSignUp.Size = new System.Drawing.Size(82, 25);
+            this.lnkSignUp.TabIndex = 14;
+            this.lnkSignUp.TabStop = true;
+            this.lnkSignUp.Text = "Sign Up";
+            this.lnkSignUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkSignUp_LinkClicked);
+            // 
             // SystemLogin
             // 
             this.AcceptButton = this.BtnSignIn;
@@ -251,6 +277,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "SystemLogin";
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.SystemLogin_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -263,6 +290,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -286,5 +314,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.ErrorProvider errors;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.LinkLabel lnkSignUp;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
+using ClinicSystem.Staff;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -30,7 +31,7 @@ namespace ClinicSystem.Login
                 chkRememberMe.Checked = false;
             }
 
-            txtPassword.Text = "abdul";
+            txtPassword.Text = "Admin";
             txtUsername.Focus();
             ChkShowPassword.Checked = false;
 
@@ -109,6 +110,17 @@ namespace ClinicSystem.Login
             }
 
             CommonOperations.SaveUsernameToFile(fileName, "");
+        }
+
+        private void SystemLogin_Load(object sender, System.EventArgs e)
+        {
+            Global.SeedDefaultData();
+        }
+
+        private void lnkSignUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AddUpdateStaff addStaff = new AddUpdateStaff();
+            addStaff.ShowDialog();
         }
     }
 }

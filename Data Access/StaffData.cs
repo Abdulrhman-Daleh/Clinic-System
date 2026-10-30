@@ -99,9 +99,9 @@ namespace Data_Access
 
             if (r == true)
             {
-                result.staffId = Convert.ToInt32(outputParams[0]);
-                result.personId = Convert.ToInt32(outputParams[1]);
-                result.staffNumber = Convert.ToString(outputParams[2]);
+                result.staffId = Convert.ToInt32(outputParams[0].Value);
+                result.personId = Convert.ToInt32(outputParams[1].Value);
+                result.staffNumber = Convert.ToString(outputParams[2].Value);
             }
 
             return result;
@@ -311,6 +311,20 @@ namespace Data_Access
             staffList = DataAccessHelper.ExecuteOneObject(query, parameters, StaffListingMapper);
 
             return staffList;
+        }
+
+        public static bool IsFirstStaff()
+        {
+            string query = @"select count(*) as count from Staff";
+
+            object obj = DataAccessHelper.ExecuteScalar(query, null);
+
+            if (obj != null && int.TryParse(obj.ToString(), out int id))
+            {
+                return id == 0;
+            }
+
+            return false;
         }
     }
 }

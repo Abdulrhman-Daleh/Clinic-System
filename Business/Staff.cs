@@ -109,13 +109,25 @@ namespace Business
 
         public override bool Save()
         {
+            if (!IsPersonValidToSave())
+            {
+                return false;
+            }
+
+
+            if (!IsStaffValidToSave())
+            {
+                return false;
+            }
+
+            string StaffId = Global.CurrentLoggedInStaff == null ? "None it's first Record" : Global.CurrentLoggedInStaff.StaffId.ToString();
             switch (Mode)
             {
                 case EnMode.Add:
                     if (AddNewStaff())
                     {
                         Mode = EnMode.Update;
-                        Auditor.Log("Staff Added", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"StaffID {StaffId}");
+                        Auditor.Log("Staff Added", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was added by StaffID {StaffId}.", $"StaffID {StaffId}");
                         return true;
                     }
                     return false;
@@ -123,7 +135,7 @@ namespace Business
                 case EnMode.Update:
                     if (UpdateStaff())
                     {
-                        Auditor.Log("Staff Updated", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"StaffID {StaffId}");
+                        Auditor.Log("Staff Updated", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was updated by StaffID {StaffId}.", $"StaffID {StaffId}");
                         return true;
                     }
 
@@ -164,6 +176,17 @@ namespace Business
         public bool IsRoleApplicableForAppointment()
         {
             return RoleInfo.RoleId == EnRole.Nurse || RoleInfo.RoleId == EnRole.Doctor;
+        }
+
+        public static bool IsFirstStaff()
+        {
+            return StaffData.IsFirstStaff();
+        }
+
+        private bool IsStaffValidToSave()
+        {
+            return Util.IsRequired(Username) && Util.IsRequired(HashedPassword)
+                && Util.IsValidId(ScheduleId) && Util.IsValidId(PersonId) && Util.IsValidId((int)RoleInfo.RoleId);
         }
     }
 }

@@ -1,5 +1,3 @@
--- ContactTypes seed begins
-
 Set Identity_Insert ContactTypes ON
 if NOT EXISTS (select 1 from ContactTypes where ContactTypeID=1)begin
     insert into ContactTypes(ContactTypeID, ContactTypeName)
@@ -107,15 +105,15 @@ SET Identity_Insert AppointmentTypes OFF
 -- insuranceTypes seed begins
 SET Identity_Insert insuranceTypes ON
 if NOT EXISTS (select 1 from insuranceTypes where InsurenceTypeID=1)begin
-    insert into insuranceTypes(InsurenceTypeID, InsurenceTypeName)
+    insert into insuranceTypes(InsurenceTypeID, InsuranceTypeName)
     values(1, N'Government Insurance')
 end
 if NOT EXISTS (select 1 from insuranceTypes where InsurenceTypeID=2)begin
-    insert into insuranceTypes(InsurenceTypeID, InsurenceTypeName)
+    insert into insuranceTypes(InsurenceTypeID, InsuranceTypeName)
     values(2, N'Private')
 end
 if NOT EXISTS (select 1 from insuranceTypes where InsurenceTypeID=3)begin
-    insert into insuranceTypes(InsurenceTypeID, InsurenceTypeName)
+    insert into insuranceTypes(InsurenceTypeID, InsuranceTypeName)
     values(3, N'Family Deductible')
 end
 SET Identity_Insert insuranceTypes OFF
