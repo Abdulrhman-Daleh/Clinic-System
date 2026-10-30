@@ -17,10 +17,16 @@ namespace ClinicSystem.People.Controls
         public delegate void SendOnFind(Person person);
         public event SendOnFind OnFind;
 
-        public bool AllowFilter
+        public bool AllowFind
         {
             get => gbFilter.Enabled;
             set => gbFilter.Enabled = value;
+        }
+
+        public bool AllowFindButton
+        {
+            get => btnFind.Enabled;
+            set => btnFind.Enabled = value;
         }
         private void SetUp()
         {
@@ -53,7 +59,7 @@ namespace ClinicSystem.People.Controls
             {
                 viewPersonInfoCtrl1.SetData(person);
 
-                if (AllowFilter)
+                if (AllowFind)
                     OnFind?.Invoke(person);
                 return;
             }
@@ -77,7 +83,7 @@ namespace ClinicSystem.People.Controls
             }
             viewPersonInfoCtrl1.SetData(person);
 
-            if (AllowFilter)
+            if (AllowFind)
                 OnFind?.Invoke(person);
         }
 
