@@ -16,7 +16,7 @@ namespace Business
         {
             return AuditorData.AddAuditTrail(new AuditTrailDto()
             {
-                StaffID = Global.CurrentLoggedInStaff.StaffId,
+                StaffID = Global.CurrentLoggedInStaff == null ? -1 : Global.CurrentLoggedInStaff.StaffId,
                 TrailTitle = trailTitle,
                 MessageDescription = messageDescription,
                 WorkedOnObjectName = workedOnObjectName

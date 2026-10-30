@@ -96,6 +96,9 @@ namespace Business
 
         public bool Save()
         {
+            if (!IsPolicyValidToSave())
+                return false;
+
             switch (_mode)
             {
                 case Mode.Add:
@@ -152,6 +155,11 @@ namespace Business
         public static async Task<BindingList<(int policyId, string ActiveDateRange)>> GetPoliciesRanges()
         {
             return await PolicyData.GetPoliciesRanges();
+        }
+
+        private bool IsPolicyValidToSave()
+        {
+            return Util.IsValidId(OwnerID) && ActiveFrom < ActiveTo;
         }
     }
 }

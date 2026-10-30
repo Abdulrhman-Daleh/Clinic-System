@@ -121,7 +121,7 @@ namespace Business
 
         public bool Save()
         {
-            if (NotValidToSave())
+            if (IsInsuranceValidToSave())
                 return false;
 
             switch (mode)
@@ -143,14 +143,6 @@ namespace Business
                     }
                     return false;
             }
-
-            return false;
-        }
-
-        private bool NotValidToSave()
-        {
-            if (Policy is null || PolicyPatientHolder is null || RecorderStaff is null)
-                return true;
 
             return false;
         }
@@ -180,6 +172,15 @@ namespace Business
             return await InsuranceData.GetPatientsUnderInsurance(insuranceId);
         }
 
+        private bool IsInsuranceValidToSave()
+        {
+            if (Policy == null || PolicyPatientHolder == null || RecorderStaff is null)
+                return false;
+
+            return Util.IsRequired(InsuranceProvider) && Util.IsRequired(Relationship) && Util.IsRequired(PatientClaims)
+                && Util.IsValidId(PolicyId) && Util.IsValidId(RecordedBy) && Util.IsValidId(PolicyholderPatientId) &&
+                Util.IsValidId((int)InsuranceType.InsuranceTypeId) && Util.IsValidId((int)InsuranceStatus.InsuranceStatusId);
+        }
     }
 
 }

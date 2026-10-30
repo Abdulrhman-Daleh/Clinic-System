@@ -87,6 +87,9 @@ namespace Business
 
         public bool Save()
         {
+            if (!IsAppointmentValidToSave())
+                return false;
+
             switch (_mode)
             {
                 case EnMode.Add:
@@ -118,6 +121,11 @@ namespace Business
         public static Appointment FindAppointmentByID(int appointmentId)
         {
             return FromDto(AppointmentData.FindAppointmentByID(appointmentId));
+        }
+
+        private bool IsAppointmentValidToSave()
+        {
+            return Util.IsValidId(PatientID) && Util.IsValidId(StaffID) && Patient != null && Staff != null;
         }
 
     }

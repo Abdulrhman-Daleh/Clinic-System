@@ -61,6 +61,9 @@ namespace Business
 
         public bool AddNewPatient()
         {
+            if (!IsPatientValidToSave())
+                return false;
+
             this.PatientId = PatientData.AddNewPatient(ToDto(this));
 
             if (this.PatientId > 0)
@@ -96,6 +99,11 @@ namespace Business
         public int GetTotalVisits()
         {
             return PatientData.GetTotalVisits(PatientId);
+        }
+
+        private bool IsPatientValidToSave()
+        {
+            return Util.IsValidId(PatientId);
         }
     }
 }

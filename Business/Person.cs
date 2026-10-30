@@ -108,5 +108,10 @@ namespace Business
         public string GetFullName() => Firstname + " " + Lastname;
 
         public char GetGenderChar() => Gender == EnGender.Male ? 'M' : 'F';
+
+        public bool IsPersonValidToSave()
+        {
+            return Util.IsRequired(Firstname) && Util.IsRequired(Lastname) && Util.IsValidId((int)Gender);
+        }
     }
 }

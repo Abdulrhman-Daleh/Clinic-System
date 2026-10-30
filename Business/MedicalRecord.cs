@@ -92,6 +92,9 @@ namespace Business
 
         public bool Save()
         {
+            if (!IsMedicalRecordValidToSave())
+                return false;
+
             switch (_mode)
             {
                 case EnMode.Add:
@@ -131,6 +134,11 @@ namespace Business
         public string GetCareText()
         {
             return ConcentToCare ? "Care" : "No Care";
+        }
+
+        private bool IsMedicalRecordValidToSave()
+        {
+            return Util.IsValidId(PatientID) && Util.IsRequired(PastSocialHistory) && Util.IsRequired(SocialStatus) && Util.IsRequired(Classification);
         }
     }
 }
