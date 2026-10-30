@@ -65,7 +65,7 @@ namespace ClinicSystem.Helpers
 
             if (AllowDigit)
             {
-                if (char.IsLetter(e.KeyChar) || char.IsPunctuation(e.KeyChar))
+                if (char.IsLetter(e.KeyChar) || char.IsPunctuation(e.KeyChar) || char.IsSymbol(e.KeyChar))
                     e.Handled = true;
                 else
                     e.Handled = false;

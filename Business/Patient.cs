@@ -103,7 +103,7 @@ namespace Business
 
         private bool IsPatientValidToSave()
         {
-            return Util.IsValidId(PatientId);
+            return Util.IsValidId(PersonId);
         }
     }
 }

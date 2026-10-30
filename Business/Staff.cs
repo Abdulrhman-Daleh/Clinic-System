@@ -114,7 +114,6 @@ namespace Business
                 return false;
             }
 
-
             if (!IsStaffValidToSave())
             {
                 return false;
@@ -186,7 +185,7 @@ namespace Business
         private bool IsStaffValidToSave()
         {
             return Util.IsRequired(Username) && Util.IsRequired(HashedPassword)
-                && Util.IsValidId(ScheduleId) && Util.IsValidId(PersonId) && Util.IsValidId((int)RoleInfo.RoleId);
+                && Util.IsValidId(ScheduleId) && Util.IsValidId((int)RoleInfo.RoleId);
         }
     }
 }

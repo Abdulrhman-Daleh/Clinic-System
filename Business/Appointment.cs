@@ -52,6 +52,8 @@ namespace Business
 
         private static Appointment FromDto(AppointmentDto appointment)
         {
+            if (appointment == null) return null;
+
             return new Appointment()
             {
                 AppointmentID = appointment.AppointmentID,
@@ -125,8 +127,25 @@ namespace Business
 
         private bool IsAppointmentValidToSave()
         {
+            if (!Staff.IsActive)
+                return false;
+
+            if (!NoOverlapWithLastAppointment())
+                return false;
+
             return Util.IsValidId(PatientID) && Util.IsValidId(StaffID) && Patient != null && Staff != null;
         }
 
+        public bool HasSOAPNotes() => AppointmentData.HasSOAPNotes(AppointmentID);
+
+        public bool HasPrescription() => AppointmentData.HasPrescription(AppointmentID);
+
+        public bool HasLabTests() => AppointmentData.HasLabTests(AppointmentID);
+
+        public bool HasReferral() => AppointmentData.HasReferral(AppointmentID);
+
+        public bool HasPayment() => AppointmentData.HasPayment(AppointmentID);
+
+        public bool HasPenalty() => AppointmentData.HasPenalty(AppointmentID);
     }
 }
