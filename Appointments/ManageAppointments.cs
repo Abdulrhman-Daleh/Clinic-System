@@ -121,5 +121,13 @@ namespace ClinicSystem.Appointments
             ViewAppointment viewAppointment = new ViewAppointment(appointmentId);
             viewAppointment.ShowDialog();
         }
+
+        private void rescheduleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+
+            BookAppointment viewAppointment = new BookAppointment(appointmentId, AppEnums.cs.EnAppointmentStatuses.Rescheduled);
+            viewAppointment.ShowDialog();
+        }
     }
 }

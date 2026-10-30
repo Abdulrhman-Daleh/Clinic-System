@@ -74,7 +74,7 @@
             this.rescheduleToolStripMenuItem});
             this.cmsAppointments.Name = "cmsPeople";
             this.cmsAppointments.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsAppointments.Size = new System.Drawing.Size(280, 118);
+            this.cmsAppointments.Size = new System.Drawing.Size(280, 146);
             this.cmsAppointments.Opening += new System.ComponentModel.CancelEventHandler(this.cmsAppointments_Opening);
             // 
             // bookAppointmentToolStripMenuItem
@@ -102,6 +102,7 @@
             this.rescheduleToolStripMenuItem.Name = "rescheduleToolStripMenuItem";
             this.rescheduleToolStripMenuItem.Size = new System.Drawing.Size(279, 38);
             this.rescheduleToolStripMenuItem.Text = "Reschedule";
+            this.rescheduleToolStripMenuItem.Click += new System.EventHandler(this.rescheduleToolStripMenuItem_Click);
             // 
             // txtFilter
             // 

@@ -12,38 +12,75 @@ namespace ClinicSystem.Appointments
         public BookAppointment(EnAppointmentStatuses appointmentStatus)
         {
             InitializeComponent();
-            SetUp();
+            SetUp(0);
             appointment = new Appointment();
             appointment.AppointmentStatuses = (appointmentStatus, appointmentStatus.ToString());
-            SetFormTextBasedMode("Add Appointment", "Add Appointment", "Add Appointment");
+            SetFormTextBasedMode("Add New Appointment", "Add New Appointment", "Add Appointment");
+        }
+        public BookAppointment(int appointmentId, EnAppointmentStatuses appointmentNewStatus)
+        {
+            InitializeComponent();
+
+            SetFormTextBasedMode($"{appointmentNewStatus} Appointment", $"{appointmentNewStatus} Appointment", $"Update Appointment");
+            appointment = Appointment.FindAppointmentByID(appointmentId);
+            SetUpdateFrom(appointment);
+            appointment.AppointmentStatuses = (appointmentNewStatus, appointmentNewStatus.ToString());
         }
 
+        private void SetUpdateFrom(Appointment appointment)
+        {
+            if (ValidationHelper.IsEmptyOrNull(appointment))
+            {
+                lblAppointmentId.Text = "Not Set";
+                btnSave.Enabled = false;
+                return;
+            }
+
+            if (appointment.AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Scheduled)
+            {
+                MessageBox.Show($"you can't reschedule : {appointment.AppointmentStatuses.AppointmentStatusText} appointment", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnSave.Enabled = false;
+                return;
+            }
+
+            cbType.Enabled = false;
+            lblAppointmentId.Text = $"Appo-" + appointment.AppointmentID;
+            findPatientCtrl1.LoadPatientInfo(appointment.PatientID);
+            findStaffCtrl1.LoadData(appointment.Staff);
+            lblStatus.Text = appointment.AppointmentStatuses.AppointmentStatusText;
+            LoadAppointmentTypes((int)appointment.AppointmentTypes.AppointmentTypeID - 1);
+
+            dtpStart.Value = DateTime.Parse(appointment.AppointmentTime.ToString());
+            dtpEnd.Value = DateTime.Parse(appointment.AppointmentEndTime.ToString());
+            dtpAppointmentDate.Value = appointment.AppointmentDate;
+            findPatientCtrl1.AllowedFind = false;
+            findStaffCtrl1.AllowFind = false;
+        }
         public delegate void SendAppointmentOnSave(Appointment appointment);
         public event SendAppointmentOnSave OnSave;
-        private void SetFormTextBasedMode(
-            string labelTitle, string pageTitle, string saveButtonText)
+        private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
             Text = pageTitle;
             btnSave.Text = saveButtonText;
         }
-        private void BtnCancel_Click(object sender, System.EventArgs e) => Close();
+        private void BtnCancel_Click(object sender, EventArgs e) => Close();
 
-        private void SetUp()
+        private void SetUp(int index)
         {
             dtpAppointmentDate.MinDate = DateTime.Now;
             dtpAppointmentDate.MaxDate = DateTime.Now.AddMonths(1);
             lblStatus.Text = "Not Set";
-            LoadAppointmentTypes();
+            LoadAppointmentTypes(index);
             findPatientCtrl1.AllowAddNew = false;
             findStaffCtrl1.AllowAddNew = false;
         }
 
-        private async void LoadAppointmentTypes()
+        private async void LoadAppointmentTypes(int index)
         {
             cbType.DataSource = await Appointment.GetAppointmentTypesNames();
 
-            cbType.SelectedIndex = 0;
+            cbType.SelectedIndex = index;
         }
 
         private void dtpEnd_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -75,15 +112,6 @@ namespace ClinicSystem.Appointments
 
         private void ReciveStaffInfo(Business.Staff staff)
         {
-            if (!staff.IsRoleApplicableForAppointment())
-            {
-                errors.SetError(findStaffCtrl1, "Staff is not a doctor nor nurse");
-                return;
-            }
-            else
-                errors.SetError(findStaffCtrl1, null);
-
-
             appointment.Staff = staff;
 
             if (ValidationHelper.IsEmptyOrNull(staff))
@@ -91,6 +119,14 @@ namespace ClinicSystem.Appointments
                 appointment.StaffID = -1;
                 return;
             }
+
+            if (!staff.IsRoleApplicableForAppointment())
+            {
+                errors.SetError(findStaffCtrl1, "Staff is not a doctor nor nurse");
+                return;
+            }
+            else
+                errors.SetError(findStaffCtrl1, null);
 
             appointment.StaffID = staff.StaffId;
         }
@@ -119,18 +155,6 @@ namespace ClinicSystem.Appointments
             }
 
             CollectData();
-
-            if (!appointment.Staff.IsActive)
-            {
-                MessageBox.Show("Staff is not active", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            if (!appointment.NoOverlapWithLastAppointment())
-            {
-                MessageBox.Show("Staff has an overlap in appointment date", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             if (!appointment.Save())
             {
