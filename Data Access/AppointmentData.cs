@@ -160,6 +160,7 @@ namespace Data_Access
                 AppointmentEndTime = reader.GetDateTime(reader.GetOrdinal("AppointmentEndTime")).TimeOfDay
             };
         }
+
         public static AppointmentDto FindAppointmentByID(int appointmentId)
         {
             string query = @"select AppointmentID, PatientID, StaffID, appo.AppointmentStatusID, aStatus.AppointmentStatusText, appo.AppointmentTypeID,
@@ -167,16 +168,149 @@ namespace Data_Access
             AppointmentTime, AppointmentEndTime from Appointments as appo inner join AppointmentStatuses as aStatus on 
             appo.AppointmentStatusID = aStatus.AppointmentStatusID inner join AppointmentTypes as appoType on appoType.AppointmentTypeID
             = appo.AppointmentTypeID
-            where AppointmentID = 2";
+            where AppointmentID = @AppointmentId";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
                 new SqlParameter("@AppointmentId", SqlDbType.Int) {Value =  appointmentId}
+
             };
 
             return DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentDtoMapper);
         }
 
+        public static bool HasSOAPNotes(int appointmentId)
+        {
+            string query = @"select case
+	        when exists 
+	        (
+	        	SELECT 1 
+                FROM Appointments AS appo 
+                INNER JOIN SOAPNotes AS n ON n.AppointmentID = appo.AppointmentID 
+                WHERE appo.AppointmentID = @AppointmentId
+	        )	then 1
+	        else 0
+	        end as s";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
+
+        public static bool HasPrescription(int appointmentId)
+        {
+            string query = @"select case
+	        when exists
+	        (
+	        	select 1 from Appointments as appo
+	                inner join Prescriptions as presc on presc.AppointmentID = appo.AppointmentID
+	        		where appo.AppointmentID = @AppointmentId
+	        ) then 1
+	        else 0
+	        end as p";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
+
+        public static bool HasLabTests(int appointmentId)
+        {
+            string query = @"select case
+	        when exists
+	        (
+	        	select 1 from Appointments as appo
+	        	inner join LabTests as LabT on LabT.AppointmentID = appo.AppointmentID
+	        	where appo.AppointmentID = @AppointmentId
+	        ) then 1
+	        else 0
+	        end as L";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
+
+        public static bool HasReferral(int appointmentId)
+        {
+            string query = @"select case
+	        when exists
+	        (
+	        	select 1 from Appointments as appo
+	        	inner join Referrals as r on r.AppointmentID = appo.AppointmentID
+	        	where appo.AppointmentID = @AppointmentId
+	        ) then 1
+	        else 0
+	        end as R";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
+
+        public static bool HasPayment(int appointmentId)
+        {
+            string query = @"select case
+	        when exists
+	        (
+	        	select 1 from Appointments as appo
+	        	inner join Payments as p on p.AppointmentID = appo.AppointmentID
+	        	where appo.AppointmentID = @AppointmentId
+	        ) then 1
+	        else 0
+	        end as R";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
+
+        public static bool HasPenalty(int appointmentId)
+        {
+            string query = @"select case
+	        when exists
+	        (
+	        	select 1 from Appointments as appo
+	        	inner join Penalties as p on p.AppointmentID = appo.AppointmentID
+	        	where appo.AppointmentID = @AppointmentId
+	        ) then 1
+	        else 0
+	        end as R";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
 
     }
 }
