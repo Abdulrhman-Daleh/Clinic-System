@@ -280,6 +280,7 @@
             this.viewAppointmentToolStripMenuItem.Name = "viewAppointmentToolStripMenuItem";
             this.viewAppointmentToolStripMenuItem.Size = new System.Drawing.Size(326, 38);
             this.viewAppointmentToolStripMenuItem.Text = "View Appointment";
+            this.viewAppointmentToolStripMenuItem.Click += new System.EventHandler(this.viewAppointmentToolStripMenuItem_Click);
             // 
             // administrationToolStripMenuItem
             // 

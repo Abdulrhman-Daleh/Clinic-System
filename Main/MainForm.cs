@@ -124,5 +124,11 @@ namespace ClinicSystem
             ManageAppointments manageAppointments = new ManageAppointments();
             manageAppointments.ShowDialog();
         }
+
+        private void viewAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ViewAppointment viewAppointment = new ViewAppointment();
+            viewAppointment.ShowDialog();
+        }
     }
 }

@@ -55,6 +55,12 @@
     <Compile Include="Appointments\BookAppointment.Designer.cs">
       <DependentUpon>BookAppointment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Appointments\Controls\FindAppointmentCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Appointments\Controls\FindAppointmentCtrl.Designer.cs">
+      <DependentUpon>FindAppointmentCtrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Appointments\Controls\ViewAppointmentInfoCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -313,6 +319,9 @@
     </Compile>
     <EmbeddedResource Include="Appointments\BookAppointment.resx">
       <DependentUpon>BookAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\Controls\FindAppointmentCtrl.resx">
+      <DependentUpon>FindAppointmentCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Appointments\Controls\ViewAppointmentInfoCtrl.resx">
       <DependentUpon>ViewAppointmentInfoCtrl.cs</DependentUpon>

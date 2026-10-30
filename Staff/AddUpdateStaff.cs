@@ -17,6 +17,7 @@ namespace ClinicSystem.Staff
             SetControls();
             SetFormTextBasedMode("Add new staff", "Add Staff", "Add Staff");
             findPersonCtrl1.OnFind += RecivePersonData;
+            findPersonCtrl1.AllowFindButton = false;
             HandleFirstStaff();
         }
         private void RecivePersonData(Person person)

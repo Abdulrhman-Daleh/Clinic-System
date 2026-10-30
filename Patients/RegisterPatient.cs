@@ -33,7 +33,10 @@ namespace ClinicSystem.Patients
         private void RecivePersonData(Person person)
         {
             if (ValidationHelper.IsEmptyOrNull(person, "person info does not exists"))
+            {
+                patient.PersonId = -1;
                 return;
+            }
 
             patient.Firstname = person.Firstname;
             patient.Lastname = person.Lastname;
