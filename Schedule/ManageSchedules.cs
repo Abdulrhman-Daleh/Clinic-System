@@ -79,6 +79,9 @@ namespace ClinicSystem.Schedule
 
         private void dgvSchedules_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvSchedules))
+                return;
+
             int scheduleId = (int)dgvSchedules.CurrentRow.Cells["ScheduleID"].Value;
 
             AddUpdateSchedule updateSchedule = new AddUpdateSchedule(scheduleId);

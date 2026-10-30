@@ -62,6 +62,7 @@
             this.dgvAppointments.RowTemplate.Height = 24;
             this.dgvAppointments.Size = new System.Drawing.Size(835, 347);
             this.dgvAppointments.TabIndex = 31;
+            this.dgvAppointments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAppointments_CellDoubleClick);
             // 
             // cmsAppointments
             // 
@@ -73,7 +74,7 @@
             this.rescheduleToolStripMenuItem});
             this.cmsAppointments.Name = "cmsPeople";
             this.cmsAppointments.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsAppointments.Size = new System.Drawing.Size(280, 146);
+            this.cmsAppointments.Size = new System.Drawing.Size(280, 118);
             this.cmsAppointments.Opening += new System.ComponentModel.CancelEventHandler(this.cmsAppointments_Opening);
             // 
             // bookAppointmentToolStripMenuItem

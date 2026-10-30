@@ -177,8 +177,7 @@ namespace ClinicSystem.MedicalRecord
         private void dgvMedicalRecords_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 ||
-                ValidationHelper.IsDgvEmptyOrNull(dgvMedicalRecords))
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvMedicalRecords))
                 return;
 
             updateMedicalRecordToolStripMenuItem_Click(

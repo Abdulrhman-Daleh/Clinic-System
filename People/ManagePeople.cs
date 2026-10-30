@@ -98,7 +98,6 @@ namespace ClinicSystem.People
         {
             updatePersonToolStripMenuItem.Enabled = status;
             viewPersonToolStripMenuItem.Enabled = status;
-            addPersonContactToolStripMenuItem.Enabled = status;
         }
         private void cmsPeople_Opening(object sender, CancelEventArgs e)
         {
@@ -106,6 +105,9 @@ namespace ClinicSystem.People
         }
         private void dgvPeople_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvPeople))
+                return;
+
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
 
             ViewPerson viewPerson = new ViewPerson(personId);

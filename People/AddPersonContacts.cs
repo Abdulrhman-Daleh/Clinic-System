@@ -28,7 +28,7 @@ namespace ClinicSystem.People
             if (ValidationHelper.IsEmptyOrNull(person, "Person does not exists"))
                 return;
 
-            findPersonCtrl1.AllowFilter = false;
+            findPersonCtrl1.AllowFind = false;
             findPersonCtrl1.RecivePersonInfo(person);
         }
 

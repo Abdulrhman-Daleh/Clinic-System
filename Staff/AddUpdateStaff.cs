@@ -17,11 +17,15 @@ namespace ClinicSystem.Staff
             SetControls();
             SetFormTextBasedMode("Add new staff", "Add Staff", "Add Staff");
             findPersonCtrl1.OnFind += RecivePersonData;
+            HandleFirstStaff();
         }
         private void RecivePersonData(Person person)
         {
             if (ValidationHelper.IsEmptyOrNull(person, "person info does not exists"))
+            {
+                staff.PersonId = -1;
                 return;
+            }
 
             staff.Firstname = person.Firstname;
             staff.Lastname = person.Lastname;
@@ -33,6 +37,18 @@ namespace ClinicSystem.Staff
         public delegate void SendStaffInfo(int staffId);
         public event SendStaffInfo SendStaffId;
 
+        private void HandleFirstStaff()
+        {
+            if (Business.Staff.IsFirstStaff())
+            {
+                findPersonCtrl1.AllowFind = true;
+                findPersonCtrl1.AllowFindButton = false
+                    ;
+                cbRoles.Enabled = false;
+                staff.RoleInfo = (EnRole.Owner, "Owner");
+            }
+        }
+
         public AddUpdateStaff(int staffId)
         {
             InitializeComponent();
@@ -43,7 +59,7 @@ namespace ClinicSystem.Staff
 
             SetControls(staff.StaffId, staff.StaffNumber, staff.Username, "Not Allowed To Show");
             SetFormTextBasedMode("Update staff", "Update Staff", "Update");
-            findPersonCtrl1.AllowFilter = false;
+            findPersonCtrl1.AllowFind = false;
             findPersonCtrl1.RecivePersonInfo(staff);
             txtPassword.Enabled = false;
         }
@@ -105,7 +121,9 @@ namespace ClinicSystem.Staff
         {
             staff.Username = txtUsername.Text;
             staff.ScheduleId = (int)cbSchedules.SelectedIndex + 1;
-            staff.RoleInfo = ((EnRole)cbRoles.SelectedIndex + 1, cbRoles.SelectedItem.ToString());
+
+            if (cbRoles.Enabled)
+                staff.RoleInfo = ((EnRole)cbRoles.SelectedIndex + 1, cbRoles.SelectedItem.ToString());
 
             if (txtPassword.Enabled)
                 staff.HashedPassword = PasswordHasher.HashPassword(txtPassword.Text);

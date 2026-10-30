@@ -93,7 +93,6 @@ namespace ClinicSystem.Patients
         private void SetControlEnableStatus(bool status)
         {
             viewPatientToolStripMenuItem.Enabled = status;
-            addNewPatientToolStripMenuItem.Enabled = status;
         }
 
         private void cmsPatient_Opening(object sender, CancelEventArgs e)
@@ -121,6 +120,20 @@ namespace ClinicSystem.Patients
 
         private void viewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvPatients))
+                return;
+
+            int patientId = (int)dgvPatients.CurrentRow.Cells[0].Value;
+
+            ViewPatient viewPatient = new ViewPatient(patientId);
+            viewPatient.ShowDialog();
+        }
+
+        private void dgvPatients_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvPatients))
+                return;
+
             int patientId = (int)dgvPatients.CurrentRow.Cells[0].Value;
 
             ViewPatient viewPatient = new ViewPatient(patientId);

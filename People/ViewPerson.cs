@@ -10,7 +10,7 @@ namespace ClinicSystem.People.Controls
         public ViewPerson()
         {
             InitializeComponent();
-            findPersonCtrl1.AllowFilter = true;
+            findPersonCtrl1.AllowFind = true;
             ResetEmptyControls();
         }
 
@@ -43,7 +43,7 @@ namespace ClinicSystem.People.Controls
         {
             InitializeComponent();
             person = Person.FindPersonById(personId);
-            findPersonCtrl1.AllowFilter = false;
+            findPersonCtrl1.AllowFind = false;
             SetInfo(person);
         }
 

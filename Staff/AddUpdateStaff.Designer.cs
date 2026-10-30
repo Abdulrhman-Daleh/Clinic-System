@@ -299,7 +299,7 @@
             // 
             // findPersonCtrl1
             // 
-            this.findPersonCtrl1.AllowFilter = true;
+            this.findPersonCtrl1.AllowFind = true;
             this.findPersonCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPersonCtrl1.Location = new System.Drawing.Point(11, 114);
             this.findPersonCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);

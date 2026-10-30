@@ -100,16 +100,26 @@ namespace ClinicSystem.Appointments
             viewAppointment.ShowDialog();
         }
 
+        private void SetControlEnableStatus(bool status)
+        {
+            rescheduleToolStripMenuItem.Enabled = status;
+            viewAppointmentToolStripMenuItem.Enabled = status;
+
+        }
         private void cmsAppointments_Opening(object sender, CancelEventArgs e)
         {
+            SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
+        }
+
+        private void dgvAppointments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
             if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
-            {
-                rescheduleToolStripMenuItem.Enabled = false;
-                viewAppointmentToolStripMenuItem.Enabled = false;
-            }
-            else
-                rescheduleToolStripMenuItem.Enabled = true;
-            viewAppointmentToolStripMenuItem.Enabled = true;
+                return;
+
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+
+            ViewAppointment viewAppointment = new ViewAppointment(appointmentId);
+            viewAppointment.ShowDialog();
         }
     }
 }

@@ -121,7 +121,7 @@ namespace ClinicSystem.Insurance
         private void dgvInsurances_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvInsurances))
                 return;
 
             int insuranceId =

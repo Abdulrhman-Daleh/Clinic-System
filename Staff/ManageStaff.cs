@@ -73,6 +73,9 @@ namespace ClinicSystem.Staff
 
         private void dgvStaff_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvStaff))
+                return;
+
             int staffId = (int)dgvStaff.CurrentRow.Cells["StaffID"].Value;
 
             ViewStaffInfo viewStaff = new ViewStaffInfo(staffId);
@@ -128,7 +131,6 @@ namespace ClinicSystem.Staff
         {
             updateStaffToolStripMenuItem.Enabled = status;
             viewStaffToolStripMenuItem.Enabled = status;
-            addNewStaffToolStripMenuItem.Enabled = status;
         }
 
         private void cmsStaff_Opening(object sender, CancelEventArgs e)

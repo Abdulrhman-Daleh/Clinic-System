@@ -88,7 +88,7 @@ namespace ClinicSystem.Policies
         private void dgvPolicies_CellDoubleClick(
             object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvPolicies))
                 return;
 
             int policyId = (int)dgvPolicies.Rows[e.RowIndex].Cells["PolicyID"].Value;
@@ -126,7 +126,6 @@ namespace ClinicSystem.Policies
         {
             updatePolicyToolStripMenuItem.Enabled = status;
             viewPolicyToolStripMenuItem.Enabled = status;
-            addNewPolicyToolStripMenuItem.Enabled = status;
         }
 
         private void cmsPolicies_Opening(

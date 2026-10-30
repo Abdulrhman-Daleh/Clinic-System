@@ -35,7 +35,6 @@
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.dgvPeople = new System.Windows.Forms.DataGridView();
             this.cmsPeople = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addNewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updatePersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addPersonContactToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,23 +113,13 @@
             this.cmsPeople.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmsPeople.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cmsPeople.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewPersonToolStripMenuItem,
             this.updatePersonToolStripMenuItem,
             this.viewPersonToolStripMenuItem,
             this.addPersonContactToolStripMenuItem});
             this.cmsPeople.Name = "cmsPeople";
             this.cmsPeople.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPeople.Size = new System.Drawing.Size(287, 156);
+            this.cmsPeople.Size = new System.Drawing.Size(287, 118);
             this.cmsPeople.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPeople_Opening);
-            // 
-            // addNewPersonToolStripMenuItem
-            // 
-            this.addNewPersonToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
-            this.addNewPersonToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addNewPersonToolStripMenuItem.Name = "addNewPersonToolStripMenuItem";
-            this.addNewPersonToolStripMenuItem.Size = new System.Drawing.Size(286, 38);
-            this.addNewPersonToolStripMenuItem.Text = "Add New Person";
-            this.addNewPersonToolStripMenuItem.Click += new System.EventHandler(this.addNewPersonToolStripMenuItem_Click);
             // 
             // updatePersonToolStripMenuItem
             // 
@@ -263,7 +252,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbGender;
         private System.Windows.Forms.ContextMenuStrip cmsPeople;
-        private System.Windows.Forms.ToolStripMenuItem addNewPersonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updatePersonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewPersonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPersonContactToolStripMenuItem;
