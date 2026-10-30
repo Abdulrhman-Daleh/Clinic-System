@@ -18,5 +18,15 @@ namespace Business
             else
                 records.Add(record);
         }
+
+        public static bool IsRequired(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value);
+        }
+
+        public static bool IsValidId(int id)
+        {
+            return id > 0;
+        }
     }
 }
