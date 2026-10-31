@@ -8,7 +8,6 @@ namespace Business
     public class Patient : Person
     {
         public int PatientId { get; set; }
-        public new int PersonId { get; set; }
         public bool? IsFrozen { get; set; }
         public DateTime RegisterDate { get; set; }
         public DateTime? EndOfBookingFreeze { get; set; }

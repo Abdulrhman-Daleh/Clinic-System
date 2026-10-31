@@ -131,6 +131,11 @@ namespace Business
             return FromDto(MedicalRecordData.FindMedicalRecordByID(medicalRecordID));
         }
 
+        public static MedicalRecord FindMedicalRecordByPatientID(int patientId)
+        {
+            return FromDto(MedicalRecordData.FindMedicalRecordByPatientID(patientId));
+        }
+
         public string GetCareText()
         {
             return ConcentToCare ? "Care" : "No Care";

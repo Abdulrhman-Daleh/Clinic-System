@@ -152,9 +152,9 @@ namespace Business
             return FromDto(InsuranceData.FindInsuranceByID(insuranceId));
         }
 
-        public static Insurance FindInsuranceByPolicyID(int policyId)
+        public static Insurance FindInsuranceByPatientId(int patientId)
         {
-            return FromDto(InsuranceData.FindInsuranceByPolicyID(policyId));
+            return FromDto(InsuranceData.FindInsuranceByPatientId(patientId));
         }
 
         public static async Task<BindingList<string>> GetInsuranceTypesNames()
@@ -181,6 +181,7 @@ namespace Business
                 && Util.IsValidId(PolicyId) && Util.IsValidId(RecordedBy) && Util.IsValidId(PolicyholderPatientId) &&
                 Util.IsValidId((int)InsuranceType.InsuranceTypeId) && Util.IsValidId((int)InsuranceStatus.InsuranceStatusId);
         }
+
     }
 
 }

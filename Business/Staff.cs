@@ -45,7 +45,7 @@ namespace Business
             if (staffDto is null)
                 return null;
 
-            return new Staff(staffDto.StaffId)
+            return new Staff(staffDto.StaffId, staffDto.ScheduleId)
             {
                 ScheduleId = staffDto.ScheduleId,
                 RoleInfo = ((EnRole)staffDto.RoleInfo.RoleId, staffDto.RoleInfo.RoleName),
@@ -57,8 +57,9 @@ namespace Business
                 IsActive = staffDto.IsActive,
                 Firstname = staffDto.Firstname,
                 Lastname = staffDto.Lastname,
-                Gender = staffDto.Gender == 'M' ? EnGender.Male : EnGender.Female
+                Gender = staffDto.Gender == 'M' ? EnGender.Male : EnGender.Female,
             };
+
         }
 
         public Staff()
@@ -79,11 +80,11 @@ namespace Business
             Mode = EnMode.Add;
         }
 
-        private Staff(int staffId)
+        private Staff(int staffId, int scheduleId)
         {
             StaffId = staffId;
-            this.Schedule = Schedule.FindScheduleByID(this.ScheduleId);
             Mode = EnMode.Update;
+            Schedule = Schedule.FindScheduleByID(scheduleId);
         }
 
         public static async Task<BindingList<string>> GetRolesNames()

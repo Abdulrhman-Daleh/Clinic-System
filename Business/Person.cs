@@ -9,7 +9,7 @@ namespace Business
     {
         private enum Mode { Add = 1, Update }
         private Mode _mode;
-        public int PersonId { get; set; }
+        public virtual int PersonId { get; set; }
         public string Firstname { get; set; } = string.Empty;
         public string Lastname { get; set; } = string.Empty;
         public EnGender Gender { get; set; } = EnGender.Male;
@@ -109,9 +109,10 @@ namespace Business
 
         public char GetGenderChar() => Gender == EnGender.Male ? 'M' : 'F';
 
-        public bool IsPersonValidToSave()
-        {
-            return Util.IsRequired(Firstname) && Util.IsRequired(Lastname) && Util.IsValidId((int)Gender);
-        }
+        public bool IsPersonValidToSave() => Util.IsRequired(Firstname) && Util.IsRequired(Lastname) && Util.IsValidId((int)Gender);
+
+        public bool IsPersonRegisteredAsPatient() => PersonData.IsPersonRegisteredAsPatient(PersonId);
+
+        public bool IsPersonRegisteredAsStaff() => PersonData.IsPersonRegisteredAsStaff(PersonId);
     }
 }
