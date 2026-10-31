@@ -91,5 +91,47 @@ namespace Data_Access
 
             return people;
         }
+
+        public static bool IsPersonRegisteredAsPatient(int personId)
+        {
+            string query = @"select case
+            when exists
+	        (
+	        	select 1 from People as person inner join Patients as pat on pat.PersonID = person.PersonID
+	        	where person.PersonID = @PersonId
+	        ) then 1
+	        else 0
+	        end as p";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@PersonId", SqlDbType.Int) {Value = personId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
+
+        public static bool IsPersonRegisteredAsStaff(int personId)
+        {
+            string query = @"select case
+	        when exists
+	        (
+	        	select 1 from People as person inner join Staff as s on s.PersonID = person.PersonID
+	        	where person.PersonID = @PersonId
+	        ) then 1
+	        else 0
+	        end as p";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@PersonId", SqlDbType.Int) {Value = personId}
+            };
+
+            object obj = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            return int.Parse(obj.ToString()) == 1;
+        }
     }
 }

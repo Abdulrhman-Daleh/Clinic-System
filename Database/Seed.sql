@@ -81,7 +81,7 @@ SET Identity_Insert AppointmentStatuses OFF
 SET Identity_Insert AppointmentTypes ON
 if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=1)begin
     insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)
-    values(1, N'New Register')
+    values(1, N'New Patient')
 end
 if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=2)begin
     insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)

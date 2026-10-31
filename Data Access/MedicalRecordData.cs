@@ -164,6 +164,34 @@ namespace Data_Access
             return DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
         }
 
+        public static MedicalRecordDto FindMedicalRecordByPatientID(int patientId)
+        {
+            string query = @"SELECT MedicalRecordID
+               ,PatientID
+               ,MedicalNumber
+               ,CreatedDate
+               ,CurrentMedication
+               ,CurrentMedicationDuration
+               ,PastSocialHistory
+               ,PastSurgeries
+               ,ConcentToCare
+               ,SocialStatus
+               ,Classification
+               ,Allergies
+             FROM MedicalRecords
+                      WHERE PatientID = @PatientId;";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                 new SqlParameter("@PatientId", SqlDbType.Int)
+                 {
+                     Value = patientId
+                 }
+             };
+
+            return DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
+        }
+
         private static MedicalRecordListDto MedicalRecordListMapper(SqlDataReader reader)
         {
             try

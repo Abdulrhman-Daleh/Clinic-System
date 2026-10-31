@@ -311,6 +311,5 @@ namespace Data_Access
 
             return int.Parse(obj.ToString()) == 1;
         }
-
     }
 }

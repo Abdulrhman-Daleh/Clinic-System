@@ -105,18 +105,19 @@ namespace Data_Access
                 query, parameters, InsuranceMapper);
         }
 
-        public static InsuranceDto FindInsuranceByPolicyID(int policyId)
+        public static InsuranceDto FindInsuranceByPatientId(int patientId)
         {
             string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InStatus.InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
                 PatientClaims, PolicyholderPatientID, PolicyID, InsuranceTypeName, insuranceStatusText
                                  FROM Insurance as I 
                     inner join insuranceTypes as InType on I.InsuranceTypeID = InType.InsurenceTypeID
                     inner join insuranceStatuses as InStatus on I.InsuranceStatusID = InStatus.insuranceStatusID
-                                 WHERE PolicyId = @PolicyId";
+                    inner join Patient_Insurance as p_insurance on p_insurance.PatientID = I.PolicyholderPatientID
+                                 WHERE p_insurance.PatientID = @PatientId";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
-                    new SqlParameter("@PolicyId", policyId)
+                    new SqlParameter("@PatientId", patientId)
                 };
 
             return DataAccessHelper.ExecuteOneObject(
