@@ -46,7 +46,7 @@
             this.viewMRecordInfo1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.viewMRecordInfo1.Location = new System.Drawing.Point(0, 82);
             this.viewMRecordInfo1.Name = "viewMRecordInfo1";
-            this.viewMRecordInfo1.Size = new System.Drawing.Size(740, 506);
+            this.viewMRecordInfo1.Size = new System.Drawing.Size(755, 506);
             this.viewMRecordInfo1.TabIndex = 0;
             // 
             // gbFilter
@@ -58,7 +58,7 @@
             this.gbFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFilter.Location = new System.Drawing.Point(0, 0);
             this.gbFilter.Name = "gbFilter";
-            this.gbFilter.Size = new System.Drawing.Size(740, 82);
+            this.gbFilter.Size = new System.Drawing.Size(755, 82);
             this.gbFilter.TabIndex = 3;
             this.gbFilter.TabStop = false;
             this.gbFilter.Text = "Find Policy";
@@ -110,7 +110,7 @@
             this.Controls.Add(this.gbFilter);
             this.Controls.Add(this.viewMRecordInfo1);
             this.Name = "FindMRecord";
-            this.Size = new System.Drawing.Size(740, 588);
+            this.Size = new System.Drawing.Size(755, 588);
             this.gbFilter.ResumeLayout(false);
             this.gbFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();

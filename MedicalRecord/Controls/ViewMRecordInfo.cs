@@ -18,6 +18,7 @@ namespace ClinicSystem.MedicalRecord.Controls
             InitializeComponent();
             CommonOperations.SetUpDefaultControlsValue(new List<Control>()
             {
+                lblMedicalNumber, lblAllergies,
                 lblClassification, lblConsent, lblCreated, lblCurrentMedication, lblMedicalNo, lblPastSoical, lblPastSurgeries, lblStatus,
             }, "Not Set");
 
@@ -30,21 +31,24 @@ namespace ClinicSystem.MedicalRecord.Controls
             if (ValidationHelper.IsEmptyOrNull(MRecord, "Medical record is not found"))
             {
                 CommonOperations.SetUpDefaultControlsValue(new List<Control>()
-                 {
+                {
+                lblMedicalNumber, lblAllergies,
                 lblClassification, lblConsent, lblCreated, lblCurrentMedication, lblMedicalNo, lblPastSoical, lblPastSurgeries, lblStatus,
-                 }, "Not Set");
+                }, "Not Set");
 
                 return;
             }
 
+            lblMedicalNumber.Text = MRecord.MedicalNumber;
             lblClassification.Text = MRecord.Classification;
             lblConsent.Text = MRecord.ConcentToCare ? "Given" : "Not Given";
             lblCreated.Text = MRecord.CreatedDate.ToShortDateString();
-            lblCurrentMedication.Text = MRecord.CurrentMedication;
+            lblCurrentMedication.Text = MRecord.CurrentMedication + "\n Until" + MRecord.CurrentMedicationDuration;
             lblMedicalNo.Text = MRecord.MedicalNumber;
             lblPastSoical.Text = MRecord.PastSocialHistory;
             lblPastSurgeries.Text = MRecord.PastSurgeries;
             lblStatus.Text = MRecord.SocialStatus;
+            lblAllergies.Text = MRecord.Allergies;
         }
     }
 }

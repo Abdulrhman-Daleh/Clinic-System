@@ -150,7 +150,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = global::ClinicSystem.Properties.Resources.user_32;
-            this.pictureBox6.Location = new System.Drawing.Point(568, 171);
+            this.pictureBox6.Location = new System.Drawing.Point(452, 171);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(35, 34);
             this.pictureBox6.TabIndex = 13;
@@ -186,7 +186,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.calendar_32;
-            this.pictureBox4.Location = new System.Drawing.Point(575, 115);
+            this.pictureBox4.Location = new System.Drawing.Point(424, 115);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(35, 34);
             this.pictureBox4.TabIndex = 9;
@@ -222,7 +222,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.money_32;
-            this.pictureBox2.Location = new System.Drawing.Point(564, 54);
+            this.pictureBox2.Location = new System.Drawing.Point(429, 54);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(35, 34);
             this.pictureBox2.TabIndex = 4;

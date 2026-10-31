@@ -29,34 +29,41 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblMedicalRecord = new System.Windows.Forms.Label();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lblUnpaidFees = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.lblTotalVisits = new System.Windows.Forms.Label();
-            this.lblHasUnpaidFees = new System.Windows.Forms.Label();
-            this.lblBookingfreeze = new System.Windows.Forms.Label();
+            this.lblFrozen = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lblRegistered = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblMedicalRecord);
+            this.groupBox1.Controls.Add(this.pictureBox5);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.lblUnpaidFees);
+            this.groupBox1.Controls.Add(this.pictureBox4);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.lblTotalVisits);
-            this.groupBox1.Controls.Add(this.lblHasUnpaidFees);
-            this.groupBox1.Controls.Add(this.lblBookingfreeze);
+            this.groupBox1.Controls.Add(this.lblFrozen);
             this.groupBox1.Controls.Add(this.pictureBox3);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.pictureBox4);
-            this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblRegistered);
@@ -65,39 +72,85 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(523, 209);
+            this.groupBox1.Size = new System.Drawing.Size(653, 204);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Patient Info";
             // 
+            // lblMedicalRecord
+            // 
+            this.lblMedicalRecord.AutoSize = true;
+            this.lblMedicalRecord.Location = new System.Drawing.Point(154, 155);
+            this.lblMedicalRecord.Name = "lblMedicalRecord";
+            this.lblMedicalRecord.Size = new System.Drawing.Size(0, 25);
+            this.lblMedicalRecord.TabIndex = 32;
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.stethoscope_32;
+            this.pictureBox5.Location = new System.Drawing.Point(23, 148);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox5.TabIndex = 31;
+            this.pictureBox5.TabStop = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(70, 155);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(80, 25);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "Record:";
+            // 
+            // lblUnpaidFees
+            // 
+            this.lblUnpaidFees.AutoSize = true;
+            this.lblUnpaidFees.Location = new System.Drawing.Point(555, 101);
+            this.lblUnpaidFees.Name = "lblUnpaidFees";
+            this.lblUnpaidFees.Size = new System.Drawing.Size(0, 25);
+            this.lblUnpaidFees.TabIndex = 29;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.warning_32;
+            this.pictureBox4.Location = new System.Drawing.Point(377, 90);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 28;
+            this.pictureBox4.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(424, 97);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 25);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Unpaid Fees:";
+            // 
             // lblTotalVisits
             // 
             this.lblTotalVisits.AutoSize = true;
-            this.lblTotalVisits.Location = new System.Drawing.Point(462, 158);
+            this.lblTotalVisits.Location = new System.Drawing.Point(541, 42);
             this.lblTotalVisits.Name = "lblTotalVisits";
             this.lblTotalVisits.Size = new System.Drawing.Size(0, 25);
             this.lblTotalVisits.TabIndex = 26;
             // 
-            // lblHasUnpaidFees
+            // lblFrozen
             // 
-            this.lblHasUnpaidFees.AutoSize = true;
-            this.lblHasUnpaidFees.Location = new System.Drawing.Point(187, 158);
-            this.lblHasUnpaidFees.Name = "lblHasUnpaidFees";
-            this.lblHasUnpaidFees.Size = new System.Drawing.Size(0, 25);
-            this.lblHasUnpaidFees.TabIndex = 25;
-            // 
-            // lblBookingfreeze
-            // 
-            this.lblBookingfreeze.AutoSize = true;
-            this.lblBookingfreeze.Location = new System.Drawing.Point(217, 101);
-            this.lblBookingfreeze.Name = "lblBookingfreeze";
-            this.lblBookingfreeze.Size = new System.Drawing.Size(0, 25);
-            this.lblBookingfreeze.TabIndex = 24;
+            this.lblFrozen.AutoSize = true;
+            this.lblFrozen.Location = new System.Drawing.Point(149, 101);
+            this.lblFrozen.Name = "lblFrozen";
+            this.lblFrozen.Size = new System.Drawing.Size(0, 25);
+            this.lblFrozen.TabIndex = 24;
             // 
             // pictureBox3
             // 
             this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.visit_32;
-            this.pictureBox3.Location = new System.Drawing.Point(299, 151);
+            this.pictureBox3.Location = new System.Drawing.Point(431, 35);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(41, 38);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -107,35 +160,16 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(346, 158);
+            this.label3.Location = new System.Drawing.Point(478, 42);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(110, 25);
+            this.label3.Size = new System.Drawing.Size(59, 25);
             this.label3.TabIndex = 22;
-            this.label3.Text = "Total visits:";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.money_32;
-            this.pictureBox4.Location = new System.Drawing.Point(19, 151);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 21;
-            this.pictureBox4.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(66, 158);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 25);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "Unpaid fees:";
+            this.label3.Text = "Visits";
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.calendar_32;
-            this.pictureBox2.Location = new System.Drawing.Point(19, 94);
+            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.snowflake_32;
+            this.pictureBox2.Location = new System.Drawing.Point(19, 90);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(41, 38);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -145,11 +179,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(66, 101);
+            this.label2.Location = new System.Drawing.Point(66, 97);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(148, 25);
+            this.label2.Size = new System.Drawing.Size(79, 25);
             this.label2.TabIndex = 18;
-            this.label2.Text = "Booking freeze:";
+            this.label2.Text = "Frozen:";
             // 
             // lblRegistered
             // 
@@ -184,11 +218,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "PatientInfoCtrl";
-            this.Size = new System.Drawing.Size(523, 209);
+            this.Size = new System.Drawing.Size(653, 204);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -198,17 +233,20 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblBookingfreeze;
+        private System.Windows.Forms.Label lblFrozen;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblRegistered;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTotalVisits;
-        private System.Windows.Forms.Label lblHasUnpaidFees;
+        private System.Windows.Forms.Label lblUnpaidFees;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblMedicalRecord;
+        private System.Windows.Forms.PictureBox pictureBox5;
+        private System.Windows.Forms.Label label7;
     }
 }

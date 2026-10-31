@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblRole = new System.Windows.Forms.Label();
-            this.lblSchedule = new System.Windows.Forms.Label();
-            this.lblHired = new System.Windows.Forms.Label();
+            this.lblShift = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.lblStaffNumber = new System.Windows.Forms.Label();
@@ -44,27 +46,34 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.lblIsActive = new System.Windows.Forms.Label();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.pictureBox7 = new System.Windows.Forms.PictureBox();
+            this.lblFullName = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblRoleTitle = new System.Windows.Forms.Label();
+            this.lblHired = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblIsActive);
+            this.groupBox1.Controls.Add(this.lblHired);
+            this.groupBox1.Controls.Add(this.lblRoleTitle);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.pictureBox7);
+            this.groupBox1.Controls.Add(this.lblFullName);
+            this.groupBox1.Controls.Add(this.lblStatus);
             this.groupBox1.Controls.Add(this.pictureBox5);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.lblUsername);
             this.groupBox1.Controls.Add(this.lblRole);
-            this.groupBox1.Controls.Add(this.lblSchedule);
-            this.groupBox1.Controls.Add(this.lblHired);
+            this.groupBox1.Controls.Add(this.lblShift);
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.lblStaffNumber);
@@ -79,158 +88,23 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(561, 267);
+            this.groupBox1.Size = new System.Drawing.Size(651, 288);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Staff Info";
             // 
-            // lblUsername
+            // lblStatus
             // 
-            this.lblUsername.AutoSize = true;
-            this.lblUsername.Location = new System.Drawing.Point(41, 91);
-            this.lblUsername.Name = "lblUsername";
-            this.lblUsername.Size = new System.Drawing.Size(0, 25);
-            this.lblUsername.TabIndex = 57;
-            // 
-            // lblRole
-            // 
-            this.lblRole.AutoSize = true;
-            this.lblRole.Location = new System.Drawing.Point(347, 91);
-            this.lblRole.Name = "lblRole";
-            this.lblRole.Size = new System.Drawing.Size(0, 25);
-            this.lblRole.TabIndex = 56;
-            // 
-            // lblSchedule
-            // 
-            this.lblSchedule.AutoSize = true;
-            this.lblSchedule.Location = new System.Drawing.Point(41, 182);
-            this.lblSchedule.Name = "lblSchedule";
-            this.lblSchedule.Size = new System.Drawing.Size(0, 25);
-            this.lblSchedule.TabIndex = 55;
-            // 
-            // lblHired
-            // 
-            this.lblHired.AutoSize = true;
-            this.lblHired.Location = new System.Drawing.Point(347, 175);
-            this.lblHired.Name = "lblHired";
-            this.lblHired.Size = new System.Drawing.Size(0, 25);
-            this.lblHired.TabIndex = 54;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.calendar_32;
-            this.pictureBox4.Location = new System.Drawing.Point(341, 126);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 53;
-            this.pictureBox4.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(388, 133);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 25);
-            this.label5.TabIndex = 52;
-            this.label5.Text = "Hired";
-            // 
-            // lblStaffNumber
-            // 
-            this.lblStaffNumber.AutoSize = true;
-            this.lblStaffNumber.Location = new System.Drawing.Point(214, 222);
-            this.lblStaffNumber.Name = "lblStaffNumber";
-            this.lblStaffNumber.Size = new System.Drawing.Size(0, 25);
-            this.lblStaffNumber.TabIndex = 51;
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = global::ClinicSystem.Properties.Resources.shield_32;
-            this.pictureBox6.Location = new System.Drawing.Point(341, 43);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 48;
-            this.pictureBox6.TabStop = false;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(388, 50);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 25);
-            this.label6.TabIndex = 47;
-            this.label6.Text = "Role:";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.hash_32;
-            this.pictureBox3.Location = new System.Drawing.Point(29, 215);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 43;
-            this.pictureBox3.TabStop = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(76, 222);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(126, 25);
-            this.label3.TabIndex = 42;
-            this.label3.Text = "Staff Number";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::ClinicSystem.Properties.Resources.clock_32;
-            this.pictureBox1.Location = new System.Drawing.Point(29, 133);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 41;
-            this.pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(76, 140);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 25);
-            this.label1.TabIndex = 40;
-            this.label1.Text = "Schedule:";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.user_32;
-            this.pictureBox2.Location = new System.Drawing.Point(29, 43);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 39;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(76, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(108, 25);
-            this.label2.TabIndex = 37;
-            this.label2.Text = "Username:";
-            // 
-            // lblIsActive
-            // 
-            this.lblIsActive.AutoSize = true;
-            this.lblIsActive.Location = new System.Drawing.Point(473, 221);
-            this.lblIsActive.Name = "lblIsActive";
-            this.lblIsActive.Size = new System.Drawing.Size(0, 25);
-            this.lblIsActive.TabIndex = 60;
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(157, 242);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 25);
+            this.lblStatus.TabIndex = 60;
             // 
             // pictureBox5
             // 
             this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.deactivite_32;
-            this.pictureBox5.Location = new System.Drawing.Point(341, 215);
+            this.pictureBox5.Location = new System.Drawing.Point(25, 236);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(41, 38);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -240,11 +114,180 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(392, 222);
+            this.label7.Location = new System.Drawing.Point(73, 243);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 25);
+            this.label7.Size = new System.Drawing.Size(74, 25);
             this.label7.TabIndex = 58;
-            this.label7.Text = "Active:";
+            this.label7.Text = "Status:";
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(184, 194);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(0, 25);
+            this.lblUsername.TabIndex = 57;
+            // 
+            // lblRole
+            // 
+            this.lblRole.AutoSize = true;
+            this.lblRole.Location = new System.Drawing.Point(443, 87);
+            this.lblRole.Name = "lblRole";
+            this.lblRole.Size = new System.Drawing.Size(0, 25);
+            this.lblRole.TabIndex = 56;
+            // 
+            // lblShift
+            // 
+            this.lblShift.AutoSize = true;
+            this.lblShift.Location = new System.Drawing.Point(136, 140);
+            this.lblShift.Name = "lblShift";
+            this.lblShift.Size = new System.Drawing.Size(0, 25);
+            this.lblShift.TabIndex = 55;
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.calendar_32;
+            this.pictureBox4.Location = new System.Drawing.Point(341, 133);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 53;
+            this.pictureBox4.TabStop = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(388, 140);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(64, 25);
+            this.label5.TabIndex = 52;
+            this.label5.Text = "Hired:";
+            // 
+            // lblStaffNumber
+            // 
+            this.lblStaffNumber.AutoSize = true;
+            this.lblStaffNumber.Location = new System.Drawing.Point(167, 87);
+            this.lblStaffNumber.Name = "lblStaffNumber";
+            this.lblStaffNumber.Size = new System.Drawing.Size(0, 25);
+            this.lblStaffNumber.TabIndex = 51;
+            // 
+            // pictureBox6
+            // 
+            this.pictureBox6.Image = global::ClinicSystem.Properties.Resources.shield_32;
+            this.pictureBox6.Location = new System.Drawing.Point(341, 80);
+            this.pictureBox6.Name = "pictureBox6";
+            this.pictureBox6.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox6.TabIndex = 48;
+            this.pictureBox6.TabStop = false;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(388, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(57, 25);
+            this.label6.TabIndex = 47;
+            this.label6.Text = "Role:";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.hash_32;
+            this.pictureBox3.Location = new System.Drawing.Point(25, 80);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 43;
+            this.pictureBox3.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(73, 87);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(87, 25);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "Staff No.";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::ClinicSystem.Properties.Resources.clock_32;
+            this.pictureBox1.Location = new System.Drawing.Point(25, 133);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 41;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(73, 140);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(57, 25);
+            this.label1.TabIndex = 40;
+            this.label1.Text = "Shift:";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.user_32;
+            this.pictureBox2.Location = new System.Drawing.Point(25, 187);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 39;
+            this.pictureBox2.TabStop = false;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(73, 194);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(108, 25);
+            this.label2.TabIndex = 37;
+            this.label2.Text = "Username:";
+            // 
+            // pictureBox7
+            // 
+            this.pictureBox7.Image = global::ClinicSystem.Properties.Resources.user_32;
+            this.pictureBox7.Location = new System.Drawing.Point(25, 31);
+            this.pictureBox7.Name = "pictureBox7";
+            this.pictureBox7.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox7.TabIndex = 62;
+            this.pictureBox7.TabStop = false;
+            // 
+            // lblFullName
+            // 
+            this.lblFullName.AutoSize = true;
+            this.lblFullName.Location = new System.Drawing.Point(73, 38);
+            this.lblFullName.Name = "lblFullName";
+            this.lblFullName.Size = new System.Drawing.Size(0, 25);
+            this.lblFullName.TabIndex = 61;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(25, 226);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(0, 25);
+            this.label8.TabIndex = 63;
+            // 
+            // lblRoleTitle
+            // 
+            this.lblRoleTitle.AutoSize = true;
+            this.lblRoleTitle.Location = new System.Drawing.Point(517, 22);
+            this.lblRoleTitle.Name = "lblRoleTitle";
+            this.lblRoleTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblRoleTitle.TabIndex = 66;
+            // 
+            // lblHired
+            // 
+            this.lblHired.AutoSize = true;
+            this.lblHired.Location = new System.Drawing.Point(448, 140);
+            this.lblHired.Name = "lblHired";
+            this.lblHired.Size = new System.Drawing.Size(0, 25);
+            this.lblHired.TabIndex = 67;
             // 
             // ViewStaffInfoCtrl
             // 
@@ -252,15 +295,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ViewStaffInfoCtrl";
-            this.Size = new System.Drawing.Size(561, 267);
+            this.Size = new System.Drawing.Size(651, 288);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -269,8 +313,7 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblRole;
-        private System.Windows.Forms.Label lblSchedule;
-        private System.Windows.Forms.Label lblHired;
+        private System.Windows.Forms.Label lblShift;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lblStaffNumber;
@@ -283,8 +326,13 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblUsername;
-        private System.Windows.Forms.Label lblIsActive;
+        private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.PictureBox pictureBox7;
+        private System.Windows.Forms.Label lblFullName;
+        private System.Windows.Forms.Label lblRoleTitle;
+        private System.Windows.Forms.Label lblHired;
     }
 }

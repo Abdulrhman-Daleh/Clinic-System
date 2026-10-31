@@ -10,7 +10,7 @@ namespace ClinicSystem.Insurance.Controls
         public ViewInsuranceInfoCtrl()
         {
             InitializeComponent();
-            CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblCoverage, lblPolicy, lblProvider, lblRecordedBy, lblType, lblPatientClaims }, "Not Set");
+            CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblTypeLongInfo, lblCoverage, lblPolicy, lblProvider, lblRecordedBy, lblType, lblPatientClaims }, "Not Set");
         }
 
         public Business.Insurance LoadedInsurance
@@ -23,7 +23,7 @@ namespace ClinicSystem.Insurance.Controls
             insurance = Business.Insurance.FindInsuranceByID(insuranceId);
             if (ValidationHelper.IsEmptyOrNull(insurance, "insurance is not found"))
             {
-                CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblCoverage, lblPolicy, lblProvider, lblRecordedBy, lblType, lblPatientClaims }, "Not Set");
+                CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblTypeLongInfo, lblCoverage, lblPolicy, lblProvider, lblRecordedBy, lblType, lblPatientClaims }, "Not Set");
                 return;
             }
 
@@ -33,6 +33,8 @@ namespace ClinicSystem.Insurance.Controls
             lblType.Text = insurance.InsuranceType.InsuranceTypeName;
             lblRecordedBy.Text = insurance.RecorderStaff.GetFullName();
             lblPatientClaims.Text = insurance.PatientClaims;
+            lblTypeLongInfo.Text = insurance.PolicyNumber + " - " + insurance.PolicyNumber;
+            lblStatus.Text = $"[{insurance.InsuranceStatus.InsuranceStatusName}]";
         }
     }
 }

@@ -48,6 +48,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.lblTypeLongInfo = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
@@ -59,6 +61,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblStatus);
+            this.groupBox1.Controls.Add(this.lblTypeLongInfo);
             this.groupBox1.Controls.Add(this.lblPatientClaims);
             this.groupBox1.Controls.Add(this.pictureBox8);
             this.groupBox1.Controls.Add(this.label10);
@@ -80,14 +84,14 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(754, 244);
+            this.groupBox1.Size = new System.Drawing.Size(759, 259);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Insurance Info";
             // 
             // lblPatientClaims
             // 
-            this.lblPatientClaims.Location = new System.Drawing.Point(212, 192);
+            this.lblPatientClaims.Location = new System.Drawing.Point(212, 218);
             this.lblPatientClaims.MaxLength = 2000;
             this.lblPatientClaims.Multiline = true;
             this.lblPatientClaims.Name = "lblPatientClaims";
@@ -97,7 +101,7 @@
             // pictureBox8
             // 
             this.pictureBox8.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.pictureBox8.Location = new System.Drawing.Point(16, 184);
+            this.pictureBox8.Location = new System.Drawing.Point(16, 210);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(40, 43);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -107,7 +111,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(63, 192);
+            this.label10.Location = new System.Drawing.Point(63, 218);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(143, 25);
             this.label10.TabIndex = 80;
@@ -116,7 +120,7 @@
             // lblRecordedBy
             // 
             this.lblRecordedBy.AutoSize = true;
-            this.lblRecordedBy.Location = new System.Drawing.Point(522, 145);
+            this.lblRecordedBy.Location = new System.Drawing.Point(522, 171);
             this.lblRecordedBy.Name = "lblRecordedBy";
             this.lblRecordedBy.Size = new System.Drawing.Size(0, 25);
             this.lblRecordedBy.TabIndex = 79;
@@ -124,7 +128,7 @@
             // lblPolicy
             // 
             this.lblPolicy.AutoSize = true;
-            this.lblPolicy.Location = new System.Drawing.Point(189, 91);
+            this.lblPolicy.Location = new System.Drawing.Point(189, 117);
             this.lblPolicy.Name = "lblPolicy";
             this.lblPolicy.Size = new System.Drawing.Size(0, 25);
             this.lblPolicy.TabIndex = 78;
@@ -132,7 +136,7 @@
             // lblCoverage
             // 
             this.lblCoverage.AutoSize = true;
-            this.lblCoverage.Location = new System.Drawing.Point(167, 145);
+            this.lblCoverage.Location = new System.Drawing.Point(167, 171);
             this.lblCoverage.Name = "lblCoverage";
             this.lblCoverage.Size = new System.Drawing.Size(0, 25);
             this.lblCoverage.TabIndex = 76;
@@ -140,7 +144,7 @@
             // lblType
             // 
             this.lblType.AutoSize = true;
-            this.lblType.Location = new System.Drawing.Point(487, 39);
+            this.lblType.Location = new System.Drawing.Point(487, 65);
             this.lblType.Name = "lblType";
             this.lblType.Size = new System.Drawing.Size(0, 25);
             this.lblType.TabIndex = 75;
@@ -148,7 +152,7 @@
             // lblProvider
             // 
             this.lblProvider.AutoSize = true;
-            this.lblProvider.Location = new System.Drawing.Point(155, 39);
+            this.lblProvider.Location = new System.Drawing.Point(155, 65);
             this.lblProvider.Name = "lblProvider";
             this.lblProvider.Size = new System.Drawing.Size(0, 25);
             this.lblProvider.TabIndex = 74;
@@ -156,7 +160,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(393, 144);
+            this.label6.Location = new System.Drawing.Point(393, 170);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(128, 25);
             this.label6.TabIndex = 73;
@@ -165,7 +169,7 @@
             // pictureBox9
             // 
             this.pictureBox9.Image = global::ClinicSystem.Properties.Resources.user_32;
-            this.pictureBox9.Location = new System.Drawing.Point(346, 135);
+            this.pictureBox9.Location = new System.Drawing.Point(346, 161);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(40, 43);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -175,7 +179,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(63, 90);
+            this.label2.Location = new System.Drawing.Point(63, 116);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(121, 25);
             this.label2.TabIndex = 70;
@@ -184,7 +188,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.Manage_Insurance_64;
-            this.pictureBox2.Location = new System.Drawing.Point(13, 83);
+            this.pictureBox2.Location = new System.Drawing.Point(13, 109);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(40, 43);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -194,7 +198,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(62, 144);
+            this.label8.Location = new System.Drawing.Point(62, 170);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(104, 25);
             this.label8.TabIndex = 64;
@@ -203,7 +207,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(15, 135);
+            this.pictureBox6.Location = new System.Drawing.Point(15, 161);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(40, 43);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -213,7 +217,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(422, 38);
+            this.label4.Location = new System.Drawing.Point(422, 64);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 25);
             this.label4.TabIndex = 58;
@@ -222,7 +226,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.time_management_32;
-            this.pictureBox3.Location = new System.Drawing.Point(376, 29);
+            this.pictureBox3.Location = new System.Drawing.Point(376, 55);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(40, 43);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -232,7 +236,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(63, 38);
+            this.label5.Location = new System.Drawing.Point(63, 64);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(90, 25);
             this.label5.TabIndex = 55;
@@ -241,12 +245,28 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.shield_32;
-            this.pictureBox4.Location = new System.Drawing.Point(16, 29);
+            this.pictureBox4.Location = new System.Drawing.Point(16, 55);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(40, 43);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 54;
             this.pictureBox4.TabStop = false;
+            // 
+            // lblTypeLongInfo
+            // 
+            this.lblTypeLongInfo.AutoSize = true;
+            this.lblTypeLongInfo.Location = new System.Drawing.Point(78, 27);
+            this.lblTypeLongInfo.Name = "lblTypeLongInfo";
+            this.lblTypeLongInfo.Size = new System.Drawing.Size(0, 25);
+            this.lblTypeLongInfo.TabIndex = 85;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(580, 18);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 25);
+            this.lblStatus.TabIndex = 86;
             // 
             // ViewInsuranceInfoCtrl
             // 
@@ -254,7 +274,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ViewInsuranceInfoCtrl";
-            this.Size = new System.Drawing.Size(754, 244);
+            this.Size = new System.Drawing.Size(759, 259);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
@@ -288,5 +308,7 @@
         private System.Windows.Forms.PictureBox pictureBox8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox lblPatientClaims;
+        private System.Windows.Forms.Label lblTypeLongInfo;
+        private System.Windows.Forms.Label lblStatus;
     }
 }

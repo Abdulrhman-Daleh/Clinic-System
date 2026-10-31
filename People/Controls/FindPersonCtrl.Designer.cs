@@ -51,7 +51,7 @@
             this.gbFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFilter.Location = new System.Drawing.Point(0, 0);
             this.gbFilter.Name = "gbFilter";
-            this.gbFilter.Size = new System.Drawing.Size(555, 82);
+            this.gbFilter.Size = new System.Drawing.Size(643, 82);
             this.gbFilter.TabIndex = 1;
             this.gbFilter.TabStop = false;
             this.gbFilter.Text = "Find By";
@@ -116,7 +116,7 @@
             this.viewPersonInfoCtrl1.Location = new System.Drawing.Point(0, 82);
             this.viewPersonInfoCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.viewPersonInfoCtrl1.Name = "viewPersonInfoCtrl1";
-            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(555, 205);
+            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(643, 205);
             this.viewPersonInfoCtrl1.TabIndex = 2;
             // 
             // FindPersonCtrl
@@ -127,7 +127,7 @@
             this.Controls.Add(this.gbFilter);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FindPersonCtrl";
-            this.Size = new System.Drawing.Size(555, 287);
+            this.Size = new System.Drawing.Size(643, 287);
             this.gbFilter.ResumeLayout(false);
             this.gbFilter.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();

@@ -51,7 +51,7 @@
             this.gbFindBy.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFindBy.Location = new System.Drawing.Point(0, 0);
             this.gbFindBy.Name = "gbFindBy";
-            this.gbFindBy.Size = new System.Drawing.Size(609, 100);
+            this.gbFindBy.Size = new System.Drawing.Size(718, 100);
             this.gbFindBy.TabIndex = 1;
             this.gbFindBy.TabStop = false;
             this.gbFindBy.Text = "Find Patient";
@@ -111,7 +111,7 @@
             this.patientInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.patientInfoCtrl1.Location = new System.Drawing.Point(0, 100);
             this.patientInfoCtrl1.Name = "patientInfoCtrl1";
-            this.patientInfoCtrl1.Size = new System.Drawing.Size(609, 210);
+            this.patientInfoCtrl1.Size = new System.Drawing.Size(718, 210);
             this.patientInfoCtrl1.TabIndex = 2;
             // 
             // errors
@@ -125,7 +125,7 @@
             this.Controls.Add(this.patientInfoCtrl1);
             this.Controls.Add(this.gbFindBy);
             this.Name = "FindPatientCtrl";
-            this.Size = new System.Drawing.Size(609, 310);
+            this.Size = new System.Drawing.Size(718, 310);
             this.gbFindBy.ResumeLayout(false);
             this.gbFindBy.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();

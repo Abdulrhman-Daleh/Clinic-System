@@ -49,7 +49,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.lblClassification = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.lblCreated = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -57,6 +56,12 @@
             this.lblMedicalNo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.lblAllergies = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.lblMedicalNumber = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -68,10 +73,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lblMedicalNumber);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.pictureBox12);
+            this.groupBox1.Controls.Add(this.lblAllergies);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.pictureBox11);
             this.groupBox1.Controls.Add(this.lblPastSurgeries);
             this.groupBox1.Controls.Add(this.lblPastSoical);
             this.groupBox1.Controls.Add(this.lblCurrentMedication);
@@ -91,7 +104,6 @@
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.pictureBox4);
             this.groupBox1.Controls.Add(this.lblClassification);
-            this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.pictureBox3);
             this.groupBox1.Controls.Add(this.lblCreated);
             this.groupBox1.Controls.Add(this.label4);
@@ -102,7 +114,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(729, 506);
+            this.groupBox1.Size = new System.Drawing.Size(729, 472);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Medical Record Info";
@@ -110,7 +122,7 @@
             // lblPastSurgeries
             // 
             this.lblPastSurgeries.AutoSize = true;
-            this.lblPastSurgeries.Location = new System.Drawing.Point(244, 468);
+            this.lblPastSurgeries.Location = new System.Drawing.Point(234, 432);
             this.lblPastSurgeries.Name = "lblPastSurgeries";
             this.lblPastSurgeries.Size = new System.Drawing.Size(0, 25);
             this.lblPastSurgeries.TabIndex = 60;
@@ -118,7 +130,7 @@
             // lblPastSoical
             // 
             this.lblPastSoical.AutoSize = true;
-            this.lblPastSoical.Location = new System.Drawing.Point(275, 421);
+            this.lblPastSoical.Location = new System.Drawing.Point(265, 385);
             this.lblPastSoical.Name = "lblPastSoical";
             this.lblPastSoical.Size = new System.Drawing.Size(0, 25);
             this.lblPastSoical.TabIndex = 59;
@@ -126,7 +138,7 @@
             // lblCurrentMedication
             // 
             this.lblCurrentMedication.AutoSize = true;
-            this.lblCurrentMedication.Location = new System.Drawing.Point(108, 323);
+            this.lblCurrentMedication.Location = new System.Drawing.Point(109, 285);
             this.lblCurrentMedication.Name = "lblCurrentMedication";
             this.lblCurrentMedication.Size = new System.Drawing.Size(0, 25);
             this.lblCurrentMedication.TabIndex = 58;
@@ -134,7 +146,7 @@
             // pictureBox10
             // 
             this.pictureBox10.Image = global::ClinicSystem.Properties.Resources.surgery_32;
-            this.pictureBox10.Location = new System.Drawing.Point(61, 463);
+            this.pictureBox10.Location = new System.Drawing.Point(51, 427);
             this.pictureBox10.Name = "pictureBox10";
             this.pictureBox10.Size = new System.Drawing.Size(40, 37);
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -144,7 +156,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(101, 468);
+            this.label15.Location = new System.Drawing.Point(91, 432);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(142, 25);
             this.label15.TabIndex = 56;
@@ -153,7 +165,7 @@
             // pictureBox8
             // 
             this.pictureBox8.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.pictureBox8.Location = new System.Drawing.Point(61, 416);
+            this.pictureBox8.Location = new System.Drawing.Point(51, 380);
             this.pictureBox8.Name = "pictureBox8";
             this.pictureBox8.Size = new System.Drawing.Size(40, 37);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -163,7 +175,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(101, 421);
+            this.label13.Location = new System.Drawing.Point(91, 385);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(174, 25);
             this.label13.TabIndex = 54;
@@ -172,7 +184,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(60, 384);
+            this.label14.Location = new System.Drawing.Point(56, 345);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(78, 25);
             this.label14.TabIndex = 53;
@@ -181,7 +193,7 @@
             // pictureBox9
             // 
             this.pictureBox9.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.pictureBox9.Location = new System.Drawing.Point(14, 378);
+            this.pictureBox9.Location = new System.Drawing.Point(10, 339);
             this.pictureBox9.Name = "pictureBox9";
             this.pictureBox9.Size = new System.Drawing.Size(40, 37);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -191,7 +203,7 @@
             // pictureBox7
             // 
             this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(61, 315);
+            this.pictureBox7.Location = new System.Drawing.Point(62, 277);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(40, 37);
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -201,7 +213,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(60, 283);
+            this.label12.Location = new System.Drawing.Point(61, 245);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(183, 25);
             this.label12.TabIndex = 50;
@@ -210,7 +222,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(14, 277);
+            this.pictureBox6.Location = new System.Drawing.Point(15, 239);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(40, 37);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -220,7 +232,7 @@
             // lblConsent
             // 
             this.lblConsent.AutoSize = true;
-            this.lblConsent.Location = new System.Drawing.Point(219, 223);
+            this.lblConsent.Location = new System.Drawing.Point(590, 121);
             this.lblConsent.Name = "lblConsent";
             this.lblConsent.Size = new System.Drawing.Size(0, 25);
             this.lblConsent.TabIndex = 48;
@@ -228,7 +240,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(60, 223);
+            this.label10.Location = new System.Drawing.Point(431, 120);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(156, 25);
             this.label10.TabIndex = 47;
@@ -237,7 +249,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.check_mark_32;
-            this.pictureBox5.Location = new System.Drawing.Point(14, 217);
+            this.pictureBox5.Location = new System.Drawing.Point(385, 114);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(40, 37);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -247,7 +259,7 @@
             // lblStatus
             // 
             this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(192, 172);
+            this.lblStatus.Location = new System.Drawing.Point(192, 120);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(0, 25);
             this.lblStatus.TabIndex = 45;
@@ -255,7 +267,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(60, 172);
+            this.label8.Location = new System.Drawing.Point(60, 120);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(129, 25);
             this.label8.TabIndex = 44;
@@ -264,7 +276,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.ring_32;
-            this.pictureBox4.Location = new System.Drawing.Point(14, 166);
+            this.pictureBox4.Location = new System.Drawing.Point(14, 114);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(40, 37);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -274,24 +286,15 @@
             // lblClassification
             // 
             this.lblClassification.AutoSize = true;
-            this.lblClassification.Location = new System.Drawing.Point(192, 124);
+            this.lblClassification.Location = new System.Drawing.Point(588, 32);
             this.lblClassification.Name = "lblClassification";
             this.lblClassification.Size = new System.Drawing.Size(0, 25);
             this.lblClassification.TabIndex = 42;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(60, 124);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(133, 25);
-            this.label6.TabIndex = 41;
-            this.label6.Text = "Classification:";
-            // 
             // pictureBox3
             // 
             this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.pictureBox3.Location = new System.Drawing.Point(14, 118);
+            this.pictureBox3.Location = new System.Drawing.Point(541, 26);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(40, 37);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -301,7 +304,7 @@
             // lblCreated
             // 
             this.lblCreated.AutoSize = true;
-            this.lblCreated.Location = new System.Drawing.Point(152, 75);
+            this.lblCreated.Location = new System.Drawing.Point(523, 68);
             this.lblCreated.Name = "lblCreated";
             this.lblCreated.Size = new System.Drawing.Size(0, 25);
             this.lblCreated.TabIndex = 39;
@@ -309,7 +312,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(60, 75);
+            this.label4.Location = new System.Drawing.Point(431, 68);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 25);
             this.label4.TabIndex = 38;
@@ -318,7 +321,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::ClinicSystem.Properties.Resources.calendar_32;
-            this.pictureBox1.Location = new System.Drawing.Point(14, 69);
+            this.pictureBox1.Location = new System.Drawing.Point(385, 62);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(40, 37);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -328,7 +331,7 @@
             // lblMedicalNo
             // 
             this.lblMedicalNo.AutoSize = true;
-            this.lblMedicalNo.Location = new System.Drawing.Point(177, 30);
+            this.lblMedicalNo.Location = new System.Drawing.Point(177, 74);
             this.lblMedicalNo.Name = "lblMedicalNo";
             this.lblMedicalNo.Size = new System.Drawing.Size(0, 25);
             this.lblMedicalNo.TabIndex = 36;
@@ -336,7 +339,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(60, 30);
+            this.label2.Location = new System.Drawing.Point(60, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(121, 25);
             this.label2.TabIndex = 35;
@@ -344,13 +347,67 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.hash_32;
-            this.pictureBox2.Location = new System.Drawing.Point(14, 24);
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(14, 68);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(40, 37);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 34;
             this.pictureBox2.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(60, 182);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(93, 25);
+            this.label1.TabIndex = 62;
+            this.label1.Text = "Allergies:";
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.Image = global::ClinicSystem.Properties.Resources.warning_32;
+            this.pictureBox11.Location = new System.Drawing.Point(14, 176);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox11.TabIndex = 61;
+            this.pictureBox11.TabStop = false;
+            // 
+            // lblAllergies
+            // 
+            this.lblAllergies.AutoSize = true;
+            this.lblAllergies.Location = new System.Drawing.Point(159, 182);
+            this.lblAllergies.Name = "lblAllergies";
+            this.lblAllergies.Size = new System.Drawing.Size(0, 25);
+            this.lblAllergies.TabIndex = 63;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(109, 32);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(153, 25);
+            this.label3.TabIndex = 65;
+            this.label3.Text = "Medical Record:";
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox12.Image")));
+            this.pictureBox12.Location = new System.Drawing.Point(62, 26);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(40, 37);
+            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox12.TabIndex = 64;
+            this.pictureBox12.TabStop = false;
+            // 
+            // lblMedicalNumber
+            // 
+            this.lblMedicalNumber.AutoSize = true;
+            this.lblMedicalNumber.Location = new System.Drawing.Point(260, 32);
+            this.lblMedicalNumber.Name = "lblMedicalNumber";
+            this.lblMedicalNumber.Size = new System.Drawing.Size(0, 25);
+            this.lblMedicalNumber.TabIndex = 66;
             // 
             // ViewMRecordInfo
             // 
@@ -358,7 +415,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ViewMRecordInfo";
-            this.Size = new System.Drawing.Size(729, 506);
+            this.Size = new System.Drawing.Size(729, 472);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
@@ -371,6 +428,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -397,7 +456,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label lblClassification;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Label lblCreated;
         private System.Windows.Forms.Label label4;
@@ -405,5 +463,11 @@
         private System.Windows.Forms.Label lblMedicalNo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lblAllergies;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.Label lblMedicalNumber;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBox12;
     }
 }

@@ -14,6 +14,7 @@ namespace ClinicSystem.People
         }
         public void SetData(Person person)
         {
+            lblRegisteredAs.Text = "";
             if (ValidationHelper.IsEmptyOrNull(person))
             {
                 SetUp();
@@ -23,11 +24,20 @@ namespace ClinicSystem.People
             lblFirstname.Text = person.Firstname;
             lblLastname.Text = person.Lastname;
             lblGender.Text = person.Gender.ToString();
+            lblTopGender.Text = $"[{person.GetGenderChar()}] {lblGender.Text}";
+            lblFullName.Text = person.GetFullName();
+
+            if (person.IsPersonRegisteredAsPatient())
+                lblRegisteredAs.Text = "[Patient]";
+
+            if (person.IsPersonRegisteredAsStaff())
+                lblRegisteredAs.Text += " [Staff]";
         }
 
-        public void SetUp()
+        private void SetUp()
         {
-            CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblFirstname, lblLastname, lblGender }, "Not Set");
+            CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblFirstname, lblLastname, lblGender, lblTopGender }, "Not Set");
+
         }
     }
 }

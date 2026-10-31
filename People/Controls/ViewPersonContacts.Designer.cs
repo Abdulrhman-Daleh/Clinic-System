@@ -42,7 +42,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(518, 182);
+            this.groupBox1.Size = new System.Drawing.Size(677, 182);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Contacts:";
@@ -67,7 +67,7 @@
             this.dgvContact.ReadOnly = true;
             this.dgvContact.RowHeadersWidth = 51;
             this.dgvContact.RowTemplate.Height = 24;
-            this.dgvContact.Size = new System.Drawing.Size(473, 111);
+            this.dgvContact.Size = new System.Drawing.Size(640, 111);
             this.dgvContact.TabIndex = 0;
             // 
             // ViewPersonContacts
@@ -76,7 +76,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.groupBox1);
             this.Name = "ViewPersonContacts";
-            this.Size = new System.Drawing.Size(518, 182);
+            this.Size = new System.Drawing.Size(677, 182);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContact)).EndInit();

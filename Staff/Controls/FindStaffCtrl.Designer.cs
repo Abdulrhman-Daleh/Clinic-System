@@ -51,7 +51,7 @@
             this.gbFindBy.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbFindBy.Location = new System.Drawing.Point(0, 0);
             this.gbFindBy.Name = "gbFindBy";
-            this.gbFindBy.Size = new System.Drawing.Size(596, 100);
+            this.gbFindBy.Size = new System.Drawing.Size(682, 100);
             this.gbFindBy.TabIndex = 0;
             this.gbFindBy.TabStop = false;
             this.gbFindBy.Text = "Find Staff";
@@ -113,7 +113,7 @@
             this.viewStaffInfoCtrl.LoadedStaff = null;
             this.viewStaffInfoCtrl.Location = new System.Drawing.Point(0, 100);
             this.viewStaffInfoCtrl.Name = "viewStaffInfoCtrl";
-            this.viewStaffInfoCtrl.Size = new System.Drawing.Size(596, 272);
+            this.viewStaffInfoCtrl.Size = new System.Drawing.Size(682, 291);
             this.viewStaffInfoCtrl.TabIndex = 1;
             // 
             // errors
@@ -127,7 +127,7 @@
             this.Controls.Add(this.viewStaffInfoCtrl);
             this.Controls.Add(this.gbFindBy);
             this.Name = "FindStaffCtrl";
-            this.Size = new System.Drawing.Size(596, 372);
+            this.Size = new System.Drawing.Size(682, 391);
             this.gbFindBy.ResumeLayout(false);
             this.gbFindBy.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();

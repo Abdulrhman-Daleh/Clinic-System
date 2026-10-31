@@ -19,17 +19,18 @@ namespace ClinicSystem.Staff.Controls
 
             if (ValidationHelper.IsEmptyOrNull(staffInfo))
             {
-                CommonOperations.SetUpDefaultControlsValue(new List<Control>() {lblUsername, lblStaffNumber, lblSchedule, lblRole,
-                lblHired, lblIsActive}, "Not Set");
+                CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblFullName, lblHired, lblRoleTitle, lblUsername, lblStaffNumber, lblShift, lblRole, lblStatus }, "Not Set");
                 return;
             }
 
-            lblHired.Text = staffInfo.HireDate.ToShortDateString();
-            lblIsActive.Text = staffInfo.IsActive ? "Active" : "InActive";
+            lblFullName.Text = staffInfo.GetFullName();
+            lblStatus.Text = staffInfo.IsActive ? "Active" : "InActive";
             lblRole.Text = staffInfo.RoleInfo.RoleName;
-            lblSchedule.Text = staffInfo.ScheduleId.ToString();
+            lblShift.Text = staffInfo.Schedule.ShiftName;
             lblStaffNumber.Text = staffInfo.StaffNumber;
-            lblUsername.Text = $"{staffInfo.Username}.{staffInfo.RoleInfo.RoleName}";
+            lblUsername.Text = $"{staffInfo.Username}";
+            lblHired.Text = staffInfo.HireDate.ToShortDateString();
+            lblRoleTitle.Text = $"[{staffInfo.RoleInfo.RoleName}]";
         }
 
 
