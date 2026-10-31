@@ -283,6 +283,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap go_to_appointment_32 {
+            get {
+                object obj = ResourceManager.GetObject("go_to_appointment_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap hash_32 {
             get {
                 object obj = ResourceManager.GetObject("hash_32", resourceCulture);
@@ -593,6 +603,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap snowflake_32 {
+            get {
+                object obj = ResourceManager.GetObject("snowflake_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap status_32 {
             get {
                 object obj = ResourceManager.GetObject("status_32", resourceCulture);
@@ -686,6 +706,16 @@ namespace ClinicSystem.Properties {
         internal static System.Drawing.Bitmap visit_32 {
             get {
                 object obj = ResourceManager.GetObject("visit_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap warning_32 {
+            get {
+                object obj = ResourceManager.GetObject("warning_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -73,6 +73,12 @@
     <Compile Include="Appointments\ManageAppointments.Designer.cs">
       <DependentUpon>ManageAppointments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Appointments\PerformAppointment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Appointments\PerformAppointment.Designer.cs">
+      <DependentUpon>PerformAppointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Appointments\ViewAppointment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -328,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Appointments\ManageAppointments.resx">
       <DependentUpon>ManageAppointments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\PerformAppointment.resx">
+      <DependentUpon>PerformAppointment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Appointments\ViewAppointment.resx">
       <DependentUpon>ViewAppointment.cs</DependentUpon>
@@ -649,6 +658,14 @@
   <ItemGroup>
     <None Include="Resources\reschedule_32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\go_to_appointment_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snowflake_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning_32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
