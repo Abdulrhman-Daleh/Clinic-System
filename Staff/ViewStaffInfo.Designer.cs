@@ -44,7 +44,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(82, 9);
+            this.lblTitle.Location = new System.Drawing.Point(93, 19);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(235, 38);
             this.lblTitle.TabIndex = 13;
@@ -52,35 +52,36 @@
             // 
             // findStaffCtrl1
             // 
+            this.findStaffCtrl1.AllowAddNew = true;
             this.findStaffCtrl1.AllowFind = true;
             this.findStaffCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.findStaffCtrl1.Location = new System.Drawing.Point(12, 66);
+            this.findStaffCtrl1.Location = new System.Drawing.Point(12, 77);
             this.findStaffCtrl1.Name = "findStaffCtrl1";
-            this.findStaffCtrl1.Size = new System.Drawing.Size(596, 372);
+            this.findStaffCtrl1.Size = new System.Drawing.Size(672, 372);
             this.findStaffCtrl1.TabIndex = 14;
             // 
             // viewPersonInfoCtrl1
             // 
             this.viewPersonInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.viewPersonInfoCtrl1.Location = new System.Drawing.Point(12, 446);
+            this.viewPersonInfoCtrl1.Location = new System.Drawing.Point(12, 457);
             this.viewPersonInfoCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.viewPersonInfoCtrl1.Name = "viewPersonInfoCtrl1";
-            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(525, 207);
+            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(672, 207);
             this.viewPersonInfoCtrl1.TabIndex = 15;
             // 
             // viewPersonContacts1
             // 
             this.viewPersonContacts1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.viewPersonContacts1.Location = new System.Drawing.Point(12, 661);
+            this.viewPersonContacts1.Location = new System.Drawing.Point(12, 672);
             this.viewPersonContacts1.Name = "viewPersonContacts1";
-            this.viewPersonContacts1.Size = new System.Drawing.Size(518, 182);
+            this.viewPersonContacts1.Size = new System.Drawing.Size(679, 182);
             this.viewPersonContacts1.TabIndex = 16;
             // 
             // BtnDeactivate
             // 
             this.BtnDeactivate.Image = global::ClinicSystem.Properties.Resources.deactivite_32;
             this.BtnDeactivate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnDeactivate.Location = new System.Drawing.Point(300, 850);
+            this.BtnDeactivate.Location = new System.Drawing.Point(373, 861);
             this.BtnDeactivate.Name = "BtnDeactivate";
             this.BtnDeactivate.Size = new System.Drawing.Size(173, 66);
             this.BtnDeactivate.TabIndex = 19;
@@ -92,7 +93,7 @@
             // 
             this.btnEdit.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(484, 848);
+            this.btnEdit.Location = new System.Drawing.Point(557, 859);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(127, 66);
             this.btnEdit.TabIndex = 18;
@@ -104,7 +105,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(134, 850);
+            this.btnClose.Location = new System.Drawing.Point(207, 861);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 17;
@@ -115,7 +116,7 @@
             // pbModeImage
             // 
             this.pbModeImage.Image = global::ClinicSystem.Properties.Resources.view_32;
-            this.pbModeImage.Location = new System.Drawing.Point(1, 2);
+            this.pbModeImage.Location = new System.Drawing.Point(12, 12);
             this.pbModeImage.Name = "pbModeImage";
             this.pbModeImage.Size = new System.Drawing.Size(65, 52);
             this.pbModeImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -126,7 +127,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 926);
+            this.ClientSize = new System.Drawing.Size(697, 926);
             this.Controls.Add(this.BtnDeactivate);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnClose);

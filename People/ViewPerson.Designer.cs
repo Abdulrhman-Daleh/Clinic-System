@@ -64,14 +64,14 @@
             this.viewPersonContacts1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.viewPersonContacts1.Location = new System.Drawing.Point(12, 386);
             this.viewPersonContacts1.Name = "viewPersonContacts1";
-            this.viewPersonContacts1.Size = new System.Drawing.Size(525, 252);
+            this.viewPersonContacts1.Size = new System.Drawing.Size(684, 181);
             this.viewPersonContacts1.TabIndex = 12;
             // 
             // btnClose
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(237, 644);
+            this.btnClose.Location = new System.Drawing.Point(368, 573);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 13;
@@ -83,7 +83,7 @@
             // 
             this.btnEdit.Image = global::ClinicSystem.Properties.Resources.update_32;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(404, 644);
+            this.btnEdit.Location = new System.Drawing.Point(535, 573);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(160, 66);
             this.btnEdit.TabIndex = 14;
@@ -94,16 +94,17 @@
             // findPersonCtrl1
             // 
             this.findPersonCtrl1.AllowFind = true;
+            this.findPersonCtrl1.AllowFindButton = true;
             this.findPersonCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPersonCtrl1.Location = new System.Drawing.Point(12, 63);
             this.findPersonCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.findPersonCtrl1.Name = "findPersonCtrl1";
-            this.findPersonCtrl1.Size = new System.Drawing.Size(555, 315);
+            this.findPersonCtrl1.Size = new System.Drawing.Size(683, 315);
             this.findPersonCtrl1.TabIndex = 15;
             // 
             // pbGender
             // 
-            this.pbGender.Location = new System.Drawing.Point(523, 17);
+            this.pbGender.Location = new System.Drawing.Point(654, 22);
             this.pbGender.Name = "pbGender";
             this.pbGender.Size = new System.Drawing.Size(41, 38);
             this.pbGender.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -114,7 +115,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(576, 719);
+            this.ClientSize = new System.Drawing.Size(708, 650);
             this.Controls.Add(this.findPersonCtrl1);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnClose);

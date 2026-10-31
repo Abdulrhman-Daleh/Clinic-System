@@ -87,7 +87,7 @@
             // cbRoles
             // 
             this.cbRoles.FormattingEnabled = true;
-            this.cbRoles.Location = new System.Drawing.Point(328, 194);
+            this.cbRoles.Location = new System.Drawing.Point(371, 194);
             this.cbRoles.Name = "cbRoles";
             this.cbRoles.Size = new System.Drawing.Size(205, 33);
             this.cbRoles.TabIndex = 34;
@@ -96,7 +96,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(375, 155);
+            this.label6.Location = new System.Drawing.Point(418, 155);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 25);
             this.label6.TabIndex = 29;
@@ -104,7 +104,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(327, 92);
+            this.txtPassword.Location = new System.Drawing.Point(370, 92);
             this.txtPassword.MaxLength = 20;
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(206, 30);
@@ -114,7 +114,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(375, 53);
+            this.label4.Location = new System.Drawing.Point(418, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 25);
             this.label4.TabIndex = 23;
@@ -178,7 +178,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(556, 315);
+            this.groupBox1.Size = new System.Drawing.Size(638, 315);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Staff Info";
@@ -186,7 +186,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = global::ClinicSystem.Properties.Resources.shield_32;
-            this.pictureBox6.Location = new System.Drawing.Point(328, 148);
+            this.pictureBox6.Location = new System.Drawing.Point(371, 148);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(41, 38);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -196,7 +196,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.key_32;
-            this.pictureBox4.Location = new System.Drawing.Point(328, 46);
+            this.pictureBox4.Location = new System.Drawing.Point(371, 46);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(41, 38);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -277,7 +277,7 @@
             // 
             this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(378, 734);
+            this.btnSave.Location = new System.Drawing.Point(458, 734);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(188, 66);
             this.btnSave.TabIndex = 15;
@@ -289,7 +289,7 @@
             // 
             this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(212, 734);
+            this.btnCancel.Location = new System.Drawing.Point(292, 734);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(160, 66);
             this.btnCancel.TabIndex = 14;
@@ -300,18 +300,19 @@
             // findPersonCtrl1
             // 
             this.findPersonCtrl1.AllowFind = true;
+            this.findPersonCtrl1.AllowFindButton = true;
             this.findPersonCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPersonCtrl1.Location = new System.Drawing.Point(11, 114);
             this.findPersonCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.findPersonCtrl1.Name = "findPersonCtrl1";
-            this.findPersonCtrl1.Size = new System.Drawing.Size(555, 287);
+            this.findPersonCtrl1.Size = new System.Drawing.Size(635, 287);
             this.findPersonCtrl1.TabIndex = 33;
             // 
             // AddUpdateStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(580, 809);
+            this.ClientSize = new System.Drawing.Size(659, 809);
             this.Controls.Add(this.findPersonCtrl1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);

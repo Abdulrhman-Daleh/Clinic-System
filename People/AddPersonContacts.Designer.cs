@@ -119,16 +119,18 @@
             // 
             // findPersonCtrl1
             // 
+            this.findPersonCtrl1.AllowFind = true;
+            this.findPersonCtrl1.AllowFindButton = true;
             this.findPersonCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPersonCtrl1.Location = new System.Drawing.Point(14, 116);
             this.findPersonCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.findPersonCtrl1.Name = "findPersonCtrl1";
-            this.findPersonCtrl1.Size = new System.Drawing.Size(594, 327);
+            this.findPersonCtrl1.Size = new System.Drawing.Size(648, 327);
             this.findPersonCtrl1.TabIndex = 1;
             // 
             // txtPhoneNumber
             // 
-            this.txtPhoneNumber.Location = new System.Drawing.Point(346, 502);
+            this.txtPhoneNumber.Location = new System.Drawing.Point(392, 502);
             this.txtPhoneNumber.Mask = "(999) 000-0000";
             this.txtPhoneNumber.Name = "txtPhoneNumber";
             this.txtPhoneNumber.Size = new System.Drawing.Size(203, 30);
@@ -176,7 +178,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::ClinicSystem.Properties.Resources.mobile_32;
-            this.pictureBox2.Location = new System.Drawing.Point(347, 458);
+            this.pictureBox2.Location = new System.Drawing.Point(393, 458);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(41, 38);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -186,7 +188,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(394, 465);
+            this.label2.Location = new System.Drawing.Point(440, 465);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(143, 25);
             this.label2.TabIndex = 35;
@@ -219,7 +221,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 719);
+            this.ClientSize = new System.Drawing.Size(675, 719);
             this.Controls.Add(this.txtPhoneNumber);
             this.Controls.Add(this.cbContactType);
             this.Controls.Add(this.pictureBox3);

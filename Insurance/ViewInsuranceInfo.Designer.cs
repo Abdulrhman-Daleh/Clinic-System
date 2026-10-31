@@ -63,7 +63,7 @@
             this.viewInsuranceInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.viewInsuranceInfoCtrl1.Location = new System.Drawing.Point(12, 60);
             this.viewInsuranceInfoCtrl1.Name = "viewInsuranceInfoCtrl1";
-            this.viewInsuranceInfoCtrl1.Size = new System.Drawing.Size(754, 244);
+            this.viewInsuranceInfoCtrl1.Size = new System.Drawing.Size(754, 258);
             this.viewInsuranceInfoCtrl1.TabIndex = 72;
             // 
             // btnEdit

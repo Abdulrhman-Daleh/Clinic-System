@@ -61,7 +61,7 @@
             // 
             this.btnEdit.Image = global::ClinicSystem.Properties.Resources.update_32;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(580, 664);
+            this.btnEdit.Location = new System.Drawing.Point(585, 661);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(160, 66);
             this.btnEdit.TabIndex = 76;
@@ -73,7 +73,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(413, 664);
+            this.btnClose.Location = new System.Drawing.Point(418, 661);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 75;
@@ -104,7 +104,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(752, 739);
+            this.ClientSize = new System.Drawing.Size(757, 739);
             this.Controls.Add(this.findMRecord1);
             this.Controls.Add(this.lblClass);
             this.Controls.Add(this.btnEdit);

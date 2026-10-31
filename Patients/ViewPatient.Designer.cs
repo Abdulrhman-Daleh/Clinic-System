@@ -61,30 +61,30 @@
             this.viewPersonInfoCtrl1.Location = new System.Drawing.Point(13, 60);
             this.viewPersonInfoCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.viewPersonInfoCtrl1.Name = "viewPersonInfoCtrl1";
-            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(525, 207);
+            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(673, 207);
             this.viewPersonInfoCtrl1.TabIndex = 2;
             // 
             // viewPersonContacts1
             // 
             this.viewPersonContacts1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.viewPersonContacts1.Location = new System.Drawing.Point(12, 275);
+            this.viewPersonContacts1.Location = new System.Drawing.Point(12, 496);
             this.viewPersonContacts1.Name = "viewPersonContacts1";
-            this.viewPersonContacts1.Size = new System.Drawing.Size(518, 182);
+            this.viewPersonContacts1.Size = new System.Drawing.Size(675, 183);
             this.viewPersonContacts1.TabIndex = 3;
             // 
             // patientInfoCtrl1
             // 
             this.patientInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.patientInfoCtrl1.Location = new System.Drawing.Point(23, 463);
+            this.patientInfoCtrl1.Location = new System.Drawing.Point(13, 281);
             this.patientInfoCtrl1.Name = "patientInfoCtrl1";
-            this.patientInfoCtrl1.Size = new System.Drawing.Size(555, 209);
+            this.patientInfoCtrl1.Size = new System.Drawing.Size(673, 209);
             this.patientInfoCtrl1.TabIndex = 4;
             // 
             // btnClose
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(418, 678);
+            this.btnClose.Location = new System.Drawing.Point(516, 681);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 15;
@@ -97,7 +97,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(585, 744);
+            this.ClientSize = new System.Drawing.Size(699, 759);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.patientInfoCtrl1);
             this.Controls.Add(this.viewPersonContacts1);

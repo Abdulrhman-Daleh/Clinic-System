@@ -22,8 +22,6 @@ namespace ClinicSystem.Patients
             viewPersonInfoCtrl1.SetData(patient);
             viewPersonContacts1.LoadUpPersonContact(patient.PersonId);
             patientInfoCtrl1.LoadPatientInfo(patient);
-
-
         }
 
         private void btnClose_Click(object sender, System.EventArgs e) => Close();

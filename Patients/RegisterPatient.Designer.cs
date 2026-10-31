@@ -63,11 +63,12 @@
             // findPersonCtrl1
             // 
             this.findPersonCtrl1.AllowFind = true;
+            this.findPersonCtrl1.AllowFindButton = true;
             this.findPersonCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPersonCtrl1.Location = new System.Drawing.Point(13, 98);
             this.findPersonCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.findPersonCtrl1.Name = "findPersonCtrl1";
-            this.findPersonCtrl1.Size = new System.Drawing.Size(555, 287);
+            this.findPersonCtrl1.Size = new System.Drawing.Size(675, 287);
             this.findPersonCtrl1.TabIndex = 4;
             // 
             // label1
@@ -92,14 +93,14 @@
             this.viewPersonContacts1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.viewPersonContacts1.Location = new System.Drawing.Point(17, 391);
             this.viewPersonContacts1.Name = "viewPersonContacts1";
-            this.viewPersonContacts1.Size = new System.Drawing.Size(518, 182);
+            this.viewPersonContacts1.Size = new System.Drawing.Size(672, 182);
             this.viewPersonContacts1.TabIndex = 7;
             // 
             // btnRegister
             // 
             this.btnRegister.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnRegister.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRegister.Location = new System.Drawing.Point(340, 576);
+            this.btnRegister.Location = new System.Drawing.Point(460, 569);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(228, 66);
             this.btnRegister.TabIndex = 9;
@@ -111,7 +112,7 @@
             // 
             this.btnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCancel.Location = new System.Drawing.Point(172, 576);
+            this.btnCancel.Location = new System.Drawing.Point(292, 569);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(160, 66);
             this.btnCancel.TabIndex = 8;
@@ -119,11 +120,11 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // AddUpdatePatient
+            // RegisterPatient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(588, 647);
+            this.ClientSize = new System.Drawing.Size(701, 647);
             this.Controls.Add(this.btnRegister);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.viewPersonContacts1);
@@ -132,7 +133,7 @@
             this.Controls.Add(this.findPersonCtrl1);
             this.Controls.Add(this.lblTitle);
             this.Controls.Add(this.pbModeImage);
-            this.Name = "AddUpdatePatient";
+            this.Name = "RegisterPatient";
             this.Text = "Add Update Patient";
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             this.ResumeLayout(false);
