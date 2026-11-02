@@ -1,4 +1,5 @@
-﻿using ClinicSystem.Helpers;
+﻿using Business;
+using ClinicSystem.Helpers;
 using System.Windows.Forms;
 
 namespace ClinicSystem.MedicalRecord.Controls
@@ -44,7 +45,9 @@ namespace ClinicSystem.MedicalRecord.Controls
         {
             ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             if (!int.TryParse(txtFindBy.Text.Trim(), out int medicalRecordID))
@@ -55,7 +58,7 @@ namespace ClinicSystem.MedicalRecord.Controls
 
             medicalRecord = Business.MedicalRecord.FindMedicalRecordByID(medicalRecordID);
 
-            viewMRecordInfo1.LoadMedicalRecordInfo(medicalRecordID);
+            viewMRecordInfo1.LoadMedicalRecordInfo(medicalRecord);
 
             if (AllowedFind)
                 SendMedicalRecord?.Invoke(medicalRecord);

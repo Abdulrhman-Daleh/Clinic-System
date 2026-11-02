@@ -1,4 +1,5 @@
-﻿using Business;
+﻿
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ namespace ClinicSystem.MedicalRecord
     public partial class AddUpdateMedicalRecord : FormsDefaultSettings
     {
         private Business.MedicalRecord medicalRecord;
+
         public AddUpdateMedicalRecord()
         {
             InitializeComponent();
@@ -119,11 +121,13 @@ namespace ClinicSystem.MedicalRecord
         {
             ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult validationResult = ValidationHelper.ValidateForm(this, errors);
+
+            if (!validationResult.IsSuccess)
             {
                 MessageBox.Show(
-                    "Form is not valid to save",
-                    "Not Valid",
+                    validationResult.Message,
+                    validationResult.Title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -143,14 +147,16 @@ namespace ClinicSystem.MedicalRecord
 
             CollectData();
 
-            if (medicalRecord.Save())
-            {
-                MessageBox.Show(
-                    "Data saved successfully",
-                    "Saved",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+            OperationResult result = medicalRecord.Save();
 
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
+            {
                 SetMedicalRecordID(medicalRecord.MedicalRecordID);
 
                 SetFormTextBasedMode(
@@ -162,14 +168,6 @@ namespace ClinicSystem.MedicalRecord
 
                 SendMedicalRecordInfo?.Invoke(medicalRecord);
             }
-            else
-            {
-                MessageBox.Show(
-                    "Failed to save",
-                    "Failed",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
         }
 
         private void AddUpdateMedicalRecord_Load(object sender, EventArgs e)
@@ -178,22 +176,22 @@ namespace ClinicSystem.MedicalRecord
             cbSocialStatus.Items.Clear();
             cbSocialStatus.Items.AddRange(new object[]
             {
-        "Not Specified",
-        "Single",
-        "Married",
-        "Separated",
-        "Divorced",
-        "Widowed"
+                "Not Specified",
+                "Single",
+                "Married",
+                "Separated",
+                "Divorced",
+                "Widowed"
             });
 
             cbClassification.Items.Clear();
             cbClassification.Items.AddRange(new object[]
             {
-        "Not Classified",
-        "General",
-        "Chronic Condition",
-        "High Risk",
-        "Special Care"
+                "Not Classified",
+                "General",
+                "Chronic Condition",
+                "High Risk",
+                "Special Care"
             });
 
             SetComboBoxValue(cbSocialStatus, medicalRecord.SocialStatus);

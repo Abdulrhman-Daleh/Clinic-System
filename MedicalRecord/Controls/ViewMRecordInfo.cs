@@ -8,11 +8,11 @@ namespace ClinicSystem.MedicalRecord.Controls
     {
 
         private Business.MedicalRecord MRecord { get; set; }
-
         public Business.MedicalRecord CurrentMRecord
         {
             get => MRecord;
         }
+
         public ViewMRecordInfo()
         {
             InitializeComponent();
@@ -24,9 +24,9 @@ namespace ClinicSystem.MedicalRecord.Controls
 
         }
 
-        public void LoadMedicalRecordInfo(int medicalRecordId)
+        public void LoadMedicalRecordInfo(Business.MedicalRecord medicalRecord)
         {
-            MRecord = Business.MedicalRecord.FindMedicalRecordByID(medicalRecordId);
+            MRecord = medicalRecord;
 
             if (ValidationHelper.IsEmptyOrNull(MRecord, "Medical record is not found"))
             {
