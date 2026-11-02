@@ -75,7 +75,9 @@ namespace ClinicSystem.Login
 
         private void BtnSignIn_Click(object sender, System.EventArgs e)
         {
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             string username = txtUsername.Text.Trim();
