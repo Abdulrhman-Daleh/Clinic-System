@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -90,40 +91,66 @@ namespace Business
             return MedicalRecordData.UpdateMedicalRecord(ToDto(this));
         }
 
-        public bool Save()
+        public OperationResult Save()
         {
-            if (!IsMedicalRecordValidToSave())
-                return false;
+            OperationResult result = IsMedicalRecordValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
                 case EnMode.Add:
+
                     if (AddMedicalRecord())
                     {
+                        _mode = EnMode.Update;
+
                         Auditor.Log(
                             "Medical Record Added",
-                            $"Medical record for PatientID {PatientID} was created by StaffID {Global.CurrentLoggedInStaff.StaffId}.",
+                            $"Medical record for PatientID {PatientID} was created by {performedBy}.",
                             $"MedicalRecordID {MedicalRecordID}");
 
-                        _mode = EnMode.Update;
-                        return true;
+                        return new OperationResult(
+                            "Medical record added successfully.",
+                            "Added",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to add medical record.",
+                        "Failed",
+                        false);
 
                 case EnMode.Update:
+
                     if (UpdateMedicalRecord())
                     {
                         Auditor.Log(
                             "Medical Record Updated",
-                            $"Medical record for PatientID {PatientID} was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.",
+                            $"Medical record for PatientID {PatientID} was updated by {performedBy}.",
                             $"MedicalRecordID {MedicalRecordID}");
 
-                        return true;
+                        return new OperationResult(
+                            "Medical record updated successfully.",
+                            "Updated",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to update medical record.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid medical record operation mode.",
+                "Failed",
+                false);
         }
 
         public static MedicalRecord FindMedicalRecordByID(int medicalRecordID)
@@ -141,9 +168,23 @@ namespace Business
             return ConcentToCare ? "Care" : "No Care";
         }
 
-        private bool IsMedicalRecordValidToSave()
+        private OperationResult IsMedicalRecordValidToSave()
         {
-            return Util.IsValidId(PatientID) && Util.IsRequired(PastSocialHistory) && Util.IsRequired(SocialStatus) && Util.IsRequired(Classification);
+            if (Util.IsValidId(PatientID) &&
+                Util.IsRequired(PastSocialHistory) &&
+                Util.IsRequired(SocialStatus) &&
+                Util.IsRequired(Classification))
+            {
+                return new OperationResult(
+                    "Medical record information is valid to save.",
+                    "Valid",
+                    true);
+            }
+
+            return new OperationResult(
+                "Medical record information is invalid.",
+                "Invalid",
+                false);
         }
     }
 }

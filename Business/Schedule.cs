@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿
+using Data_Access;
 using Data_Access.DTOs;
 using System;
 using System.ComponentModel;
@@ -8,8 +9,9 @@ namespace Business
 {
     public class Schedule
     {
-        private enum EnMode { Add = 1, Update };
-        private EnMode Mode;
+        private enum Mode { Add = 1, Update }
+        private Mode _mode;
+
         public int ScheduleId { get; set; }
         public TimeSpan WorkStartFrom { get; set; }
         public TimeSpan WorkEndAt { get; set; }
@@ -40,17 +42,17 @@ namespace Business
 
         public Schedule(int scheduleId)
         {
-            this.ScheduleId = scheduleId;
-            Mode = EnMode.Update;
+            ScheduleId = scheduleId;
+            _mode = Mode.Update;
         }
 
         public Schedule()
         {
-            this.ScheduleId = -1;
-            this.WorkStartFrom = TimeSpan.MinValue;
-            this.WorkEndAt = TimeSpan.MinValue;
-            this.ShiftName = string.Empty;
-            Mode = EnMode.Add;
+            ScheduleId = -1;
+            WorkStartFrom = TimeSpan.MinValue;
+            WorkEndAt = TimeSpan.MinValue;
+            ShiftName = string.Empty;
+            _mode = Mode.Add;
         }
 
         public static async Task<BindingList<string>> GetSchedulesNames()
@@ -64,7 +66,7 @@ namespace Business
 
             if (id == 0) return false;
 
-            this.ScheduleId = id;
+            ScheduleId = id;
             return true;
         }
 
@@ -73,30 +75,85 @@ namespace Business
             return ScheduleData.UpdateSchedule(ToDto(this));
         }
 
-        public bool Save()
+        public OperationResult Save()
         {
-            switch (Mode)
+            OperationResult result = IsScheduleValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+
+            switch (_mode)
             {
-                case EnMode.Add:
+                case Mode.Add:
+
                     if (AddNewSchedule())
                     {
-                        Mode = EnMode.Update;
-                        Auditor.Log("Schedule Added", $"Shift '{ShiftName}' ({WorkStartFrom:hh\\:mm}–{WorkEndAt:hh\\:mm}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ScheduleID {ScheduleId}");
-                        return true;
-                    }
-                    return false;
+                        _mode = Mode.Update;
 
-                case EnMode.Update:
+                        Auditor.Log(
+                            "Schedule Added",
+                            $"Shift '{ShiftName}' ({WorkStartFrom:hh\\:mm}–{WorkEndAt:hh\\:mm}) was added by {performedBy}.",
+                            $"ScheduleID {ScheduleId}");
+
+                        return new OperationResult(
+                            "Schedule added successfully.",
+                            "Added",
+                            true);
+                    }
+
+                    return new OperationResult(
+                        "Failed to add schedule.",
+                        "Failed",
+                        false);
+
+                case Mode.Update:
+
                     if (UpdateSchedule())
                     {
-                        Auditor.Log("Schedule Updated", $"Shift '{ShiftName}' ({WorkStartFrom:hh\\:mm}–{WorkEndAt:hh\\:mm}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ScheduleID {ScheduleId}");
-                        return true;
+                        Auditor.Log(
+                            "Schedule Updated",
+                            $"Shift '{ShiftName}' ({WorkStartFrom:hh\\:mm}–{WorkEndAt:hh\\:mm}) was updated by {performedBy}.",
+                            $"ScheduleID {ScheduleId}");
+
+                        return new OperationResult(
+                            "Schedule updated successfully.",
+                            "Updated",
+                            true);
                     }
 
-                    return false;
+                    return new OperationResult(
+                        "Failed to update schedule.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid schedule operation mode.",
+                "Failed",
+                false);
+        }
+
+        private OperationResult IsScheduleValidToSave()
+        {
+            if (Util.IsRequired(ShiftName) &&
+                WorkStartFrom != TimeSpan.MinValue &&
+                WorkEndAt != TimeSpan.MinValue &&
+                WorkStartFrom != WorkEndAt)
+            {
+                return new OperationResult(
+                    "Schedule information is valid to save.",
+                    "Valid",
+                    true);
+            }
+
+            return new OperationResult(
+                "Schedule information is invalid.",
+                "Invalid",
+                false);
         }
 
         public static async Task<BindingList<Schedule>> GetSchedules()

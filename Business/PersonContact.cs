@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System.ComponentModel;
@@ -8,8 +9,9 @@ namespace Business
 {
     public class PersonContact
     {
-        private enum Mode { Add = 1, Update = 2 };
+        private enum Mode { Add = 1, Update }
         private Mode _mode;
+
         public (EnContactTypes ContactTypeId, string ContactTypeName) ContactType { get; set; }
         public int ContactId { get; set; }
         public string Email { get; set; }
@@ -27,7 +29,8 @@ namespace Business
                 PhoneNumber = contactDto.PhoneNumber,
                 PersonId = contactDto.PersonId,
                 ContactId = contactDto.ContactId,
-                ContactType = (contactDto.ContactType.ContactTypeId, contactDto.ContactType.ContactTypeName)
+                ContactType = (contactDto.ContactType.ContactTypeId, contactDto.ContactType.ContactTypeName),
+                _mode = Mode.Update
             };
         }
 
@@ -44,7 +47,6 @@ namespace Business
                 PersonId = contact.PersonId,
                 ContactType = (contact.ContactType.ContactTypeId, contact.ContactType.ContactTypeName)
             };
-
         }
 
         public PersonContact()
@@ -66,30 +68,61 @@ namespace Business
             return PersonContactData.UpdateContact(ToDto(this));
         }
 
-        public bool Save()
+        public OperationResult Save()
         {
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+
             switch (_mode)
             {
                 case Mode.Add:
+
                     if (AddNewContact())
                     {
                         _mode = Mode.Update;
-                        Auditor.Log("Contact Added", $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ContactID {ContactId}");
-                        return true;
+
+                        Auditor.Log(
+                            "Contact Added",
+                            $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was added by {performedBy}.",
+                            $"ContactID {ContactId}");
+
+                        return new OperationResult(
+                            "Contact added successfully.",
+                            "Added",
+                            true);
                     }
-                    else
-                        return false;
+
+                    return new OperationResult(
+                        "Failed to add contact.",
+                        "Failed",
+                        false);
 
                 case Mode.Update:
+
                     if (UpdateContact())
                     {
-                        Auditor.Log("Contact Updated", $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"ContactID {ContactId}");
-                        return true;
+                        Auditor.Log(
+                            "Contact Updated",
+                            $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was updated by {performedBy}.",
+                            $"ContactID {ContactId}");
+
+                        return new OperationResult(
+                            "Contact updated successfully.",
+                            "Updated",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to update contact.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid contact operation mode.",
+                "Failed",
+                false);
         }
 
         public static async Task<BindingList<PersonContact>> GetShortContactInfo(int personId)
@@ -101,6 +134,5 @@ namespace Business
 
             return contacts;
         }
-
     }
 }

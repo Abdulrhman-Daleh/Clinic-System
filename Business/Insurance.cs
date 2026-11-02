@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -9,8 +10,9 @@ namespace Business
 {
     public class Insurance
     {
-        public enum Mode { Add = 1, Update }
-        public Mode mode;
+        private enum Mode { Add = 1, Update }
+        private Mode _mode;
+
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
@@ -27,6 +29,11 @@ namespace Business
         public Policy Policy { get; set; }
         public Patient PolicyPatientHolder { get; set; }
         public Staff RecorderStaff { get; set; }
+
+        public bool IsAddMode()
+        {
+            return _mode == Mode.Add;
+        }
         public Insurance()
         {
             InsuranceID = -1;
@@ -42,13 +49,13 @@ namespace Business
             Policy = null;
             PolicyPatientHolder = null;
             RecorderStaff = null;
-            mode = Mode.Add;
+            _mode = Mode.Add;
         }
 
         public Insurance(int insuranceId)
         {
             InsuranceID = insuranceId;
-            mode = Mode.Update;
+            _mode = Mode.Update;
         }
 
         public static Insurance FromDto(InsuranceDto insuranceDto)
@@ -73,8 +80,7 @@ namespace Business
                 Relationship = insuranceDto.Relationship,
                 Policy = Policy.FindPolicyByID(insuranceDto.PolicyId),
                 PolicyPatientHolder = Patient.FindPatientById(insuranceDto.PolicyholderPatientId),
-                RecorderStaff = Staff.FindStaffById(insuranceDto.RecordedBy),
-                mode = Mode.Update
+                RecorderStaff = Staff.FindStaffById(insuranceDto.RecordedBy)
             };
         }
 
@@ -103,7 +109,9 @@ namespace Business
 
         private bool _AddNewInsurance()
         {
-            var result = InsuranceData.AddNewInsurance(ToDto(this), Patient.ToDto(PolicyPatientHolder));
+            var result = InsuranceData.AddNewInsurance(
+                ToDto(this),
+                Patient.ToDto(PolicyPatientHolder));
 
             if (result.InsuranceId == -1)
                 return false;
@@ -119,32 +127,66 @@ namespace Business
             return InsuranceData.UpdateInsurance(ToDto(this));
         }
 
-        public bool Save()
+        public OperationResult Save()
         {
-            if (IsInsuranceValidToSave())
-                return false;
+            OperationResult result = IsInsuranceValidToSave();
 
-            switch (mode)
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+
+            switch (_mode)
             {
                 case Mode.Add:
+
                     if (_AddNewInsurance())
                     {
-                        mode = Mode.Update;
-                        Auditor.Log("Insurance Added", $"Insurance type '{InsuranceType.InsuranceTypeName}' for PatientID {PolicyholderPatientId} (Provider: {InsuranceProvider}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"InsuranceID {InsuranceID}");
-                        return true;
+                        _mode = Mode.Update;
+
+                        Auditor.Log(
+                            "Insurance Added",
+                            $"Insurance type '{InsuranceType.InsuranceTypeName}' ({InsuranceStatus.InsuranceStatusName}) from '{InsuranceProvider}' for PatientID {PolicyholderPatientId} was added by {performedBy}.",
+                            $"InsuranceID {InsuranceID}");
+
+                        return new OperationResult(
+                            "Insurance added successfully.",
+                            "Added",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to add insurance.",
+                        "Failed",
+                        false);
 
                 case Mode.Update:
+
                     if (_UpdateInsurance())
                     {
-                        Auditor.Log("Insurance Updated", $"Insurance type '{InsuranceType.InsuranceTypeName}' for PatientID {PolicyholderPatientId} (Provider: {InsuranceProvider}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"InsuranceID {InsuranceID}");
-                        return true;
+                        Auditor.Log(
+                            "Insurance Updated",
+                            $"Insurance type '{InsuranceType.InsuranceTypeName}' ({InsuranceStatus.InsuranceStatusName}) from '{InsuranceProvider}' for PatientID {PolicyholderPatientId} was updated by {performedBy}.",
+                            $"InsuranceID {InsuranceID}");
+
+                        return new OperationResult(
+                            "Insurance updated successfully.",
+                            "Updated",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to update insurance.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid insurance operation mode.",
+                "Failed",
+                false);
         }
 
         public static Insurance FindInsuranceByID(int insuranceId)
@@ -172,16 +214,37 @@ namespace Business
             return await InsuranceData.GetPatientsUnderInsurance(insuranceId);
         }
 
-        private bool IsInsuranceValidToSave()
+        private OperationResult IsInsuranceValidToSave()
         {
-            if (Policy == null || PolicyPatientHolder == null || RecorderStaff is null)
-                return false;
+            if (Policy == null ||
+                PolicyPatientHolder == null ||
+                RecorderStaff == null)
+            {
+                return new OperationResult(
+                    "Insurance information is invalid.",
+                    "Invalid",
+                    false);
+            }
 
-            return Util.IsRequired(InsuranceProvider) && Util.IsRequired(Relationship) && Util.IsRequired(PatientClaims)
-                && Util.IsValidId(PolicyId) && Util.IsValidId(RecordedBy) && Util.IsValidId(PolicyholderPatientId) &&
-                Util.IsValidId((int)InsuranceType.InsuranceTypeId) && Util.IsValidId((int)InsuranceStatus.InsuranceStatusId);
+            if (Util.IsRequired(InsuranceProvider) &&
+                Util.IsRequired(Relationship) &&
+                Util.IsRequired(PatientClaims) &&
+                Util.IsValidId(PolicyId) &&
+                Util.IsValidId(RecordedBy) &&
+                Util.IsValidId(PolicyholderPatientId) &&
+                Util.IsValidId((int)InsuranceType.InsuranceTypeId) &&
+                Util.IsValidId((int)InsuranceStatus.InsuranceStatusId))
+            {
+                return new OperationResult(
+                    "Insurance information is valid to save.",
+                    "Valid",
+                    true);
+            }
+
+            return new OperationResult(
+                "Insurance information is invalid.",
+                "Invalid",
+                false);
         }
-
     }
-
 }

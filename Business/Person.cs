@@ -39,6 +39,7 @@ namespace Business
             };
         }
 
+
         public PersonContact contactInfo = new PersonContact();
 
         public Person()
@@ -65,21 +66,21 @@ namespace Business
             return PersonData.UpdatePerson(ToDto(this), PersonContact.ToDto(contactInfo));
         }
 
-        public virtual bool Save()
+        public virtual OperationResult Save()
         {
             if (_mode == Mode.Add)
             {
                 _mode = Mode.Update;
-                return true;
+                return new OperationResult("Person Info send", "PersonSend", true);
             }
 
             if (_UpdatePerson())
             {
                 Auditor.Log("Person Updated", $"Person: {Firstname} {Lastname} (PersonID {PersonId}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PersonID {PersonId}");
-                return true;
+                return new OperationResult("Person updated successfuly", "Updated", true);
             }
 
-            return false;
+            return new OperationResult("failed to save person info", "Failed", false);
         }
 
         public static Person FindPersonById(int personId)
@@ -109,10 +110,28 @@ namespace Business
 
         public char GetGenderChar() => Gender == EnGender.Male ? 'M' : 'F';
 
-        public bool IsPersonValidToSave() => Util.IsRequired(Firstname) && Util.IsRequired(Lastname) && Util.IsValidId((int)Gender);
+        public OperationResult IsPersonValidToSave()
+        {
+            if (Util.IsRequired(Firstname) && Util.IsRequired(Lastname) && Util.IsValidId((int)Gender))
+                return new OperationResult("Form is valid to save", "valid", true);
 
-        public bool IsPersonRegisteredAsPatient() => PersonData.IsPersonRegisteredAsPatient(PersonId);
+            return new OperationResult("Form is invalid to save", "Invalid", false);
+        }
 
-        public bool IsPersonRegisteredAsStaff() => PersonData.IsPersonRegisteredAsStaff(PersonId);
+        public OperationResult IsPersonRegisteredAsPatient()
+        {
+            if (PersonData.IsPersonRegisteredAsPatient(PersonId))
+                return new OperationResult("Person is already registered as patient", "Not Allowed", true);
+
+            return new OperationResult("person isn't a patient", "Allowed", false);
+        }
+
+        public OperationResult IsPersonRegisteredAsStaff()
+        {
+            if (PersonData.IsPersonRegisteredAsStaff(PersonId))
+                return new OperationResult("Person is already registered as staff", "Not Allowed", true);
+
+            return new OperationResult("person isn't a staff", "Allowed", false);
+        }
     }
 }

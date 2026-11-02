@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -11,6 +12,7 @@ namespace Business
     {
         private enum Mode { Add = 1, Update }
         private Mode _mode;
+
         public int PolicyID { get; set; }
         public int OwnerID { get; set; }
         public (EnPolicyStatuses PolicyStatusID, string PolicyStatusText) PolicyStatus { get; set; }
@@ -21,7 +23,7 @@ namespace Business
         public decimal? NoShowFee { get; set; }
         public Staff Owner { get; set; }
 
-        public static Policy FromDto(PolicyDto policyDto)
+        private static Policy FromDto(PolicyDto policyDto)
         {
             if (policyDto == null)
                 return null;
@@ -36,12 +38,11 @@ namespace Business
                 NoShowFreezeDays = policyDto.NoShowFreezeDays,
                 LateFeesPerDay = policyDto.LateFeesPerDay,
                 NoShowFee = policyDto.NoShowFee,
-                Owner = Staff.FindStaffById(policyDto.OwnerID),
-                _mode = Mode.Update
+                Owner = Staff.FindStaffById(policyDto.OwnerID)
             };
         }
 
-        public static PolicyDto ToDto(Policy policy)
+        private static PolicyDto ToDto(Policy policy)
         {
             return new PolicyDto
             {
@@ -58,17 +59,23 @@ namespace Business
 
         public string BookingFreezeDaysText()
         {
-            return NoShowFreezeDays != null ? $"{NoShowFreezeDays.ToString()} days after a no-show" : "No freeze days";
+            return NoShowFreezeDays != null
+                ? $"{NoShowFreezeDays.ToString()} days after a no-show"
+                : "No freeze days";
         }
 
         public string LateFeesPerDayText()
         {
-            return LateFeesPerDay != null ? $"$ {LateFeesPerDay.ToString()} per day" : "No late fees";
+            return LateFeesPerDay != null
+                ? $"$ {LateFeesPerDay.ToString()} per day"
+                : "No late fees";
         }
 
         public string NoShowFeesText()
         {
-            return NoShowFee != null ? $"$ {NoShowFee.ToString()}" : "Empty No show fees";
+            return NoShowFee != null
+                ? $"$ {NoShowFee.ToString()}"
+                : "Empty No show fees";
         }
 
         public Policy()
@@ -94,32 +101,66 @@ namespace Business
             return PolicyData.UpdatePolicy(ToDto(this));
         }
 
-        public bool Save()
+        public OperationResult Save()
         {
-            if (!IsPolicyValidToSave())
-                return false;
+            OperationResult result = IsPolicyValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
                 case Mode.Add:
+
                     if (_AddNewPolicy())
                     {
                         _mode = Mode.Update;
-                        Auditor.Log("Policy Added", $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}) was added by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PolicyID {PolicyID}");
-                        return true;
+
+                        Auditor.Log(
+                            "Policy Added",
+                            $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}, Active: {ActiveFrom:d} - {ActiveTo:d}) was added by {performedBy}.",
+                            $"PolicyID {PolicyID}");
+
+                        return new OperationResult(
+                            "Policy added successfully.",
+                            "Added",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to add policy.",
+                        "Failed",
+                        false);
 
                 case Mode.Update:
+
                     if (_UpdatePolicy())
                     {
-                        Auditor.Log("Policy Updated", $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}) was updated by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PolicyID {PolicyID}");
-                        return true;
+                        Auditor.Log(
+                            "Policy Updated",
+                            $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}, Active: {ActiveFrom:d} - {ActiveTo:d}) was updated by {performedBy}.",
+                            $"PolicyID {PolicyID}");
+
+                        return new OperationResult(
+                            "Policy updated successfully.",
+                            "Updated",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to update policy.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid policy operation mode.",
+                "Failed",
+                false);
         }
 
         public static Policy FindPolicyByID(int policyID)
@@ -157,9 +198,23 @@ namespace Business
             return await PolicyData.GetPoliciesRanges();
         }
 
-        private bool IsPolicyValidToSave()
+        private OperationResult IsPolicyValidToSave()
         {
-            return Util.IsValidId(OwnerID) && ActiveFrom < ActiveTo;
+            if (Util.IsValidId(OwnerID) && ActiveFrom < ActiveTo)
+            {
+                return new OperationResult(
+                    "Policy information is valid to save.",
+                    "Valid",
+                    true);
+            }
+
+            return new OperationResult(
+                "Policy information is invalid.",
+                "Invalid",
+                false);
         }
+
+        public static bool UpdatePolicyStatus(int policyId, int newStatusId) =>
+            PolicyData.UpdatePolicyStatus(policyId, newStatusId);
     }
 }

@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -9,8 +10,9 @@ namespace Business
 {
     public class Staff : Person
     {
-        public enum EnMode { Add = 1, Update = 2 }
-        private EnMode Mode { get; set; }
+        private enum Mode { Add = 1, Update }
+        private Mode _mode;
+
         public int StaffId { get; set; }
         public int ScheduleId { get; set; }
         public (EnRole RoleId, string RoleName) RoleInfo { get; set; }
@@ -59,7 +61,6 @@ namespace Business
                 Lastname = staffDto.Lastname,
                 Gender = staffDto.Gender == 'M' ? EnGender.Male : EnGender.Female,
             };
-
         }
 
         public Staff()
@@ -75,15 +76,15 @@ namespace Business
             HireDate = DateTime.MinValue;
             Firstname = string.Empty;
             Lastname = string.Empty;
-            this.Schedule = new Schedule();
+            Schedule = new Schedule();
             Gender = EnGender.Male;
-            Mode = EnMode.Add;
+            _mode = Mode.Add;
         }
 
         private Staff(int staffId, int scheduleId)
         {
             StaffId = staffId;
-            Mode = EnMode.Update;
+            _mode = Mode.Update;
             Schedule = Schedule.FindScheduleByID(scheduleId);
         }
 
@@ -94,11 +95,12 @@ namespace Business
 
         private bool AddNewStaff()
         {
-            (int staffId, int personId, string staffNumber) result = StaffData.AddNewStaff(ToDto(this));
+            (int staffId, int personId, string staffNumber) result =
+                StaffData.AddNewStaff(ToDto(this));
 
-            this.StaffId = result.staffId;
-            this.PersonId = result.personId;
-            this.StaffNumber = result.staffNumber;
+            StaffId = result.staffId;
+            PersonId = result.personId;
+            StaffNumber = result.staffNumber;
 
             return StaffId > 0;
         }
@@ -108,41 +110,71 @@ namespace Business
             return StaffData.UpdateStaff(ToDto(this));
         }
 
-        public override bool Save()
+        public override OperationResult Save()
         {
-            if (!IsPersonValidToSave())
-            {
-                return false;
-            }
+            OperationResult result = IsPersonValidToSave();
 
-            if (!IsStaffValidToSave())
-            {
-                return false;
-            }
+            if (!result.IsSuccess)
+                return result;
 
-            string StaffId = Global.CurrentLoggedInStaff == null ? "None it's first Record" : Global.CurrentLoggedInStaff.StaffId.ToString();
-            switch (Mode)
+            result = IsStaffValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+
+            switch (_mode)
             {
-                case EnMode.Add:
+                case Mode.Add:
+
                     if (AddNewStaff())
                     {
-                        Mode = EnMode.Update;
-                        Auditor.Log("Staff Added", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was added by StaffID {StaffId}.", $"StaffID {StaffId}");
-                        return true;
-                    }
-                    return false;
+                        _mode = Mode.Update;
 
-                case EnMode.Update:
+                        Auditor.Log(
+                            "Staff Added",
+                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {RoleInfo.RoleName}) was added by {performedBy}.",
+                            $"StaffID {StaffId}");
+
+                        return new OperationResult(
+                            "Staff added successfully.",
+                            "Added",
+                            true);
+                    }
+
+                    return new OperationResult(
+                        "Failed to add staff.",
+                        "Failed",
+                        false);
+
+                case Mode.Update:
+
                     if (UpdateStaff())
                     {
-                        Auditor.Log("Staff Updated", $"Staff {StaffNumber} ({RoleInfo.RoleName}) was updated by StaffID {StaffId}.", $"StaffID {StaffId}");
-                        return true;
+                        Auditor.Log(
+                            "Staff Updated",
+                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {RoleInfo.RoleName}) was updated by {performedBy}.",
+                            $"StaffID {StaffId}");
+
+                        return new OperationResult(
+                            "Staff updated successfully.",
+                            "Updated",
+                            true);
                     }
 
-                    return false;
+                    return new OperationResult(
+                        "Failed to update staff.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid staff operation mode.",
+                "Failed",
+                false);
         }
 
         public static bool DoesExistsByUsername(string username)
@@ -152,7 +184,7 @@ namespace Business
 
         public bool IsAddMode()
         {
-            return Mode == EnMode.Add;
+            return _mode == Mode.Add;
         }
 
         public static Staff FindStaffById(int staffId)
@@ -170,12 +202,16 @@ namespace Business
             return FromDto(StaffData.FindStaffByUsername(userName));
         }
 
-        public bool DeactivateStaff() => StaffData.DeactivateStaff(this.StaffId);
-        public bool IsOwner() => RoleInfo.RoleId == EnRole.Owner;
+        public bool DeactivateStaff() =>
+            StaffData.DeactivateStaff(StaffId);
+
+        public bool IsOwner() =>
+            RoleInfo.RoleId == EnRole.Owner;
 
         public bool IsRoleApplicableForAppointment()
         {
-            return RoleInfo.RoleId == EnRole.Nurse || RoleInfo.RoleId == EnRole.Doctor;
+            return RoleInfo.RoleId == EnRole.Nurse ||
+                   RoleInfo.RoleId == EnRole.Doctor;
         }
 
         public static bool IsFirstStaff()
@@ -183,10 +219,23 @@ namespace Business
             return StaffData.IsFirstStaff();
         }
 
-        private bool IsStaffValidToSave()
+        private OperationResult IsStaffValidToSave()
         {
-            return Util.IsRequired(Username) && Util.IsRequired(HashedPassword)
-                && Util.IsValidId(ScheduleId) && Util.IsValidId((int)RoleInfo.RoleId);
+            if (Util.IsRequired(Username) &&
+                Util.IsRequired(HashedPassword) &&
+                Util.IsValidId(ScheduleId) &&
+                Util.IsValidId((int)RoleInfo.RoleId))
+            {
+                return new OperationResult(
+                    "Staff information is valid to save.",
+                    "Valid",
+                    true);
+            }
+
+            return new OperationResult(
+                "Staff information is invalid.",
+                "Invalid",
+                false);
         }
     }
 }
