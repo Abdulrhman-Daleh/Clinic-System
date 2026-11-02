@@ -1,5 +1,5 @@
-﻿using Business;
-using System;
+﻿
+using Business;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -9,37 +9,57 @@ namespace ClinicSystem.Helpers
 {
     public class ValidationHelper
     {
-        public static bool ValidateRequiredTextBox(Control control, ErrorProvider errors)
+        public static OperationResult ValidateRequiredTextBox(Control control, ErrorProvider errors)
         {
             if (Util.IsInputEmpty(control.Text))
             {
                 errors.SetError(control, "this field must be filled");
-                return false;
+
+                return new OperationResult(
+                    "This field must be filled.",
+                    "Invalid",
+                    false);
             }
 
             errors.SetError(control, null);
-            return true;
+
+            return new OperationResult(
+                "Input is valid.",
+                "Valid",
+                true);
         }
-        public static bool NotValidToSave(Control control, ErrorProvider errors)
+
+        public static OperationResult ValidateForm(Control control, ErrorProvider errors)
         {
             foreach (Control c in control.Controls)
             {
-                if (!string.IsNullOrWhiteSpace(errors.GetError(c)))
-                    return true;
+                string error = errors.GetError(c);
 
-                foreach (Control child in control.Controls)
+                if (!string.IsNullOrWhiteSpace(error))
                 {
-                    if (NotValidToSave(child, errors))
-                        return true;
+                    return new OperationResult(
+                        error,
+                        "Not Valid",
+                        false);
                 }
+
+                OperationResult result = ValidateForm(c, errors);
+
+                if (!result.IsSuccess)
+                    return result;
             }
 
-            return false;
+            return new OperationResult(
+                "Form is valid to save.",
+                "Valid",
+                true);
         }
+
         public static bool IsValidId(int id)
         {
             return id > 0;
         }
+
         public static bool IsEmptyOrNull<T>(T value, string message = null)
         {
             bool result = string.IsNullOrWhiteSpace(value != null ? value.ToString() : string.Empty);
@@ -54,7 +74,9 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
+
         public static void LockComboBox(KeyPressEventArgs e) => e.Handled = true;
+
         public static void HandleInputType(KeyPressEventArgs e, bool AllowDigit, bool AllowText)
         {
             if (AllowDigit && AllowText)
@@ -69,7 +91,6 @@ namespace ClinicSystem.Helpers
                     e.Handled = true;
                 else
                     e.Handled = false;
-
             }
             else
             {
@@ -79,11 +100,13 @@ namespace ClinicSystem.Helpers
                     e.Handled = false;
             }
         }
+
         public static void ResetDefaultFilter(TextBox txtBox)
         {
             txtBox.Text = string.Empty;
             txtBox.Focus();
         }
+
         public static bool IsEmailValid(string email)
         {
             if (IsEmptyOrNull(email, null))
@@ -94,23 +117,30 @@ namespace ClinicSystem.Helpers
 
             return rgx.IsMatch(email);
         }
+
         private static int CountPhoneDigits(string phoneNumber)
         {
             return phoneNumber.Count(char.IsDigit);
         }
+
         public static bool IsValidPhoneNumber(string phoneNumber)
         {
             return CountPhoneDigits(phoneNumber) == 10;
         }
-        public static void SetApproperiteMaxLength(TextBox txtFilterBy, List<string> allowedIntColumns, string currentColumn,
-            int numAllowedLength, int textAllowedLength)
-        {
 
+        public static void SetApproperiteMaxLength(
+            TextBox txtFilterBy,
+            List<string> allowedIntColumns,
+            string currentColumn,
+            int numAllowedLength,
+            int textAllowedLength)
+        {
             if (allowedIntColumns.Contains(currentColumn))
                 txtFilterBy.MaxLength = numAllowedLength;
             else
                 txtFilterBy.MaxLength = textAllowedLength;
         }
+
         public static bool IsDgvEmptyOrNull(DataGridView dgv)
         {
             if (IsEmptyOrNull(dgv))
@@ -118,6 +148,7 @@ namespace ClinicSystem.Helpers
 
             return dgv.RowCount <= 0;
         }
+
         public static bool CheckAcceptablePasswordStrength(string password)
         {
             bool goodLength = false;
@@ -143,7 +174,8 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
-        public static bool Date1BeforeDate2(DateTime date1, DateTime date2)
+
+        public static bool Date1BeforeDate2(System.DateTime date1, System.DateTime date2)
         {
             return date1.Date < date2.Date;
         }
