@@ -142,6 +142,9 @@
   <data name="allergy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\allergy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="sample_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sample_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="add_policy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_policy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -280,6 +283,9 @@
   <data name="manage_staff_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\manage_staff_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="warning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\warning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="update_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\update_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -294,6 +300,9 @@
   </data>
   <data name="show_password_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\show_password_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="outbox_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\outbox_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Appointment_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Appointment_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -316,7 +325,7 @@
   <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="warning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\warning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="atm-card_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atm-card_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -163,6 +163,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap atm_card_32 {
+            get {
+                object obj = ResourceManager.GetObject("atm-card_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap badge_32 {
             get {
                 object obj = ResourceManager.GetObject("badge_32", resourceCulture);
@@ -453,6 +463,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap outbox_32 {
+            get {
+                object obj = ResourceManager.GetObject("outbox_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap password_32 {
             get {
                 object obj = ResourceManager.GetObject("password_32", resourceCulture);
@@ -546,6 +566,16 @@ namespace ClinicSystem.Properties {
         internal static System.Drawing.Bitmap ring_32 {
             get {
                 object obj = ResourceManager.GetObject("ring_32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap sample_32 {
+            get {
+                object obj = ResourceManager.GetObject("sample_32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
