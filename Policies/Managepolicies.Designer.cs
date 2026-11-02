@@ -42,6 +42,9 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
+            this.approveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.suspendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.archiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPolicies)).BeginInit();
             this.cmsPolicies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -71,10 +74,13 @@
             this.cmsPolicies.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addNewPolicyToolStripMenuItem,
             this.updatePolicyToolStripMenuItem,
-            this.viewPolicyToolStripMenuItem});
+            this.viewPolicyToolStripMenuItem,
+            this.approveToolStripMenuItem,
+            this.suspendToolStripMenuItem,
+            this.archiveToolStripMenuItem});
             this.cmsPolicies.Name = "cmsPeople";
             this.cmsPolicies.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPolicies.Size = new System.Drawing.Size(231, 118);
+            this.cmsPolicies.Size = new System.Drawing.Size(231, 260);
             this.cmsPolicies.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPolicies_Opening);
             // 
             // addNewPolicyToolStripMenuItem
@@ -186,6 +192,32 @@
             this.pbModeImage.TabIndex = 25;
             this.pbModeImage.TabStop = false;
             // 
+            // approveToolStripMenuItem
+            // 
+            this.approveToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.check_mark_32;
+            this.approveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.approveToolStripMenuItem.Name = "approveToolStripMenuItem";
+            this.approveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.approveToolStripMenuItem.Text = "Approve";
+            // 
+            // suspendToolStripMenuItem
+            // 
+            this.suspendToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.x_32;
+            this.suspendToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.suspendToolStripMenuItem.Name = "suspendToolStripMenuItem";
+            this.suspendToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.suspendToolStripMenuItem.Text = "Suspend";
+            this.suspendToolStripMenuItem.Click += new System.EventHandler(this.suspendToolStripMenuItem_Click);
+            // 
+            // archiveToolStripMenuItem
+            // 
+            this.archiveToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.outbox_32;
+            this.archiveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.archiveToolStripMenuItem.Text = "Archive";
+            this.archiveToolStripMenuItem.Click += new System.EventHandler(this.archiveToolStripMenuItem_Click);
+            // 
             // Managepolicies
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -226,5 +258,8 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblRecords;
         private System.Windows.Forms.PictureBox pbModeImage;
+        private System.Windows.Forms.ToolStripMenuItem approveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem suspendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem archiveToolStripMenuItem;
     }
 }

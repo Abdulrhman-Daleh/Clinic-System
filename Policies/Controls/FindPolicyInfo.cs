@@ -51,7 +51,9 @@ namespace ClinicSystem.Policies.Controls
         {
             this.ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             int policyId = -1;

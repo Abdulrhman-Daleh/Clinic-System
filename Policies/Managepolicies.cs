@@ -1,8 +1,10 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Policies
 {
@@ -160,6 +162,32 @@ namespace ClinicSystem.Policies
             List<object> temp = CommonOperations.FilterData(Policies, filterName, value);
 
             CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
+        }
+
+        private void archiveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
+            if (!Policy.UpdatePolicyStatus(policyId, (int)EnPolicyStatuses.Archived))
+            {
+                MessageBox.Show("Failed to archive this policy", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Policy got archive successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            RefreshFilter(0);
+        }
+
+        private void suspendToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
+            if (!Policy.UpdatePolicyStatus(policyId, (int)EnPolicyStatuses.Suspended))
+            {
+                MessageBox.Show("Failed to suspend this policy", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Policy got suspend successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            RefreshFilter(0);
         }
     }
 }

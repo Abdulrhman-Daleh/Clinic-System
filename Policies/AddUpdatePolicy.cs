@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
 using System;
@@ -10,6 +11,7 @@ namespace ClinicSystem.Policies
     public partial class AddUpdatePolicy : FormsDefaultSettings
     {
         Business.Policy policy = new Business.Policy();
+
         public AddUpdatePolicy()
         {
             InitializeComponent();
@@ -167,11 +169,13 @@ namespace ClinicSystem.Policies
         {
             ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
             {
                 MessageBox.Show(
-                    "Form is not valid to save",
-                    "Not Valid",
+                    result.Message,
+                    result.Title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -179,23 +183,31 @@ namespace ClinicSystem.Policies
             }
 
             CollectData();
+
             if (ValidationHelper.IsEmptyOrNull(policy.Owner, "No owner was selected"))
                 return;
 
             if (!policy.Owner.IsOwner())
             {
-                MessageBox.Show("Selected staff is no an owner", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Selected staff is no an owner",
+                    "Not Allowed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 
-            if (policy.Save())
-            {
-                MessageBox.Show(
-                    "Data saved successfully",
-                    "Saved",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+            result = policy.Save();
 
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
+            {
                 SetPolicyId(policy.PolicyID);
 
                 SetFormTextBasedMode(
@@ -207,14 +219,6 @@ namespace ClinicSystem.Policies
                     policy.NoShowFreezeDays.HasValue);
 
                 SendPolicy?.Invoke(policy);
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Failed to save",
-                    "Failed",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
             }
         }
 

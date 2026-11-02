@@ -5,6 +5,7 @@ using LoggerMessage;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -188,6 +189,7 @@ namespace Data_Access
         {
             return ((int)reader["policyId"], (string)reader["display"]);
         }
+
         public static async Task<BindingList<(int policyId, string ActiveDateRange)>> GetPoliciesRanges()
         {
             BindingList<(int policyId, string ActiveDateRange)> list = new BindingList<(int policyId, string ActiveDateRange)>();
@@ -201,6 +203,19 @@ namespace Data_Access
             list = await DataAccessHelper.ExecuteObjectList<(int policyId, string display)>(query, null, PolicySimpleMapper);
 
             return list;
+        }
+
+        public static bool UpdatePolicyStatus(int policyId, int newStatusId)
+        {
+            string query = @"Update Policies set PolicyStatusID = @NewStatusId where PolicyID = @PolicyId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@NewStatusId", SqlDbType.Int) { Value = newStatusId },
+                new SqlParameter("@PolicyId", SqlDbType.Int) { Value = policyId }
+            };
+
+            return DataAccessHelper.ExecuteNonQuery(query, parameters) > 0;
         }
     }
 }
