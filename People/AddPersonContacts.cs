@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
 using System.Windows.Forms;
@@ -8,6 +9,7 @@ namespace ClinicSystem.People
     public partial class AddPersonContacts : FormsDefaultSettings
     {
         private Person Person;
+
         public AddPersonContacts()
         {
             InitializeComponent();
@@ -83,24 +85,35 @@ namespace ClinicSystem.People
             if (ValidationHelper.IsEmptyOrNull(Person.contactInfo, "Contact does not exists"))
                 return;
 
-
             this.ValidateChildren(ValidationConstraints.Enabled);
-            if (ValidationHelper.NotValidToSave(this, errors))
+
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
             {
-                MessageBox.Show("Form is not valid to save", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    result.Message,
+                    result.Title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 
+            result = Person.contactInfo.Save();
 
-            if (Person.contactInfo.Save())
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
             {
                 SetFormTextBasedMode("Update Person Contact", "Update Person Contact", "Update");
-                MessageBox.Show("Data Saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrintContactId(Person.contactInfo.ContactId);
                 CommonOperations.UpdateAfterAdding(Person.Contacts, Person.contactInfo);
             }
-            else
-                MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public void PrintContactId(int contactId) => lblContactId.Text = contactId != -1 ? $"C-{contactId}" : "[Not Set]";

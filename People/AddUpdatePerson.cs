@@ -71,6 +71,7 @@ namespace ClinicSystem
 
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
 
+
         private void btnSave_Click(object sender, System.EventArgs e)
         {
             if (ValidationHelper.IsEmptyOrNull(_person, "person is not valid to save"))
@@ -81,23 +82,37 @@ namespace ClinicSystem
             _person.Gender = (EnGender)cbGender.SelectedIndex + 1;
 
             this.ValidateChildren(ValidationConstraints.Enabled);
-            if (ValidationHelper.NotValidToSave(this, errors))
+
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
             {
-                MessageBox.Show("Form is not valid to save", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    result.Message,
+                    result.Title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 
-            if (_person.Save())
+            result = _person.Save();
+
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
             {
-                MessageBox.Show("data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 PrintPersonId(_person.PersonId);
                 SendPersonInfo?.Invoke(_person);
                 lnkAddContact.Enabled = true;
                 SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
-            else
-                MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
 
         private void ValidateInputKeyPress(object sender, KeyPressEventArgs e)
         {

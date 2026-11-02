@@ -1,4 +1,5 @@
-﻿using Business;
+﻿
+using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -12,9 +13,11 @@ namespace ClinicSystem.People
             InitializeComponent();
             SetUp();
         }
+
         public void SetData(Person person)
         {
             lblRegisteredAs.Text = "";
+
             if (ValidationHelper.IsEmptyOrNull(person))
             {
                 SetUp();
@@ -27,17 +30,18 @@ namespace ClinicSystem.People
             lblTopGender.Text = $"[{person.GetGenderChar()}] {lblGender.Text}";
             lblFullName.Text = person.GetFullName();
 
-            if (person.IsPersonRegisteredAsPatient())
+            if (person.IsPersonRegisteredAsPatient().IsSuccess)
                 lblRegisteredAs.Text = "[Patient]";
 
-            if (person.IsPersonRegisteredAsStaff())
+            if (person.IsPersonRegisteredAsStaff().IsSuccess)
                 lblRegisteredAs.Text += " [Staff]";
         }
 
         private void SetUp()
         {
-            CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblFirstname, lblLastname, lblGender, lblTopGender }, "Not Set");
-
+            CommonOperations.SetUpDefaultControlsValue(
+                new List<Control>() { lblFirstname, lblLastname, lblGender, lblTopGender },
+                "Not Set");
         }
     }
 }

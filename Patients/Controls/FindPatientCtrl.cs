@@ -55,7 +55,9 @@ namespace ClinicSystem.Patients.Controls
         {
             this.ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             int.TryParse(txtFindBy.Text, out int patientId);
