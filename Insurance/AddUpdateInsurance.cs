@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
 using System;
@@ -18,14 +19,18 @@ namespace ClinicSystem.Insurance
         public AddUpdateInsurance()
         {
             InitializeComponent();
-            SetControls();
+
             insurance = new Business.Insurance();
+
+            SetControls();
 
             SetFormTextBasedMode(
                 "Add New Insurance", "Add Insurance", "Add Insurance");
+
             lblInsuranceId.Text = "[Not Set]";
 
             findPatientCtrl1.SendPatient += RecivePatient;
+
             insurance.RecorderStaff = Global.CurrentLoggedInStaff;
             insurance.RecordedBy = insurance.RecorderStaff.StaffId;
         }
@@ -80,7 +85,7 @@ namespace ClinicSystem.Insurance
         {
             await SetNeededComboBoxes();
 
-            if (insurance.mode == Business.Insurance.Mode.Add)
+            if (insurance.IsAddMode())
                 return;
 
             txtProviderName.Text = insurance.InsuranceProvider;
@@ -115,7 +120,6 @@ namespace ClinicSystem.Insurance
             return true;
         }
 
-
         private void ValidateRequiredInput(object sender, CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
@@ -144,11 +148,13 @@ namespace ClinicSystem.Insurance
         {
             ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
             {
                 MessageBox.Show(
-                    "Form is not valid to save",
-                    "Not Valid",
+                    result.Message,
+                    result.Title,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
 
@@ -157,14 +163,16 @@ namespace ClinicSystem.Insurance
 
             CollectData();
 
-            if (insurance.Save())
-            {
-                MessageBox.Show(
-                    "Data saved successfully",
-                    "Saved",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+            result = insurance.Save();
 
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
+            {
                 lblInsuranceId.Text = $"Ins-{insurance.InsuranceID}";
                 findPatientCtrl1.LoadPatientInfo(insurance.PolicyholderPatientId);
                 SetUpdateMode();
@@ -172,14 +180,6 @@ namespace ClinicSystem.Insurance
                 findPatientCtrl1.AllowedFind = false;
 
                 SendInsuranceId?.Invoke(insurance.InsuranceID);
-            }
-            else
-            {
-                MessageBox.Show(
-                    "Failed to save",
-                    "Failed",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
             }
         }
 
