@@ -1,4 +1,6 @@
-﻿using ClinicSystem.Helpers;
+﻿
+using Business;
+using ClinicSystem.Helpers;
 using System;
 using System.Windows.Forms;
 
@@ -7,6 +9,7 @@ namespace ClinicSystem.Schedule
     public partial class AddUpdateSchedule : FormsDefaultSettings
     {
         Business.Schedule schedule = new Business.Schedule();
+
         public AddUpdateSchedule()
         {
             InitializeComponent();
@@ -56,18 +59,24 @@ namespace ClinicSystem.Schedule
             CollectData();
             lblDuration.Text = (schedule.WorkEndAt - schedule.WorkStartFrom).ToString();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
-            if (schedule.Save())
+            result = schedule.Save();
+
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
             {
                 SetFormTextBasedMode("Update schedule", "Update", "Update");
-                MessageBox.Show("Data Saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 lblScheduleId.Text = $"Sch-{schedule.ScheduleId}";
-                return;
             }
-            else
-                MessageBox.Show("Failed To save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void txtShiftName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
