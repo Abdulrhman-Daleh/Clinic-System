@@ -1,4 +1,5 @@
-﻿using ClinicSystem.Helpers;
+﻿using Business;
+using ClinicSystem.Helpers;
 using System;
 using System.Windows.Forms;
 
@@ -49,7 +50,9 @@ namespace ClinicSystem.Staff.Controls
 
         private void Find()
         {
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             string searchType = cbFindBy.SelectedItem.ToString();

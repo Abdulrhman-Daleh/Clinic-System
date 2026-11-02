@@ -134,9 +134,16 @@ namespace ClinicSystem.Staff
         {
             this.ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
             {
-                MessageBox.Show("Form is not valid to save", "Not Valid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    result.Message,
+                    result.Title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 
@@ -144,16 +151,21 @@ namespace ClinicSystem.Staff
 
             try
             {
-                if (staff.Save())
+                result = staff.Save();
+
+                MessageBox.Show(
+                    result.Message,
+                    result.Title,
+                    MessageBoxButtons.OK,
+                    result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+                if (result.IsSuccess)
                 {
-                    MessageBox.Show("Data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     SetStaffId(staff.StaffId);
                     SetStaffNumber(staff.StaffNumber);
                     SetFormTextBasedMode("update staff", "Update staff", "Update");
                     SendStaffId?.Invoke(staff.StaffId);
                 }
-                else
-                    MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -163,7 +175,9 @@ namespace ClinicSystem.Staff
 
         private void txtUsername_Validating(object sender, CancelEventArgs e)
         {
-            if (!ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors))
+            OperationResult result = ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             if (Business.Staff.DoesExistsByUsername(txtUsername.Text) && staff.IsAddMode())
