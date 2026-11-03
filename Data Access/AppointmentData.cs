@@ -44,8 +44,6 @@ namespace Data_Access
 
         public static int UpdateAppointment(AppointmentDto appointmentDto)
         {
-            int appointmentId = -1;
-
             string query = @"Update Appointments
             set AppointmentStatusID = @AppointmentStatusID, AppointmentTypeID = @AppointmentTypeID, AppointmentDate = @AppointmentDate,
             AppointmentTime = @AppointmentTime, AppointmentEndTime = @AppointmentEndTime where AppointmentID = @AppointmentId";

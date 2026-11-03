@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -10,6 +11,7 @@ namespace Business
     public class Appointment
     {
         private EnMode _mode;
+
         public int AppointmentID { get; set; }
         public int PatientID { get; set; }
         public int StaffID { get; set; }
@@ -20,6 +22,7 @@ namespace Business
         public TimeSpan AppointmentEndTime { get; set; }
         public Patient Patient { get; set; }
         public Staff Staff { get; set; }
+
         public Appointment()
         {
             AppointmentID = -1;
@@ -65,11 +68,11 @@ namespace Business
                 AppointmentTime = appointment.AppointmentTime,
                 AppointmentEndTime = appointment.AppointmentEndTime,
                 _mode = EnMode.Update,
-
                 Staff = Staff.FindStaffById(appointment.StaffID),
                 Patient = Patient.FindPatientById(appointment.PatientID)
             };
         }
+
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
             return await AppointmentData.GetAppointmentTypesNames();
@@ -87,32 +90,66 @@ namespace Business
             return AppointmentData.UpdateAppointment(ToDto(this)) > 0;
         }
 
-        public bool Save()
+        public OperationResult Save()
         {
-            if (!IsAppointmentValidToSave())
-                return false;
+            OperationResult result = IsAppointmentValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = Global.CurrentLoggedInStaff == null
+                ? "Initial setup"
+                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
                 case EnMode.Add:
+
                     if (AddNewAppointment())
                     {
                         _mode = EnMode.Update;
-                        Auditor.Log("Appointment Added", $"Appointment for PatientID {PatientID} with StaffID {StaffID} was scheduled for {AppointmentDate} at {AppointmentTime} by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"AppointmentID {AppointmentID}");
-                        return true;
+
+                        Auditor.Log(
+                            "Appointment Added",
+                            $"Appointment type '{AppointmentTypes.AppointmentTypeText}' for PatientID {PatientID} with StaffID {StaffID} was scheduled on {AppointmentDate:d} from {AppointmentTime:hh\\:mm} to {AppointmentEndTime:hh\\:mm} by {performedBy}.",
+                            $"AppointmentID {AppointmentID}");
+
+                        return new OperationResult(
+                            "Appointment added successfully.",
+                            "Added",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to add appointment.",
+                        "Failed",
+                        false);
 
                 case EnMode.Update:
+
                     if (UpdateAppointment())
                     {
-                        Auditor.Log("Appointment Updated", $"Appointment for PatientID {PatientID} with StaffID {StaffID} was rescheduled to {AppointmentDate} at {AppointmentTime} by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"AppointmentID {AppointmentID}");
-                        return true;
+                        Auditor.Log(
+                            "Appointment Updated",
+                            $"Appointment type '{AppointmentTypes.AppointmentTypeText}' for PatientID {PatientID} with StaffID {StaffID} was updated to {AppointmentDate:d} from {AppointmentTime:hh\\:mm} to {AppointmentEndTime:hh\\:mm} (Status: {AppointmentStatuses.AppointmentStatusText}) by {performedBy}.",
+                            $"AppointmentID {AppointmentID}");
+
+                        return new OperationResult(
+                            "Appointment updated successfully.",
+                            "Updated",
+                            true);
                     }
-                    return false;
+
+                    return new OperationResult(
+                        "Failed to update appointment.",
+                        "Failed",
+                        false);
             }
 
-            return false;
+            return new OperationResult(
+                "Invalid appointment operation mode.",
+                "Failed",
+                false);
         }
 
         public bool NoOverlapWithLastAppointment()
@@ -125,15 +162,39 @@ namespace Business
             return FromDto(AppointmentData.FindAppointmentByID(appointmentId));
         }
 
-        private bool IsAppointmentValidToSave()
+        private OperationResult IsAppointmentValidToSave()
         {
+            if (!Util.IsValidId(PatientID) ||
+                !Util.IsValidId(StaffID) ||
+                Patient == null ||
+                Staff == null)
+            {
+                return new OperationResult(
+                    "Patient or staff information is invalid.",
+                    "Invalid",
+                    false);
+            }
+
             if (!Staff.IsActive)
-                return false;
+            {
+                return new OperationResult(
+                    "Cannot schedule an appointment with inactive staff.",
+                    "Invalid",
+                    false);
+            }
 
             if (!NoOverlapWithLastAppointment())
-                return false;
+            {
+                return new OperationResult(
+                    "Staff already has an appointment during this time.",
+                    "Appointment Conflict",
+                    false);
+            }
 
-            return Util.IsValidId(PatientID) && Util.IsValidId(StaffID) && Patient != null && Staff != null;
+            return new OperationResult(
+                "Appointment information is valid to save.",
+                "Valid",
+                true);
         }
 
         public bool HasSOAPNotes() => AppointmentData.HasSOAPNotes(AppointmentID);
