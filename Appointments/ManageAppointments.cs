@@ -104,6 +104,7 @@ namespace ClinicSystem.Appointments
         {
             rescheduleToolStripMenuItem.Enabled = status;
             viewAppointmentToolStripMenuItem.Enabled = status;
+            goToAppointmentToolStripMenuItem.Enabled = status;
 
         }
         private void cmsAppointments_Opening(object sender, CancelEventArgs e)
@@ -128,6 +129,14 @@ namespace ClinicSystem.Appointments
 
             BookAppointment viewAppointment = new BookAppointment(appointmentId, AppEnums.cs.EnAppointmentStatuses.Rescheduled);
             viewAppointment.ShowDialog();
+        }
+
+        private void goToAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+
+            PerformAppointment performAppointment = new PerformAppointment(appointmentId);
+            performAppointment.ShowDialog();
         }
     }
 }

@@ -43,7 +43,9 @@ namespace ClinicSystem.Appointments.Controls
 
         private void Find()
         {
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
                 return;
 
             int value = int.Parse(txtFindBy.Text.Trim());
@@ -82,6 +84,7 @@ namespace ClinicSystem.Appointments.Controls
         public void LoadAppointmentInfo(int appointmentId)
         {
             txtFindBy.Text = appointmentId.ToString();
+            cbFindBy.Enabled = false;
             Find();
         }
 

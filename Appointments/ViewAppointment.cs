@@ -13,7 +13,6 @@ namespace ClinicSystem.Appointments
             findAppointmentCtrl1.AllowFind = false;
             SetAppointment(findAppointmentCtrl1.CurrentAppointment);
         }
-
         public ViewAppointment()
         {
             InitializeComponent();
@@ -35,6 +34,9 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
+            patientInfoCtrl1.LoadPatientInfo(appointment.Patient);
+            viewPersonContacts1.LoadUpPersonContact(appointment.Patient.PersonId);
+            viewPersonInfoCtrl1.SetData(appointment.Staff);
             lblAppointmentId.Text = appointment.Patient.GetFullName() + " . " + appointment.Staff.RoleInfo.RoleName + " . " + appointment.Staff.GetFullName();
             lblStatus.Text = appointment.AppointmentStatuses.AppointmentStatusText;
             btnReschedule.Enabled = true;

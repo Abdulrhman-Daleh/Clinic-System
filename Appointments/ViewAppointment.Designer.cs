@@ -34,6 +34,9 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.findAppointmentCtrl1 = new ClinicSystem.Appointments.Controls.FindAppointmentCtrl();
+            this.patientInfoCtrl1 = new ClinicSystem.Patients.Controls.PatientInfoCtrl();
+            this.viewPersonContacts1 = new ClinicSystem.People.Controls.ViewPersonContacts();
+            this.viewPersonInfoCtrl1 = new ClinicSystem.People.ViewPersonInfoCtrl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,7 +64,7 @@
             // 
             this.btnReschedule.Image = global::ClinicSystem.Properties.Resources.update_32;
             this.btnReschedule.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnReschedule.Location = new System.Drawing.Point(392, 787);
+            this.btnReschedule.Location = new System.Drawing.Point(475, 685);
             this.btnReschedule.Name = "btnReschedule";
             this.btnReschedule.Size = new System.Drawing.Size(215, 66);
             this.btnReschedule.TabIndex = 76;
@@ -73,7 +76,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(226, 787);
+            this.btnClose.Location = new System.Drawing.Point(309, 685);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 75;
@@ -95,16 +98,44 @@
             // 
             this.findAppointmentCtrl1.AllowFind = true;
             this.findAppointmentCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.findAppointmentCtrl1.Location = new System.Drawing.Point(12, 70);
+            this.findAppointmentCtrl1.Location = new System.Drawing.Point(696, 80);
             this.findAppointmentCtrl1.Name = "findAppointmentCtrl1";
-            this.findAppointmentCtrl1.Size = new System.Drawing.Size(597, 711);
+            this.findAppointmentCtrl1.Size = new System.Drawing.Size(638, 671);
             this.findAppointmentCtrl1.TabIndex = 79;
+            // 
+            // patientInfoCtrl1
+            // 
+            this.patientInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.patientInfoCtrl1.Location = new System.Drawing.Point(20, 70);
+            this.patientInfoCtrl1.Name = "patientInfoCtrl1";
+            this.patientInfoCtrl1.Size = new System.Drawing.Size(670, 204);
+            this.patientInfoCtrl1.TabIndex = 80;
+            // 
+            // viewPersonContacts1
+            // 
+            this.viewPersonContacts1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.viewPersonContacts1.Location = new System.Drawing.Point(20, 497);
+            this.viewPersonContacts1.Name = "viewPersonContacts1";
+            this.viewPersonContacts1.Size = new System.Drawing.Size(671, 182);
+            this.viewPersonContacts1.TabIndex = 81;
+            // 
+            // viewPersonInfoCtrl1
+            // 
+            this.viewPersonInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.viewPersonInfoCtrl1.Location = new System.Drawing.Point(20, 282);
+            this.viewPersonInfoCtrl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.viewPersonInfoCtrl1.Name = "viewPersonInfoCtrl1";
+            this.viewPersonInfoCtrl1.Size = new System.Drawing.Size(670, 207);
+            this.viewPersonInfoCtrl1.TabIndex = 82;
             // 
             // ViewAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(619, 858);
+            this.ClientSize = new System.Drawing.Size(1347, 763);
+            this.Controls.Add(this.viewPersonInfoCtrl1);
+            this.Controls.Add(this.viewPersonContacts1);
+            this.Controls.Add(this.patientInfoCtrl1);
             this.Controls.Add(this.findAppointmentCtrl1);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.btnReschedule);
@@ -127,5 +158,8 @@
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Label lblStatus;
         private Controls.FindAppointmentCtrl findAppointmentCtrl1;
+        private Patients.Controls.PatientInfoCtrl patientInfoCtrl1;
+        private People.Controls.ViewPersonContacts viewPersonContacts1;
+        private People.ViewPersonInfoCtrl viewPersonInfoCtrl1;
     }
 }

@@ -31,15 +31,16 @@
             this.components = new System.ComponentModel.Container();
             this.dgvAppointments = new System.Windows.Forms.DataGridView();
             this.cmsAppointments = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.bookAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.rescheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblRecords = new System.Windows.Forms.Label();
+            this.bookAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rescheduleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.goToAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).BeginInit();
@@ -71,38 +72,12 @@
             this.cmsAppointments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.bookAppointmentToolStripMenuItem,
             this.viewAppointmentToolStripMenuItem,
-            this.rescheduleToolStripMenuItem});
+            this.rescheduleToolStripMenuItem,
+            this.goToAppointmentToolStripMenuItem});
             this.cmsAppointments.Name = "cmsPeople";
             this.cmsAppointments.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsAppointments.Size = new System.Drawing.Size(280, 146);
+            this.cmsAppointments.Size = new System.Drawing.Size(286, 184);
             this.cmsAppointments.Opening += new System.ComponentModel.CancelEventHandler(this.cmsAppointments_Opening);
-            // 
-            // bookAppointmentToolStripMenuItem
-            // 
-            this.bookAppointmentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_appointment;
-            this.bookAppointmentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.bookAppointmentToolStripMenuItem.Name = "bookAppointmentToolStripMenuItem";
-            this.bookAppointmentToolStripMenuItem.Size = new System.Drawing.Size(279, 38);
-            this.bookAppointmentToolStripMenuItem.Text = "Book Appointment";
-            this.bookAppointmentToolStripMenuItem.Click += new System.EventHandler(this.bookAppointmentToolStripMenuItem_Click);
-            // 
-            // viewAppointmentToolStripMenuItem
-            // 
-            this.viewAppointmentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_record_32;
-            this.viewAppointmentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewAppointmentToolStripMenuItem.Name = "viewAppointmentToolStripMenuItem";
-            this.viewAppointmentToolStripMenuItem.Size = new System.Drawing.Size(279, 38);
-            this.viewAppointmentToolStripMenuItem.Text = "View Appointment";
-            this.viewAppointmentToolStripMenuItem.Click += new System.EventHandler(this.viewAppointmentToolStripMenuItem_Click);
-            // 
-            // rescheduleToolStripMenuItem
-            // 
-            this.rescheduleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.reschedule_32;
-            this.rescheduleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.rescheduleToolStripMenuItem.Name = "rescheduleToolStripMenuItem";
-            this.rescheduleToolStripMenuItem.Size = new System.Drawing.Size(279, 38);
-            this.rescheduleToolStripMenuItem.Text = "Reschedule";
-            this.rescheduleToolStripMenuItem.Click += new System.EventHandler(this.rescheduleToolStripMenuItem_Click);
             // 
             // txtFilter
             // 
@@ -163,6 +138,42 @@
             this.lblRecords.Name = "lblRecords";
             this.lblRecords.Size = new System.Drawing.Size(0, 25);
             this.lblRecords.TabIndex = 32;
+            // 
+            // bookAppointmentToolStripMenuItem
+            // 
+            this.bookAppointmentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_appointment;
+            this.bookAppointmentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.bookAppointmentToolStripMenuItem.Name = "bookAppointmentToolStripMenuItem";
+            this.bookAppointmentToolStripMenuItem.Size = new System.Drawing.Size(285, 38);
+            this.bookAppointmentToolStripMenuItem.Text = "Book Appointment";
+            this.bookAppointmentToolStripMenuItem.Click += new System.EventHandler(this.bookAppointmentToolStripMenuItem_Click);
+            // 
+            // viewAppointmentToolStripMenuItem
+            // 
+            this.viewAppointmentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_record_32;
+            this.viewAppointmentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewAppointmentToolStripMenuItem.Name = "viewAppointmentToolStripMenuItem";
+            this.viewAppointmentToolStripMenuItem.Size = new System.Drawing.Size(285, 38);
+            this.viewAppointmentToolStripMenuItem.Text = "View Appointment";
+            this.viewAppointmentToolStripMenuItem.Click += new System.EventHandler(this.viewAppointmentToolStripMenuItem_Click);
+            // 
+            // rescheduleToolStripMenuItem
+            // 
+            this.rescheduleToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.reschedule_32;
+            this.rescheduleToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.rescheduleToolStripMenuItem.Name = "rescheduleToolStripMenuItem";
+            this.rescheduleToolStripMenuItem.Size = new System.Drawing.Size(285, 38);
+            this.rescheduleToolStripMenuItem.Text = "Reschedule";
+            this.rescheduleToolStripMenuItem.Click += new System.EventHandler(this.rescheduleToolStripMenuItem_Click);
+            // 
+            // goToAppointmentToolStripMenuItem
+            // 
+            this.goToAppointmentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.go_to_appointment_32;
+            this.goToAppointmentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.goToAppointmentToolStripMenuItem.Name = "goToAppointmentToolStripMenuItem";
+            this.goToAppointmentToolStripMenuItem.Size = new System.Drawing.Size(285, 38);
+            this.goToAppointmentToolStripMenuItem.Text = "Go To Appointment";
+            this.goToAppointmentToolStripMenuItem.Click += new System.EventHandler(this.goToAppointmentToolStripMenuItem_Click);
             // 
             // btnClose
             // 
@@ -226,5 +237,6 @@
         private System.Windows.Forms.ToolStripMenuItem bookAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rescheduleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem goToAppointmentToolStripMenuItem;
     }
 }

@@ -111,7 +111,7 @@
             this.findPatientCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPatientCtrl1.Location = new System.Drawing.Point(7, 110);
             this.findPatientCtrl1.Name = "findPatientCtrl1";
-            this.findPatientCtrl1.Size = new System.Drawing.Size(609, 310);
+            this.findPatientCtrl1.Size = new System.Drawing.Size(718, 310);
             this.findPatientCtrl1.TabIndex = 25;
             // 
             // groupBox1
@@ -132,7 +132,7 @@
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Location = new System.Drawing.Point(622, 19);
+            this.groupBox1.Location = new System.Drawing.Point(731, 19);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(565, 537);
             this.groupBox1.TabIndex = 27;
@@ -314,11 +314,12 @@
             // 
             // findStaffCtrl1
             // 
+            this.findStaffCtrl1.AllowAddNew = true;
             this.findStaffCtrl1.AllowFind = true;
             this.findStaffCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findStaffCtrl1.Location = new System.Drawing.Point(12, 426);
             this.findStaffCtrl1.Name = "findStaffCtrl1";
-            this.findStaffCtrl1.Size = new System.Drawing.Size(596, 372);
+            this.findStaffCtrl1.Size = new System.Drawing.Size(713, 372);
             this.findStaffCtrl1.TabIndex = 59;
             // 
             // errors
@@ -329,7 +330,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1201, 799);
+            this.ClientSize = new System.Drawing.Size(1308, 799);
             this.Controls.Add(this.findStaffCtrl1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.BtnCancel);

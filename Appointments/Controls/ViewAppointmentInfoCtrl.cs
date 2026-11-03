@@ -1,6 +1,8 @@
 ﻿using Business;
+using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Appointments.Controls
@@ -12,15 +14,16 @@ namespace ClinicSystem.Appointments.Controls
             InitializeComponent();
             SetDefaultForm();
         }
-
         private Appointment Appointment { get; set; }
         public Appointment CurrentAppointment { get => Appointment; }
+
+        private static HashSet<Form> activeForms = new HashSet<Form>();
 
         private void SetDefaultForm()
         {
             CommonOperations.SetUpDefaultControlsValue(new List<Control>()
             {
-                lblType, lblTime, lblStatus, lnkSOAPNote, lnkReferral, lnkPrescription, lnkPenalty, lnkPayment, lblPatientId, lnkLabTest, lblDoctor, lblDate, lblFrozen
+                lblType, lblTypeTitle, lblStatus, lnkSOAPNote, lnkReferral, lnkPrescription, lnkPenalty, lnkPayment, lblPatientId, lnkLabTest, lblDoctor, lblDate, lblFrozen
             }, "Not Set");
         }
 
@@ -31,24 +34,29 @@ namespace ClinicSystem.Appointments.Controls
             {
                 CommonOperations.SetUpDefaultControlsValue(new List<Control>()
                 {
-                lblType, lblTime, lblStatus, lnkSOAPNote, lnkReferral, lnkPrescription, lnkPenalty, lnkPayment, lblPatientId, lnkLabTest, lblDoctor, lblDate, lblFrozen
+                lblType, lblTypeTitle, lblStatus, lnkSOAPNote, lnkReferral, lnkPrescription, lnkPenalty, lnkPayment, lblPatientId, lnkLabTest, lblDoctor, lblDate, lblFrozen
                 }, "Not Set");
                 return;
             }
 
             lblPatientId.Text = Appointment.Patient.GetFullName() + " . " + Appointment.Patient.GetGenderChar() + " . since "
                 + Appointment.Patient.RegisterDate.ToShortDateString();
-            lblDate.Text = Appointment.AppointmentDate.ToShortDateString();
-            lblTime.Text = Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
+            lblDate.Text = Appointment.AppointmentDate.ToShortDateString() + ". . " + Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
             lblDoctor.Text = Appointment.Staff.GetFullName();
             lblType.Text = Appointment.AppointmentTypes.AppointmentTypeText;
             lblStatus.Text = Appointment.AppointmentStatuses.AppointmentStatusText;
+            lblTypeTitle.Text = $"[{Appointment.AppointmentTypes.AppointmentTypeText}]";
 
             if (Appointment.Patient.IsFrozen ?? false)
                 lblFrozen.Text = "Frozen until " + Appointment.Patient.EndOfBookingFreeze;
+            else
+                lblFrozen.Text = "Not Frozen";
 
             if (Appointment.Patient.HasUnPaidFees ?? false)
-                lblFrozen.Text = " . " + Appointment.Patient.ISUnpaidText();
+                lblUnpaidfees.Text = " . " + Appointment.Patient.ISUnpaidText();
+            else
+                lblUnpaidfees.Text = "None";
+
 
             if (Appointment.HasSOAPNotes())
                 SetLinkValues(lnkSOAPNote, "View SOAP Note", true);
@@ -85,6 +93,21 @@ namespace ClinicSystem.Appointments.Controls
         {
             link.Enabled = status;
             link.Text = linkValue;
+        }
+
+        private void lnkSOAPNote_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ViewSOAPNote viewNote = new ViewSOAPNote(Appointment.AppointmentID);
+            if (activeForms.Where(x => x.Text == viewNote.Text).Count() > 0)
+            {
+                MessageBox.Show("Form is already open", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+                activeForms.Add(viewNote);
+
+            viewNote.ShowDialog();
+            activeForms.Remove(viewNote);
         }
     }
 }

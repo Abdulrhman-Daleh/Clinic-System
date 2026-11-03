@@ -45,9 +45,9 @@
             // 
             this.viewAppointmentInfoCtrl1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.viewAppointmentInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.viewAppointmentInfoCtrl1.Location = new System.Drawing.Point(0, 112);
+            this.viewAppointmentInfoCtrl1.Location = new System.Drawing.Point(0, 113);
             this.viewAppointmentInfoCtrl1.Name = "viewAppointmentInfoCtrl1";
-            this.viewAppointmentInfoCtrl1.Size = new System.Drawing.Size(597, 599);
+            this.viewAppointmentInfoCtrl1.Size = new System.Drawing.Size(631, 553);
             this.viewAppointmentInfoCtrl1.TabIndex = 0;
             // 
             // gbFindBy
@@ -60,7 +60,7 @@
             this.gbFindBy.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gbFindBy.Location = new System.Drawing.Point(0, 0);
             this.gbFindBy.Name = "gbFindBy";
-            this.gbFindBy.Size = new System.Drawing.Size(597, 112);
+            this.gbFindBy.Size = new System.Drawing.Size(631, 113);
             this.gbFindBy.TabIndex = 2;
             this.gbFindBy.TabStop = false;
             this.gbFindBy.Text = "Find Appointment";
@@ -125,7 +125,7 @@
             this.Controls.Add(this.gbFindBy);
             this.Controls.Add(this.viewAppointmentInfoCtrl1);
             this.Name = "FindAppointmentCtrl";
-            this.Size = new System.Drawing.Size(597, 711);
+            this.Size = new System.Drawing.Size(631, 666);
             this.gbFindBy.ResumeLayout(false);
             this.gbFindBy.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();

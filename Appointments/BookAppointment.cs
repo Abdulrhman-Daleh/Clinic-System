@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
 using System;
@@ -9,6 +10,7 @@ namespace ClinicSystem.Appointments
     public partial class BookAppointment : FormsDefaultSettings
     {
         private Appointment appointment;
+
         public BookAppointment(EnAppointmentStatuses appointmentStatus)
         {
             InitializeComponent();
@@ -17,6 +19,7 @@ namespace ClinicSystem.Appointments
             appointment.AppointmentStatuses = (appointmentStatus, appointmentStatus.ToString());
             SetFormTextBasedMode("Add New Appointment", "Add New Appointment", "Add Appointment");
         }
+
         public BookAppointment(int appointmentId, EnAppointmentStatuses appointmentNewStatus)
         {
             InitializeComponent();
@@ -56,14 +59,17 @@ namespace ClinicSystem.Appointments
             findPatientCtrl1.AllowedFind = false;
             findStaffCtrl1.AllowFind = false;
         }
+
         public delegate void SendAppointmentOnSave(Appointment appointment);
         public event SendAppointmentOnSave OnSave;
+
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
             Text = pageTitle;
             btnSave.Text = saveButtonText;
         }
+
         private void BtnCancel_Click(object sender, EventArgs e) => Close();
 
         private void SetUp(int index)
@@ -148,26 +154,37 @@ namespace ClinicSystem.Appointments
         {
             ValidateChildren();
 
-            if (ValidationHelper.NotValidToSave(this, errors))
+            OperationResult result = ValidationHelper.ValidateForm(this, errors);
+
+            if (!result.IsSuccess)
             {
-                MessageBox.Show("Not Valid to save", "Not Valid", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    result.Message,
+                    result.Title,
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
                 return;
             }
 
             CollectData();
 
-            if (!appointment.Save())
-            {
-                MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+            result = appointment.Save();
 
-            MessageBox.Show("Data saved successfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            lblAppointmentId.Text = "App-" + appointment.AppointmentID;
-            SetFormTextBasedMode("Update Appointment", "Update Appointment", "Update");
-            findPatientCtrl1.AllowedFind = false;
-            findStaffCtrl1.AllowFind = false;
-            OnSave?.Invoke(appointment);
+            MessageBox.Show(
+                result.Message,
+                result.Title,
+                MessageBoxButtons.OK,
+                result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (result.IsSuccess)
+            {
+                lblAppointmentId.Text = "App-" + appointment.AppointmentID;
+                SetFormTextBasedMode("Update Appointment", "Update Appointment", "Update");
+                findPatientCtrl1.AllowedFind = false;
+                findStaffCtrl1.AllowFind = false;
+                OnSave?.Invoke(appointment);
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
