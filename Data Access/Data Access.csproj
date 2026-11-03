@@ -63,6 +63,7 @@
     <Compile Include="ListingDTOs\AppointmentListDto.cs" />
     <Compile Include="ListingDTOs\InsuranceListDto.cs" />
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
+    <Compile Include="SOAPNoteData.cs" />
     <Compile Include="ListingDTOs\StaffListingDto.cs" />
     <Compile Include="MedicalRecordData.cs" />
     <Compile Include="PatientData.cs" />

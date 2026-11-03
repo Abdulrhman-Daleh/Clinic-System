@@ -85,6 +85,18 @@
     <Compile Include="Appointments\SOAPNotes\AddUpdateSOAPNote.Designer.cs">
       <DependentUpon>AddUpdateSOAPNote.cs</DependentUpon>
     </Compile>
+    <Compile Include="Appointments\SOAPNotes\Controls\ViewSoapNoteCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Appointments\SOAPNotes\Controls\ViewSoapNoteCtrl.Designer.cs">
+      <DependentUpon>ViewSoapNoteCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Appointments\SOAPNotes\ViewSOAPNote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Appointments\SOAPNotes\ViewSOAPNote.Designer.cs">
+      <DependentUpon>ViewSOAPNote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Appointments\ViewAppointment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -346,6 +358,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Appointments\SOAPNotes\AddUpdateSOAPNote.resx">
       <DependentUpon>AddUpdateSOAPNote.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\SOAPNotes\Controls\ViewSoapNoteCtrl.resx">
+      <DependentUpon>ViewSoapNoteCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Appointments\SOAPNotes\ViewSOAPNote.resx">
+      <DependentUpon>ViewSOAPNote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Appointments\ViewAppointment.resx">
       <DependentUpon>ViewAppointment.cs</DependentUpon>
