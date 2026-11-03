@@ -106,7 +106,7 @@
             this.findPatientCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findPatientCtrl1.Location = new System.Drawing.Point(11, 83);
             this.findPatientCtrl1.Name = "findPatientCtrl1";
-            this.findPatientCtrl1.Size = new System.Drawing.Size(609, 310);
+            this.findPatientCtrl1.Size = new System.Drawing.Size(669, 310);
             this.findPatientCtrl1.TabIndex = 6;
             // 
             // groupBox1
@@ -122,7 +122,7 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Location = new System.Drawing.Point(11, 403);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(609, 196);
+            this.groupBox1.Size = new System.Drawing.Size(669, 196);
             this.groupBox1.TabIndex = 7;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Record";
@@ -222,7 +222,7 @@
             this.groupBox2.Controls.Add(this.pictureBox8);
             this.groupBox2.Location = new System.Drawing.Point(11, 611);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(609, 157);
+            this.groupBox2.Size = new System.Drawing.Size(669, 157);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Current Medication";
@@ -298,7 +298,7 @@
             this.groupBox3.Controls.Add(this.pictureBox10);
             this.groupBox3.Location = new System.Drawing.Point(11, 774);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(609, 107);
+            this.groupBox3.Size = new System.Drawing.Size(669, 107);
             this.groupBox3.TabIndex = 13;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Allergies";
@@ -361,14 +361,14 @@
             this.groupBox4.Controls.Add(this.pictureBox13);
             this.groupBox4.Location = new System.Drawing.Point(12, 898);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(609, 182);
+            this.groupBox4.Size = new System.Drawing.Size(669, 182);
             this.groupBox4.TabIndex = 14;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "History";
             // 
             // txtPastSurgeries
             // 
-            this.txtPastSurgeries.Location = new System.Drawing.Point(338, 83);
+            this.txtPastSurgeries.Location = new System.Drawing.Point(391, 83);
             this.txtPastSurgeries.Multiline = true;
             this.txtPastSurgeries.Name = "txtPastSurgeries";
             this.txtPastSurgeries.Size = new System.Drawing.Size(253, 82);
@@ -395,7 +395,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(400, 46);
+            this.label7.Location = new System.Drawing.Point(453, 46);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(146, 25);
             this.label7.TabIndex = 4;
@@ -404,7 +404,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.pictureBox5.Location = new System.Drawing.Point(349, 40);
+            this.pictureBox5.Location = new System.Drawing.Point(402, 40);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(40, 37);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -481,7 +481,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(637, 1170);
+            this.ClientSize = new System.Drawing.Size(692, 1170);
             this.Controls.Add(this.lblMedicalRecordID);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnSave);

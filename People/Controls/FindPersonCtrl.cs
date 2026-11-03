@@ -101,6 +101,7 @@ namespace ClinicSystem.People.Controls
             txtFindBy.Text = person.PersonId.ToString()
                 ;
             viewPersonInfoCtrl1.SetData(person);
+            OnFind?.Invoke(person);
         }
 
         private void btnAddNew_Click(object sender, EventArgs e)
