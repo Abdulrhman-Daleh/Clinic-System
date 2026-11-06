@@ -175,6 +175,9 @@
   <data name="patient_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\patient_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="People_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="clock_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\clock_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -184,8 +187,8 @@
   <data name="reschedule_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\reschedule_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="People_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\People_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="balance_scale_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\balance_scale_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="administration_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\administration_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -225,6 +228,9 @@
   </data>
   <data name="female_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\female_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="quantity_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\quantity_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="patient_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\patient_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -295,6 +301,9 @@
   <data name="add_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="atm-card_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\atm-card_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="refresh_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -303,6 +312,9 @@
   </data>
   <data name="outbox_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbox_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="first-aid-box_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\first-aid-box_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Appointment_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Appointment_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -325,7 +337,7 @@
   <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="atm-card_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\atm-card_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="money-bag_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\money-bag_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
