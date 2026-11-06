@@ -1,5 +1,4 @@
-﻿using AppEnums.cs;
-using Business;
+﻿using Business;
 using ClinicSystem.Helpers;
 using System.Windows.Forms;
 
@@ -83,7 +82,7 @@ namespace ClinicSystem.Patients.Controls
 
         private void btnAddNew_Click(object sender, System.EventArgs e)
         {
-            RegisterPatient addPatient = new RegisterPatient(EnAddMode.ReturnDraft);
+            RegisterPatient addPatient = new RegisterPatient();
             addPatient.OnRegisterSave += RecivePatientId;
             addPatient.ShowDialog();
         }

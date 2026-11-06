@@ -1,5 +1,4 @@
-﻿using AppEnums.cs;
-using Business;
+﻿using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
@@ -113,7 +112,7 @@ namespace ClinicSystem.Patients
 
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegisterPatient register = new RegisterPatient(EnAddMode.AddImmediately);
+            RegisterPatient register = new RegisterPatient();
             register.OnRegisterSave += RefreshDgv;
             register.ShowDialog();
         }

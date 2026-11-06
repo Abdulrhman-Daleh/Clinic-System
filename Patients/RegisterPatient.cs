@@ -1,5 +1,4 @@
-﻿using AppEnums.cs;
-using Business;
+﻿using Business;
 using ClinicSystem.Helpers;
 using System.Windows.Forms;
 
@@ -8,14 +7,12 @@ namespace ClinicSystem.Patients
     public partial class RegisterPatient : FormsDefaultSettings
     {
         Patient patient = new Patient();
-        private EnAddMode _mode;
-        public RegisterPatient(EnAddMode mode)
+        public RegisterPatient()
         {
             InitializeComponent();
             SetFormTextBasedMode("Register New Patient", "Register patient", "Register Patient");
             lblPatientId.Text = "[Not Set]";
             findPersonCtrl1.OnFind += RecivePersonData;
-            _mode = mode;
         }
 
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
@@ -47,19 +44,13 @@ namespace ClinicSystem.Patients
 
         private void btnRegister_Click(object sender, System.EventArgs e)
         {
-            if (_mode == EnAddMode.ReturnDraft)
-            {
-                OnRegisterSave?.Invoke(patient);
-                return;
-            }
-
             if (!patient.AddNewPatient())
             {
                 MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            MessageBox.Show("Data saved succeesfullu", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Data saved succeesfully", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
             lblPatientId.Text = $"pat-{patient.PatientId}";
             OnRegisterSave?.Invoke(patient);
             this.Close();
