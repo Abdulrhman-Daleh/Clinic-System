@@ -92,7 +92,6 @@ namespace ClinicSystem.Staff
 
         private void ValidateInputValues(object sender, CancelEventArgs e)
         {
-            ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
 
         private void ValidateInputKeyPress(object sender, KeyPressEventArgs e)
@@ -192,6 +191,24 @@ namespace ClinicSystem.Staff
         private void LockComboFromEditing(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
+        }
+
+        private void txtPassword_Validating(object sender, CancelEventArgs e)
+        {
+            OperationResult result = ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
+            if (!result.IsSuccess)
+            {
+                errors.SetError(txtPassword, result.Message);
+                return;
+            }
+            else
+                errors.SetError(txtPassword, null);
+
+            if (!ValidationHelper.CheckAcceptablePasswordStrength(txtPassword.Text))
+            {
+                errors.SetError(txtPassword, "Password is weak. Rules length >= 10, contains digit, contains punc");
+                return;
+            }
         }
     }
 }

@@ -109,7 +109,7 @@
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(206, 30);
             this.txtPassword.TabIndex = 24;
-            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateInputValues);
+            this.txtPassword.Validating += new System.ComponentModel.CancelEventHandler(this.txtPassword_Validating);
             // 
             // label4
             // 
