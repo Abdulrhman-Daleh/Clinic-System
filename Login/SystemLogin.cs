@@ -59,7 +59,7 @@ namespace ClinicSystem.Login
             else
                 errors.SetError(txtPassword, null);
 
-            if (ValidationHelper.CheckAcceptablePasswordStrength(txtPassword.Text))
+            if (!ValidationHelper.CheckAcceptablePasswordStrength(txtPassword.Text))
             {
                 errors.SetError(txtPassword, "Password is weak. Rules length >= 10, contains digit, contains punc");
                 return;
