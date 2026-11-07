@@ -3,6 +3,7 @@ using ClinicSystem.Appointments;
 using ClinicSystem.Insurance;
 using ClinicSystem.Login;
 using ClinicSystem.MedicalRecord;
+using ClinicSystem.Medicine;
 using ClinicSystem.Patients;
 using ClinicSystem.People;
 using ClinicSystem.People.Controls;
@@ -59,7 +60,7 @@ namespace ClinicSystem
 
         private void registerPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RegisterPatient patient = new RegisterPatient(EnAddMode.AddImmediately);
+            RegisterPatient patient = new RegisterPatient();
             patient.ShowDialog();
         }
 
@@ -129,6 +130,12 @@ namespace ClinicSystem
         {
             ViewAppointment viewAppointment = new ViewAppointment();
             viewAppointment.ShowDialog();
+        }
+
+        private void manageMedicinesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageMedicines manageMedicines = new ManageMedicines();
+            manageMedicines.ShowDialog();
         }
     }
 }

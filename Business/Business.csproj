@@ -49,11 +49,14 @@
     <Compile Include="InsuranceList.cs" />
     <Compile Include="MedicalRecord.cs" />
     <Compile Include="MedicalRecordList.cs" />
+    <Compile Include="Medicine.cs" />
     <Compile Include="OperationResult.cs" />
     <Compile Include="Patient.cs" />
     <Compile Include="PatientInsuranceInfo.cs" />
     <Compile Include="PatientList.cs" />
     <Compile Include="Policy.cs" />
+    <Compile Include="Prescription.cs" />
+    <Compile Include="PrescriptionItem.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="SOAPNote.cs" />
     <Compile Include="Staff.cs" />

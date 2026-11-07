@@ -191,6 +191,42 @@
     <Compile Include="MedicalRecord\ViewMedicalRecord.Designer.cs">
       <DependentUpon>ViewMedicalRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Medicine\AddUpdateMedicine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Medicine\AddUpdateMedicine.Designer.cs">
+      <DependentUpon>AddUpdateMedicine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\Controls\FindMedicineCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Medicine\Controls\FindMedicineCtrl.Designer.cs">
+      <DependentUpon>FindMedicineCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\Controls\ViewMedicineCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Medicine\Controls\ViewMedicineCtrl.Designer.cs">
+      <DependentUpon>ViewMedicineCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\ManageMedicines.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Medicine\ManageMedicines.Designer.cs">
+      <DependentUpon>ManageMedicines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\PrescriptionItem\AddUpdatePrescriptionItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Medicine\PrescriptionItem\AddUpdatePrescriptionItem.Designer.cs">
+      <DependentUpon>AddUpdatePrescriptionItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\Prescription\CreatePrescribion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Medicine\Prescription\CreatePrescribion.Designer.cs">
+      <DependentUpon>CreatePrescribion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Patients\Controls\FindPatientCtrl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -406,6 +442,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MedicalRecord\ViewMedicalRecord.resx">
       <DependentUpon>ViewMedicalRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\AddUpdateMedicine.resx">
+      <DependentUpon>AddUpdateMedicine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\Controls\FindMedicineCtrl.resx">
+      <DependentUpon>FindMedicineCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\Controls\ViewMedicineCtrl.resx">
+      <DependentUpon>ViewMedicineCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\ManageMedicines.resx">
+      <DependentUpon>ManageMedicines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\PrescriptionItem\AddUpdatePrescriptionItem.resx">
+      <DependentUpon>AddUpdatePrescriptionItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\Prescription\CreatePrescribion.resx">
+      <DependentUpon>CreatePrescribion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\Controls\FindPatientCtrl.resx">
       <DependentUpon>FindPatientCtrl.cs</DependentUpon>
@@ -702,6 +756,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\atm-card_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quantity_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\balance_scale_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\first-aid-box_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\money-bag_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

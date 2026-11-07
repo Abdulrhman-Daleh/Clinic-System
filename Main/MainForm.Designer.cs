@@ -53,6 +53,7 @@
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.manageMedicinesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -286,7 +287,8 @@
             // 
             this.administrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.policiesToolStripMenuItem,
-            this.insurancesToolStripMenuItem1});
+            this.insurancesToolStripMenuItem1,
+            this.manageMedicinesToolStripMenuItem});
             this.administrationToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.administration_64;
             this.administrationToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.administrationToolStripMenuItem.Name = "administrationToolStripMenuItem";
@@ -298,7 +300,7 @@
             this.policiesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.note_32;
             this.policiesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.policiesToolStripMenuItem.Name = "policiesToolStripMenuItem";
-            this.policiesToolStripMenuItem.Size = new System.Drawing.Size(210, 38);
+            this.policiesToolStripMenuItem.Size = new System.Drawing.Size(294, 38);
             this.policiesToolStripMenuItem.Text = "Policies";
             this.policiesToolStripMenuItem.Click += new System.EventHandler(this.policiesToolStripMenuItem_Click);
             // 
@@ -307,9 +309,18 @@
             this.insurancesToolStripMenuItem1.Image = global::ClinicSystem.Properties.Resources.shield_32;
             this.insurancesToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.insurancesToolStripMenuItem1.Name = "insurancesToolStripMenuItem1";
-            this.insurancesToolStripMenuItem1.Size = new System.Drawing.Size(210, 38);
+            this.insurancesToolStripMenuItem1.Size = new System.Drawing.Size(294, 38);
             this.insurancesToolStripMenuItem1.Text = "Insurances";
             this.insurancesToolStripMenuItem1.Click += new System.EventHandler(this.insurancesToolStripMenuItem1_Click);
+            // 
+            // manageMedicinesToolStripMenuItem
+            // 
+            this.manageMedicinesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.pill_32;
+            this.manageMedicinesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.manageMedicinesToolStripMenuItem.Name = "manageMedicinesToolStripMenuItem";
+            this.manageMedicinesToolStripMenuItem.Size = new System.Drawing.Size(294, 38);
+            this.manageMedicinesToolStripMenuItem.Text = " Manage Medicines";
+            this.manageMedicinesToolStripMenuItem.Click += new System.EventHandler(this.manageMedicinesToolStripMenuItem_Click);
             // 
             // pictureBox1
             // 
@@ -368,5 +379,6 @@
         private System.Windows.Forms.ToolStripMenuItem manageAppointmentsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem bookAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAppointmentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem manageMedicinesToolStripMenuItem;
     }
 }
