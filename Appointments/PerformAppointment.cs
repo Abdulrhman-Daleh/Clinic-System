@@ -4,6 +4,7 @@ using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
 using ClinicSystem.Insurance;
 using ClinicSystem.MedicalRecord;
+using ClinicSystem.Medicine.Prescription;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -34,6 +35,7 @@ namespace ClinicSystem.Appointments
                 lnkViewMedicalRecord.Enabled = false;
                 return;
             }
+
             MedicalRecord = Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID);
             Insurance = Business.Insurance.FindInsuranceByPatientId(Appointment.PatientID);
 
@@ -137,6 +139,12 @@ namespace ClinicSystem.Appointments
 
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             btnSave.Enabled = false;
+        }
+
+        private void lnkPrescribe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CreatePrescribion prescribe = new CreatePrescribion(Appointment.AppointmentID);
+            prescribe.ShowDialog();
         }
     }
 }
