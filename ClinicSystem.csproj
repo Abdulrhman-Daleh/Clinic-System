@@ -136,6 +136,12 @@
     <Compile Include="Insurance\ViewInsuranceInfo.Designer.cs">
       <DependentUpon>ViewInsuranceInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="LabOrderTest\AddUpdateLabTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LabOrderTest\AddUpdateLabTest.Designer.cs">
+      <DependentUpon>AddUpdateLabTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\SystemLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -418,6 +424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Insurance\ViewInsuranceInfo.resx">
       <DependentUpon>ViewInsuranceInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabOrderTest\AddUpdateLabTest.resx">
+      <DependentUpon>AddUpdateLabTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\SystemLogin.resx">
       <DependentUpon>SystemLogin.cs</DependentUpon>
@@ -769,5 +778,6 @@
   <ItemGroup>
     <None Include="Resources\money-bag_32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

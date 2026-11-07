@@ -420,6 +420,7 @@
             this.lnkOrderTests.TabIndex = 39;
             this.lnkOrderTests.TabStop = true;
             this.lnkOrderTests.Text = "[Order Lab Test]";
+            this.lnkOrderTests.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkOrderTests_LinkClicked);
             // 
             // pictureBox8
             // 

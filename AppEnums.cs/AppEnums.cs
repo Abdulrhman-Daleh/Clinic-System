@@ -12,4 +12,5 @@
     public enum EnDosageForms { Tablet = 1, Capsule = 2, Syrup = 3, Suspension = 4, Injection = 5, Cream = 6, Ointment = 7, Gel = 8, EyeDrops = 9, EarDrops = 10, NasalSpray = 11, Inhaler = 12, Suppository = 13, Patch = 14, Lozenge = 15 }
 
     public enum EnStrengthUnits { Mcg = 1, Mg = 2, G = 3, Ml = 4, MgPerMl = 5, Percentage = 6, IU = 7, IUPerMl = 8 }
+    public enum EnTestStatuses { Ordered = 1, Scheduled, Collected, InProgress, Pending, Completed }
 }

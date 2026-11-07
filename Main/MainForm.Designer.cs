@@ -55,6 +55,7 @@
             this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manageMedicinesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.myLabQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -249,7 +250,8 @@
             this.appointmentsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.manageAppointmentsToolStripMenuItem,
             this.bookAppointmentToolStripMenuItem,
-            this.viewAppointmentToolStripMenuItem});
+            this.viewAppointmentToolStripMenuItem,
+            this.myLabQueueToolStripMenuItem});
             this.appointmentsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.Appointment_64;
             this.appointmentsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.appointmentsToolStripMenuItem.Name = "appointmentsToolStripMenuItem";
@@ -333,6 +335,14 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
+            // myLabQueueToolStripMenuItem
+            // 
+            this.myLabQueueToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.sample_32;
+            this.myLabQueueToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.myLabQueueToolStripMenuItem.Name = "myLabQueueToolStripMenuItem";
+            this.myLabQueueToolStripMenuItem.Size = new System.Drawing.Size(326, 38);
+            this.myLabQueueToolStripMenuItem.Text = "My Lab Queue";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -380,5 +390,6 @@
         private System.Windows.Forms.ToolStripMenuItem bookAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageMedicinesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem myLabQueueToolStripMenuItem;
     }
 }

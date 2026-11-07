@@ -43,7 +43,7 @@ namespace ClinicSystem.MedicalRecord.Controls
             lblClassification.Text = MRecord.Classification;
             lblConsent.Text = MRecord.ConcentToCare ? "Given" : "Not Given";
             lblCreated.Text = MRecord.CreatedDate.ToShortDateString();
-            lblCurrentMedication.Text = MRecord.CurrentMedication + "\n Until" + MRecord.CurrentMedicationDuration;
+            lblCurrentMedication.Text = MRecord.CurrentMedication + "\n Until: " + MRecord.CurrentMedicationDuration;
             lblMedicalNo.Text = MRecord.MedicalNumber;
             lblPastSoical.Text = MRecord.PastSocialHistory;
             lblPastSurgeries.Text = MRecord.PastSurgeries;

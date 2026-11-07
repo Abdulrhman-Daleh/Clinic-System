@@ -3,6 +3,7 @@ using Business;
 using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
 using ClinicSystem.Insurance;
+using ClinicSystem.LabOrderTest;
 using ClinicSystem.MedicalRecord;
 using ClinicSystem.Medicine.Prescription;
 using System.Collections.Generic;
@@ -122,9 +123,10 @@ namespace ClinicSystem.Appointments
         private void lnkSOAPNote_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AddUpdateSOAPNote writeSOAP = new AddUpdateSOAPNote(Appointment.AppointmentID);
+            writeSOAP.OnSave += ReciveNotifyOnNoteSave;
             writeSOAP.ShowDialog();
         }
-
+        private void ReciveNotifyOnNoteSave() => lnkSOAPNote.Enabled = false;
         private void btnSave_Click(object sender, System.EventArgs e)
         {
             Appointment.AppointmentStatuses = (EnAppointmentStatuses.Completed, "Completed");
@@ -144,7 +146,21 @@ namespace ClinicSystem.Appointments
         private void lnkPrescribe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             CreatePrescribion prescribe = new CreatePrescribion(Appointment.AppointmentID);
+            prescribe.OnSave += ReciveNotifyOnPrescriptionAdd;
             prescribe.ShowDialog();
         }
+
+        private void ReciveNotifyOnPrescriptionAdd() => lnkPrescribe.Enabled = false;
+
+        private void lnkOrderTests_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AddUpdateLabTest addLabTest = new AddUpdateLabTest(Appointment.AppointmentID);
+            addLabTest.OnSave += ReciveOrderTest;
+            addLabTest.ShowDialog();
+        }
+
+        private void ReciveOrderTest(LabTest Test) => lnkOrderTests.Enabled = false;
+
+
     }
 }
