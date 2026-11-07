@@ -19,6 +19,8 @@ namespace ClinicSystem.Appointments.SOAPNotes
             SetUpInfo();
         }
 
+        public delegate void SendNotifyOnSOAPNoteSave();
+        public event SendNotifyOnSOAPNoteSave OnSave;
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
@@ -73,6 +75,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             lblNoteId.Text = $"No-{Note.NoteID}";
             findAppointmentCtrl1.LoadAppointmentInfo(Note.AppointmentID);
+            OnSave?.Invoke();
 
         }
     }

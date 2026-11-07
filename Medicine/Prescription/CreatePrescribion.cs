@@ -16,6 +16,9 @@ namespace ClinicSystem.Medicine.Prescription
             SetUpAddMode(appointmentId);
             SetFormTextBasedMode("Create new prescription", "Add prescription", "Create");
         }
+
+        public delegate void SendNotifiyOnPrescriptionAdd();
+        public event SendNotifiyOnPrescriptionAdd OnSave;
         private void SetUpAddMode(int appointmentId)
         {
             prescription = new Business.Prescription();
@@ -77,6 +80,7 @@ namespace ClinicSystem.Medicine.Prescription
             lblPrescriptionId.Text = $"per-{prescription.PrescriptionID}";
             lnkAddItem.Enabled = false;
             viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(prescription.AppointmentID);
+            OnSave?.Invoke();
         }
 
         private void btnSave_Click(object sender, System.EventArgs e)
