@@ -440,6 +440,7 @@
             this.lnkPrescribe.TabIndex = 37;
             this.lnkPrescribe.TabStop = true;
             this.lnkPrescribe.Text = "[Prescribe]";
+            this.lnkPrescribe.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPrescribe_LinkClicked);
             // 
             // pbModeImage
             // 
