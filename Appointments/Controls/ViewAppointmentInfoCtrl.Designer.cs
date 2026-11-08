@@ -245,6 +245,7 @@
             this.lnkPrescription.Name = "lnkPrescription";
             this.lnkPrescription.Size = new System.Drawing.Size(0, 25);
             this.lnkPrescription.TabIndex = 95;
+            this.lnkPrescription.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPrescription_LinkClicked);
             // 
             // lnkSOAPNote
             // 

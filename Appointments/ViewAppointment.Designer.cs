@@ -143,7 +143,7 @@
             this.Controls.Add(this.lblAppointmentId);
             this.Controls.Add(this.pictureBox2);
             this.Name = "ViewAppointment";
-            this.Text = "ViewAppointment";
+            this.Text = "View Appointment";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

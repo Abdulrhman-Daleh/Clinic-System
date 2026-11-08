@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
+using ClinicSystem.Medicine.Prescription;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -108,6 +109,21 @@ namespace ClinicSystem.Appointments.Controls
 
             viewNote.ShowDialog();
             activeForms.Remove(viewNote);
+        }
+
+        private void lnkPrescription_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ViewPrescription viewPrescription = new ViewPrescription(Appointment.AppointmentID);
+            if (activeForms.Where(x => x.Text == viewPrescription.Text).Count() > 0)
+            {
+                MessageBox.Show("Form is already open", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+                activeForms.Add(viewPrescription);
+
+            viewPrescription.ShowDialog();
+            activeForms.Remove(viewPrescription);
         }
     }
 }

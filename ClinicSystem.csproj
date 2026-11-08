@@ -227,11 +227,29 @@
     <Compile Include="Medicine\PrescriptionItem\AddUpdatePrescriptionItem.Designer.cs">
       <DependentUpon>AddUpdatePrescriptionItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Medicine\PrescriptionItem\Controls\ViewPrescriptionItems.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Medicine\PrescriptionItem\Controls\ViewPrescriptionItems.Designer.cs">
+      <DependentUpon>ViewPrescriptionItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Medicine\Prescription\CreatePrescribion.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Medicine\Prescription\CreatePrescribion.Designer.cs">
       <DependentUpon>CreatePrescribion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\Prescription\ViewPrescription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Medicine\Prescription\ViewPrescription.Designer.cs">
+      <DependentUpon>ViewPrescription.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Medicine\Prescription\Controls\ViewPrescriptionCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Medicine\Prescription\Controls\ViewPrescriptionCtrl.Designer.cs">
+      <DependentUpon>ViewPrescriptionCtrl.cs</DependentUpon>
     </Compile>
     <Compile Include="Patients\Controls\FindPatientCtrl.cs">
       <SubType>UserControl</SubType>
@@ -467,8 +485,17 @@
     <EmbeddedResource Include="Medicine\PrescriptionItem\AddUpdatePrescriptionItem.resx">
       <DependentUpon>AddUpdatePrescriptionItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\PrescriptionItem\Controls\ViewPrescriptionItems.resx">
+      <DependentUpon>ViewPrescriptionItems.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Medicine\Prescription\CreatePrescribion.resx">
       <DependentUpon>CreatePrescribion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\Prescription\ViewPrescription.resx">
+      <DependentUpon>ViewPrescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Medicine\Prescription\Controls\ViewPrescriptionCtrl.resx">
+      <DependentUpon>ViewPrescriptionCtrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\Controls\FindPatientCtrl.resx">
       <DependentUpon>FindPatientCtrl.cs</DependentUpon>
@@ -777,6 +804,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\money-bag_32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\autograph_32.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
