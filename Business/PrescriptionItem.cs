@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ namespace Business
     public class PrescriptionItem
     {
         private EnMode _mode;
+
         public int ItemID { get; set; }
         public int MedicineID { get; set; }
         public Medicine Medicine { get; set; }
@@ -104,17 +106,26 @@ namespace Business
             switch (_mode)
             {
                 case EnMode.Add:
-                    _mode = EnMode.Update;
 
-                    Auditor.Log(
-                        "Prescription Item Added",
-                        $"MedicineID {MedicineID} was prescribed with dose {Dose}, {Frequency}, quantity {Quantity}, for {Duration} by {performedBy}.",
-                        $"PrescriptionItemID {ItemID}");
+                    if (AddNewPrescriptionItem())
+                    {
+                        _mode = EnMode.Update;
+
+                        Auditor.Log(
+                            "Prescription Item Added",
+                            $"MedicineID {MedicineID} was prescribed with dose {Dose}, {Frequency}, quantity {Quantity}, for {Duration} by {performedBy}.",
+                            $"PrescriptionItemID {ItemID}");
+
+                        return new OperationResult(
+                            "Prescription item added successfully.",
+                            "Added",
+                            true);
+                    }
 
                     return new OperationResult(
-                        "Prescription item added successfully.",
-                        "Added",
-                        true);
+                        "Failed to add prescription item.",
+                        "Failed",
+                        false);
 
                 case EnMode.Update:
 
@@ -148,17 +159,9 @@ namespace Business
             return FromDto(PrescriptionItemData.FindPrescriptionItemByID(itemID));
         }
 
-        public static async Task<BindingList<PrescriptionItem>> GetPrescriptionItems(int prescriptionID)
+        public static async Task<BindingList<PrescriptionItemListing>> GetPrescriptionItemsListing(int prescriptionID)
         {
-            BindingList<PrescriptionItem> items = new BindingList<PrescriptionItem>();
-
-            foreach (PrescriptionItemDto itemDto in
-                await PrescriptionItemData.GetPrescriptionItems(prescriptionID))
-            {
-                items.Add(FromDto(itemDto));
-            }
-
-            return items;
+            return await PrescriptionItemListing.GetPrescriptionItems(prescriptionID);
         }
 
         private OperationResult IsPrescriptionItemValidToSave()

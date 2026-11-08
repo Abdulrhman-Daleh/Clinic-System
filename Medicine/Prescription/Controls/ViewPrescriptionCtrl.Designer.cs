@@ -75,7 +75,7 @@
             // lblValidUntil
             // 
             this.lblValidUntil.AutoSize = true;
-            this.lblValidUntil.Location = new System.Drawing.Point(510, 45);
+            this.lblValidUntil.Location = new System.Drawing.Point(501, 45);
             this.lblValidUntil.Name = "lblValidUntil";
             this.lblValidUntil.Size = new System.Drawing.Size(0, 25);
             this.lblValidUntil.TabIndex = 27;
@@ -83,7 +83,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = global::ClinicSystem.Properties.Resources.clock_32;
-            this.pictureBox5.Location = new System.Drawing.Point(357, 38);
+            this.pictureBox5.Location = new System.Drawing.Point(348, 38);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(41, 38);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -93,7 +93,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(404, 45);
+            this.label9.Location = new System.Drawing.Point(395, 45);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(102, 25);
             this.label9.TabIndex = 25;

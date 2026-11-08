@@ -18,7 +18,7 @@ namespace ClinicSystem.Medicine.PrescriptionItem
 
         public async void LoadPrescriptionItems(int prescriptionId, decimal totalPrice)
         {
-            BindingList<Business.PrescriptionItem> prescriptionItems = await Business.PrescriptionItem.GetPrescriptionItems(prescriptionId);
+            BindingList<Business.PrescriptionItemListing> prescriptionItems = await Business.PrescriptionItemListing.GetPrescriptionItems(prescriptionId);
             CommonOperations.LoadDataToDGV(dgvPrescriptionitems, prescriptionItems, lblRecord);
             lblTotal.Text = $"{totalPrice} $";
         }

@@ -58,6 +58,7 @@
     <Compile Include="Policy.cs" />
     <Compile Include="Prescription.cs" />
     <Compile Include="PrescriptionItem.cs" />
+    <Compile Include="PrescriptionItemListing.cs" />
     <Compile Include="Schedule.cs" />
     <Compile Include="SOAPNote.cs" />
     <Compile Include="Staff.cs" />

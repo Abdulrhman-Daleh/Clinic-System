@@ -68,6 +68,7 @@
     <Compile Include="ListingDTOs\AppointmentListDto.cs" />
     <Compile Include="ListingDTOs\InsuranceListDto.cs" />
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
+    <Compile Include="ListingDTOs\PrescriptionItemListingDto.cs" />
     <Compile Include="MedicineData.cs" />
     <Compile Include="PrescriptionData.cs" />
     <Compile Include="PrescriptionItemData.cs" />

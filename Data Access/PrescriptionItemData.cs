@@ -1,5 +1,6 @@
 ﻿
 using Data_Access.DTOs;
+using Data_Access.ListingDTOs;
 using Log;
 using LoggerMessage;
 using System;
@@ -181,32 +182,76 @@ namespace Data_Access
                 PrescriptionItemMapper);
         }
 
-        public static async Task<BindingList<PrescriptionItemDto>> GetPrescriptionItems(int prescriptionId)
+        private static PrescriptionItemListingDto PrescriptionItemListingMapper(SqlDataReader reader)
+        {
+            try
+            {
+                return new PrescriptionItemListingDto()
+                {
+                    ItemID = (int)reader["ItemID"],
+                    MedicineID = (int)reader["MedicineID"],
+                    PrescriptionID = (int)reader["PrescriptionID"],
+                    DrugName = (string)reader["DrugName"],
+                    StrengthValue = (decimal)reader["StrengthValue"],
+                    StrengthUnitText = (string)reader["StrengthUnitText"],
+                    DosageFormText = (string)reader["DosageFormText"],
+                    Dose = (byte)reader["Dose"],
+                    Frequency = (string)reader["Frequency"],
+                    Quantity = (byte)reader["Quantity"],
+                    Duration = (string)reader["Duration"],
+                    LineTotal = (decimal)reader["LineTotal"]
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(
+                    ex.Message,
+                    "PrescriptionItemData",
+                    "Application",
+                    EventLogEntryType.Error));
+
+                return null;
+            }
+        }
+
+        public static async Task<BindingList<PrescriptionItemListingDto>> GetPrescriptionItemsListing(int prescriptionId)
         {
             string query = @"
-                SELECT
-                    ItemID,
-                    MedicineID,
-                    PrescriptionID,
-                    Dose,
-                    Frequency,
-                    Quantity,
-                    Duration
-                FROM PrescriptionItems
-                WHERE PrescriptionID = @PrescriptionID";
+        SELECT
+            pi.ItemID,
+            pi.MedicineID,
+            pi.PrescriptionID,
+            m.DrugName,
+            m.StrengthValue,
+            su.StrengthUnitText,
+            df.DosageFormText,
+            pi.Dose,
+            pi.Frequency,
+            pi.Quantity,
+            pi.Duration,
+            CAST(m.UnitPrice * pi.Quantity AS DECIMAL(18,2)) AS LineTotal
+        FROM PrescriptionItems AS pi
+        INNER JOIN Medicines AS m
+            ON pi.MedicineID = m.MedicineID
+        INNER JOIN StrengthUnits AS su
+            ON m.StrengthUnitID = su.StrengthUnitID
+        INNER JOIN DosageForms AS df
+            ON m.DosageFormID = df.DosageFormID
+        WHERE pi.PrescriptionID = @PrescriptionID";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
-                new SqlParameter("@PrescriptionID", SqlDbType.Int)
-                {
-                    Value = prescriptionId
-                }
+                 new SqlParameter("@PrescriptionID", SqlDbType.Int)
+                 {
+                     Value = prescriptionId
+                 }
             };
 
             return await DataAccessHelper.ExecuteObjectList(
                 query,
                 parameters,
-                PrescriptionItemMapper);
+                PrescriptionItemListingMapper);
         }
+
     }
 }
