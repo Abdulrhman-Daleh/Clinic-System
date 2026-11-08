@@ -208,5 +208,10 @@ namespace Business
                 "Invalid",
                 false);
         }
+
+        public string SignedByName() => DoctorDidSign ? Appointment.Staff.GetFullName() : "Not Signed";
+
+        public string GetValidUntilDate() => DateTime.Now >= ExpirationDate ? "Expired" : $"{ExpirationDate.ToShortDateString()}   ( +{(ExpirationDate - DateTime.Now).TotalDays} days)";
+
     }
 }

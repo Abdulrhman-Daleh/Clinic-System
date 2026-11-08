@@ -89,6 +89,7 @@ namespace Business
         {
             return Quantity * Medicine.UnitPrice;
         }
+
         public OperationResult Save()
         {
             OperationResult result = IsPrescriptionItemValidToSave();

@@ -208,5 +208,8 @@ namespace Business
         public bool HasPayment() => AppointmentData.HasPayment(AppointmentID);
 
         public bool HasPenalty() => AppointmentData.HasPenalty(AppointmentID);
+
+        public bool IsStillActive() => AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed && AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Cancelled && AppointmentStatuses.AppointmentStatusID
+            != EnAppointmentStatuses.NoShow;
     }
 }
