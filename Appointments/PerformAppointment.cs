@@ -51,7 +51,6 @@ namespace ClinicSystem.Appointments
 
             lnkSOAPNote.Enabled = !Appointment.HasSOAPNotes();
             lnkPenalty.Enabled = !Appointment.HasPenalty();
-            lnkOrderTests.Enabled = !Appointment.HasLabTests();
             lnkPayment.Enabled = !Appointment.HasPayment();
             lnkPrescribe.Enabled = !Appointment.HasPrescription();
             lnkRefer.Enabled = !Appointment.HasReferral();
