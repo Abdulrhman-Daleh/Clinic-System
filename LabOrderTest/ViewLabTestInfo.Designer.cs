@@ -41,7 +41,7 @@
             // viewMRecordInfo1
             // 
             this.viewMRecordInfo1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.viewMRecordInfo1.Location = new System.Drawing.Point(12, 88);
+            this.viewMRecordInfo1.Location = new System.Drawing.Point(12, 65);
             this.viewMRecordInfo1.Name = "viewMRecordInfo1";
             this.viewMRecordInfo1.Size = new System.Drawing.Size(729, 472);
             this.viewMRecordInfo1.TabIndex = 80;
@@ -87,7 +87,7 @@
             // viewLabTestInfoCtrl1
             // 
             this.viewLabTestInfoCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.viewLabTestInfoCtrl1.Location = new System.Drawing.Point(8, 566);
+            this.viewLabTestInfoCtrl1.Location = new System.Drawing.Point(8, 543);
             this.viewLabTestInfoCtrl1.Name = "viewLabTestInfoCtrl1";
             this.viewLabTestInfoCtrl1.Size = new System.Drawing.Size(736, 389);
             this.viewLabTestInfoCtrl1.TabIndex = 84;
@@ -96,7 +96,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(1198, 894);
+            this.btnClose.Location = new System.Drawing.Point(1198, 866);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 85;
@@ -109,7 +109,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1374, 972);
+            this.ClientSize = new System.Drawing.Size(1374, 951);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.viewLabTestInfoCtrl1);
             this.Controls.Add(this.lblTitle);

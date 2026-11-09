@@ -2,6 +2,7 @@
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace ClinicSystem.LabOrderTest
 {
@@ -87,6 +88,24 @@ namespace ClinicSystem.LabOrderTest
             int labTestId = (int)dgvLabTests.CurrentRow.Cells["LabID"].Value;
             ViewLabTestInfo viewLabTest = new ViewLabTestInfo(labTestId);
             viewLabTest.ShowDialog();
+        }
+
+        private void addLabTestToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            AddUpdateLabTest addTest = new AddUpdateLabTest(findAppointmentCtrl1.CurrentAppointment.AppointmentID);
+            addTest.OnSave += ReciveLabInfo;
+            addTest.ShowDialog();
+        }
+
+        private void ReciveLabInfo(LabTest labTest)
+        {
+            int targetIndex = -1;
+            LabTestListing labList = LabTestListing.FindLabTestByID(labTest.LabID);
+
+            if (labTests.Any(x => x.LabID == labTest.LabID))
+                targetIndex = labTests.IndexOf(labTests.First(x => x.LabID == labTest.LabID));
+
+            CommonOperations.UpdateAfterAdding(labTests, labList, targetIndex);
         }
     }
 }

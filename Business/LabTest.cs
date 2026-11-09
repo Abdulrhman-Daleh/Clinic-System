@@ -44,9 +44,11 @@ namespace Business
             _mode = EnMode.Add;
         }
 
-        public LabTest(int labID)
+        public LabTest(int labID, int appointmentId, int staffId)
         {
             LabID = labID;
+            Appointment = Appointment.FindAppointmentByID(appointmentId);
+            Nurse = Staff.FindStaffById(staffId);
             _mode = EnMode.Update;
         }
 
@@ -55,7 +57,7 @@ namespace Business
             if (labTestDto == null)
                 return null;
 
-            return new LabTest(labTestDto.LabID)
+            return new LabTest(labTestDto.LabID, labTestDto.AppointmentID, labTestDto.NurseID)
             {
                 LabID = labTestDto.LabID,
                 AppointmentID = labTestDto.AppointmentID,

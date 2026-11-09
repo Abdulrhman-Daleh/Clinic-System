@@ -63,5 +63,10 @@ namespace Business
 
             return labTests;
         }
+
+        public static LabTestListing FindLabTestByID(int labId)
+        {
+            return FromDto(LabTestData.FindLabTestListByID(labId));
+        }
     }
 }

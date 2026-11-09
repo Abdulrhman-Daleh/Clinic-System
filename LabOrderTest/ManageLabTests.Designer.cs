@@ -33,14 +33,14 @@
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.findAppointmentCtrl1 = new ClinicSystem.Appointments.Controls.FindAppointmentCtrl();
             this.dgvLabTests = new System.Windows.Forms.DataGridView();
+            this.cmsLabTests = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addLabTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewLabTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
-            this.cmsLabTests = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addLabTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewLabTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblRecords = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvLabTests)).BeginInit();
@@ -94,6 +94,36 @@
             this.dgvLabTests.TabIndex = 90;
             this.dgvLabTests.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLabTests_CellDoubleClick);
             // 
+            // cmsLabTests
+            // 
+            this.cmsLabTests.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmsLabTests.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsLabTests.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addLabTestToolStripMenuItem,
+            this.viewLabTestToolStripMenuItem});
+            this.cmsLabTests.Name = "cmsPeople";
+            this.cmsLabTests.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsLabTests.Size = new System.Drawing.Size(230, 80);
+            this.cmsLabTests.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLabTests_Opening);
+            // 
+            // addLabTestToolStripMenuItem
+            // 
+            this.addLabTestToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
+            this.addLabTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addLabTestToolStripMenuItem.Name = "addLabTestToolStripMenuItem";
+            this.addLabTestToolStripMenuItem.Size = new System.Drawing.Size(229, 38);
+            this.addLabTestToolStripMenuItem.Text = "Add Lab Test";
+            this.addLabTestToolStripMenuItem.Click += new System.EventHandler(this.addLabTestToolStripMenuItem_Click);
+            // 
+            // viewLabTestToolStripMenuItem
+            // 
+            this.viewLabTestToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.show_password_32;
+            this.viewLabTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewLabTestToolStripMenuItem.Name = "viewLabTestToolStripMenuItem";
+            this.viewLabTestToolStripMenuItem.Size = new System.Drawing.Size(229, 38);
+            this.viewLabTestToolStripMenuItem.Text = "View Lab Test";
+            this.viewLabTestToolStripMenuItem.Click += new System.EventHandler(this.viewLabTestToolStripMenuItem_Click);
+            // 
             // txtFilter
             // 
             this.txtFilter.Location = new System.Drawing.Point(849, 71);
@@ -144,34 +174,6 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // cmsLabTests
-            // 
-            this.cmsLabTests.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmsLabTests.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsLabTests.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addLabTestToolStripMenuItem,
-            this.viewLabTestToolStripMenuItem});
-            this.cmsLabTests.Name = "cmsPeople";
-            this.cmsLabTests.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsLabTests.Size = new System.Drawing.Size(230, 108);
-            this.cmsLabTests.Opening += new System.ComponentModel.CancelEventHandler(this.cmsLabTests_Opening);
-            // 
-            // addLabTestToolStripMenuItem
-            // 
-            this.addLabTestToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.plus_32;
-            this.addLabTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addLabTestToolStripMenuItem.Name = "addLabTestToolStripMenuItem";
-            this.addLabTestToolStripMenuItem.Size = new System.Drawing.Size(229, 38);
-            this.addLabTestToolStripMenuItem.Text = "Add Lab Test";
-            // 
-            // viewLabTestToolStripMenuItem
-            // 
-            this.viewLabTestToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.show_password_32;
-            this.viewLabTestToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewLabTestToolStripMenuItem.Name = "viewLabTestToolStripMenuItem";
-            this.viewLabTestToolStripMenuItem.Size = new System.Drawing.Size(229, 38);
-            this.viewLabTestToolStripMenuItem.Text = "View Lab Test";
             // 
             // lblRecords
             // 

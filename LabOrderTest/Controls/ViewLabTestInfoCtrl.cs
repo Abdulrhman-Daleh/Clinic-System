@@ -31,6 +31,17 @@ namespace ClinicSystem.LabOrderTest.Controls
             }
 
             lblTestname.Text = CurrentLabTest.TestName;
+            lblStatus.Text = $"[{CurrentLabTest.TestStatuses.TestStatusText}]";
+            lblNurse.Text = CurrentLabTest.Appointment.Staff.GetFullName();
+            lblRequestedDate.Text = CurrentLabTest.RequestDate.ToShortDateString();
+
+            lblPreformed.Text = ValidationHelper.IsEmptyOrNull(CurrentLabTest.PerformDate) ? "Not Preformed" : CurrentLabTest.PerformDate.GetValueOrDefault().ToShortDateString();
+
+            lblResultRecorded.Text = ValidationHelper.IsEmptyOrNull(CurrentLabTest.ResultRecordedAt) ? "Not Recorded" : CurrentLabTest.ResultRecordedAt.GetValueOrDefault().ToShortDateString();
+
+            lblReason.Text = CurrentLabTest.Reason;
+            lblInstructions.Text = CurrentLabTest.Instructions;
+            lblResult.Text = ValidationHelper.IsEmptyOrNull(CurrentLabTest.TestResult) ? "Not Available" : CurrentLabTest.TestResult;
         }
     }
 }

@@ -220,7 +220,7 @@ namespace Data_Access
                     lt.PerformDate,
                     lt.ResultRecordedAt
                 FROM LabTests AS lt
-                INNER JOIN TestStatuses AS ts
+                INNER JOIN TestsStatuses AS ts
                     ON lt.TestStatusID = ts.TestStatusID
                 WHERE lt.LabID = @LabID";
 
@@ -236,6 +236,40 @@ namespace Data_Access
                 query,
                 parameters,
                 LabTestMapper);
+        }
+
+        public static LabTestListingDto FindLabTestListByID(int labID)
+        {
+            string query = @"
+        SELECT
+            lt.LabID,
+            lt.TestName,
+            ts.TestStatusText as Status,
+            lt.RequestDate as Requested,
+            lt.PerformDate as Performed,
+            lt.ResultRecordedAt as Resulted,
+            lt.TestResult as Result
+        FROM LabTests AS lt
+        INNER JOIN Staff AS s
+            ON lt.NurseID = s.StaffID
+        INNER JOIN People AS p
+            ON s.PersonID = p.PersonID
+        INNER JOIN TestsStatuses AS ts
+            ON lt.TestStatusID = ts.TestStatusID
+                WHERE lt.LabID = @LabID";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@LabID", SqlDbType.Int)
+                {
+                    Value = labID
+                }
+            };
+
+            return DataAccessHelper.ExecuteOneObject(
+                query,
+                parameters,
+                LabTestListingMapper);
         }
 
         private static LabTestListingDto LabTestListingMapper(SqlDataReader reader)
