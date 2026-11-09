@@ -49,6 +49,7 @@
     <Compile Include="InsuranceList.cs" />
     <Compile Include="LabTest.cs" />
     <Compile Include="LabTestListing.cs" />
+    <Compile Include="LabTestQueueListing.cs" />
     <Compile Include="MedicalRecord.cs" />
     <Compile Include="MedicalRecordList.cs" />
     <Compile Include="Medicine.cs" />

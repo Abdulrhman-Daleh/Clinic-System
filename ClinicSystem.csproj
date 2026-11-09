@@ -154,6 +154,12 @@
     <Compile Include="LabOrderTest\ManageLabTests.Designer.cs">
       <DependentUpon>ManageLabTests.cs</DependentUpon>
     </Compile>
+    <Compile Include="LabOrderTest\ManageMyLabQueue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LabOrderTest\ManageMyLabQueue.Designer.cs">
+      <DependentUpon>ManageMyLabQueue.cs</DependentUpon>
+    </Compile>
     <Compile Include="LabOrderTest\ViewLabTestInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -469,6 +475,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LabOrderTest\ManageLabTests.resx">
       <DependentUpon>ManageLabTests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabOrderTest\ManageMyLabQueue.resx">
+      <DependentUpon>ManageMyLabQueue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LabOrderTest\ViewLabTestInfo.resx">
       <DependentUpon>ViewLabTestInfo.cs</DependentUpon>

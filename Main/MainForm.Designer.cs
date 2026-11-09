@@ -50,12 +50,12 @@
             this.manageAppointmentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bookAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.myLabQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manageMedicinesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.myLabQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -285,6 +285,15 @@
             this.viewAppointmentToolStripMenuItem.Text = "View Appointment";
             this.viewAppointmentToolStripMenuItem.Click += new System.EventHandler(this.viewAppointmentToolStripMenuItem_Click);
             // 
+            // myLabQueueToolStripMenuItem
+            // 
+            this.myLabQueueToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.sample_32;
+            this.myLabQueueToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.myLabQueueToolStripMenuItem.Name = "myLabQueueToolStripMenuItem";
+            this.myLabQueueToolStripMenuItem.Size = new System.Drawing.Size(326, 38);
+            this.myLabQueueToolStripMenuItem.Text = "My Lab Queue";
+            this.myLabQueueToolStripMenuItem.Click += new System.EventHandler(this.myLabQueueToolStripMenuItem_Click);
+            // 
             // administrationToolStripMenuItem
             // 
             this.administrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -334,14 +343,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // myLabQueueToolStripMenuItem
-            // 
-            this.myLabQueueToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.sample_32;
-            this.myLabQueueToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.myLabQueueToolStripMenuItem.Name = "myLabQueueToolStripMenuItem";
-            this.myLabQueueToolStripMenuItem.Size = new System.Drawing.Size(326, 38);
-            this.myLabQueueToolStripMenuItem.Text = "My Lab Queue";
             // 
             // MainForm
             // 

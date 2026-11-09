@@ -365,5 +365,76 @@ namespace Data_Access
                 null,
                 LabTestListingMapper);
         }
+
+        private static LabTestQueueListingDto LabTestQueueMapper(SqlDataReader reader)
+        {
+            try
+            {
+                return new LabTestQueueListingDto()
+                {
+                    LabID = (int)reader["LabID"],
+                    TestName = (string)reader["TestName"],
+                    PatientName = (string)reader["PatientName"],
+                    RequestDate = (DateTime)reader["RequestDate"],
+                    TestStatusText = (string)reader["TestStatusText"]
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(
+                    ex.Message,
+                    "LabTestData",
+                    "Application",
+                    EventLogEntryType.Error));
+
+                return null;
+            }
+        }
+
+        public static async Task<BindingList<LabTestQueueListingDto>> GetMyLabQueue(int nurseID)
+        {
+            string query = @"
+        SELECT
+            lt.LabID,
+            lt.TestName,
+            CONCAT(patientPerson.Firstname, ' ', patientPerson.Lastname) AS PatientName,
+            lt.RequestDate,
+            ts.TestStatusText
+
+        FROM LabTests AS lt
+
+        INNER JOIN Appointments AS a
+            ON lt.AppointmentID = a.AppointmentID
+
+        INNER JOIN Patients AS p
+            ON a.PatientID = p.PatientID
+
+        INNER JOIN People AS patientPerson
+            ON p.PersonID = patientPerson.PersonID
+
+        INNER JOIN TestStatuses AS ts
+            ON lt.TestStatusID = ts.TestStatusID
+
+        WHERE
+            lt.NurseID = @NurseID
+            AND ts.TestStatusText IN ('Requested', 'Performed')
+
+        ORDER BY
+            lt.RequestDate ASC,
+            lt.LabID ASC";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+    {
+        new SqlParameter("@NurseID", SqlDbType.Int)
+        {
+            Value = nurseID
+        }
+    };
+
+            return await DataAccessHelper.ExecuteObjectList(
+                query,
+                parameters,
+                LabTestQueueMapper);
+        }
     }
 }

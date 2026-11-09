@@ -1,6 +1,7 @@
 ﻿using AppEnums.cs;
 using ClinicSystem.Appointments;
 using ClinicSystem.Insurance;
+using ClinicSystem.LabOrderTest;
 using ClinicSystem.Login;
 using ClinicSystem.MedicalRecord;
 using ClinicSystem.Medicine;
@@ -136,6 +137,12 @@ namespace ClinicSystem
         {
             ManageMedicines manageMedicines = new ManageMedicines();
             manageMedicines.ShowDialog();
+        }
+
+        private void myLabQueueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ManageMyLabQueue LabQueue = new ManageMyLabQueue();
+            LabQueue.ShowDialog();
         }
     }
 }
