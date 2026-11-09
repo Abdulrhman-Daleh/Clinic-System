@@ -3,8 +3,6 @@ using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace Business
 {
@@ -171,36 +169,6 @@ namespace Business
         public static LabTest FindLabTestByID(int labID)
         {
             return FromDto(LabTestData.FindLabTestByID(labID));
-        }
-
-        public static async Task<BindingList<LabTest>> GetLabTestsByAppointmentID(int appointmentID)
-        {
-            BindingList<LabTest> labTests = new BindingList<LabTest>();
-
-            foreach (LabTestDto labTestDto in
-                await LabTestData.GetLabTestsByAppointmentID(appointmentID))
-            {
-                labTests.Add(FromDto(labTestDto));
-            }
-
-            return labTests;
-        }
-
-        public static async Task<BindingList<LabTest>> GetLabTests()
-        {
-            BindingList<LabTest> labTests = new BindingList<LabTest>();
-
-            foreach (LabTestDto labTestDto in await LabTestData.GetLabTests())
-            {
-                labTests.Add(FromDto(labTestDto));
-            }
-
-            return labTests;
-        }
-
-        public static async Task<BindingList<string>> GetTestStatusesNames()
-        {
-            return await LabTestData.GetTestStatusesNames();
         }
 
         private OperationResult IsLabTestValidToSave()

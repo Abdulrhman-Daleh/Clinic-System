@@ -142,6 +142,24 @@
     <Compile Include="LabOrderTest\AddUpdateLabTest.Designer.cs">
       <DependentUpon>AddUpdateLabTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="LabOrderTest\Controls\ViewLabTestInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="LabOrderTest\Controls\ViewLabTestInfoCtrl.Designer.cs">
+      <DependentUpon>ViewLabTestInfoCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LabOrderTest\ManageLabTests.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LabOrderTest\ManageLabTests.Designer.cs">
+      <DependentUpon>ManageLabTests.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LabOrderTest\ViewLabTestInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LabOrderTest\ViewLabTestInfo.Designer.cs">
+      <DependentUpon>ViewLabTestInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Login\SystemLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -445,6 +463,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LabOrderTest\AddUpdateLabTest.resx">
       <DependentUpon>AddUpdateLabTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabOrderTest\Controls\ViewLabTestInfoCtrl.resx">
+      <DependentUpon>ViewLabTestInfoCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabOrderTest\ManageLabTests.resx">
+      <DependentUpon>ManageLabTests.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LabOrderTest\ViewLabTestInfo.resx">
+      <DependentUpon>ViewLabTestInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\SystemLogin.resx">
       <DependentUpon>SystemLogin.cs</DependentUpon>

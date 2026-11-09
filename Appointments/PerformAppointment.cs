@@ -155,12 +155,7 @@ namespace ClinicSystem.Appointments
         private void lnkOrderTests_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AddUpdateLabTest addLabTest = new AddUpdateLabTest(Appointment.AppointmentID);
-            addLabTest.OnSave += ReciveOrderTest;
             addLabTest.ShowDialog();
         }
-
-        private void ReciveOrderTest(LabTest Test) => lnkOrderTests.Enabled = false;
-
-
     }
 }

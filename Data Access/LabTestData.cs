@@ -1,5 +1,6 @@
 ﻿using AppEnums.cs;
 using Data_Access.DTOs;
+using Data_Access.ListingDTOs;
 using Log;
 using LoggerMessage;
 using System;
@@ -47,11 +48,6 @@ namespace Data_Access
 
                 return null;
             }
-        }
-
-        private static string TestStatusMapper(SqlDataReader reader)
-        {
-            return (string)reader["TestStatusText"];
         }
 
         public static int AddNewLabTest(LabTestDto labTestDto)
@@ -242,78 +238,98 @@ namespace Data_Access
                 LabTestMapper);
         }
 
-        public static async Task<BindingList<LabTestDto>> GetLabTestsByAppointmentID(int appointmentID)
+        private static LabTestListingDto LabTestListingMapper(SqlDataReader reader)
+        {
+            try
+            {
+                return new LabTestListingDto()
+                {
+                    LabID = (int)reader["LabID"],
+                    TestName = (string)reader["TestName"],
+                    NurseName = (string)reader["Nurse"],
+                    TestStatusText = (string)reader["Status"],
+                    RequestDate = (DateTime)reader["Requested"],
+                    PerformDate = reader["Performed"] == DBNull.Value
+                        ? (DateTime?)null
+                        : (DateTime)reader["Performed"],
+                    ResultRecordedAt = reader["Resulted"] == DBNull.Value
+                        ? (DateTime?)null
+                        : (DateTime)reader["Resulted"],
+                    TestResult = reader["Result"] == DBNull.Value
+                        ? null
+                        : (string)reader["Result"]
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LogMessageInformation(
+                    ex.Message,
+                    "LabTestData",
+                    "Application",
+                    EventLogEntryType.Error));
+
+                return null;
+            }
+        }
+
+        public static async Task<BindingList<LabTestListingDto>> GetLabTestsByAppointmentID(int appointmentID)
         {
             string query = @"
-                SELECT
-                    lt.LabID,
-                    lt.AppointmentID,
-                    lt.TestStatusID,
-                    ts.TestStatusText,
-                    lt.NurseID,
-                    lt.Reason,
-                    lt.Instructions,
-                    lt.TestResult,
-                    lt.TestName,
-                    lt.RequestDate,
-                    lt.PerformDate,
-                    lt.ResultRecordedAt
-                FROM LabTests AS lt
-                INNER JOIN TestStatuses AS ts
-                    ON lt.TestStatusID = ts.TestStatusID
-                WHERE lt.AppointmentID = @AppointmentID";
+        SELECT  
+            lt.LabID,
+            lt.TestName,
+            CONCAT(p.Firstname, ' ', p.Lastname) AS Nurse,
+            ts.TestStatusText as Status,
+            lt.RequestDate as Requested,
+            lt.PerformDate as Performed,
+            lt.ResultRecordedAt as Resulted,
+            lt.TestResult as Result
+        FROM LabTests AS lt
+        INNER JOIN Staff AS s
+            ON lt.NurseID = s.StaffID
+        INNER JOIN People AS p
+            ON s.PersonID = p.PersonID
+        INNER JOIN TestsStatuses AS ts
+            ON lt.TestStatusID = ts.TestStatusID
+        WHERE lt.AppointmentID = @AppointmentID";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
-            {
-                new SqlParameter("@AppointmentID", SqlDbType.Int)
-                {
-                    Value = appointmentID
-                }
-            };
+             {
+                 new SqlParameter("@AppointmentID", SqlDbType.Int)
+                 {
+                     Value = appointmentID
+                 }
+             };
 
             return await DataAccessHelper.ExecuteObjectList(
                 query,
                 parameters,
-                LabTestMapper);
+                LabTestListingMapper);
         }
 
-        public static async Task<BindingList<LabTestDto>> GetLabTests()
+        public static async Task<BindingList<LabTestListingDto>> GetLabTests()
         {
             string query = @"
-                SELECT
-                    lt.LabID,
-                    lt.AppointmentID,
-                    lt.TestStatusID,
-                    ts.TestStatusText,
-                    lt.NurseID,
-                    lt.Reason,
-                    lt.Instructions,
-                    lt.TestResult,
-                    lt.TestName,
-                    lt.RequestDate,
-                    lt.PerformDate,
-                    lt.ResultRecordedAt
-                FROM LabTests AS lt
-                INNER JOIN TestStatuses AS ts
-                    ON lt.TestStatusID = ts.TestStatusID";
+        SELECT
+            lt.LabID,
+            lt.TestName,
+            ts.TestStatusText as Status,
+            lt.RequestDate as Requested,
+            lt.PerformDate as Performed,
+            lt.ResultRecordedAt as Resulted,
+            lt.TestResult as Result
+        FROM LabTests AS lt
+        INNER JOIN Staff AS s
+            ON lt.NurseID = s.StaffID
+        INNER JOIN People AS p
+            ON s.PersonID = p.PersonID
+        INNER JOIN TestsStatuses AS ts
+            ON lt.TestStatusID = ts.TestStatusID";
 
             return await DataAccessHelper.ExecuteObjectList(
                 query,
                 null,
-                LabTestMapper);
-        }
-
-        public static async Task<BindingList<string>> GetTestStatusesNames()
-        {
-            string query = @"
-                SELECT TestStatusText
-                FROM TestStatuses
-                ORDER BY TestStatusID";
-
-            return await DataAccessHelper.ExecuteObjectList(
-                query,
-                null,
-                TestStatusMapper);
+                LabTestListingMapper);
         }
     }
 }

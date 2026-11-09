@@ -236,6 +236,7 @@
             this.lnkLabTest.Name = "lnkLabTest";
             this.lnkLabTest.Size = new System.Drawing.Size(0, 25);
             this.lnkLabTest.TabIndex = 96;
+            this.lnkLabTest.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLabTest_LinkClicked);
             // 
             // lnkPrescription
             // 

@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
+using ClinicSystem.LabOrderTest;
 using ClinicSystem.Medicine.Prescription;
 using System.Collections.Generic;
 using System.Linq;
@@ -124,6 +125,22 @@ namespace ClinicSystem.Appointments.Controls
 
             viewPrescription.ShowDialog();
             activeForms.Remove(viewPrescription);
+        }
+
+        private void lnkLabTest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ManageLabTests manageTests = new ManageLabTests(Appointment.AppointmentID);
+
+            if (activeForms.Where(x => x.Text == manageTests.Text).Count() > 0)
+            {
+                MessageBox.Show("Form is already open", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+                activeForms.Add(manageTests);
+
+            manageTests.ShowDialog();
+            activeForms.Remove(manageTests);
         }
     }
 }
