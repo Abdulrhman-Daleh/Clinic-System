@@ -75,6 +75,9 @@ namespace Business
 
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
+                return new BindingList<string>();
+
             return await AppointmentData.GetAppointmentTypesNames();
         }
 
@@ -90,16 +93,128 @@ namespace Business
             return AppointmentData.UpdateAppointment(ToDto(this)) > 0;
         }
 
+        private OperationResult CheckSaveAccess()
+        {
+            if (_mode == EnMode.Add)
+                return Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner);
+
+            Staff currentStaff = Global.CurrentLoggedInStaff;
+
+            if (currentStaff == null)
+            {
+                return new OperationResult(
+                    "You must be logged in to modify appointments.",
+                    "Access Denied",
+                    false);
+            }
+
+            if (currentStaff.RoleInfo.RoleId == EnRole.Receptionist ||
+                currentStaff.RoleInfo.RoleId == EnRole.Owner)
+            {
+                OperationResult result = Util.CanAccessForm(
+                    EnRole.Receptionist,
+                    EnRole.Owner);
+
+                if (!result.IsSuccess)
+                    return result;
+
+                if (AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.Completed)
+                {
+                    return new OperationResult(
+                        "Only the assigned doctor can complete an appointment.",
+                        "Access Denied",
+                        false);
+                }
+
+                return result;
+            }
+
+            if (currentStaff.RoleInfo.RoleId != EnRole.Doctor)
+            {
+                return new OperationResult(
+                    "You do not have permission to modify appointments.",
+                    "Access Denied",
+                    false);
+            }
+
+            AppointmentDto existingAppointment =
+                AppointmentData.FindAppointmentByID(AppointmentID);
+
+            if (existingAppointment == null)
+            {
+                return new OperationResult(
+                    "Appointment does not exist.",
+                    "Not Found",
+                    false);
+            }
+
+            if (existingAppointment.StaffID != currentStaff.StaffId)
+            {
+                return new OperationResult(
+                    "You are not authorized to modify this appointment.",
+                    "Access Denied",
+                    false);
+            }
+
+            if (existingAppointment.AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.Completed ||
+                existingAppointment.AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.Cancelled ||
+                existingAppointment.AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.NoShow)
+            {
+                return new OperationResult(
+                    "This appointment can no longer be completed.",
+                    "Not Allowed",
+                    false);
+            }
+
+            // Doctors can only change the appointment status to Completed.
+            // They cannot change the patient, assigned staff, type, date, or time.
+
+            if (AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed ||
+                PatientID != existingAppointment.PatientID ||
+                StaffID != existingAppointment.StaffID ||
+                AppointmentTypes.AppointmentTypeID != existingAppointment.AppointmentTypes.AppointmentTypeID ||
+                AppointmentDate != existingAppointment.AppointmentDate ||
+                AppointmentTime != existingAppointment.AppointmentTime ||
+                AppointmentEndTime != existingAppointment.AppointmentEndTime)
+            {
+                return new OperationResult(
+                    "Doctors can only complete their assigned appointments.",
+                    "Access Denied",
+                    false);
+            }
+
+            return new OperationResult(
+                "Appointment completion access granted.",
+                "Access Granted",
+                true);
+        }
+
         public OperationResult Save()
         {
-            OperationResult result = IsAppointmentValidToSave();
+            OperationResult result = CheckSaveAccess();
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            Staff currentStaff = Global.CurrentLoggedInStaff;
+
+            // Completing an appointment does not require checking
+            // schedule availability or staff activation again.
+
+            if (_mode == EnMode.Update &&
+                currentStaff.RoleInfo.RoleId == EnRole.Doctor)
+            {
+                result = IsAppointmentValidToComplete();
+            }
+            else
+            {
+                result = IsAppointmentValidToSave();
+            }
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {currentStaff.StaffId}";
 
             switch (_mode)
             {
@@ -152,6 +267,26 @@ namespace Business
                 false);
         }
 
+        private OperationResult IsAppointmentValidToComplete()
+        {
+            if (!Util.IsValidId(AppointmentID) ||
+                !Util.IsValidId(PatientID) ||
+                !Util.IsValidId(StaffID) ||
+                Patient == null ||
+                Staff == null)
+            {
+                return new OperationResult(
+                    "Appointment information is invalid.",
+                    "Invalid",
+                    false);
+            }
+
+            return new OperationResult(
+                "Appointment information is valid to complete.",
+                "Valid",
+                true);
+        }
+
         public bool NoOverlapWithLastAppointment()
         {
             return AppointmentData.NoOverlapWithLastAppointment(ToDto(this));
@@ -159,15 +294,79 @@ namespace Business
 
         public static Appointment FindAppointmentByID(int appointmentId)
         {
-            return FromDto(AppointmentData.FindAppointmentByID(appointmentId));
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Nurse,
+                EnRole.Owner).IsSuccess)
+                return null;
+
+            AppointmentDto appointmentDto =
+                AppointmentData.FindAppointmentByID(appointmentId);
+
+            if (appointmentDto == null)
+                return null;
+
+            // A doctor can only retrieve their own appointments.
+            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Doctor &&
+                appointmentDto.StaffID != Global.CurrentLoggedInStaff.StaffId)
+                return null;
+
+            return FromDto(appointmentDto);
         }
+
+        private bool CanAccessCurrentAppointment()
+        {
+            if (Global.CurrentLoggedInStaff == null)
+                return false;
+
+            switch (Global.CurrentLoggedInStaff.RoleInfo.RoleId)
+            {
+                case EnRole.Receptionist:
+                case EnRole.Owner:
+                case EnRole.Nurse:
+                    return true;
+
+                case EnRole.Doctor:
+                    return StaffID == Global.CurrentLoggedInStaff.StaffId;
+
+                default:
+                    return false;
+            }
+        }
+
+        public bool HasSOAPNotes() =>
+            CanAccessCurrentAppointment() &&
+            AppointmentData.HasSOAPNotes(AppointmentID);
+
+        public bool HasPrescription() =>
+            CanAccessCurrentAppointment() &&
+            AppointmentData.HasPrescription(AppointmentID);
+
+        public bool HasLabTests() =>
+            CanAccessCurrentAppointment() &&
+            AppointmentData.HasLabTests(AppointmentID);
+
+        public bool HasReferral() =>
+            CanAccessCurrentAppointment() &&
+            AppointmentData.HasReferral(AppointmentID);
+
+        public bool HasPayment() =>
+            CanAccessCurrentAppointment() &&
+            AppointmentData.HasPayment(AppointmentID);
+
+        public bool HasPenalty() =>
+            CanAccessCurrentAppointment() &&
+            AppointmentData.HasPenalty(AppointmentID);
 
         private OperationResult IsAppointmentValidToSave()
         {
             if (!Util.IsValidId(PatientID) ||
                 !Util.IsValidId(StaffID) ||
                 Patient == null ||
-                Staff == null)
+                Staff == null ||
+                Patient.PatientId != PatientID ||
+                Staff.StaffId != StaffID)
             {
                 return new OperationResult(
                     "Patient or staff information is invalid.",
@@ -197,19 +396,9 @@ namespace Business
                 true);
         }
 
-        public bool HasSOAPNotes() => AppointmentData.HasSOAPNotes(AppointmentID);
-
-        public bool HasPrescription() => AppointmentData.HasPrescription(AppointmentID);
-
-        public bool HasLabTests() => AppointmentData.HasLabTests(AppointmentID);
-
-        public bool HasReferral() => AppointmentData.HasReferral(AppointmentID);
-
-        public bool HasPayment() => AppointmentData.HasPayment(AppointmentID);
-
-        public bool HasPenalty() => AppointmentData.HasPenalty(AppointmentID);
-
-        public bool IsStillActive() => AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed && AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Cancelled && AppointmentStatuses.AppointmentStatusID
-            != EnAppointmentStatuses.NoShow;
+        public bool IsStillActive() =>
+            AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed &&
+            AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Cancelled &&
+            AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.NoShow;
     }
 }

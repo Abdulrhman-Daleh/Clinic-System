@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +11,7 @@ namespace ClinicSystem.Staff
     public partial class ManageStaff : FormsDefaultSettings
     {
         BindingList<StaffList> StaffList = new BindingList<StaffList>();
+
         public ManageStaff()
         {
             InitializeComponent();
@@ -48,6 +51,9 @@ namespace ClinicSystem.Staff
 
         private void addNewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             AddUpdateStaff addStaff = new AddUpdateStaff();
             addStaff.SendStaffId += RefreshDgv;
             addStaff.ShowDialog();
@@ -55,6 +61,9 @@ namespace ClinicSystem.Staff
 
         private void updateStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             int staffId = (int)dgvStaff.CurrentRow.Cells["StaffID"].Value;
 
             AddUpdateStaff updateStaff = new AddUpdateStaff(staffId);
@@ -64,6 +73,9 @@ namespace ClinicSystem.Staff
 
         private void viewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             int staffId = (int)dgvStaff.CurrentRow.Cells["StaffID"].Value;
 
             ViewStaffInfo viewStaff = new ViewStaffInfo(staffId);
@@ -73,6 +85,9 @@ namespace ClinicSystem.Staff
 
         private void dgvStaff_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvStaff))
                 return;
 
@@ -108,6 +123,12 @@ namespace ClinicSystem.Staff
 
         private void ManageStaff_Load(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+            {
+                Close();
+                return;
+            }
+
             SetUp();
             LoadStaffInfo();
         }

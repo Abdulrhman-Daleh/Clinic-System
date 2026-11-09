@@ -34,6 +34,7 @@ namespace Business
         {
             return _mode == Mode.Add;
         }
+
         public Insurance()
         {
             InsuranceID = -1;
@@ -93,7 +94,7 @@ namespace Business
             {
                 InsuranceID = insurance.InsuranceID,
                 PolicyId = insurance.PolicyId,
-                RecordedBy = insurance.RecorderStaff.StaffId,
+                RecordedBy = insurance.RecordedBy,
                 InsuranceType = insurance.InsuranceType,
                 InsuranceStatus = insurance.InsuranceStatus,
                 UploadedDate = insurance.UploadedDate,
@@ -102,7 +103,7 @@ namespace Business
                 CoverageStartDate = insurance.CoverageStartDate,
                 CoverageEndDate = insurance.CoverageEndDate,
                 PatientClaims = insurance.PatientClaims,
-                PolicyholderPatientId = insurance.PolicyPatientHolder.PatientId,
+                PolicyholderPatientId = insurance.PolicyholderPatientId,
                 Relationship = insurance.Relationship
             };
         }
@@ -129,14 +130,26 @@ namespace Business
 
         public OperationResult Save()
         {
-            OperationResult result = IsInsuranceValidToSave();
+            OperationResult result = Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Owner);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            if (_mode == Mode.Add)
+            {
+                RecordedBy = Global.CurrentLoggedInStaff.StaffId;
+                RecorderStaff = Global.CurrentLoggedInStaff;
+            }
+
+            result = IsInsuranceValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy =
+                $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
@@ -191,26 +204,53 @@ namespace Business
 
         public static Insurance FindInsuranceByID(int insuranceId)
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Owner).IsSuccess)
+                return null;
+
             return FromDto(InsuranceData.FindInsuranceByID(insuranceId));
         }
 
         public static Insurance FindInsuranceByPatientId(int patientId)
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Owner).IsSuccess)
+                return null;
+
             return FromDto(InsuranceData.FindInsuranceByPatientId(patientId));
         }
 
         public static async Task<BindingList<string>> GetInsuranceTypesNames()
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Owner).IsSuccess)
+                return new BindingList<string>();
+
             return await InsuranceData.GetInsuranceTypesNames();
         }
 
         public static async Task<BindingList<string>> GetInsuranceStatusesNames()
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Owner).IsSuccess)
+                return new BindingList<string>();
+
             return await InsuranceData.GetInsuranceStatusesNames();
         }
 
         public static async Task<BindingList<PatientInsuranceInfoDto>> GetPatientsUnderInsurance(int insuranceId)
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Owner).IsSuccess)
+                return new BindingList<PatientInsuranceInfoDto>();
+
             return await InsuranceData.GetPatientsUnderInsurance(insuranceId);
         }
 

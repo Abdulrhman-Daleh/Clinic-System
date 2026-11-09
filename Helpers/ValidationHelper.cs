@@ -1,4 +1,5 @@
 ﻿
+using AppEnums.cs;
 using Business;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,6 +174,22 @@ namespace ClinicSystem.Helpers
         public static bool Date1BeforeDate2(System.DateTime date1, System.DateTime date2)
         {
             return date1.Date < date2.Date;
+        }
+
+        public static bool CheckAccess(params EnRole[] allowedRoles)
+        {
+            OperationResult result = Util.CanAccessForm(
+                allowedRoles);
+
+            if (!result.IsSuccess)
+            {
+                MessageBox.Show(result.Message, result.Title,
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return false;
+            }
+
+            return true;
         }
     }
 }

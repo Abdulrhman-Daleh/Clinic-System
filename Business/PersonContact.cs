@@ -70,9 +70,12 @@ namespace Business
 
         public OperationResult Save()
         {
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            OperationResult result = Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner);
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
@@ -128,6 +131,9 @@ namespace Business
         public static async Task<BindingList<PersonContact>> GetShortContactInfo(int personId)
         {
             BindingList<PersonContact> contacts = new BindingList<PersonContact>();
+
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
+                return contacts;
 
             foreach (PersonContactDto c in await PersonContactData.GetShortContactInfo(personId))
                 contacts.Add(FromDto(c));

@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
 using System;
@@ -8,6 +9,7 @@ namespace Business
     public class SOAPNote
     {
         private EnMode _mode;
+
         public int NoteID { get; set; }
         public int WrittenByID { get; set; }
         public int AppointmentID { get; set; }
@@ -81,6 +83,11 @@ namespace Business
             };
         }
 
+        private static OperationResult CheckDoctorAccess()
+        {
+            return Util.CanAccessForm(EnRole.Doctor);
+        }
+
         private bool AddNewSOAPNote()
         {
             NoteID = SOAPNoteData.AddNewSOAPNote(ToDto(this));
@@ -95,26 +102,29 @@ namespace Business
 
         public OperationResult Save()
         {
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            OperationResult result = CheckDoctorAccess();
 
-            OperationResult result = IsNoteValidToSave();
+            if (!result.IsSuccess)
+                return result;
+
+            if (_mode == EnMode.Add)
+                WrittenByID = Global.CurrentLoggedInStaff.StaffId;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+
+            result = IsNoteValidToSave();
 
             if (!result.IsSuccess)
             {
                 return new OperationResult(
-                      "Failed to save SOAP note missing some data.",
-                      "Failed",
-                      false);
+                    "Failed to save SOAP note missing some data.",
+                    "Failed",
+                    false);
             }
 
             switch (_mode)
             {
                 case EnMode.Add:
-
-                    if (Global.CurrentLoggedInStaff != null)
-                        WrittenByID = Global.CurrentLoggedInStaff.StaffId;
 
                     if (AddNewSOAPNote())
                     {
@@ -165,21 +175,37 @@ namespace Business
 
         public static SOAPNote FindSOAPNoteByID(int noteID)
         {
+            if (!CheckDoctorAccess().IsSuccess)
+                return null;
+
             return FromDto(SOAPNoteData.FindSOAPNoteByID(noteID));
         }
 
         public static SOAPNote FindSOAPNoteByAppointmentID(int appointmentID)
         {
+            if (!CheckDoctorAccess().IsSuccess)
+                return null;
+
             return FromDto(SOAPNoteData.FindSOAPNoteByAppointmentID(appointmentID));
         }
 
         private OperationResult IsNoteValidToSave()
         {
-            if (Util.IsValidId(WrittenByID) && Util.IsValidId(MedicalRecordID) && IsActive != null)
-                return new OperationResult("Note is valid", "Valid", true);
+            if (Util.IsValidId(WrittenByID) &&
+                Util.IsValidId(AppointmentID) &&
+                Util.IsValidId(MedicalRecordID) &&
+                IsActive != null)
+            {
+                return new OperationResult(
+                    "Note is valid",
+                    "Valid",
+                    true);
+            }
 
-
-            return new OperationResult("Note is missing some data", "Missing Data", false);
+            return new OperationResult(
+                "Note is missing some data",
+                "Missing Data",
+                false);
         }
     }
 }

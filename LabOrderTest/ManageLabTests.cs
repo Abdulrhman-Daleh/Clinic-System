@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +11,8 @@ namespace ClinicSystem.LabOrderTest
     public partial class ManageLabTests : FormsDefaultSettings
     {
         BindingList<LabTestListing> labTests = new BindingList<LabTestListing>();
+        private int? _appointmentId;
+
         public ManageLabTests()
         {
             InitializeComponent();
@@ -17,7 +21,7 @@ namespace ClinicSystem.LabOrderTest
         public ManageLabTests(int appointmentId)
         {
             InitializeComponent();
-            SetLoadedAppointment(appointmentId);
+            _appointmentId = appointmentId;
         }
 
         private async void SetLoadedAppointment(int appointmentId)
@@ -42,6 +46,12 @@ namespace ClinicSystem.LabOrderTest
 
         private void dgvLabTests_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvLabTests) || e.RowIndex < 0)
+                return;
+
             int labTestId = (int)dgvLabTests.CurrentRow.Cells["LabID"].Value;
             ViewLabTestInfo viewLabTest = new ViewLabTestInfo(labTestId);
             viewLabTest.ShowDialog();
@@ -49,9 +59,18 @@ namespace ClinicSystem.LabOrderTest
 
         private void ManageLabTests_Load(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
+            {
+                Close();
+                return;
+            }
+
             cbFilterBy.Items.AddRange(new[] { "None", "LabID", "TestName", "NurseName", "TestStatusText" });
             cbFilterBy.SelectedIndex = 0;
             txtFilter.Text = string.Empty;
+
+            if (_appointmentId.HasValue)
+                SetLoadedAppointment(_appointmentId.Value);
         }
 
         private void RefreshFilter(int index)
@@ -61,6 +80,7 @@ namespace ClinicSystem.LabOrderTest
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "LabID" }, CommonOperations.GetFilterName(cbFilterBy),
               5, 40);
         }
+
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
@@ -85,6 +105,12 @@ namespace ClinicSystem.LabOrderTest
 
         private void viewLabTestToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvLabTests))
+                return;
+
             int labTestId = (int)dgvLabTests.CurrentRow.Cells["LabID"].Value;
             ViewLabTestInfo viewLabTest = new ViewLabTestInfo(labTestId);
             viewLabTest.ShowDialog();
@@ -92,6 +118,12 @@ namespace ClinicSystem.LabOrderTest
 
         private void addLabTestToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (findAppointmentCtrl1.CurrentAppointment == null)
+                return;
+
             AddUpdateLabTest addTest = new AddUpdateLabTest(findAppointmentCtrl1.CurrentAppointment.AppointmentID);
             addTest.OnSave += ReciveLabInfo;
             addTest.ShowDialog();

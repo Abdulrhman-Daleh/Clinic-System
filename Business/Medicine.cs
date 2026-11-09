@@ -22,8 +22,6 @@ namespace Business
         public (EnDosageForms DosageFormID, string DosageFormName) DosageForm { get; set; }
 
         public decimal UnitPrice { get; set; }
-
-        // Computed properties for DataGridView
         public int StrengthUnitID => (int)StrengthType.StrengthTypeID;
         public string StrengthUnitText => StrengthType.StrengthTypeName;
 
@@ -39,6 +37,9 @@ namespace Business
         {
             BindingList<string> list = new BindingList<string>();
 
+            if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
+                return list;
+
             foreach (var s in await MedicineData.GetMedicineStrengthUnits())
                 list.Add(s);
 
@@ -48,6 +49,9 @@ namespace Business
         public static async Task<BindingList<string>> GetMedicineDosageForms()
         {
             BindingList<string> list = new BindingList<string>();
+
+            if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
+                return list;
 
             foreach (var s in await MedicineData.GetMedicineDosageForms())
                 list.Add(s);
@@ -116,18 +120,22 @@ namespace Business
 
         public OperationResult Save()
         {
-            OperationResult result = IsMedicineValidToSave();
+            OperationResult result = Util.CanAccessForm(EnRole.Owner);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            result = IsMedicineValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
                 case EnMode.Add:
+
                     if (AddMedicine())
                     {
                         _mode = EnMode.Update;
@@ -146,8 +154,8 @@ namespace Business
                     return new OperationResult(
                         "Failed to add medicine.",
                         "Failed",
-
                         false);
+
                 case EnMode.Update:
 
                     if (UpdateMedicine())
@@ -177,17 +185,26 @@ namespace Business
 
         public static Medicine FindMedicineByID(int medicineID)
         {
+            if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
+                return null;
+
             return FromDto(MedicineData.FindMedicineByID(medicineID));
         }
 
         public static Medicine FindMedicineByDrugName(string drugName)
         {
+            if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
+                return null;
+
             return FromDto(MedicineData.FindMedicineByDrugName(drugName));
         }
 
         public static async Task<BindingList<Medicine>> GetMedicines()
         {
             BindingList<Medicine> medicines = new BindingList<Medicine>();
+
+            if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
+                return medicines;
 
             foreach (MedicineDto medicineDto in await MedicineData.GetMedicines())
             {

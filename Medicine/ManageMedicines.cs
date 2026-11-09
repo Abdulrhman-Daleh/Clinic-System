@@ -1,4 +1,6 @@
-﻿using ClinicSystem.Helpers;
+﻿
+using AppEnums.cs;
+using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -81,6 +83,12 @@ namespace ClinicSystem.Medicine
 
         private void ManageMedicines_Load(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+            {
+                Close();
+                return;
+            }
+
             LoadMedicineInfo();
             SetUp();
         }
@@ -125,6 +133,9 @@ namespace ClinicSystem.Medicine
 
         private void addNewMedicineToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             AddUpdateMedicine addMedicine = new AddUpdateMedicine();
 
             addMedicine.OnSave += RefreshDgv;
@@ -133,6 +144,9 @@ namespace ClinicSystem.Medicine
 
         private void updateMedicineToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvMedicines))
                 return;
 
@@ -148,6 +162,9 @@ namespace ClinicSystem.Medicine
         private void dgvMedicines_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvMedicines))
                 return;
 

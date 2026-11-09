@@ -1,4 +1,6 @@
-﻿using ClinicSystem.Helpers;
+﻿
+using AppEnums.cs;
+using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,21 +29,21 @@ namespace ClinicSystem.MedicalRecord
         {
             cbConsentToCare.Items.AddRange(new object[]
             {
-        "All",
-        "Yes",
-        "No"
+                "All",
+                "Yes",
+                "No"
             });
 
             cbConsentToCare.SelectedIndex = 0;
 
             cbFilterBy.Items.AddRange(new object[]
             {
-        "None",
-        "MedicalRecordID",
-        "MedicalNumber",
-        "PatientName",
-        "Classification",
-        "ConsentToCare"
+                "None",
+                "MedicalRecordID",
+                "MedicalNumber",
+                "PatientName",
+                "Classification",
+                "ConsentToCare"
             });
 
             cbFilterBy.SelectedIndex = 0;
@@ -58,6 +60,12 @@ namespace ClinicSystem.MedicalRecord
 
         private void ManageMedicalRecord_Load(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+            {
+                Close();
+                return;
+            }
+
             SetUp();
             LoadMedicalRecordInfo();
         }
@@ -151,6 +159,9 @@ namespace ClinicSystem.MedicalRecord
         private void addNewMedicalRecordToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
             AddUpdateMedicalRecord addMedicalRecord =
                 new AddUpdateMedicalRecord();
 
@@ -161,6 +172,9 @@ namespace ClinicSystem.MedicalRecord
         private void updateMedicalRecordToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvMedicalRecords))
                 return;
 
@@ -186,6 +200,9 @@ namespace ClinicSystem.MedicalRecord
 
         private void viewToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
             int medicalRecordId = (int)dgvMedicalRecords.CurrentRow.Cells["MedicalRecordID"].Value;
 
             ViewMedicalRecord viewMedicalRecord = new ViewMedicalRecord(medicalRecordId);

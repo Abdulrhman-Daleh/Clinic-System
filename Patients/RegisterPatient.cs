@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System.Windows.Forms;
 
@@ -7,12 +9,24 @@ namespace ClinicSystem.Patients
     public partial class RegisterPatient : FormsDefaultSettings
     {
         Patient patient = new Patient();
+
         public RegisterPatient()
         {
             InitializeComponent();
+            Load += RegisterPatient_Load;
+
             SetFormTextBasedMode("Register New Patient", "Register patient", "Register Patient");
             lblPatientId.Text = "[Not Set]";
             findPersonCtrl1.OnFind += RecivePersonData;
+        }
+
+        private void RegisterPatient_Load(object sender, System.EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            {
+                Close();
+                return;
+            }
         }
 
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
@@ -44,6 +58,9 @@ namespace ClinicSystem.Patients
 
         private void btnRegister_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             if (!patient.AddNewPatient())
             {
                 MessageBox.Show("Failed to save", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);

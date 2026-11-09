@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,12 @@ namespace ClinicSystem.LabOrderTest
 
         private async void ManageMyLabQueue_Load(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Nurse))
+            {
+                Close();
+                return;
+            }
+
             cbFilterBy.Items.AddRange(new[]
             {
                 "None",
@@ -108,6 +116,9 @@ namespace ClinicSystem.LabOrderTest
 
         private void ViewSelectedLabTest()
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Nurse))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvLabQueue))
                 return;
 

@@ -1,4 +1,5 @@
 ﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -77,14 +78,17 @@ namespace Business
 
         public OperationResult Save()
         {
-            OperationResult result = IsScheduleValidToSave();
+            OperationResult result = Util.CanAccessForm(EnRole.Owner);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            result = IsScheduleValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {

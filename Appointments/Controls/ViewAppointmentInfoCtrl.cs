@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
 using ClinicSystem.LabOrderTest;
@@ -16,6 +18,7 @@ namespace ClinicSystem.Appointments.Controls
             InitializeComponent();
             SetDefaultForm();
         }
+
         private Appointment Appointment { get; set; }
         public Appointment CurrentAppointment { get => Appointment; }
 
@@ -31,19 +34,29 @@ namespace ClinicSystem.Appointments.Controls
 
         public void LoadUpAppointmentInfo(int appointmentId)
         {
+            if (!ValidationHelper.CheckAccess(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Nurse,
+                EnRole.Owner))
+                return;
+
             Appointment = Appointment.FindAppointmentByID(appointmentId);
+
             if (ValidationHelper.IsEmptyOrNull(Appointment))
             {
                 CommonOperations.SetUpDefaultControlsValue(new List<Control>()
                 {
-                lblType, lblTypeTitle, lblStatus, lnkSOAPNote, lnkReferral, lnkPrescription, lnkPenalty, lnkPayment, lblPatientId, lnkLabTest, lblDoctor, lblDate, lblFrozen
+                    lblType, lblTypeTitle, lblStatus, lnkSOAPNote, lnkReferral, lnkPrescription, lnkPenalty, lnkPayment, lblPatientId, lnkLabTest, lblDoctor, lblDate, lblFrozen
                 }, "Not Set");
                 return;
             }
 
             lblPatientId.Text = Appointment.Patient.GetFullName() + " . " + Appointment.Patient.GetGenderChar() + " . since "
                 + Appointment.Patient.RegisterDate.ToShortDateString();
+
             lblDate.Text = Appointment.AppointmentDate.ToShortDateString() + ". . " + Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
+
             lblDoctor.Text = Appointment.Staff.GetFullName();
             lblType.Text = Appointment.AppointmentTypes.AppointmentTypeText;
             lblStatus.Text = Appointment.AppointmentStatuses.AppointmentStatusText;
@@ -58,7 +71,6 @@ namespace ClinicSystem.Appointments.Controls
                 lblUnpaidfees.Text = " . " + Appointment.Patient.ISUnpaidText();
             else
                 lblUnpaidfees.Text = "None";
-
 
             if (Appointment.HasSOAPNotes())
                 SetLinkValues(lnkSOAPNote, "View SOAP Note", true);
@@ -99,7 +111,14 @@ namespace ClinicSystem.Appointments.Controls
 
         private void lnkSOAPNote_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
             ViewSOAPNote viewNote = new ViewSOAPNote(Appointment.AppointmentID);
+
             if (activeForms.Where(x => x.Text == viewNote.Text).Count() > 0)
             {
                 MessageBox.Show("Form is already open", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -114,7 +133,14 @@ namespace ClinicSystem.Appointments.Controls
 
         private void lnkPrescription_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
             ViewPrescription viewPrescription = new ViewPrescription(Appointment.AppointmentID);
+
             if (activeForms.Where(x => x.Text == viewPrescription.Text).Count() > 0)
             {
                 MessageBox.Show("Form is already open", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -129,6 +155,12 @@ namespace ClinicSystem.Appointments.Controls
 
         private void lnkLabTest_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
+                return;
+
+            if (Appointment == null)
+                return;
+
             ManageLabTests manageTests = new ManageLabTests(Appointment.AppointmentID);
 
             if (activeForms.Where(x => x.Text == manageTests.Text).Count() > 0)

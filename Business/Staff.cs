@@ -63,6 +63,18 @@ namespace Business
             };
         }
 
+        private OperationResult CheckStaffManagementAccess()
+        {
+            if (Global.CurrentLoggedInStaff == null)
+            {
+                if (_mode == Mode.Add && IsFirstStaff())
+                    return new OperationResult("Initial staff setup is allowed.", "Access Granted", true);
+
+                return new OperationResult("You must be logged in to manage staff.", "Access Denied", false);
+            }
+
+            return Util.CanAccessForm(EnRole.Owner);
+        }
         public Staff()
         {
             StaffId = -1;
@@ -112,7 +124,12 @@ namespace Business
 
         public override OperationResult Save()
         {
-            OperationResult result = IsPersonValidToSave();
+            OperationResult result = CheckStaffManagementAccess();
+
+            if (!result.IsSuccess)
+                return result;
+
+            result = IsPersonValidToSave();
 
             if (!result.IsSuccess)
                 return result;
@@ -202,8 +219,13 @@ namespace Business
             return FromDto(StaffData.FindStaffByUsername(userName));
         }
 
-        public bool DeactivateStaff() =>
-            StaffData.DeactivateStaff(StaffId);
+        public bool DeactivateStaff()
+        {
+            if (Global.CurrentLoggedInStaff?.IsOwner() != true)
+                return false;
+
+            return StaffData.DeactivateStaff(StaffId);
+        }
 
         public bool IsOwner() =>
             RoleInfo.RoleId == EnRole.Owner;

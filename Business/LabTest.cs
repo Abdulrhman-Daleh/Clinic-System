@@ -9,6 +9,7 @@ namespace Business
     public class LabTest
     {
         private EnMode _mode;
+
         public int LabID { get; set; }
         public int AppointmentID { get; set; }
         public Appointment Appointment { get; set; }
@@ -106,16 +107,112 @@ namespace Business
             return LabTestData.UpdateLabTest(ToDto(this));
         }
 
-        public OperationResult Save()
+        private OperationResult CheckAddAccess()
         {
-            OperationResult result = IsLabTestValidToSave();
+            OperationResult result = Util.CanAccessForm(EnRole.Doctor);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            Appointment appointment = Business.Appointment.FindAppointmentByID(AppointmentID);
+
+            if (appointment == null ||
+                appointment.Staff == null ||
+                appointment.Staff.StaffId != Global.CurrentLoggedInStaff.StaffId)
+            {
+                return new OperationResult(
+                    "You are not authorized to order lab tests for this appointment.",
+                    "Access Denied",
+                    false);
+            }
+
+            Staff nurse = Staff.FindStaffById(NurseID);
+
+            if (nurse == null ||
+                nurse.RoleInfo.RoleId != EnRole.Nurse ||
+                !nurse.IsActive)
+            {
+                return new OperationResult(
+                    "The selected nurse is invalid or inactive.",
+                    "Invalid Nurse",
+                    false);
+            }
+
+            Appointment = appointment;
+            Nurse = nurse;
+
+            return new OperationResult(
+                "Lab test ordering access granted.",
+                "Access Granted",
+                true);
+        }
+
+        private OperationResult CheckUpdateAccess()
+        {
+            OperationResult result = Util.CanAccessForm(EnRole.Nurse);
+
+            if (!result.IsSuccess)
+                return result;
+
+            LabTestDto existingLabTest = LabTestData.FindLabTestByID(LabID);
+
+            if (existingLabTest == null)
+            {
+                return new OperationResult(
+                    "Lab test does not exist.",
+                    "Not Found",
+                    false);
+            }
+
+            if (existingLabTest.NurseID != Global.CurrentLoggedInStaff.StaffId)
+            {
+                return new OperationResult(
+                    "You are not assigned to this lab test.",
+                    "Access Denied",
+                    false);
+            }
+
+            if (AppointmentID != existingLabTest.AppointmentID ||
+                NurseID != existingLabTest.NurseID)
+            {
+                return new OperationResult(
+                    "You cannot change the appointment or assigned nurse of this lab test.",
+                    "Access Denied",
+                    false);
+            }
+
+            // Preserve the original order information.
+            AppointmentID = existingLabTest.AppointmentID;
+            NurseID = existingLabTest.NurseID;
+            TestName = existingLabTest.TestName;
+            Reason = existingLabTest.Reason;
+            Instructions = existingLabTest.Instructions;
+            RequestDate = existingLabTest.RequestDate;
+
+            return new OperationResult(
+                "Lab test update access granted.",
+                "Access Granted",
+                true);
+        }
+
+        public OperationResult Save()
+        {
+            OperationResult result;
+
+            if (_mode == EnMode.Add)
+                result = CheckAddAccess();
+            else
+                result = CheckUpdateAccess();
+
+            if (!result.IsSuccess)
+                return result;
+
+            result = IsLabTestValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
@@ -170,7 +267,30 @@ namespace Business
 
         public static LabTest FindLabTestByID(int labID)
         {
-            return FromDto(LabTestData.FindLabTestByID(labID));
+            if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Nurse).IsSuccess)
+                return null;
+
+            LabTestDto labTestDto = LabTestData.FindLabTestByID(labID);
+
+            if (labTestDto == null)
+                return null;
+
+            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Nurse)
+            {
+                if (labTestDto.NurseID != Global.CurrentLoggedInStaff.StaffId)
+                    return null;
+            }
+            else if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Doctor)
+            {
+                Appointment appointment =
+                    Business.Appointment.FindAppointmentByID(labTestDto.AppointmentID);
+
+                if (appointment?.Staff == null ||
+                    appointment.Staff.StaffId != Global.CurrentLoggedInStaff.StaffId)
+                    return null;
+            }
+
+            return FromDto(labTestDto);
         }
 
         private OperationResult IsLabTestValidToSave()

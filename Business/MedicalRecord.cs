@@ -93,14 +93,17 @@ namespace Business
 
         public OperationResult Save()
         {
-            OperationResult result = IsMedicalRecordValidToSave();
+            OperationResult result = Util.CanAccessForm(EnRole.Doctor);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            result = IsMedicalRecordValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
@@ -155,11 +158,17 @@ namespace Business
 
         public static MedicalRecord FindMedicalRecordByID(int medicalRecordID)
         {
+            if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
+                return null;
+
             return FromDto(MedicalRecordData.FindMedicalRecordByID(medicalRecordID));
         }
 
         public static MedicalRecord FindMedicalRecordByPatientID(int patientId)
         {
+            if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
+                return null;
+
             return FromDto(MedicalRecordData.FindMedicalRecordByPatientID(patientId));
         }
 

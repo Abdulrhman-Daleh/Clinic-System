@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
@@ -55,6 +57,12 @@ namespace ClinicSystem.Insurance
 
         private void ManageInsurances_Load(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            {
+                Close();
+                return;
+            }
+
             SetUp();
             LoadInsurancesInfo();
         }
@@ -121,6 +129,9 @@ namespace ClinicSystem.Insurance
         private void dgvInsurances_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvInsurances))
                 return;
 
@@ -148,6 +159,9 @@ namespace ClinicSystem.Insurance
         private void addNewInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             AddUpdateInsurance addInsurance = new AddUpdateInsurance();
             addInsurance.SendInsuranceId += RefreshDgv;
             addInsurance.ShowDialog();
@@ -156,6 +170,9 @@ namespace ClinicSystem.Insurance
         private void updateInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvInsurances))
                 return;
 
@@ -172,6 +189,9 @@ namespace ClinicSystem.Insurance
         private void viewInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             if (ValidationHelper.IsDgvEmptyOrNull(dgvInsurances))
                 return;
 

@@ -1,4 +1,6 @@
-﻿using Business;
+﻿
+using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace ClinicSystem.Appointments
     public partial class ManageAppointments : FormsDefaultSettings
     {
         private BindingList<AppointmentList> Appointments { get; set; }
+
         public ManageAppointments()
         {
             InitializeComponent();
@@ -32,6 +35,7 @@ namespace ClinicSystem.Appointments
         {
             ValidationHelper.LockComboBox(e);
         }
+
         private void SetUp()
         {
             cbFilterBy.Items.AddRange(new object[] { "None", "AppointmentID", "Patient", "Doctor", "Status" });
@@ -55,6 +59,12 @@ namespace ClinicSystem.Appointments
 
         private void ManageAppointments_Load(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
+            {
+                Close();
+                return;
+            }
+
             SetUp();
             LoadAppointments();
         }
@@ -76,7 +86,10 @@ namespace ClinicSystem.Appointments
 
         private void bookAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BookAppointment appointment = new BookAppointment(AppEnums.cs.EnAppointmentStatuses.Scheduled);
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
+            BookAppointment appointment = new BookAppointment(EnAppointmentStatuses.Scheduled);
             appointment.OnSave += RefreshDgv;
             appointment.ShowDialog();
         }
@@ -94,6 +107,12 @@ namespace ClinicSystem.Appointments
 
         private void viewAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+                return;
+
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
             ViewAppointment viewAppointment = new ViewAppointment(appointmentId);
@@ -105,8 +124,8 @@ namespace ClinicSystem.Appointments
             rescheduleToolStripMenuItem.Enabled = status;
             viewAppointmentToolStripMenuItem.Enabled = status;
             goToAppointmentToolStripMenuItem.Enabled = status;
-
         }
+
         private void cmsAppointments_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
@@ -114,7 +133,10 @@ namespace ClinicSystem.Appointments
 
         private void dgvAppointments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments) || e.RowIndex < 0)
                 return;
 
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
@@ -125,14 +147,26 @@ namespace ClinicSystem.Appointments
 
         private void rescheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+                return;
+
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
-            BookAppointment viewAppointment = new BookAppointment(appointmentId, AppEnums.cs.EnAppointmentStatuses.Rescheduled);
+            BookAppointment viewAppointment = new BookAppointment(appointmentId, EnAppointmentStatuses.Rescheduled);
             viewAppointment.ShowDialog();
         }
 
         private void goToAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+                return;
+
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
             PerformAppointment performAppointment = new PerformAppointment(appointmentId);

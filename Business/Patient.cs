@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
@@ -60,14 +61,21 @@ namespace Business
 
         public bool AddNewPatient()
         {
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
+                return false;
+
             if (!IsPatientValidToSave())
                 return false;
 
-            this.PatientId = PatientData.AddNewPatient(ToDto(this));
+            PatientId = PatientData.AddNewPatient(ToDto(this));
 
-            if (this.PatientId > 0)
+            if (PatientId > 0)
             {
-                Auditor.Log("Patient Added", $"Patient linked to PersonID {PersonId} was registered by StaffID {Global.CurrentLoggedInStaff.StaffId}.", $"PatientID {PatientId}");
+                Auditor.Log(
+                    "Patient Added",
+                    $"Patient linked to PersonID {PersonId} was registered by StaffID {Global.CurrentLoggedInStaff.StaffId}.",
+                    $"PatientID {PatientId}");
+
                 return true;
             }
 
@@ -76,6 +84,13 @@ namespace Business
 
         public static Patient FindPatientById(int patientId)
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Nurse,
+                EnRole.Owner).IsSuccess)
+                return null;
+
             return FromDto(PatientData.FindPatientById(patientId));
         }
 
@@ -97,6 +112,13 @@ namespace Business
 
         public int GetTotalVisits()
         {
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Nurse,
+                EnRole.Owner).IsSuccess)
+                return 0;
+
             return PatientData.GetTotalVisits(PatientId);
         }
 

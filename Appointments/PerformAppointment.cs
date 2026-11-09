@@ -1,4 +1,5 @@
-﻿using AppEnums.cs;
+﻿
+using AppEnums.cs;
 using Business;
 using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
@@ -16,10 +17,26 @@ namespace ClinicSystem.Appointments
         private Appointment Appointment { get; set; }
         private Business.MedicalRecord MedicalRecord { get; set; }
         private Business.Insurance Insurance { get; set; }
+
+        private int _appointmentId;
+
         public PerformAppointment(int appointmentId)
         {
             InitializeComponent();
-            Appointment = Appointment.FindAppointmentByID(appointmentId);
+
+            _appointmentId = appointmentId;
+            Load += PerformAppointment_Load;
+        }
+
+        private void PerformAppointment_Load(object sender, System.EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+            {
+                Close();
+                return;
+            }
+
+            Appointment = Business.Appointment.FindAppointmentByID(_appointmentId);
             SetUpForm();
         }
 
@@ -107,12 +124,24 @@ namespace ClinicSystem.Appointments
 
         private void lnkViewMedicalRecord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (MedicalRecord == null)
+                return;
+
             ViewMedicalRecord medicalRecord = new ViewMedicalRecord(MedicalRecord.MedicalRecordID);
             medicalRecord.ShowDialog();
         }
 
         private void lnkViewInsurance_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Insurance == null)
+                return;
+
             ViewInsuranceInfo viewInsurance = new ViewInsuranceInfo(Insurance.InsuranceID);
             viewInsurance.ShowDialog();
         }
@@ -121,13 +150,27 @@ namespace ClinicSystem.Appointments
 
         private void lnkSOAPNote_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
             AddUpdateSOAPNote writeSOAP = new AddUpdateSOAPNote(Appointment.AppointmentID);
             writeSOAP.OnSave += ReciveNotifyOnNoteSave;
             writeSOAP.ShowDialog();
         }
+
         private void ReciveNotifyOnNoteSave() => lnkSOAPNote.Enabled = false;
+
         private void btnSave_Click(object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
             Appointment.AppointmentStatuses = (EnAppointmentStatuses.Completed, "Completed");
 
             OperationResult result = Appointment.Save();
@@ -144,6 +187,12 @@ namespace ClinicSystem.Appointments
 
         private void lnkPrescribe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
             CreatePrescribion prescribe = new CreatePrescribion(Appointment.AppointmentID);
             prescribe.OnSave += ReciveNotifyOnPrescriptionAdd;
             prescribe.ShowDialog();
@@ -153,6 +202,12 @@ namespace ClinicSystem.Appointments
 
         private void lnkOrderTests_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
             AddUpdateLabTest addLabTest = new AddUpdateLabTest(Appointment.AppointmentID);
             addLabTest.ShowDialog();
         }

@@ -123,30 +123,35 @@ namespace ClinicSystem.People
 
             CommonOperations.UpdateAfterAdding(People, person, targetIndex);
         }
-        private void addNewPersonToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AddUpdatePerson addPerson = new AddUpdatePerson();
-            addPerson.SendPersonInfo += RefreshDgv;
-            addPerson.ShowDialog();
-        }
         private void updatePersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
 
             AddUpdatePerson updatePerson = new AddUpdatePerson(personId);
             updatePerson.SendPersonInfo += RefreshDgv;
             updatePerson.ShowDialog();
         }
+
         private void viewPersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
 
             ViewPerson viewPerson = new ViewPerson(personId);
             viewPerson.OnEdit += RefreshDgv;
             viewPerson.ShowDialog();
         }
+
         private void addPersonContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
             int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
 
             AddPersonContacts addContact = new AddPersonContacts(personId);

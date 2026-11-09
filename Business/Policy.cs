@@ -103,14 +103,17 @@ namespace Business
 
         public OperationResult Save()
         {
-            OperationResult result = IsPolicyValidToSave();
+            OperationResult result = Util.CanAccessForm(EnRole.Owner);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            result = IsPolicyValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
@@ -198,6 +201,14 @@ namespace Business
             return await PolicyData.GetPoliciesRanges();
         }
 
+        public static bool UpdatePolicyStatus(int policyId, int newStatusId)
+        {
+            if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
+                return false;
+
+            return PolicyData.UpdatePolicyStatus(policyId, newStatusId);
+        }
+
         private OperationResult IsPolicyValidToSave()
         {
             if (Util.IsValidId(OwnerID) && ActiveFrom < ActiveTo)
@@ -213,8 +224,5 @@ namespace Business
                 "Invalid",
                 false);
         }
-
-        public static bool UpdatePolicyStatus(int policyId, int newStatusId) =>
-            PolicyData.UpdatePolicyStatus(policyId, newStatusId);
     }
 }

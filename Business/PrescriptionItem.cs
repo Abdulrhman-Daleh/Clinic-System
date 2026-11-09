@@ -94,14 +94,17 @@ namespace Business
 
         public OperationResult Save()
         {
-            OperationResult result = IsPrescriptionItemValidToSave();
+            OperationResult result = Util.CanAccessForm(EnRole.Doctor);
 
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = Global.CurrentLoggedInStaff == null
-                ? "Initial setup"
-                : $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            result = IsPrescriptionItemValidToSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
@@ -156,11 +159,17 @@ namespace Business
 
         public static PrescriptionItem FindPrescriptionItemByID(int itemID)
         {
+            if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
+                return null;
+
             return FromDto(PrescriptionItemData.FindPrescriptionItemByID(itemID));
         }
 
         public static async Task<BindingList<PrescriptionItemListing>> GetPrescriptionItemsListing(int prescriptionID)
         {
+            if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
+                return new BindingList<PrescriptionItemListing>();
+
             return await PrescriptionItemListing.GetPrescriptionItems(prescriptionID);
         }
 

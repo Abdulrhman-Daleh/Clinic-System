@@ -435,7 +435,7 @@
             // 
             this.BtnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.BtnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnCancel.Location = new System.Drawing.Point(254, 1088);
+            this.BtnCancel.Location = new System.Drawing.Point(314, 1088);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(158, 70);
             this.BtnCancel.TabIndex = 11;
@@ -447,7 +447,7 @@
             // 
             this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(418, 1088);
+            this.btnSave.Location = new System.Drawing.Point(478, 1088);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(202, 70);
             this.btnSave.TabIndex = 15;
