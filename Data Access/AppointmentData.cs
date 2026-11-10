@@ -120,13 +120,18 @@ namespace Data_Access
             };
         }
 
-        public static async Task<BindingList<AppointmentListDto>> GetAppointment()
+        public static async Task<BindingList<AppointmentListDto>> GetAppointment(int doctorId)
         {
             BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
 
-            string query = @"select AppointmentID, TIme, Patient, Doctor, Type, Status From vw_AppointmentsList";
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@DoctorId", SqlDbType.Int) {Value = doctorId}
+            };
 
-            appointments = await DataAccessHelper.ExecuteObjectList(query, null, AppointmentListDtoMapper);
+            string query = @"select * From GetAppointmentsList(@DoctorId)";
+
+            appointments = await DataAccessHelper.ExecuteObjectList(query, parameters, AppointmentListDtoMapper);
 
             return appointments;
         }
@@ -159,18 +164,19 @@ namespace Data_Access
             };
         }
 
-        public static AppointmentDto FindAppointmentByID(int appointmentId)
+        public static AppointmentDto FindAppointmentByID(int appointmentId, int staffId)
         {
             string query = @"select AppointmentID, PatientID, StaffID, appo.AppointmentStatusID, aStatus.AppointmentStatusText, appo.AppointmentTypeID,
             appoType.AppointmentTypeText, AppointmentDate,
             AppointmentTime, AppointmentEndTime from Appointments as appo inner join AppointmentStatuses as aStatus on 
             appo.AppointmentStatusID = aStatus.AppointmentStatusID inner join AppointmentTypes as appoType on appoType.AppointmentTypeID
             = appo.AppointmentTypeID
-            where AppointmentID = @AppointmentId";
+            where AppointmentID = @AppointmentId and StaffID = @StaffId";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
-                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value =  appointmentId}
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value =  appointmentId},
+                new SqlParameter("@StaffId", SqlDbType.Int) {Value =  staffId}
 
             };
 

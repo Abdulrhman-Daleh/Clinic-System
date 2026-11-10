@@ -235,10 +235,15 @@ namespace Data_Access
             }
         }
 
-        public static async Task<BindingList<InsuranceListDto>> GetInsurances()
+        public static async Task<BindingList<InsuranceListDto>> GetInsurances(int staffId)
         {
             BindingList<InsuranceListDto> list = new BindingList<InsuranceListDto>();
-            string query = @"select * from vw_InsuranceList";
+            string query = @"select * from GetInsuranceList(@StaffId)";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@StaffId", SqlDbType.Int) {Value = staffId}
+            };
 
             list = await DataAccessHelper.ExecuteObjectList(query, null, InsuranceListMapper);
 

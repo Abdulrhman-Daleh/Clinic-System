@@ -30,7 +30,7 @@ namespace Business
         {
             BindingList<AppointmentList> appointments = new BindingList<AppointmentList>();
 
-            foreach (var appo in await AppointmentData.GetAppointment())
+            foreach (var appo in await AppointmentData.GetAppointment(Global.CurrentLoggedInStaff.StaffId))
                 appointments.Add(FromDto(appo));
 
             return appointments;

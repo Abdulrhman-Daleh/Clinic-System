@@ -259,7 +259,7 @@ namespace Business
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
                 return prescriptions;
 
-            foreach (PrescriptionDto prescriptionDto in await PrescriptionData.GetPrescriptions())
+            foreach (PrescriptionDto prescriptionDto in await PrescriptionData.GetPrescriptions(Global.CurrentLoggedInStaff.StaffId))
             {
                 Prescription prescription = FromDto(prescriptionDto);
 

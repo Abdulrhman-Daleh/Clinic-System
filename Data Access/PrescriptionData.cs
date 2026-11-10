@@ -182,21 +182,30 @@ namespace Data_Access
                 PrescriptionMapper);
         }
 
-        public static async Task<BindingList<PrescriptionDto>> GetPrescriptions()
+        public static async Task<BindingList<PrescriptionDto>> GetPrescriptions(int doctorId)
         {
             string query = @"
-                SELECT
+                 SELECT
                     PrescriptionID,
                     AppointmentID,
                     TotalPrice,
                     DoctorDidSign,
                     WriteDate,
                     ExpirationDate
-                FROM Prescriptions";
+                FROM Prescriptions as P
+                inner join Appointments as A on A.AppointmentID = P.AppointmentID
+                inner join Staff as s on s.StaffID = A.StaffID
+                inner join StaffRoles as r on r.RoleID = s.RoleID
+                where r.RoleName = 'Doctor' and s.StaffID = @doctorId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@doctorId", SqlDbType.Int) { Value = doctorId }
+            };
 
             return await DataAccessHelper.ExecuteObjectList(
                 query,
-                null,
+                parameters,
                 PrescriptionMapper);
         }
     }

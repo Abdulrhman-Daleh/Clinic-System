@@ -37,7 +37,7 @@ namespace Business
         {
             BindingList<InsuranceList> list = new BindingList<InsuranceList>();
 
-            foreach (InsuranceListDto dto in await InsuranceData.GetInsurances())
+            foreach (InsuranceListDto dto in await InsuranceData.GetInsurances(Global.CurrentLoggedInStaff.StaffId))
                 list.Add(FromDto(dto));
 
             return list;
