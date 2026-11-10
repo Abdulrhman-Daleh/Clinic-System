@@ -1,4 +1,5 @@
 ﻿
+using AppEnums.cs;
 using Data_Access;
 using Data_Access.ListingDTOs;
 using System;
@@ -38,16 +39,38 @@ namespace Business
 
         public static async Task<BindingList<LabTestListing>> GetLabTestsByAppointmentID(int appointmentID)
         {
-            BindingList<LabTestListingDto> labTestDtos =
-                await LabTestData.GetLabTestsByAppointmentID(appointmentID);
+            BindingList<LabTestListing> list = new BindingList<LabTestListing>();
 
-            BindingList<LabTestListing> labTests =
-                new BindingList<LabTestListing>();
+            OperationResult result = Util.CanAccessForm(
+                EnRole.Doctor,
+                EnRole.Nurse);
 
-            foreach (LabTestListingDto labTestDto in labTestDtos)
-                labTests.Add(FromDto(labTestDto));
+            if (!result.IsSuccess)
+                return list;
 
-            return labTests;
+            int? doctorStaffId = null;
+            int? nurseStaffId = null;
+
+            switch (Global.CurrentLoggedInStaff.RoleInfo.RoleId)
+            {
+                case EnRole.Doctor:
+                    doctorStaffId = Global.CurrentLoggedInStaff.StaffId;
+                    break;
+
+                case EnRole.Nurse:
+                    nurseStaffId = Global.CurrentLoggedInStaff.StaffId;
+                    break;
+            }
+
+            var records = await LabTestData.GetLabTestsByAppointmentID(
+                appointmentID,
+                doctorStaffId,
+                nurseStaffId);
+
+            foreach (var record in records)
+                list.Add(FromDto(record));
+
+            return list;
         }
 
         public static async Task<BindingList<LabTestListing>> GetLabTests()

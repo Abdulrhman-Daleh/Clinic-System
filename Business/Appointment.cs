@@ -138,7 +138,7 @@ namespace Business
             }
 
             AppointmentDto existingAppointment =
-                AppointmentData.FindAppointmentByID(AppointmentID);
+                AppointmentData.FindAppointmentByID(AppointmentID, Global.CurrentLoggedInStaff.StaffId);
 
             if (existingAppointment == null)
             {
@@ -302,7 +302,7 @@ namespace Business
                 return null;
 
             AppointmentDto appointmentDto =
-                AppointmentData.FindAppointmentByID(appointmentId);
+                AppointmentData.FindAppointmentByID(appointmentId, Global.CurrentLoggedInStaff.StaffId);
 
             if (appointmentDto == null)
                 return null;

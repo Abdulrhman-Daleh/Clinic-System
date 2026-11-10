@@ -84,15 +84,56 @@ namespace Data_Access
 
             return patientId;
         }
-        public static async Task<BindingList<PatientListingDto>> GetPatientListingDatas()
+
+        public static async Task<BindingList<PatientListingDto>> GetPatientListingDatas(
+            int? doctorStaffId, int? nurseStaffId)
         {
-            BindingList<PatientListingDto> list = new BindingList<PatientListingDto>();
+            string query = @"
+        SELECT *
+        FROM vw_PatientInfo P
+        WHERE
+            (
+                (@DoctorStaffID IS NULL AND @NurseStaffID IS NULL)
 
-            string query = @"select * from vw_PatientInfo";
+                OR
+                (
+                    @DoctorStaffID IS NOT NULL
+                    AND EXISTS
+                    (
+                        SELECT 1
+                        FROM Appointments A
+                        WHERE A.PatientID = P.PatientID
+                          AND A.StaffID = @DoctorStaffID
+                    )
+                )
 
-            list = await DataAccessHelper.ExecuteObjectList<PatientListingDto>(query, null, PatientListMapper);
-            return list;
+                OR
+                (
+                    @NurseStaffID IS NOT NULL
+                    AND EXISTS
+                    (
+                        SELECT 1
+                        FROM LabTests LT
+                        INNER JOIN Appointments A
+                            ON A.AppointmentID = LT.AppointmentID
+                        WHERE A.PatientID = P.PatientID
+                          AND LT.NurseID = @NurseStaffID
+                    )
+                )
+            );";
+
+            List<SqlParameter> parameters = new List<SqlParameter>
+    {
+        new SqlParameter("@DoctorStaffID", (object)doctorStaffId ?? DBNull.Value),
+        new SqlParameter("@NurseStaffID", (object)nurseStaffId ?? DBNull.Value)
+    };
+
+            return await DataAccessHelper.ExecuteObjectList(
+                query,
+                parameters,
+                PatientListMapper);
         }
+
         public static PatientListingDto FindPatientByIdList(int patientId)
         {
             PatientListingDto patientListing = new PatientListingDto();

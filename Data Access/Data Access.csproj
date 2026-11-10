@@ -60,6 +60,7 @@
     <Compile Include="DTOs\PolicyDto.cs" />
     <Compile Include="DTOs\PrescriptionDto.cs" />
     <Compile Include="DTOs\PrescriptionItemDto.cs" />
+    <Compile Include="DTOs\ReferralDto.cs" />
     <Compile Include="DTOs\ScheduleDto.cs" />
     <Compile Include="DTOs\SOAPNoteDto.cs" />
     <Compile Include="DTOs\StaffDto.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="MedicineData.cs" />
     <Compile Include="PrescriptionData.cs" />
     <Compile Include="PrescriptionItemData.cs" />
+    <Compile Include="ReferralData.cs" />
     <Compile Include="SOAPNoteData.cs" />
     <Compile Include="ListingDTOs\StaffListingDto.cs" />
     <Compile Include="MedicalRecordData.cs" />

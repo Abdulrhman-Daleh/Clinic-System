@@ -400,6 +400,7 @@
             this.lnkRefer.TabIndex = 41;
             this.lnkRefer.TabStop = true;
             this.lnkRefer.Text = "[Refer]";
+            this.lnkRefer.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkRefer_LinkClicked);
             // 
             // pictureBox9
             // 

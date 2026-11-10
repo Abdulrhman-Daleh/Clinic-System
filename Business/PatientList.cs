@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.ListingDTOs;
 using System;
 using System.ComponentModel;
@@ -37,11 +38,33 @@ namespace Business
         }
         public static async Task<BindingList<PatientList>> GetPatientListingDatas()
         {
-            BindingList<PatientList> list = new BindingList<PatientList>();
+            BindingList<PatientList> list =
+                new BindingList<PatientList>();
 
-            foreach (PatientListingDto item in await PatientData.GetPatientListingDatas())
-                list.Add(FromDto(item));
+            if (!Util.CanAccessForm(
+                EnRole.Receptionist,
+                EnRole.Doctor,
+                EnRole.Nurse,
+                EnRole.Owner).IsSuccess)
+                return list;
 
+            int? doctorStaffId = null;
+            int? nurseStaffId = null;
+
+            switch (Global.CurrentLoggedInStaff.RoleInfo.RoleId)
+            {
+                case EnRole.Doctor:
+                    doctorStaffId = Global.CurrentLoggedInStaff.StaffId;
+                    break;
+
+                case EnRole.Nurse:
+                    nurseStaffId = Global.CurrentLoggedInStaff.StaffId;
+                    break;
+            }
+
+            foreach (var d in await PatientData.GetPatientListingDatas(
+                doctorStaffId, nurseStaffId))
+                list.Add(FromDto(d));
 
             return list;
         }

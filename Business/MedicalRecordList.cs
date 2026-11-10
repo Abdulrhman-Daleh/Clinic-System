@@ -33,7 +33,7 @@ namespace Business
         public static async Task<BindingList<MedicalRecordList>> GetMedicalRecords()
         {
             BindingList<MedicalRecordListDto> recordDtos =
-                await MedicalRecordData.GetMedicalRecords();
+                await MedicalRecordData.GetMedicalRecords(Global.CurrentLoggedInStaff.StaffId);
 
             BindingList<MedicalRecordList> medicalRecords =
                 new BindingList<MedicalRecordList>();

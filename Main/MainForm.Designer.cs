@@ -92,7 +92,7 @@
             this.exitToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.logout_32;
             this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 38);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

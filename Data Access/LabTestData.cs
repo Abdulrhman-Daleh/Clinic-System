@@ -306,7 +306,9 @@ namespace Data_Access
             }
         }
 
-        public static async Task<BindingList<LabTestListingDto>> GetLabTestsByAppointmentID(int appointmentID)
+
+        public static async Task<BindingList<LabTestListingDto>> GetLabTestsByAppointmentID(
+            int appointmentID, int? doctorStaffId, int? nurseStaffId)
         {
             string query = @"
         SELECT  
@@ -325,21 +327,48 @@ namespace Data_Access
             ON s.PersonID = p.PersonID
         INNER JOIN TestsStatuses AS ts
             ON lt.TestStatusID = ts.TestStatusID
-        WHERE lt.AppointmentID = @AppointmentID";
+        WHERE lt.AppointmentID = @AppointmentID
+          AND
+          (
+              (
+                  @DoctorStaffID IS NOT NULL
+                  AND EXISTS
+                  (
+                      SELECT 1
+                      FROM Appointments A
+                      WHERE A.AppointmentID = lt.AppointmentID
+                        AND A.StaffID = @DoctorStaffID
+                  )
+              )
+              OR
+              (
+                  @NurseStaffID IS NOT NULL
+                  AND lt.NurseID = @NurseStaffID
+              )
+          );";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
-             {
-                 new SqlParameter("@AppointmentID", SqlDbType.Int)
-                 {
-                     Value = appointmentID
-                 }
-             };
+    {
+        new SqlParameter("@AppointmentID", SqlDbType.Int)
+        {
+            Value = appointmentID
+        },
+        new SqlParameter("@DoctorStaffID", SqlDbType.Int)
+        {
+            Value = (object)doctorStaffId ?? DBNull.Value
+        },
+        new SqlParameter("@NurseStaffID", SqlDbType.Int)
+        {
+            Value = (object)nurseStaffId ?? DBNull.Value
+        }
+    };
 
             return await DataAccessHelper.ExecuteObjectList(
                 query,
                 parameters,
                 LabTestListingMapper);
         }
+
 
         public static async Task<BindingList<LabTestListingDto>> GetLabTests()
         {

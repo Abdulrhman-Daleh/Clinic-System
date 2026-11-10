@@ -220,7 +220,8 @@ namespace Data_Access
             }
         }
 
-        public static async Task<BindingList<MedicalRecordListDto>> GetMedicalRecords()
+
+        public static async Task<BindingList<MedicalRecordListDto>> GetMedicalRecords(int doctorStaffId)
         {
             string query = @"
         SELECT
@@ -235,12 +236,23 @@ namespace Data_Access
             ON MR.PatientID = PA.PatientID
         INNER JOIN People P
             ON PA.PersonID = P.PersonID
+        WHERE EXISTS
+        (
+            SELECT 1
+            FROM Appointments A
+            WHERE A.PatientID = MR.PatientID
+              AND A.StaffID = @DoctorStaffID
+        )
         ORDER BY MR.MedicalRecordID DESC;";
 
             return await DataAccessHelper.ExecuteObjectList(
                 query,
-                new List<SqlParameter>(),
+                new List<SqlParameter>
+                {
+            new SqlParameter("@DoctorStaffID", doctorStaffId)
+                },
                 MedicalRecordListMapper);
         }
+
     }
 }

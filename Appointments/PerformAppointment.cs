@@ -7,6 +7,7 @@ using ClinicSystem.Insurance;
 using ClinicSystem.LabOrderTest;
 using ClinicSystem.MedicalRecord;
 using ClinicSystem.Medicine.Prescription;
+using ClinicSystem.Referral;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -210,6 +211,12 @@ namespace ClinicSystem.Appointments
 
             AddUpdateLabTest addLabTest = new AddUpdateLabTest(Appointment.AppointmentID);
             addLabTest.ShowDialog();
+        }
+
+        private void lnkRefer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AddUpdateReferral addRef = new AddUpdateReferral(Appointment.AppointmentID);
+            addRef.ShowDialog();
         }
     }
 }

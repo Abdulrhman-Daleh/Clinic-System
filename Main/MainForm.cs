@@ -1,6 +1,7 @@
 ﻿
 using AppEnums.cs;
 using ClinicSystem.Appointments;
+using ClinicSystem.Helpers;
 using ClinicSystem.Insurance;
 using ClinicSystem.LabOrderTest;
 using ClinicSystem.Login;
@@ -25,10 +26,9 @@ namespace ClinicSystem
             WindowState = FormWindowState.Maximized;
         }
 
-
         private void viewPersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             ViewPerson viewPerson = new ViewPerson();
@@ -37,7 +37,7 @@ namespace ClinicSystem
 
         private void addPersonContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             AddPersonContacts addContact = new AddPersonContacts();
@@ -46,7 +46,7 @@ namespace ClinicSystem
 
         private void addNewStaffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
 
             AddUpdateStaff addStaff = new AddUpdateStaff();
@@ -55,7 +55,7 @@ namespace ClinicSystem
 
         private void viewAllPeopleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             ManagePeople managePeople = new ManagePeople();
@@ -64,7 +64,7 @@ namespace ClinicSystem
 
         private void updateStaffToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
 
             ViewStaffInfo viewStaff = new ViewStaffInfo();
@@ -73,7 +73,7 @@ namespace ClinicSystem
 
         private void manageStaffToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
 
             ManageStaff manageStaff = new ManageStaff();
@@ -82,7 +82,7 @@ namespace ClinicSystem
 
         private void registerPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             RegisterPatient patient = new RegisterPatient();
@@ -91,7 +91,7 @@ namespace ClinicSystem
 
         private void managePatientsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             ManagePatient managePatient = new ManagePatient();
@@ -100,7 +100,7 @@ namespace ClinicSystem
 
         private void schedulesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
 
             ManageSchedules schedules = new ManageSchedules();
@@ -109,7 +109,7 @@ namespace ClinicSystem
 
         private void policiesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
 
             Managepolicies managepolicies = new Managepolicies();
@@ -118,7 +118,7 @@ namespace ClinicSystem
 
         private void insurancesToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             ManageInsurances manageInsurances = new ManageInsurances();
@@ -127,7 +127,7 @@ namespace ClinicSystem
 
         private void addMedicalRecordToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Doctor))
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
                 return;
 
             AddUpdateMedicalRecord addMedicalRecord = new AddUpdateMedicalRecord();
@@ -136,7 +136,7 @@ namespace ClinicSystem
 
         private void manageMedicalRecordsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Doctor))
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
                 return;
 
             ManageMedicalRecord manageMedical = new ManageMedicalRecord();
@@ -145,7 +145,7 @@ namespace ClinicSystem
 
         private void addMedicalRecordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Doctor))
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
                 return;
 
             ViewMedicalRecord viewMRecord = new ViewMedicalRecord();
@@ -154,7 +154,7 @@ namespace ClinicSystem
 
         private void bookAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             BookAppointment bookAppointment =
@@ -165,7 +165,7 @@ namespace ClinicSystem
 
         private void manageAppointmentsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Receptionist, EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner, EnRole.Doctor))
                 return;
 
             ManageAppointments manageAppointments = new ManageAppointments();
@@ -174,7 +174,7 @@ namespace ClinicSystem
 
         private void viewAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(
+            if (!ValidationHelper.CheckAccess(
                 EnRole.Receptionist,
                 EnRole.Doctor,
                 EnRole.Nurse,
@@ -187,7 +187,7 @@ namespace ClinicSystem
 
         private void manageMedicinesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Owner))
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
 
             ManageMedicines manageMedicines = new ManageMedicines();
@@ -196,7 +196,7 @@ namespace ClinicSystem
 
         private void myLabQueueToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!CheckAccess(EnRole.Nurse))
+            if (!ValidationHelper.CheckAccess(EnRole.Nurse))
                 return;
 
             ManageMyLabQueue LabQueue = new ManageMyLabQueue();
