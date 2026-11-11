@@ -16,6 +16,9 @@ namespace Business
 
         private static AppointmentList FromDto(AppointmentListDto appointmentList)
         {
+            if (appointmentList == null)
+                return new AppointmentList();
+
             return new AppointmentList()
             {
                 AppointmentID = appointmentList.AppointmentID,

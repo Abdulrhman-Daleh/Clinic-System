@@ -53,8 +53,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.pictureBox12 = new System.Windows.Forms.PictureBox();
-            this.lnkPenalty = new System.Windows.Forms.LinkLabel();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.lnkPayment = new System.Windows.Forms.LinkLabel();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
@@ -66,6 +64,7 @@
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
+            this.findPolicyInfo1 = new ClinicSystem.Policies.Controls.FindPolicyInfo();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -76,7 +75,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
@@ -324,8 +322,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.pictureBox12);
-            this.groupBox3.Controls.Add(this.lnkPenalty);
             this.groupBox3.Controls.Add(this.pictureBox11);
             this.groupBox3.Controls.Add(this.lnkPayment);
             this.groupBox3.Controls.Add(this.pictureBox10);
@@ -340,26 +336,6 @@
             this.groupBox3.TabIndex = 39;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Actions";
-            // 
-            // pictureBox12
-            // 
-            this.pictureBox12.Image = global::ClinicSystem.Properties.Resources.warning_32;
-            this.pictureBox12.Location = new System.Drawing.Point(378, 92);
-            this.pictureBox12.Name = "pictureBox12";
-            this.pictureBox12.Size = new System.Drawing.Size(37, 40);
-            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox12.TabIndex = 46;
-            this.pictureBox12.TabStop = false;
-            // 
-            // lnkPenalty
-            // 
-            this.lnkPenalty.AutoSize = true;
-            this.lnkPenalty.Location = new System.Drawing.Point(422, 100);
-            this.lnkPenalty.Name = "lnkPenalty";
-            this.lnkPenalty.Size = new System.Drawing.Size(144, 25);
-            this.lnkPenalty.TabIndex = 45;
-            this.lnkPenalty.TabStop = true;
-            this.lnkPenalty.Text = "[Apply Penalty]";
             // 
             // pictureBox11
             // 
@@ -459,7 +435,7 @@
             // 
             this.btnSave.Image = global::ClinicSystem.Properties.Resources.save_32;
             this.btnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSave.Location = new System.Drawing.Point(509, 726);
+            this.btnSave.Location = new System.Drawing.Point(522, 1049);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(283, 70);
             this.btnSave.TabIndex = 60;
@@ -471,7 +447,7 @@
             // 
             this.BtnCancel.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.BtnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnCancel.Location = new System.Drawing.Point(341, 726);
+            this.BtnCancel.Location = new System.Drawing.Point(354, 1049);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(158, 70);
             this.BtnCancel.TabIndex = 59;
@@ -479,11 +455,22 @@
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // findPolicyInfo1
+            // 
+            this.findPolicyInfo1.AllowedFind = true;
+            this.findPolicyInfo1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.findPolicyInfo1.Location = new System.Drawing.Point(12, 729);
+            this.findPolicyInfo1.Name = "findPolicyInfo1";
+            this.findPolicyInfo1.Size = new System.Drawing.Size(793, 314);
+            this.findPolicyInfo1.TabIndex = 61;
+            // 
             // PerformAppointment
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 803);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(817, 1124);
+            this.Controls.Add(this.findPolicyInfo1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.groupBox3);
@@ -511,7 +498,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
@@ -554,13 +540,12 @@
         private System.Windows.Forms.LinkLabel lnkOrderTests;
         private System.Windows.Forms.PictureBox pictureBox8;
         private System.Windows.Forms.LinkLabel lnkPrescribe;
-        private System.Windows.Forms.PictureBox pictureBox12;
-        private System.Windows.Forms.LinkLabel lnkPenalty;
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.LinkLabel lnkPayment;
         private System.Windows.Forms.PictureBox pictureBox10;
         private System.Windows.Forms.LinkLabel lnkRefer;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button BtnCancel;
+        private Policies.Controls.FindPolicyInfo findPolicyInfo1;
     }
 }

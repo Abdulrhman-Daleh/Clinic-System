@@ -42,7 +42,7 @@ namespace Data_Access
             return appointmentId;
         }
 
-        public static int UpdateAppointment(AppointmentDto appointmentDto, PaymentDto paymentDto)
+        public static int UpdateAppointment(AppointmentDto appointmentDto, PaymentDto paymentDto, PenaltyDto penalty)
         {
             string query = "sp_UpdateAppointment";
 
@@ -57,7 +57,13 @@ namespace Data_Access
                 new SqlParameter("@paymentAppointmentId", SqlDbType.Int) {Value = paymentDto.AppointmentID ?? (object)DBNull.Value },
                 new SqlParameter("@PenaltyId", SqlDbType.Int) {Value = paymentDto.PenaltyID ?? (object)DBNull.Value },
                 new SqlParameter("@ProccessById", SqlDbType.Int) {Value = paymentDto.ProccessByID },
-                new SqlParameter("@PaymentAmount", SqlDbType.Decimal) {Value = paymentDto.PaymentAmount }
+                new SqlParameter("@PaymentAmount", SqlDbType.Decimal) {Value = paymentDto.PaymentAmount },
+                new SqlParameter("@penaltyAppointmentId", SqlDbType.Int) {Value = penalty.AppointmentID ?? (object)DBNull.Value },
+                new SqlParameter("@PenaltyStatusID", SqlDbType.Int) {Value = penalty.PenaltyStatusID },
+                new SqlParameter("@PenaltyAmount", SqlDbType.Decimal) {Value = penalty.PenaltyAmount },
+                new SqlParameter("@PolicyID", SqlDbType.Int) {Value = penalty.PolicyID },
+                new SqlParameter("@PenaltyDueDate", SqlDbType.DateTime) {Value = penalty.PenaltyDueDate },
+                new SqlParameter("@PenaltyClosedDate", SqlDbType.DateTime) {Value = penalty.PenaltyClosedDate ?? (object)DBNull.Value}
             };
 
             return DataAccessHelper.ExecuteNonQueryStoredProcedure<int>(query, parameters);

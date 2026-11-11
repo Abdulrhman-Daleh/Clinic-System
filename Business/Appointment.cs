@@ -88,9 +88,14 @@ namespace Business
             return AppointmentID > 0;
         }
 
-        private bool UpdateAppointment(Payment paymentInfo)
+        private Penalty GetPenaltyToAppointment(Policy policy, Appointment appointment)
         {
-            return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo)) > 0;
+            Penalty peanlty = new Penalty();
+            return peanlty.CreatePenalty(policy, appointment);
+        }
+        private bool UpdateAppointment(Payment paymentInfo, Policy policy = null)
+        {
+            return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo), Penalty.ToDTO(GetPenaltyToAppointment(policy, this))) > 0;
         }
 
         private OperationResult CheckSaveAccess()
@@ -189,7 +194,7 @@ namespace Business
                 true);
         }
 
-        public OperationResult Save(Payment paymentInfo = null)
+        public OperationResult Save(Payment paymentInfo = null, Policy policy = null)
         {
             OperationResult result = CheckSaveAccess();
 
@@ -206,8 +211,8 @@ namespace Business
             {
                 result = IsAppointmentValidToComplete();
 
-                if (paymentInfo == null)
-                    result = new OperationResult("Payment is required to finish the appointment", "Required Payment", false);
+                if (policy == null)
+                    result = new OperationResult("policy is required to be selected", "Not Valid", false);
             }
             else
             {
@@ -245,7 +250,7 @@ namespace Business
 
                 case EnMode.Update:
 
-                    if (UpdateAppointment(paymentInfo))
+                    if (UpdateAppointment(paymentInfo, policy))
                     {
                         Auditor.Log(
                             "Appointment Updated",

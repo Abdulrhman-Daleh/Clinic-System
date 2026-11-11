@@ -28,6 +28,13 @@ namespace ClinicSystem.Appointments
 
             _appointmentId = appointmentId;
             Load += PerformAppointment_Load;
+            findPolicyInfo1.SendPolicy += FindPolicyInfo1_SendPolicy;
+        }
+
+        private Policy policy = new Policy();
+        private void FindPolicyInfo1_SendPolicy(Policy policy)
+        {
+            this.policy = policy;
         }
 
         public delegate void SendAppointmentInfo(Appointment appointment);
@@ -72,7 +79,6 @@ namespace ClinicSystem.Appointments
             lblPatientName.Text = $"{Appointment.Patient.GetFullName()} . since {Appointment.Patient.RegisterDate.ToShortDateString()} . {Appointment.Patient.GetTotalVisits()} vists";
 
             lnkSOAPNote.Enabled = !Appointment.HasSOAPNotes();
-            lnkPenalty.Enabled = !Appointment.HasPenalty();
             lnkPayment.Enabled = !Appointment.HasPayment();
             lnkPrescribe.Enabled = !Appointment.HasPrescription();
             lnkRefer.Enabled = !Appointment.HasReferral();
@@ -178,7 +184,7 @@ namespace ClinicSystem.Appointments
 
             Appointment.AppointmentStatuses = (EnAppointmentStatuses.Completed, "Completed");
 
-            OperationResult result = Appointment.Save(addedPayment);
+            OperationResult result = Appointment.Save(addedPayment, policy);
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             if (!result.IsSuccess)
