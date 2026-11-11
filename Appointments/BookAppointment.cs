@@ -3,6 +3,7 @@ using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Appointments
@@ -30,7 +31,7 @@ namespace ClinicSystem.Appointments
             appointment.AppointmentStatuses = (appointmentNewStatus, appointmentNewStatus.ToString());
         }
 
-        private void SetUpdateFrom(Appointment appointment)
+        private async Task SetUpdateFrom(Appointment appointment)
         {
             if (ValidationHelper.IsEmptyOrNull(appointment))
             {
@@ -51,13 +52,14 @@ namespace ClinicSystem.Appointments
             findPatientCtrl1.LoadPatientInfo(appointment.PatientID);
             findStaffCtrl1.LoadData(appointment.Staff);
             lblStatus.Text = appointment.AppointmentStatuses.AppointmentStatusText;
-            LoadAppointmentTypes((int)appointment.AppointmentTypes.AppointmentTypeID - 1);
+            await LoadAppointmentTypes();
 
             dtpStart.Value = DateTime.Parse(appointment.AppointmentTime.ToString());
             dtpEnd.Value = DateTime.Parse(appointment.AppointmentEndTime.ToString());
             dtpAppointmentDate.Value = appointment.AppointmentDate;
             findPatientCtrl1.AllowedFind = false;
             findStaffCtrl1.AllowFind = false;
+            cbType.SelectedIndex = (int)appointment.AppointmentTypes.AppointmentTypeID - 1;
         }
 
         public delegate void SendAppointmentOnSave(Appointment appointment);
@@ -72,21 +74,20 @@ namespace ClinicSystem.Appointments
 
         private void BtnCancel_Click(object sender, EventArgs e) => Close();
 
-        private void SetUp(int index)
+        private async Task SetUp(int index)
         {
             dtpAppointmentDate.MinDate = DateTime.Now;
             dtpAppointmentDate.MaxDate = DateTime.Now.AddMonths(1);
             lblStatus.Text = "Not Set";
-            LoadAppointmentTypes(index);
+            await LoadAppointmentTypes();
             findPatientCtrl1.AllowAddNew = false;
             findStaffCtrl1.AllowAddNew = false;
+            cbType.SelectedIndex = index;
         }
 
-        private async void LoadAppointmentTypes(int index)
+        private async Task LoadAppointmentTypes()
         {
             cbType.DataSource = await Appointment.GetAppointmentTypesNames();
-
-            cbType.SelectedIndex = index;
         }
 
         private void dtpEnd_Validating(object sender, System.ComponentModel.CancelEventArgs e)
@@ -169,7 +170,7 @@ namespace ClinicSystem.Appointments
 
             CollectData();
 
-            result = appointment.Save();
+            result = appointment.Save(null);
 
             MessageBox.Show(
                 result.Message,
