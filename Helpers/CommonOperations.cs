@@ -108,9 +108,6 @@ namespace ClinicSystem.Helpers
                 if (ValidationHelper.IsEmptyOrNull(currentValue) && ValidationHelper.IsEmptyOrNull(valueToCheck))
                     return null;
 
-                if (ValidationHelper.IsEmptyOrNull(currentValue) || ValidationHelper.IsEmptyOrNull(valueToCheck))
-                    return null;
-
                 try
                 {
                     object convertedValue = Convert.ChangeType(valueToCheck, prop.PropertyType);

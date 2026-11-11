@@ -82,12 +82,18 @@ namespace Data_Access
             return person;
         }
 
-        public static async Task<BindingList<PersonDto>> GetPeople()
+        public static async Task<BindingList<PersonDto>> GetPeople(int personId)
         {
             BindingList<PersonDto> people = new BindingList<PersonDto>();
 
-            string query = @"select PersonID, Firstname, Lastname, Gender from People";
-            people = await DataAccessHelper.ExecuteObjectList(query, null, PersonMapper);
+            string query = @"select PersonID, Firstname, Lastname, Gender from People where PersonID = @personId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@personId", SqlDbType.Int) {Value = personId}
+            };
+
+            people = await DataAccessHelper.ExecuteObjectList(query, parameters, PersonMapper);
 
             return people;
         }

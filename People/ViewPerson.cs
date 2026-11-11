@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using ClinicSystem.Properties;
 
@@ -51,6 +52,9 @@ namespace ClinicSystem.People.Controls
 
         private void btnEdit_Click(object sender, System.EventArgs e)
         {
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess && Global.CurrentLoggedInStaff.PersonId != person.PersonId)
+                return;
+
             AddUpdatePerson updatePerson = new AddUpdatePerson(person.PersonId);
             updatePerson.SendPersonInfo += RecivePersonObj;
             updatePerson.ShowDialog();

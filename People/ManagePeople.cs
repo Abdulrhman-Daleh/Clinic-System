@@ -134,7 +134,6 @@ namespace ClinicSystem.People
             updatePerson.SendPersonInfo += RefreshDgv;
             updatePerson.ShowDialog();
         }
-
         private void viewPersonToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
@@ -146,7 +145,6 @@ namespace ClinicSystem.People
             viewPerson.OnEdit += RefreshDgv;
             viewPerson.ShowDialog();
         }
-
         private void addPersonContactToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))

@@ -9,15 +9,12 @@ namespace Business
 {
     public class Person
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
-
+        private EnMode _mode;
         public virtual int PersonId { get; set; }
         public string Firstname { get; set; } = string.Empty;
         public string Lastname { get; set; } = string.Empty;
         public EnGender Gender { get; set; } = EnGender.Male;
         public BindingList<PersonContact> Contacts { get; set; }
-
         public static Person FromDto(PersonDto personDto)
         {
             if (personDto == null) return null;
@@ -28,10 +25,9 @@ namespace Business
                 Firstname = personDto.Firstname,
                 Lastname = personDto.Lastname,
                 Gender = personDto.Gender == 'M' ? EnGender.Male : EnGender.Female,
-                _mode = Mode.Update
+                _mode = EnMode.Update
             };
         }
-
         public static PersonDto ToDto(Person person)
         {
             return new PersonDto
@@ -44,31 +40,26 @@ namespace Business
         }
 
         public PersonContact contactInfo = new PersonContact();
-
         public Person()
         {
             PersonId = -1;
-            _mode = Mode.Add;
+            _mode = EnMode.Add;
             Contacts = new BindingList<PersonContact>();
         }
-
-        private async void _LoadPersonContacts()
+        private async void LoadPersonContacts()
         {
             Contacts = await PersonContact.GetShortContactInfo(this.PersonId);
         }
-
         public Person(int personId)
         {
             PersonId = personId;
-            _mode = Mode.Update;
-            _LoadPersonContacts();
+            _mode = EnMode.Update;
+            LoadPersonContacts();
         }
-
-        private bool _UpdatePerson()
+        private bool UpdatePerson()
         {
             return PersonData.UpdatePerson(ToDto(this), PersonContact.ToDto(contactInfo));
         }
-
         public virtual OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(
@@ -78,22 +69,21 @@ namespace Business
             if (!result.IsSuccess)
                 return result;
 
-            if (_mode == Mode.Add)
+            if (_mode == EnMode.Add)
             {
-                _mode = Mode.Update;
+                _mode = EnMode.Update;
                 return new OperationResult("Person Info send", "PersonSend", true);
             }
 
-            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Receptionist &&
-                PersonData.IsPersonRegisteredAsStaff(PersonId))
+            if (Global.CurrentLoggedInStaff.PersonId != PersonId)
             {
                 return new OperationResult(
-                    "Receptionists cannot update staff personal information.",
+                    "not allowed to update staff personal information.",
                     "Access Denied",
                     false);
             }
 
-            if (_UpdatePerson())
+            if (UpdatePerson())
             {
                 Auditor.Log(
                     "Person Updated",
@@ -111,19 +101,13 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static Person FindPersonById(int personId)
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
                 return null;
 
-            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Receptionist &&
-                PersonData.IsPersonRegisteredAsStaff(personId))
-                return null;
-
             return FromDto(PersonData.FindPersonById(personId));
         }
-
         public static Person FindPersonByFirstname(string Firstname)
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
@@ -134,13 +118,8 @@ namespace Business
             if (personDto == null)
                 return null;
 
-            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Receptionist &&
-                PersonData.IsPersonRegisteredAsStaff(personDto.PersonId))
-                return null;
-
             return FromDto(personDto);
         }
-
         public static async Task<BindingList<Person>> GetPeople()
         {
             BindingList<Person> people = new BindingList<Person>();
@@ -148,24 +127,15 @@ namespace Business
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
                 return people;
 
-            BindingList<PersonDto> peopleDto = await PersonData.GetPeople();
+            BindingList<PersonDto> peopleDto = await PersonData.GetPeople(Global.CurrentLoggedInStaff.PersonId);
 
             foreach (PersonDto row in peopleDto)
-            {
-                if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Receptionist &&
-                    PersonData.IsPersonRegisteredAsStaff(row.PersonId))
-                    continue;
-
                 people.Add(FromDto(row));
-            }
 
             return people;
         }
-
         public string GetFullName() => Firstname + " " + Lastname;
-
         public char GetGenderChar() => Gender == EnGender.Male ? 'M' : 'F';
-
         public OperationResult IsPersonValidToSave()
         {
             if (Util.IsRequired(Firstname) && Util.IsRequired(Lastname) && Util.IsValidId((int)Gender))
@@ -173,7 +143,6 @@ namespace Business
 
             return new OperationResult("Form is invalid to save", "Invalid", false);
         }
-
         public OperationResult IsPersonRegisteredAsPatient()
         {
             OperationResult result = Util.CanAccessForm(
@@ -194,7 +163,6 @@ namespace Business
                 "Allowed",
                 false);
         }
-
         public OperationResult IsPersonRegisteredAsStaff()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Owner);

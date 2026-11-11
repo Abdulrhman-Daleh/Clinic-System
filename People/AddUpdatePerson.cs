@@ -15,7 +15,6 @@ namespace ClinicSystem
 
         public delegate void SendPersonInfoOnSave(Person person);
         public event SendPersonInfoOnSave SendPersonInfo;
-
         public AddUpdatePerson()
         {
             InitializeComponent();
@@ -25,7 +24,6 @@ namespace ClinicSystem
             SetControls();
             lnkAddContact.Enabled = false;
         }
-
         private void SetControls(int selectedIndex = 0, string firstName = "", string lastName = "", int personId = -1)
         {
             cbGender.Items.Add("Male");
@@ -37,7 +35,6 @@ namespace ClinicSystem
             txtLastName.Text = lastName;
             PrintPersonId(personId);
         }
-
         public AddUpdatePerson(int personId)
         {
             InitializeComponent();
@@ -50,7 +47,6 @@ namespace ClinicSystem
             SetControls((int)_person.Gender - 1, _person.Firstname, _person.Lastname, _person.PersonId);
             lnkAddContact.Enabled = true;
         }
-
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText, Image image)
         {
             lblTitle.Text = labelTitle;
@@ -58,20 +54,15 @@ namespace ClinicSystem
             btnSave.Text = saveButtonText;
             pbModeImage.Image = image;
         }
-
         private void ValidateInputValues(object sender, CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
-
         private void PrintPersonId(int personId)
         {
             lblPersonId.Text = personId != -1 ? $"P-{personId}" : "[Not Set]";
         }
-
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
-
-
         private void btnSave_Click(object sender, System.EventArgs e)
         {
             if (ValidationHelper.IsEmptyOrNull(_person, "person is not valid to save"))
@@ -112,18 +103,14 @@ namespace ClinicSystem
                 SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
             }
         }
-
-
         private void ValidateInputKeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void cbGender_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void lnkAddContact_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             AddPersonContacts addContact = new AddPersonContacts(_person.PersonId);

@@ -1,5 +1,4 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using ClinicSystem.Appointments;
 using ClinicSystem.Helpers;
 using ClinicSystem.Insurance;
