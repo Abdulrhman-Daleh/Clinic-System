@@ -91,7 +91,7 @@
             // lblSetBy
             // 
             this.lblSetBy.AutoSize = true;
-            this.lblSetBy.Location = new System.Drawing.Point(610, 176);
+            this.lblSetBy.Location = new System.Drawing.Point(577, 176);
             this.lblSetBy.Name = "lblSetBy";
             this.lblSetBy.Size = new System.Drawing.Size(0, 25);
             this.lblSetBy.TabIndex = 20;
@@ -107,7 +107,7 @@
             // lblActiveFrom
             // 
             this.lblActiveFrom.AutoSize = true;
-            this.lblActiveFrom.Location = new System.Drawing.Point(618, 120);
+            this.lblActiveFrom.Location = new System.Drawing.Point(585, 120);
             this.lblActiveFrom.Name = "lblActiveFrom";
             this.lblActiveFrom.Size = new System.Drawing.Size(0, 25);
             this.lblActiveFrom.TabIndex = 18;
@@ -123,7 +123,7 @@
             // lblLateFees
             // 
             this.lblLateFees.AutoSize = true;
-            this.lblLateFees.Location = new System.Drawing.Point(603, 59);
+            this.lblLateFees.Location = new System.Drawing.Point(562, 59);
             this.lblLateFees.Name = "lblLateFees";
             this.lblLateFees.Size = new System.Drawing.Size(0, 25);
             this.lblLateFees.TabIndex = 16;
