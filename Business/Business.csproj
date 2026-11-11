@@ -57,6 +57,7 @@
     <Compile Include="Patient.cs" />
     <Compile Include="PatientInsuranceInfo.cs" />
     <Compile Include="PatientList.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="Policy.cs" />
     <Compile Include="Prescription.cs" />
     <Compile Include="PrescriptionItem.cs" />

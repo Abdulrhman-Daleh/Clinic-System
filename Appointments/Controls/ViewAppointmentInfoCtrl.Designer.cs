@@ -227,6 +227,7 @@
             this.lnkReferral.Name = "lnkReferral";
             this.lnkReferral.Size = new System.Drawing.Size(0, 25);
             this.lnkReferral.TabIndex = 97;
+            this.lnkReferral.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkReferral_LinkClicked);
             // 
             // lnkLabTest
             // 

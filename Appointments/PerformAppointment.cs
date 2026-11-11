@@ -7,6 +7,7 @@ using ClinicSystem.Insurance;
 using ClinicSystem.LabOrderTest;
 using ClinicSystem.MedicalRecord;
 using ClinicSystem.Medicine.Prescription;
+using ClinicSystem.Payment;
 using ClinicSystem.Referral;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -28,6 +29,9 @@ namespace ClinicSystem.Appointments
             _appointmentId = appointmentId;
             Load += PerformAppointment_Load;
         }
+
+        public delegate void SendAppointmentInfo(Appointment appointment);
+        public event SendAppointmentInfo OnSave;
 
         private void PerformAppointment_Load(object sender, System.EventArgs e)
         {
@@ -174,16 +178,14 @@ namespace ClinicSystem.Appointments
 
             Appointment.AppointmentStatuses = (EnAppointmentStatuses.Completed, "Completed");
 
-            OperationResult result = Appointment.Save();
+            OperationResult result = Appointment.Save(addedPayment);
+            MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             if (!result.IsSuccess)
-            {
-                MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
 
-            MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             btnSave.Enabled = false;
+            OnSave?.Invoke(Appointment);
         }
 
         private void lnkPrescribe_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -215,8 +217,25 @@ namespace ClinicSystem.Appointments
 
         private void lnkRefer_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            AddUpdateReferral addRef = new AddUpdateReferral(Appointment.AppointmentID);
+            AddUpdateReferral addRef = new AddUpdateReferral(Appointment.AppointmentID, EnMode.Add);
+            addRef.OnSave += ReciveRefInfo;
             addRef.ShowDialog();
+        }
+
+        private void ReciveRefInfo(Business.Referral refInfo) => lnkRefer.Enabled = false;
+
+        private void lnkPayment_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            AddNewPayment addPayment = new AddNewPayment(Appointment.AppointmentID, null, AddNewPayment.EnAddMode.ReturnDtaft);
+            addPayment.OnSave += RecivePaymentInfo;
+            addPayment.ShowDialog();
+        }
+
+        private Business.Payment addedPayment = null;
+        private void RecivePaymentInfo(Business.Payment paymentInfo)
+        {
+            addedPayment = paymentInfo;
+            lnkPayment.Enabled = false;
         }
     }
 }

@@ -42,11 +42,9 @@ namespace Data_Access
             return appointmentId;
         }
 
-        public static int UpdateAppointment(AppointmentDto appointmentDto)
+        public static int UpdateAppointment(AppointmentDto appointmentDto, PaymentDto paymentDto)
         {
-            string query = @"Update Appointments
-            set AppointmentStatusID = @AppointmentStatusID, AppointmentTypeID = @AppointmentTypeID, AppointmentDate = @AppointmentDate,
-            AppointmentTime = @AppointmentTime, AppointmentEndTime = @AppointmentEndTime where AppointmentID = @AppointmentId";
+            string query = "sp_UpdateAppointment";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
@@ -55,10 +53,14 @@ namespace Data_Access
                 new SqlParameter("@AppointmentTypeID", SqlDbType.Int) {Value = appointmentDto.AppointmentTypes.AppointmentTypeID },
                 new SqlParameter("@AppointmentTime", SqlDbType.Time) {Value = appointmentDto.AppointmentTime },
                 new SqlParameter("@AppointmentEndTime", SqlDbType.Time) {Value = appointmentDto.AppointmentEndTime },
-                new SqlParameter("@AppointmentDate", SqlDbType.Date) {Value = appointmentDto.AppointmentDate }
+                new SqlParameter("@AppointmentDate", SqlDbType.Date) {Value = appointmentDto.AppointmentDate },
+                new SqlParameter("@paymentAppointmentId", SqlDbType.Int) {Value = paymentDto.AppointmentID ?? (object)DBNull.Value },
+                new SqlParameter("@PenaltyId", SqlDbType.Int) {Value = paymentDto.PenaltyID ?? (object)DBNull.Value },
+                new SqlParameter("@ProccessById", SqlDbType.Int) {Value = paymentDto.ProccessByID },
+                new SqlParameter("@PaymentAmount", SqlDbType.Decimal) {Value = paymentDto.PaymentAmount }
             };
 
-            return DataAccessHelper.ExecuteNonQuery(query, parameters);
+            return DataAccessHelper.ExecuteNonQueryStoredProcedure<int>(query, parameters);
         }
 
         private static string AppointmentTypeMapper(SqlDataReader reader)

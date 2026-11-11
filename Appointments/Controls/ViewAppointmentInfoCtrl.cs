@@ -5,6 +5,7 @@ using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;
 using ClinicSystem.LabOrderTest;
 using ClinicSystem.Medicine.Prescription;
+using ClinicSystem.Referral;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -173,6 +174,27 @@ namespace ClinicSystem.Appointments.Controls
 
             manageTests.ShowDialog();
             activeForms.Remove(manageTests);
+        }
+
+        private void lnkReferral_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Doctor))
+                return;
+
+            if (Appointment == null)
+                return;
+
+            AddUpdateReferral viewReferral = new AddUpdateReferral(Appointment.AppointmentID, EnMode.Update);
+            if (activeForms.Where(x => x.Text == viewReferral.Text).Count() > 0)
+            {
+                MessageBox.Show("Form is already open", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+                activeForms.Add(viewReferral);
+
+            viewReferral.ShowDialog();
+            activeForms.Remove(viewReferral);
         }
     }
 }

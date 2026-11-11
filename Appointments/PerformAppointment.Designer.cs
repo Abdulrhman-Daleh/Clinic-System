@@ -380,6 +380,7 @@
             this.lnkPayment.TabIndex = 43;
             this.lnkPayment.TabStop = true;
             this.lnkPayment.Text = "[Collect Payment]";
+            this.lnkPayment.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPayment_LinkClicked);
             // 
             // pictureBox10
             // 

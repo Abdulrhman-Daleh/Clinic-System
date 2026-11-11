@@ -88,9 +88,9 @@ namespace Business
             return AppointmentID > 0;
         }
 
-        private bool UpdateAppointment()
+        private bool UpdateAppointment(Payment paymentInfo)
         {
-            return AppointmentData.UpdateAppointment(ToDto(this)) > 0;
+            return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo)) > 0;
         }
 
         private OperationResult CheckSaveAccess()
@@ -189,7 +189,7 @@ namespace Business
                 true);
         }
 
-        public OperationResult Save()
+        public OperationResult Save(Payment paymentInfo = null)
         {
             OperationResult result = CheckSaveAccess();
 
@@ -205,6 +205,9 @@ namespace Business
                 currentStaff.RoleInfo.RoleId == EnRole.Doctor)
             {
                 result = IsAppointmentValidToComplete();
+
+                if (paymentInfo == null)
+                    result = new OperationResult("Payment is required to finish the appointment", "Required Payment", false);
             }
             else
             {
@@ -242,7 +245,7 @@ namespace Business
 
                 case EnMode.Update:
 
-                    if (UpdateAppointment())
+                    if (UpdateAppointment(paymentInfo))
                     {
                         Auditor.Log(
                             "Appointment Updated",

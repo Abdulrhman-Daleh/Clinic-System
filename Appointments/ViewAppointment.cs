@@ -41,12 +41,23 @@ namespace ClinicSystem.Appointments
             lblStatus.Text = appointment.AppointmentStatuses.AppointmentStatusText;
             btnReschedule.Enabled = true;
             lblAppointmentId.Text = "Appo-" + appointment.AppointmentID.ToString();
+            btnReschedule.Enabled = appointment.IsStillActive();
         }
+
+        public delegate void SendAppointmentOnSave(Appointment appointment);
+        public event SendAppointmentOnSave OnSave;
 
         private void btnReschedule_Click(object sender, System.EventArgs e)
         {
             BookAppointment rescheduleAppointment = new BookAppointment(findAppointmentCtrl1.CurrentAppointment.AppointmentID, AppEnums.cs.EnAppointmentStatuses.Rescheduled);
+
+            rescheduleAppointment.OnSave += RescheduleAppointment_OnSave;
             rescheduleAppointment.ShowDialog();
+        }
+
+        private void RescheduleAppointment_OnSave(Appointment appointment)
+        {
+            OnSave?.Invoke(appointment);
         }
     }
 }

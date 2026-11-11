@@ -13,4 +13,5 @@
     public enum EnStrengthUnits { Mcg = 1, Mg = 2, G = 3, Ml = 4, MgPerMl = 5, Percentage = 6, IU = 7, IUPerMl = 8 }
     public enum EnTestStatuses { Ordered = 1, Scheduled, Collected, InProgress, Pending, Completed }
     public enum EnReferralUrgencies { Immediate = 1, Urgent, Priority, Routine }
+    public enum EnPaymentStatuses { Pending = 1, Completed, Cancelled, Declined }
 }

@@ -305,6 +305,12 @@
     <Compile Include="Patients\ViewPatient.Designer.cs">
       <DependentUpon>ViewPatient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Payment\AddNewPayment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payment\AddNewPayment.Designer.cs">
+      <DependentUpon>AddNewPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\AddPersonContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -553,6 +559,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Patients\ViewPatient.resx">
       <DependentUpon>ViewPatient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Payment\AddNewPayment.resx">
+      <DependentUpon>AddNewPayment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddPersonContacts.resx">
       <DependentUpon>AddPersonContacts.cs</DependentUpon>
@@ -855,6 +864,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Referral_64.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\atm-card_321.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

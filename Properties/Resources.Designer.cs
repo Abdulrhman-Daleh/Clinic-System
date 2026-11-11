@@ -173,6 +173,16 @@ namespace ClinicSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap atm_card_321 {
+            get {
+                object obj = ResourceManager.GetObject("atm-card_321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap autograph_32 {
             get {
                 object obj = ResourceManager.GetObject("autograph_32", resourceCulture);

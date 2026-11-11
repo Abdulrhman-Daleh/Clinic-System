@@ -55,6 +55,7 @@
     <Compile Include="DTOs\MedicineDto.cs" />
     <Compile Include="DTOs\PatientDto.cs" />
     <Compile Include="DTOs\PatientInsuranceInfoDto.cs" />
+    <Compile Include="DTOs\PaymentDto.cs" />
     <Compile Include="DTOs\PersonContactDto.cs" />
     <Compile Include="DTOs\PersonDto.cs" />
     <Compile Include="DTOs\PolicyDto.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
     <Compile Include="ListingDTOs\PrescriptionItemListingDto.cs" />
     <Compile Include="MedicineData.cs" />
+    <Compile Include="PaymentData.cs" />
     <Compile Include="PrescriptionData.cs" />
     <Compile Include="PrescriptionItemData.cs" />
     <Compile Include="ReferralData.cs" />

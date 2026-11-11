@@ -116,6 +116,7 @@ namespace ClinicSystem.Appointments
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
             ViewAppointment viewAppointment = new ViewAppointment(appointmentId);
+            viewAppointment.OnSave += RefreshDgv;
             viewAppointment.ShowDialog();
         }
 
@@ -129,6 +130,27 @@ namespace ClinicSystem.Appointments
         private void cmsAppointments_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
+                return;
+
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+                return;
+
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+
+            Appointment app = Appointment.FindAppointmentByID(appointmentId);
+
+            if (ValidationHelper.IsEmptyOrNull(app, "Appointment is not found"))
+                return;
+
+            if (app.StaffID != Global.CurrentLoggedInStaff.StaffId)
+            {
+                MessageBox.Show("allowed to see only his appointment", "Not allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            rescheduleToolStripMenuItem.Enabled = app.IsStillActive();
+            goToAppointmentToolStripMenuItem.Enabled = app.IsStillActive();
         }
 
         private void dgvAppointments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -156,6 +178,7 @@ namespace ClinicSystem.Appointments
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
             BookAppointment viewAppointment = new BookAppointment(appointmentId, EnAppointmentStatuses.Rescheduled);
+            viewAppointment.OnSave += RefreshDgv;
             viewAppointment.ShowDialog();
         }
 
@@ -170,6 +193,7 @@ namespace ClinicSystem.Appointments
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
             PerformAppointment performAppointment = new PerformAppointment(appointmentId);
+            performAppointment.OnSave += RefreshDgv;
             performAppointment.ShowDialog();
         }
     }
