@@ -27,7 +27,7 @@ namespace Data_Access
                     ReferralDate = (DateTime)reader["ReferralDate"],
                     ReferralUrgencies = (
                         (AppEnums.cs.EnReferralUrgencies)(int)reader["ReferralUrgencyID"],
-                        (string)reader["ReferralUrgencyText"]
+                        (string)reader["ReferralUrgencyLevel"]
                     ),
                     Speciality = (string)reader["Speciality"]
                 };
@@ -229,6 +229,33 @@ namespace Data_Access
 
             return await DataAccessHelper.ExecuteObjectList<ReferralDto>(
                 query, null, ReferralMapper);
+        }
+
+        public static ReferralDto FindReferralByAppointmentID(int appointmentID, int staffId)
+        {
+            string query = @"SELECT
+                    r.ReferralID,
+                    r.DoctorID,
+                    r.AppointmentID,
+                    r.NoteID,
+                    r.ReferralReason,
+                    r.ReferralDate,
+                    r.ReferralUrgencyID,
+                    ru.ReferralUrgencyLevel,
+                    r.Speciality
+                FROM Referrals AS r
+                INNER JOIN ReferralUrgencies AS ru
+                    ON r.ReferralUrgencyID = ru.ReferralUrgencyID
+                    where AppointmentID = @AppointmentId
+                    and DoctorID = @StaffId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@StaffId", SqlDbType.Int) {Value = staffId},
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentID}
+            };
+
+            return DataAccessHelper.ExecuteOneObject(query, parameters, ReferralMapper);
         }
     }
 }

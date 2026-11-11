@@ -40,21 +40,21 @@
             this.errors = new System.Windows.Forms.ErrorProvider(this.components);
             this.cbReferralUrgency = new System.Windows.Forms.ComboBox();
             this.viewStaffInfoCtrl1 = new ClinicSystem.Staff.Controls.ViewStaffInfoCtrl();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.gbReferral = new System.Windows.Forms.GroupBox();
+            this.txtReferralReason = new System.Windows.Forms.TextBox();
+            this.txtSpeciality = new System.Windows.Forms.TextBox();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.txtSpeciality = new System.Windows.Forms.TextBox();
-            this.txtReferralReason = new System.Windows.Forms.TextBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.gbReferral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -158,42 +158,59 @@
             this.viewStaffInfoCtrl1.Size = new System.Drawing.Size(651, 288);
             this.viewStaffInfoCtrl1.TabIndex = 21;
             // 
-            // groupBox1
+            // gbReferral
             // 
-            this.groupBox1.Controls.Add(this.txtReferralReason);
-            this.groupBox1.Controls.Add(this.txtSpeciality);
-            this.groupBox1.Controls.Add(this.pictureBox4);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.cbReferralUrgency);
-            this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.pictureBox3);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Location = new System.Drawing.Point(11, 647);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1133, 150);
-            this.groupBox1.TabIndex = 22;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Referral  Details";
+            this.gbReferral.Controls.Add(this.txtReferralReason);
+            this.gbReferral.Controls.Add(this.txtSpeciality);
+            this.gbReferral.Controls.Add(this.pictureBox4);
+            this.gbReferral.Controls.Add(this.label8);
+            this.gbReferral.Controls.Add(this.cbReferralUrgency);
+            this.gbReferral.Controls.Add(this.pictureBox1);
+            this.gbReferral.Controls.Add(this.label4);
+            this.gbReferral.Controls.Add(this.pictureBox3);
+            this.gbReferral.Controls.Add(this.label3);
+            this.gbReferral.Location = new System.Drawing.Point(11, 647);
+            this.gbReferral.Name = "gbReferral";
+            this.gbReferral.Size = new System.Drawing.Size(1133, 150);
+            this.gbReferral.TabIndex = 22;
+            this.gbReferral.TabStop = false;
+            this.gbReferral.Text = "Referral  Details";
             // 
-            // pictureBox3
+            // txtReferralReason
             // 
-            this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.outbox_32;
-            this.pictureBox3.Location = new System.Drawing.Point(10, 38);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 53;
-            this.pictureBox3.TabStop = false;
+            this.txtReferralReason.Location = new System.Drawing.Point(631, 40);
+            this.txtReferralReason.Multiline = true;
+            this.txtReferralReason.Name = "txtReferralReason";
+            this.txtReferralReason.Size = new System.Drawing.Size(482, 104);
+            this.txtReferralReason.TabIndex = 64;
+            this.txtReferralReason.Validating += new System.ComponentModel.CancelEventHandler(this.txtReferralReason_Validating);
             // 
-            // label3
+            // txtSpeciality
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(58, 45);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(98, 25);
-            this.label3.TabIndex = 52;
-            this.label3.Text = "Specialty:";
+            this.txtSpeciality.Location = new System.Drawing.Point(162, 42);
+            this.txtSpeciality.Name = "txtSpeciality";
+            this.txtSpeciality.Size = new System.Drawing.Size(194, 30);
+            this.txtSpeciality.TabIndex = 63;
+            this.txtSpeciality.Validating += new System.ComponentModel.CancelEventHandler(this.txtSpeciality_Validating);
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.note_32;
+            this.pictureBox4.Location = new System.Drawing.Point(495, 38);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 62;
+            this.pictureBox4.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(543, 45);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(85, 25);
+            this.label8.TabIndex = 61;
+            this.label8.Text = "Reason:";
             // 
             // pictureBox1
             // 
@@ -214,48 +231,31 @@
             this.label4.TabIndex = 55;
             this.label4.Text = "Urgency:";
             // 
-            // label8
+            // pictureBox3
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(543, 45);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(85, 25);
-            this.label8.TabIndex = 61;
-            this.label8.Text = "Reason:";
+            this.pictureBox3.Image = global::ClinicSystem.Properties.Resources.outbox_32;
+            this.pictureBox3.Location = new System.Drawing.Point(10, 38);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(41, 38);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 53;
+            this.pictureBox3.TabStop = false;
             // 
-            // pictureBox4
+            // label3
             // 
-            this.pictureBox4.Image = global::ClinicSystem.Properties.Resources.note_32;
-            this.pictureBox4.Location = new System.Drawing.Point(495, 38);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(41, 38);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 62;
-            this.pictureBox4.TabStop = false;
-            // 
-            // txtSpeciality
-            // 
-            this.txtSpeciality.Location = new System.Drawing.Point(162, 42);
-            this.txtSpeciality.Name = "txtSpeciality";
-            this.txtSpeciality.Size = new System.Drawing.Size(194, 30);
-            this.txtSpeciality.TabIndex = 63;
-            this.txtSpeciality.Validating += new System.ComponentModel.CancelEventHandler(this.txtSpeciality_Validating);
-            // 
-            // txtReferralReason
-            // 
-            this.txtReferralReason.Location = new System.Drawing.Point(631, 40);
-            this.txtReferralReason.Multiline = true;
-            this.txtReferralReason.Name = "txtReferralReason";
-            this.txtReferralReason.Size = new System.Drawing.Size(482, 104);
-            this.txtReferralReason.TabIndex = 64;
-            this.txtReferralReason.Validating += new System.ComponentModel.CancelEventHandler(this.txtReferralReason_Validating);
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(58, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(98, 25);
+            this.label3.TabIndex = 52;
+            this.label3.Text = "Specialty:";
             // 
             // AddUpdateReferral
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1544, 807);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbReferral);
             this.Controls.Add(this.viewStaffInfoCtrl1);
             this.Controls.Add(this.viewSoapNoteCtrl1);
             this.Controls.Add(this.viewAppointmentInfoCtrl1);
@@ -269,11 +269,11 @@
             this.Text = "New Referral";
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errors)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.gbReferral.ResumeLayout(false);
+            this.gbReferral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,7 +291,7 @@
         private Appointments.SOAPNotes.Controls.ViewSoapNoteCtrl viewSoapNoteCtrl1;
         private System.Windows.Forms.ErrorProvider errors;
         private System.Windows.Forms.ComboBox cbReferralUrgency;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbReferral;
         private Staff.Controls.ViewStaffInfoCtrl viewStaffInfoCtrl1;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox1;

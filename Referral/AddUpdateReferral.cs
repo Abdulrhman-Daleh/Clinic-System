@@ -9,22 +9,44 @@ namespace ClinicSystem.Referral
 {
     public partial class AddUpdateReferral : FormsDefaultSettings
     {
-
         private Business.Referral referral;
-
-        public AddUpdateReferral(int appointmentId)
+        public AddUpdateReferral(int appointmentId, EnMode mode)
         {
             InitializeComponent();
-            referral = new Business.Referral();
             lblReferralId.Text = "Not Set";
+
+            cbReferralUrgency.DataSource =
+                Enum.GetValues(typeof(EnReferralUrgencies));
 
             viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
             Load += AddUpdateReferral_Load;
+            SetUpForm(appointmentId, mode);
+        }
+
+        private void SetUpForm(int appointmentId, EnMode mode)
+        {
+            if (mode == EnMode.Add)
+            {
+                referral = new Business.Referral();
+                SetFormTextBasedMode(
+                    "Add Referral",
+                    "Add Referral",
+                    "Add");
+                return;
+            }
 
             SetFormTextBasedMode(
-                "Add Referral",
-                "Add Referral",
-                "Add");
+                    "Update Referral",
+                    "Update Referral",
+                    "Update");
+
+            referral = Business.Referral.FindReferralByAppointmentID(appointmentId);
+            txtReferralReason.Text = referral.ReferralReason;
+            txtSpeciality.Text = referral.Speciality;
+            cbReferralUrgency.SelectedIndex = (int)referral.ReferralUrgencies.ReferralUrgencyID - 1;
+            lblReferralId.Text = $"Ref-{referral.ReferralID}";
+            btnSave.Enabled = referral.Appointment.IsStillActive();
+            gbReferral.Enabled = referral.Appointment.IsStillActive();
         }
 
         public delegate void SendReferralInfo(Business.Referral referral);
@@ -42,9 +64,6 @@ namespace ClinicSystem.Referral
 
         private void SetPage()
         {
-            cbReferralUrgency.DataSource =
-                Enum.GetValues(typeof(EnReferralUrgencies));
-
             cbReferralUrgency.SelectedIndex = 0;
             SetControls();
         }
@@ -72,6 +91,10 @@ namespace ClinicSystem.Referral
             referral.NoteID = viewSoapNoteCtrl1.CurrentNote.NoteID;
 
             referral.DoctorID = Global.CurrentLoggedInStaff.StaffId;
+            referral.Doctor = Global.CurrentLoggedInStaff;
+
+            referral.Note = viewSoapNoteCtrl1.CurrentNote;
+            referral.NoteID = referral.Note == null ? -1 : referral.Note.NoteID;
 
             referral.ReferralReason = txtReferralReason.Text.Trim();
 
