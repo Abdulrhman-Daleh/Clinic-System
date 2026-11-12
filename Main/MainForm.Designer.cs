@@ -55,7 +55,10 @@
             this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manageMedicinesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewCurrentInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewCurrentRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.viewCurrentRecordStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +73,8 @@
             this.manageStaffToolStripMenuItem,
             this.patientsToolStripMenuItem,
             this.appointmentsToolStripMenuItem,
-            this.administrationToolStripMenuItem});
+            this.administrationToolStripMenuItem,
+            this.viewCurrentInfoToolStripMenuItem});
             this.MSOperations.Location = new System.Drawing.Point(0, 0);
             this.MSOperations.Name = "MSOperations";
             this.MSOperations.Size = new System.Drawing.Size(1762, 72);
@@ -333,6 +337,26 @@
             this.manageMedicinesToolStripMenuItem.Text = " Manage Medicines";
             this.manageMedicinesToolStripMenuItem.Click += new System.EventHandler(this.manageMedicinesToolStripMenuItem_Click);
             // 
+            // viewCurrentInfoToolStripMenuItem
+            // 
+            this.viewCurrentInfoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewCurrentRecordToolStripMenuItem,
+            this.viewCurrentRecordStaffToolStripMenuItem});
+            this.viewCurrentInfoToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.perf_64;
+            this.viewCurrentInfoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewCurrentInfoToolStripMenuItem.Name = "viewCurrentInfoToolStripMenuItem";
+            this.viewCurrentInfoToolStripMenuItem.Size = new System.Drawing.Size(257, 68);
+            this.viewCurrentInfoToolStripMenuItem.Text = "View Current Info";
+            // 
+            // viewCurrentRecordToolStripMenuItem
+            // 
+            this.viewCurrentRecordToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_current_32;
+            this.viewCurrentRecordToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewCurrentRecordToolStripMenuItem.Name = "viewCurrentRecordToolStripMenuItem";
+            this.viewCurrentRecordToolStripMenuItem.Size = new System.Drawing.Size(357, 38);
+            this.viewCurrentRecordToolStripMenuItem.Text = "View Current Record";
+            this.viewCurrentRecordToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentRecordToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -343,6 +367,15 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            // 
+            // viewCurrentRecordStaffToolStripMenuItem
+            // 
+            this.viewCurrentRecordStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_current_32;
+            this.viewCurrentRecordStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewCurrentRecordStaffToolStripMenuItem.Name = "viewCurrentRecordStaffToolStripMenuItem";
+            this.viewCurrentRecordStaffToolStripMenuItem.Size = new System.Drawing.Size(357, 38);
+            this.viewCurrentRecordStaffToolStripMenuItem.Text = "View Current Record Staff";
+            this.viewCurrentRecordStaffToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentRecordStaffToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -392,5 +425,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem manageMedicinesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem myLabQueueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewCurrentInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewCurrentRecordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewCurrentRecordStaffToolStripMenuItem;
     }
 }

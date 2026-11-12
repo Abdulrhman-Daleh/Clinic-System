@@ -345,11 +345,12 @@
             // 
             // findStaffCtrl1
             // 
+            this.findStaffCtrl1.AllowAddNew = true;
             this.findStaffCtrl1.AllowFind = true;
             this.findStaffCtrl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.findStaffCtrl1.Location = new System.Drawing.Point(12, 94);
             this.findStaffCtrl1.Name = "findStaffCtrl1";
-            this.findStaffCtrl1.Size = new System.Drawing.Size(596, 372);
+            this.findStaffCtrl1.Size = new System.Drawing.Size(623, 372);
             this.findStaffCtrl1.TabIndex = 25;
             // 
             // AddUpdatePolicy

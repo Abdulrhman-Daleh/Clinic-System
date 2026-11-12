@@ -1,4 +1,5 @@
 ﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Appointments;
 using ClinicSystem.Helpers;
 using ClinicSystem.Insurance;
@@ -208,6 +209,24 @@ namespace ClinicSystem
 
             SystemLogin login = new SystemLogin();
             login.ShowDialog();
+        }
+
+        private void viewCurrentRecordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ValidationHelper.IsEmptyOrNull(Global.CurrentLoggedInStaff, "No user is logged In"))
+                return;
+
+            ViewPerson viewPerson = new ViewPerson(Global.CurrentLoggedInStaff.PersonId);
+            viewPerson.ShowDialog();
+        }
+
+        private void viewCurrentRecordStaffToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ValidationHelper.IsEmptyOrNull(Global.CurrentLoggedInStaff, "No user is logged In"))
+                return;
+
+            ViewStaffInfo viewStaffRecord = new ViewStaffInfo(Global.CurrentLoggedInStaff.StaffId);
+            viewStaffRecord.ShowDialog();
         }
     }
 }

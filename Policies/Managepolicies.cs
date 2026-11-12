@@ -4,6 +4,7 @@ using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Policies
@@ -21,22 +22,22 @@ namespace ClinicSystem.Policies
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
 
-            CommonOperations.HandleSwitchingFilter(
-                cbFilterBy, null, txtFilter, dgvPolicies,
-                Policies, lblRecords, null);
+            CommonOperations.HandleSwitchingFilter(cbFilterBy, cbPolicyStatus, txtFilter, dgvPolicies, Policies, lblRecords, "Status");
 
             ValidationHelper.SetApproperiteMaxLength(
                 txtFilter,
-                new List<string> { "PolicyID", "OwnerID", "PolicyStatusID" },
+                new List<string> { "PolicyID", "OwnerID" },
                 CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
 
-        private void SetUp()
+        private async Task SetUp()
         {
+            await LoadPolicyStatuses();
+
             cbFilterBy.Items.AddRange(new object[]
             {
-                "None", "PolicyID", "OwnerID", "PolicyStatusID"
+                "None", "PolicyID", "OwnerID", "Status"
             });
 
             cbFilterBy.SelectedIndex = 0;
@@ -62,6 +63,9 @@ namespace ClinicSystem.Policies
         private void addNewPolicyToolStripMenuItem_Click(
             object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             AddUpdatePolicy addPolicy = new AddUpdatePolicy();
             addPolicy.SendPolicy += RefreshDgv;
             addPolicy.ShowDialog();
@@ -70,6 +74,9 @@ namespace ClinicSystem.Policies
         private void updatePolicyToolStripMenuItem_Click(
             object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             int policyId = (int)dgvPolicies.CurrentRow.Cells["PolicyID"].Value;
 
             AddUpdatePolicy updatePolicy = new AddUpdatePolicy(policyId);
@@ -80,6 +87,9 @@ namespace ClinicSystem.Policies
         private void viewPolicyToolStripMenuItem_Click(
             object sender, System.EventArgs e)
         {
+            if (!ValidationHelper.CheckAccess(EnRole.Owner))
+                return;
+
             int policyId = (int)dgvPolicies.CurrentRow.Cells["PolicyID"].Value;
 
             ViewPolicyInfo viewPolicy = new ViewPolicyInfo(policyId);
@@ -102,7 +112,6 @@ namespace ClinicSystem.Policies
         private async void LoadPoliciesInfo()
         {
             Policies = await Policy.GetPolicies();
-
             if (CommonOperations.LoadDataToDGV(
                 dgvPolicies, Policies, lblRecords))
             {
@@ -112,9 +121,9 @@ namespace ClinicSystem.Policies
             RefreshFilter(0);
         }
 
-        private void ManagePolcies_Load(object sender, System.EventArgs e)
+        private async void ManagePolcies_Load(object sender, System.EventArgs e)
         {
-            SetUp();
+            await SetUp();
             LoadPoliciesInfo();
         }
 
@@ -128,13 +137,48 @@ namespace ClinicSystem.Policies
         {
             updatePolicyToolStripMenuItem.Enabled = status;
             viewPolicyToolStripMenuItem.Enabled = status;
+            approveToolStripMenuItem.Enabled = status;
+            suspendToolStripMenuItem.Enabled = status;
+            archiveToolStripMenuItem.Enabled = status;
         }
 
         private void cmsPolicies_Opening(
             object sender, CancelEventArgs e)
         {
-            SetControlEnableStatus(
-                !ValidationHelper.IsDgvEmptyOrNull(dgvPolicies));
+            bool EmptyDGV = ValidationHelper.IsDgvEmptyOrNull(dgvPolicies);
+            SetControlEnableStatus(!EmptyDGV);
+
+            if (!EmptyDGV)
+            {
+                int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
+
+                Policy policyInfo = Policy.FindPolicyByID(policyId);
+
+                if (ValidationHelper.IsEmptyOrNull(policyInfo))
+                {
+                    SetControlEnableStatus(false);
+                    return;
+                }
+
+                if (policyInfo.IsActive() && policyInfo.PolicyStatus.PolicyStatusID == EnPolicyStatuses.Active)
+                {
+                    approveToolStripMenuItem.Enabled = false;
+                    suspendToolStripMenuItem.Enabled = true;
+                    archiveToolStripMenuItem.Enabled = true;
+                }
+                else if (policyInfo.IsActive() && policyInfo.PolicyStatus.PolicyStatusID == EnPolicyStatuses.AwaitingApprovel)
+                {
+                    approveToolStripMenuItem.Enabled = true;
+                    suspendToolStripMenuItem.Enabled = false;
+                    archiveToolStripMenuItem.Enabled = true;
+                }
+                else
+                {
+                    approveToolStripMenuItem.Enabled = true;
+                    suspendToolStripMenuItem.Enabled = false;
+                    archiveToolStripMenuItem.Enabled = false;
+                }
+            }
         }
 
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
@@ -167,27 +211,54 @@ namespace ClinicSystem.Policies
         private void archiveToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
-            if (!Policy.UpdatePolicyStatus(policyId, (int)EnPolicyStatuses.Archived))
+            if (!Policy.UpdatePolicyStatus(policyId, EnPolicyStatuses.Archived))
             {
                 MessageBox.Show("Failed to archive this policy", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             MessageBox.Show("Policy got archive successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RefreshFilter(0);
+            RefreshDgv(Policy.FindPolicyByID(policyId));
         }
 
         private void suspendToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
-            if (!Policy.UpdatePolicyStatus(policyId, (int)EnPolicyStatuses.Suspended))
+            if (!Policy.UpdatePolicyStatus(policyId, EnPolicyStatuses.Suspended))
             {
                 MessageBox.Show("Failed to suspend this policy", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             MessageBox.Show("Policy got suspend successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RefreshFilter(0);
+            RefreshDgv(Policy.FindPolicyByID(policyId));
+        }
+
+        private async Task LoadPolicyStatuses()
+        {
+            cbPolicyStatus.DataSource =
+                await Business.Policy.GetPolicyStatusesNames();
+
+            cbPolicyStatus.SelectedIndex = 0;
+        }
+
+        private void cbPolicyStatus_SelectedIndexChanged(object sender, System.EventArgs e)
+        {
+            List<object> temp = CommonOperations.FilterData(Policies, "Status", cbPolicyStatus.Text);
+            CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
+        }
+
+        private void approveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
+            if (!Policy.UpdatePolicyStatus(policyId, EnPolicyStatuses.Active))
+            {
+                MessageBox.Show("Failed to archive this policy", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            MessageBox.Show("Policy got archive successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            RefreshDgv(Policy.FindPolicyByID(policyId));
         }
     }
 }

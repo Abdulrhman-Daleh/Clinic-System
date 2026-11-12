@@ -173,14 +173,21 @@ namespace Data_Access
             return policyStatuses;
         }
 
-        public static async Task<BindingList<PolicyDto>> GetPolicies()
+        public static async Task<BindingList<PolicyDto>> GetPolicies(int ownerId)
         {
             BindingList<PolicyDto> list = new BindingList<PolicyDto>();
 
             string query = @"select PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom,
-            ActiveTo, PolicyStatusID from Policies";
+            ActiveTo, ps.PolicyStatusID, ps.PolicyStatusText from Policies as p 
+                inner join PolicyStatuses as ps on ps.PolicyStatusID = p.PolicyStatusID
+            where OwnerID = 4";
 
-            list = await DataAccessHelper.ExecuteObjectList(query, null, PolicyMapper);
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@ownerId", SqlDbType.Int) {Value = ownerId}
+            };
+
+            list = await DataAccessHelper.ExecuteObjectList(query, parameters, PolicyMapper);
 
             return list;
         }

@@ -26,7 +26,7 @@ namespace ClinicSystem.Policies.Controls
             lblBookingFreeze.Text = policyInfo.BookingFreezeDaysText();
             lblLateFees.Text = policyInfo.LateFeesPerDayText();
             lblNo_ShowFees.Text = policyInfo.NoShowFeesText();
-            //    lblSetBy.Text = policyInfo.Owner.GetFullName();
+            lblSetBy.Text = policyInfo.Owner.GetFullName();
         }
     }
 }

@@ -34,6 +34,9 @@
             this.addNewPolicyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updatePolicyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewPolicyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.approveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.suspendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.archiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
@@ -42,9 +45,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
-            this.approveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.suspendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.archiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cbPolicyStatus = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPolicies)).BeginInit();
             this.cmsPolicies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -109,6 +110,33 @@
             this.viewPolicyToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
             this.viewPolicyToolStripMenuItem.Text = "View Policy";
             this.viewPolicyToolStripMenuItem.Click += new System.EventHandler(this.viewPolicyToolStripMenuItem_Click);
+            // 
+            // approveToolStripMenuItem
+            // 
+            this.approveToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.check_mark_32;
+            this.approveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.approveToolStripMenuItem.Name = "approveToolStripMenuItem";
+            this.approveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.approveToolStripMenuItem.Text = "Approve";
+            this.approveToolStripMenuItem.Click += new System.EventHandler(this.approveToolStripMenuItem_Click);
+            // 
+            // suspendToolStripMenuItem
+            // 
+            this.suspendToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.x_32;
+            this.suspendToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.suspendToolStripMenuItem.Name = "suspendToolStripMenuItem";
+            this.suspendToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.suspendToolStripMenuItem.Text = "Suspend";
+            this.suspendToolStripMenuItem.Click += new System.EventHandler(this.suspendToolStripMenuItem_Click);
+            // 
+            // archiveToolStripMenuItem
+            // 
+            this.archiveToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.outbox_32;
+            this.archiveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
+            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
+            this.archiveToolStripMenuItem.Text = "Archive";
+            this.archiveToolStripMenuItem.Click += new System.EventHandler(this.archiveToolStripMenuItem_Click);
             // 
             // txtFilter
             // 
@@ -192,37 +220,22 @@
             this.pbModeImage.TabIndex = 25;
             this.pbModeImage.TabStop = false;
             // 
-            // approveToolStripMenuItem
+            // cbPolicyStatus
             // 
-            this.approveToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.check_mark_32;
-            this.approveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.approveToolStripMenuItem.Name = "approveToolStripMenuItem";
-            this.approveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
-            this.approveToolStripMenuItem.Text = "Approve";
-            // 
-            // suspendToolStripMenuItem
-            // 
-            this.suspendToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.x_32;
-            this.suspendToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.suspendToolStripMenuItem.Name = "suspendToolStripMenuItem";
-            this.suspendToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
-            this.suspendToolStripMenuItem.Text = "Suspend";
-            this.suspendToolStripMenuItem.Click += new System.EventHandler(this.suspendToolStripMenuItem_Click);
-            // 
-            // archiveToolStripMenuItem
-            // 
-            this.archiveToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.outbox_32;
-            this.archiveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.archiveToolStripMenuItem.Name = "archiveToolStripMenuItem";
-            this.archiveToolStripMenuItem.Size = new System.Drawing.Size(230, 38);
-            this.archiveToolStripMenuItem.Text = "Archive";
-            this.archiveToolStripMenuItem.Click += new System.EventHandler(this.archiveToolStripMenuItem_Click);
+            this.cbPolicyStatus.FormattingEnabled = true;
+            this.cbPolicyStatus.Location = new System.Drawing.Point(215, 80);
+            this.cbPolicyStatus.Name = "cbPolicyStatus";
+            this.cbPolicyStatus.Size = new System.Drawing.Size(121, 33);
+            this.cbPolicyStatus.TabIndex = 35;
+            this.cbPolicyStatus.SelectedIndexChanged += new System.EventHandler(this.cbPolicyStatus_SelectedIndexChanged);
+            this.cbPolicyStatus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
             // 
             // Managepolicies
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(809, 549);
+            this.Controls.Add(this.cbPolicyStatus);
             this.Controls.Add(this.dgvPolicies);
             this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.label1);
@@ -261,5 +274,6 @@
         private System.Windows.Forms.ToolStripMenuItem approveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem suspendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem archiveToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cbPolicyStatus;
     }
 }

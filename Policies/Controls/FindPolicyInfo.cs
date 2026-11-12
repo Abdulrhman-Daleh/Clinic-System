@@ -58,8 +58,8 @@ namespace ClinicSystem.Policies.Controls
 
             int policyId = -1;
             int.TryParse(txtFindBy.Text, out policyId);
-            if (policy == null)
-                policy = Policy.FindPolicyByID(policyId);
+
+            policy = Policy.FindPolicyByID(policyId);
 
             viewPolicyInfoCtrl1.LoadPolicyInfo(policy);
 

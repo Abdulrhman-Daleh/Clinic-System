@@ -20,6 +20,8 @@ namespace Business
         public decimal? LateFeesPerDay { get; set; }
         public decimal? NoShowFee { get; set; }
         public Staff Owner { get; set; }
+        [Browsable(true)]
+        public string Status => PolicyStatus.PolicyStatusText;
         private static Policy FromDto(PolicyDto policyDto)
         {
             if (policyDto == null)
@@ -172,9 +174,12 @@ namespace Business
         }
         public static async Task<BindingList<Policy>> GetPolicies()
         {
+            if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
+                return null;
+
             BindingList<Policy> list = new BindingList<Policy>();
 
-            foreach (PolicyDto p in await PolicyData.GetPolicies())
+            foreach (PolicyDto p in await PolicyData.GetPolicies(Global.CurrentLoggedInStaff.StaffId))
                 list.Add(FromDto(p));
 
             return list;
@@ -183,12 +188,12 @@ namespace Business
         {
             return await PolicyData.GetPoliciesRanges();
         }
-        public static bool UpdatePolicyStatus(int policyId, int newStatusId)
+        public static bool UpdatePolicyStatus(int policyId, EnPolicyStatuses newStatus)
         {
             if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
                 return false;
 
-            return PolicyData.UpdatePolicyStatus(policyId, newStatusId);
+            return PolicyData.UpdatePolicyStatus(policyId, (int)newStatus);
         }
         private OperationResult IsPolicyValidToSave()
         {

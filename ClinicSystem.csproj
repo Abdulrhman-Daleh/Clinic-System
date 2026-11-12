@@ -865,9 +865,14 @@
   <ItemGroup>
     <None Include="Resources\Referral_64.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\perf_64.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\atm-card_321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\view_current_32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
