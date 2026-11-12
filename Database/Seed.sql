@@ -1,3 +1,4 @@
+
 USE ClinicDatabase;
 GO
 
