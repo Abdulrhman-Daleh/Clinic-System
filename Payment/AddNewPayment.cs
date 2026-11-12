@@ -68,13 +68,8 @@ namespace ClinicSystem.Payment
                 return;
             }
 
-            result = Util.CanAccessForm(EnRole.Receptionist, EnRole.Doctor);
-
-            if (!result.IsSuccess)
-            {
-                MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor))
                 return;
-            }
 
             CollectData();
 
