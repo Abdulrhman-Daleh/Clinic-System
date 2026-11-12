@@ -10,9 +10,7 @@ namespace Business
 {
     public class Policy
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
-
+        private EnMode _mode;
         public int PolicyID { get; set; }
         public int OwnerID { get; set; }
         public (EnPolicyStatuses PolicyStatusID, string PolicyStatusText) PolicyStatus { get; set; }
@@ -22,13 +20,12 @@ namespace Business
         public decimal? LateFeesPerDay { get; set; }
         public decimal? NoShowFee { get; set; }
         public Staff Owner { get; set; }
-
         private static Policy FromDto(PolicyDto policyDto)
         {
             if (policyDto == null)
                 return null;
 
-            return new Policy(policyDto.PolicyID)
+            return new Policy(policyDto.PolicyID, policyDto.OwnerID)
             {
                 PolicyID = policyDto.PolicyID,
                 OwnerID = policyDto.OwnerID,
@@ -41,7 +38,6 @@ namespace Business
                 Owner = Staff.FindStaffById(policyDto.OwnerID)
             };
         }
-
         private static PolicyDto ToDto(Policy policy)
         {
             return new PolicyDto
@@ -56,51 +52,44 @@ namespace Business
                 NoShowFee = policy.NoShowFee
             };
         }
-
         public string BookingFreezeDaysText()
         {
             return NoShowFreezeDays != null
                 ? $"{NoShowFreezeDays.ToString()} days after a no-show"
                 : "No freeze days";
         }
-
         public string LateFeesPerDayText()
         {
             return LateFeesPerDay != null
                 ? $"$ {LateFeesPerDay.ToString()} per day"
                 : "No late fees";
         }
-
         public string NoShowFeesText()
         {
             return NoShowFee != null
                 ? $"$ {NoShowFee.ToString()}"
                 : "Empty No show fees";
         }
-
         public Policy()
         {
             PolicyID = -1;
-            _mode = Mode.Add;
+            _mode = EnMode.Add;
         }
-
-        public Policy(int policyID)
+        public Policy(int policyID, int ownerId)
         {
             PolicyID = policyID;
-            _mode = Mode.Update;
+            Owner = Staff.FindStaffById(ownerId);
+            _mode = EnMode.Update;
         }
-
-        private bool _AddNewPolicy()
+        private bool AddNewPolicy()
         {
             PolicyID = PolicyData.AddNewPolicy(ToDto(this));
             return PolicyID != -1;
         }
-
-        private bool _UpdatePolicy()
+        private bool UpdatePolicy()
         {
             return PolicyData.UpdatePolicy(ToDto(this));
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Owner);
@@ -117,11 +106,11 @@ namespace Business
 
             switch (_mode)
             {
-                case Mode.Add:
+                case EnMode.Add:
 
-                    if (_AddNewPolicy())
+                    if (AddNewPolicy())
                     {
-                        _mode = Mode.Update;
+                        _mode = EnMode.Update;
 
                         Auditor.Log(
                             "Policy Added",
@@ -139,9 +128,9 @@ namespace Business
                         "Failed",
                         false);
 
-                case Mode.Update:
+                case EnMode.Update:
 
-                    if (_UpdatePolicy())
+                    if (UpdatePolicy())
                     {
                         Auditor.Log(
                             "Policy Updated",
@@ -165,27 +154,22 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static Policy FindPolicyByID(int policyID)
         {
             return FromDto(PolicyData.FindPolicyByID(policyID));
         }
-
         public static Policy FindPolicyByOwnerID(int ownerID)
         {
             return FromDto(PolicyData.FindPolicyByOwnerID(ownerID));
         }
-
         public static async Task<BindingList<string>> GetPolicyStatusesNames()
         {
             return await PolicyData.GetPolicyStatusesNames();
         }
-
         public bool IsActive()
         {
             return ActiveTo > DateTime.Now;
         }
-
         public static async Task<BindingList<Policy>> GetPolicies()
         {
             BindingList<Policy> list = new BindingList<Policy>();
@@ -195,12 +179,10 @@ namespace Business
 
             return list;
         }
-
         public static async Task<BindingList<(int policyId, string ActiveDateRange)>> GetPoliciesRanges()
         {
             return await PolicyData.GetPoliciesRanges();
         }
-
         public static bool UpdatePolicyStatus(int policyId, int newStatusId)
         {
             if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
@@ -208,7 +190,6 @@ namespace Business
 
             return PolicyData.UpdatePolicyStatus(policyId, newStatusId);
         }
-
         private OperationResult IsPolicyValidToSave()
         {
             if (Util.IsValidId(OwnerID) && ActiveFrom < ActiveTo)

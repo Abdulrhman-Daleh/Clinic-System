@@ -19,7 +19,6 @@ namespace Business
         public DateTime ReferralDate { get; set; }
         public (EnReferralUrgencies ReferralUrgencyID, string ReferralUrgencyText) ReferralUrgencies { get; set; }
         public string Speciality { get; set; }
-
         public Referral()
         {
             ReferralID = -1;
@@ -33,7 +32,6 @@ namespace Business
 
             _mode = EnMode.Add;
         }
-
         public Referral(int referralID, int doctorID, int appointmentID, int noteId)
         {
             ReferralID = referralID;
@@ -47,7 +45,6 @@ namespace Business
 
             _mode = EnMode.Update;
         }
-
         public static Referral FromDto(ReferralDto referralDto)
         {
             if (referralDto == null)
@@ -69,7 +66,6 @@ namespace Business
                 Speciality = referralDto.Speciality
             };
         }
-
         public static ReferralDto ToDto(Referral referral)
         {
             if (referral == null)
@@ -87,19 +83,16 @@ namespace Business
                 Speciality = referral.Speciality
             };
         }
-
         private bool AddNewReferral()
         {
             ReferralID = ReferralData.AddNewReferral(ToDto(this));
 
             return ReferralID > 0;
         }
-
         private bool UpdateReferral()
         {
             return ReferralData.UpdateReferral(ToDto(this));
         }
-
         private OperationResult CheckAddAccess()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
@@ -151,7 +144,6 @@ namespace Business
                 "Access Granted",
                 true);
         }
-
         private OperationResult CheckUpdateAccess()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
@@ -200,7 +192,6 @@ namespace Business
                 "Access Granted",
                 true);
         }
-
         public OperationResult Save()
         {
             OperationResult result;
@@ -271,24 +262,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
-        public static Referral FindReferralByID(int referralID)
-        {
-            if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
-                return null;
-
-            ReferralDto referralDto =
-                ReferralData.FindReferralByID(referralID);
-
-            if (referralDto == null)
-                return null;
-
-            if (referralDto.DoctorID != Global.CurrentLoggedInStaff.StaffId)
-                return null;
-
-            return FromDto(referralDto);
-        }
-
         public static Referral FindReferralByAppointmentID(int appointmentID)
         {
             return FromDto(ReferralData.FindReferralByAppointmentID(appointmentID, Global.CurrentLoggedInStaff.StaffId));

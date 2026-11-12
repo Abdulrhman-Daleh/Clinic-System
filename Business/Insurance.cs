@@ -10,9 +10,7 @@ namespace Business
 {
     public class Insurance
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
-
+        private EnMode _mode;
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
@@ -29,12 +27,10 @@ namespace Business
         public Policy Policy { get; set; }
         public Patient PolicyPatientHolder { get; set; }
         public Staff RecorderStaff { get; set; }
-
         public bool IsAddMode()
         {
-            return _mode == Mode.Add;
+            return _mode == EnMode.Add;
         }
-
         public Insurance()
         {
             InsuranceID = -1;
@@ -50,21 +46,22 @@ namespace Business
             Policy = null;
             PolicyPatientHolder = null;
             RecorderStaff = null;
-            _mode = Mode.Add;
+            _mode = EnMode.Add;
         }
-
-        public Insurance(int insuranceId)
+        public Insurance(int insuranceId, int policyId, int policyHolderPatientId, int staffId)
         {
             InsuranceID = insuranceId;
-            _mode = Mode.Update;
+            Policy = Policy.FindPolicyByID(policyId);
+            PolicyPatientHolder = Patient.FindPatientById(policyHolderPatientId);
+            RecorderStaff = Staff.FindStaffById(staffId);
+            _mode = EnMode.Update;
         }
-
         public static Insurance FromDto(InsuranceDto insuranceDto)
         {
             if (insuranceDto == null)
                 return null;
 
-            return new Insurance(insuranceDto.InsuranceID)
+            return new Insurance(insuranceDto.InsuranceID, insuranceDto.PolicyId, insuranceDto.PolicyholderPatientId, insuranceDto.RecordedBy)
             {
                 InsuranceID = insuranceDto.InsuranceID,
                 PolicyId = insuranceDto.PolicyId,
@@ -79,12 +76,8 @@ namespace Business
                 PatientClaims = insuranceDto.PatientClaims,
                 PolicyholderPatientId = insuranceDto.PolicyholderPatientId,
                 Relationship = insuranceDto.Relationship,
-                Policy = Policy.FindPolicyByID(insuranceDto.PolicyId),
-                PolicyPatientHolder = Patient.FindPatientById(insuranceDto.PolicyholderPatientId),
-                RecorderStaff = Staff.FindStaffById(insuranceDto.RecordedBy)
             };
         }
-
         public static InsuranceDto ToDto(Insurance insurance)
         {
             if (insurance == null)
@@ -107,8 +100,7 @@ namespace Business
                 Relationship = insurance.Relationship
             };
         }
-
-        private bool _AddNewInsurance()
+        private bool AddNewInsurance()
         {
             var result = InsuranceData.AddNewInsurance(
                 ToDto(this),
@@ -122,12 +114,10 @@ namespace Business
 
             return true;
         }
-
-        private bool _UpdateInsurance()
+        private bool UpdateInsurance()
         {
             return InsuranceData.UpdateInsurance(ToDto(this));
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(
@@ -137,7 +127,10 @@ namespace Business
             if (!result.IsSuccess)
                 return result;
 
-            if (_mode == Mode.Add)
+            if (Global.CurrentLoggedInStaff == null)
+                return new OperationResult("No user is logged in", "Not valid", false);
+
+            if (_mode == EnMode.Add)
             {
                 RecordedBy = Global.CurrentLoggedInStaff.StaffId;
                 RecorderStaff = Global.CurrentLoggedInStaff;
@@ -153,11 +146,11 @@ namespace Business
 
             switch (_mode)
             {
-                case Mode.Add:
+                case EnMode.Add:
 
-                    if (_AddNewInsurance())
+                    if (AddNewInsurance())
                     {
-                        _mode = Mode.Update;
+                        _mode = EnMode.Update;
 
                         Auditor.Log(
                             "Insurance Added",
@@ -175,9 +168,9 @@ namespace Business
                         "Failed",
                         false);
 
-                case Mode.Update:
+                case EnMode.Update:
 
-                    if (_UpdateInsurance())
+                    if (UpdateInsurance())
                     {
                         Auditor.Log(
                             "Insurance Updated",
@@ -201,7 +194,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static Insurance FindInsuranceByID(int insuranceId)
         {
             if (!Util.CanAccessForm(
@@ -212,7 +204,6 @@ namespace Business
 
             return FromDto(InsuranceData.FindInsuranceByID(insuranceId));
         }
-
         public static Insurance FindInsuranceByPatientId(int patientId)
         {
             if (!Util.CanAccessForm(
@@ -223,7 +214,6 @@ namespace Business
 
             return FromDto(InsuranceData.FindInsuranceByPatientId(patientId));
         }
-
         public static async Task<BindingList<string>> GetInsuranceTypesNames()
         {
             if (!Util.CanAccessForm(
@@ -233,7 +223,6 @@ namespace Business
 
             return await InsuranceData.GetInsuranceTypesNames();
         }
-
         public static async Task<BindingList<string>> GetInsuranceStatusesNames()
         {
             if (!Util.CanAccessForm(
@@ -243,7 +232,6 @@ namespace Business
 
             return await InsuranceData.GetInsuranceStatusesNames();
         }
-
         public static async Task<BindingList<PatientInsuranceInfoDto>> GetPatientsUnderInsurance(int insuranceId)
         {
             if (!Util.CanAccessForm(
@@ -253,7 +241,6 @@ namespace Business
 
             return await InsuranceData.GetPatientsUnderInsurance(insuranceId);
         }
-
         private OperationResult IsInsuranceValidToSave()
         {
             if (Policy == null ||

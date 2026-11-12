@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.DTOs;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -13,7 +14,6 @@ namespace Business
         public string Classification { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public bool ConsentToCare { get; set; }
-
         private static MedicalRecordList FromDto(MedicalRecordListDto recordDto)
         {
             if (recordDto == null)
@@ -29,9 +29,11 @@ namespace Business
                 ConsentToCare = recordDto.ConsentToCare
             };
         }
-
         public static async Task<BindingList<MedicalRecordList>> GetMedicalRecords()
         {
+            if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
+                return null;
+
             BindingList<MedicalRecordListDto> recordDtos =
                 await MedicalRecordData.GetMedicalRecords(Global.CurrentLoggedInStaff.StaffId);
 

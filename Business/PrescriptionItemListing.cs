@@ -20,10 +20,8 @@ namespace Business
         public byte Quantity { get; set; }
         public string Duration { get; set; }
         public decimal LineTotal { get; set; }
-
         public string Medicine =>
             $"{DrugName} {StrengthValue:0.####}{StrengthUnitText} · {DosageFormText}";
-
         private static PrescriptionItemListing FromDto(PrescriptionItemListingDto itemDto)
         {
             if (itemDto == null)
@@ -45,7 +43,6 @@ namespace Business
                 LineTotal = itemDto.LineTotal
             };
         }
-
         public static async Task<BindingList<PrescriptionItemListing>> GetPrescriptionItems(int prescriptionID)
         {
             BindingList<PrescriptionItemListingDto> itemDtos =

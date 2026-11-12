@@ -1,5 +1,4 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System.ComponentModel;
@@ -9,15 +8,12 @@ namespace Business
 {
     public class PersonContact
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
-
+        private EnMode _mode;
         public (EnContactTypes ContactTypeId, string ContactTypeName) ContactType { get; set; }
         public int ContactId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int PersonId { get; set; }
-
         public static PersonContact FromDto(PersonContactDto contactDto)
         {
             if (contactDto == null)
@@ -30,10 +26,9 @@ namespace Business
                 PersonId = contactDto.PersonId,
                 ContactId = contactDto.ContactId,
                 ContactType = (contactDto.ContactType.ContactTypeId, contactDto.ContactType.ContactTypeName),
-                _mode = Mode.Update
+                _mode = EnMode.Update
             };
         }
-
         public static PersonContactDto ToDto(PersonContact contact)
         {
             if (contact == null)
@@ -48,26 +43,22 @@ namespace Business
                 ContactType = (contact.ContactType.ContactTypeId, contact.ContactType.ContactTypeName)
             };
         }
-
         public PersonContact()
         {
             ContactId = -1;
             ContactType = ((EnContactTypes)0, "None");
-            _mode = Mode.Add;
+            _mode = EnMode.Add;
         }
-
         private bool AddNewContact()
         {
             ContactId = PersonContactData.AddNewContact(ToDto(this));
 
             return ContactId > 0;
         }
-
         private bool UpdateContact()
         {
             return PersonContactData.UpdateContact(ToDto(this));
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner);
@@ -75,15 +66,18 @@ namespace Business
             if (!result.IsSuccess)
                 return result;
 
+            if (Global.CurrentLoggedInStaff == null)
+                return new OperationResult("person is not logged in", "Not logged", false);
+
             string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
-                case Mode.Add:
+                case EnMode.Add:
 
                     if (AddNewContact())
                     {
-                        _mode = Mode.Update;
+                        _mode = EnMode.Update;
 
                         Auditor.Log(
                             "Contact Added",
@@ -101,7 +95,7 @@ namespace Business
                         "Failed",
                         false);
 
-                case Mode.Update:
+                case EnMode.Update:
 
                     if (UpdateContact())
                     {
@@ -127,7 +121,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static async Task<BindingList<PersonContact>> GetShortContactInfo(int personId)
         {
             BindingList<PersonContact> contacts = new BindingList<PersonContact>();

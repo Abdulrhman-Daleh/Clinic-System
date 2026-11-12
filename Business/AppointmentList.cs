@@ -13,7 +13,6 @@ namespace Business
         public string Doctor { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
-
         private static AppointmentList FromDto(AppointmentListDto appointmentList)
         {
             if (appointmentList == null)
@@ -38,12 +37,9 @@ namespace Business
 
             return appointments;
         }
-
         public static AppointmentList FindAppointmentListByID(int appointmentId)
         {
             return FromDto(AppointmentData.FindAppointmentListByID(appointmentId));
         }
-
-
     }
 }

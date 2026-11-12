@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.ListingDTOs;
 using System;
 using System.ComponentModel;
@@ -17,7 +18,6 @@ namespace Business
         public string Username { get; set; }
         public DateTime HireDate { get; set; }
         public string Status { get; set; }
-
         private static StaffList FromDto(StaffListingDto listDto)
         {
             return new StaffList()
@@ -33,9 +33,11 @@ namespace Business
                 Status = listDto.Status
             };
         }
-
         public static async Task<BindingList<StaffList>> GetStaff()
         {
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
+                return null;
+
             BindingList<StaffList> list = new BindingList<StaffList>();
 
             foreach (var l in await StaffData.GetStaff())
@@ -45,9 +47,14 @@ namespace Business
 
             return list;
         }
-
         public static StaffList FindStaffById(int staffId)
         {
+            if (Util.CanAccessForm(EnRole.Receptionist).IsSuccess)
+                return null;
+
+            if (staffId != Global.CurrentLoggedInStaff.StaffId)
+                return null;
+
             return FromDto(StaffData.FindStaffByIdList(staffId));
         }
     }

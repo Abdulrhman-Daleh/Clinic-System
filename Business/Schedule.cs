@@ -10,14 +10,11 @@ namespace Business
 {
     public class Schedule
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
-
+        private EnMode _mode;
         public int ScheduleId { get; set; }
         public TimeSpan WorkStartFrom { get; set; }
         public TimeSpan WorkEndAt { get; set; }
         public string ShiftName { get; set; }
-
         public static Schedule FromDto(ScheduleDto scheduleDto)
         {
             if (scheduleDto == null) return null;
@@ -29,7 +26,6 @@ namespace Business
                 ShiftName = scheduleDto.ShiftName,
             };
         }
-
         public static ScheduleDto ToDto(Schedule schedule)
         {
             return new ScheduleDto
@@ -40,27 +36,23 @@ namespace Business
                 ShiftName = schedule.ShiftName
             };
         }
-
         public Schedule(int scheduleId)
         {
             ScheduleId = scheduleId;
-            _mode = Mode.Update;
+            _mode = EnMode.Update;
         }
-
         public Schedule()
         {
             ScheduleId = -1;
             WorkStartFrom = TimeSpan.MinValue;
             WorkEndAt = TimeSpan.MinValue;
             ShiftName = string.Empty;
-            _mode = Mode.Add;
+            _mode = EnMode.Add;
         }
-
         public static async Task<BindingList<string>> GetSchedulesNames()
         {
             return await ScheduleData.GetSchedulesNames();
         }
-
         private bool AddNewSchedule()
         {
             int id = ScheduleData.AddNewSchedule(ToDto(this));
@@ -70,12 +62,10 @@ namespace Business
             ScheduleId = id;
             return true;
         }
-
         private bool UpdateSchedule()
         {
             return ScheduleData.UpdateSchedule(ToDto(this));
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Owner);
@@ -88,15 +78,15 @@ namespace Business
             if (!result.IsSuccess)
                 return result;
 
-            string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
+            string performedBy = Global.CurrentLoggedInStaff == null ? "Inital Owner" : $"Performed by: {Global.CurrentLoggedInStaff.StaffId}";
 
             switch (_mode)
             {
-                case Mode.Add:
+                case EnMode.Add:
 
                     if (AddNewSchedule())
                     {
-                        _mode = Mode.Update;
+                        _mode = EnMode.Update;
 
                         Auditor.Log(
                             "Schedule Added",
@@ -114,7 +104,7 @@ namespace Business
                         "Failed",
                         false);
 
-                case Mode.Update:
+                case EnMode.Update:
 
                     if (UpdateSchedule())
                     {
@@ -140,7 +130,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         private OperationResult IsScheduleValidToSave()
         {
             if (Util.IsRequired(ShiftName) &&
@@ -159,19 +148,15 @@ namespace Business
                 "Invalid",
                 false);
         }
-
         public static async Task<BindingList<Schedule>> GetSchedules()
         {
             BindingList<Schedule> list = new BindingList<Schedule>();
 
             foreach (var s in await ScheduleData.GetSchedules())
-            {
                 list.Add(FromDto(s));
-            }
 
             return list;
         }
-
         public static Schedule FindScheduleByID(int scheduleId)
         {
             return FromDto(ScheduleData.FindScheduleByID(scheduleId));

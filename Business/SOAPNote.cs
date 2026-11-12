@@ -23,7 +23,6 @@ namespace Business
         public Staff WrittenBy { get; set; }
         public Appointment Appointment { get; set; }
         public MedicalRecord MedicalRecord { get; set; }
-
         public SOAPNote()
         {
             NoteID = -1;
@@ -33,7 +32,6 @@ namespace Business
             CreationDate = DateTime.Now;
             _mode = EnMode.Add;
         }
-
         private SOAPNote(int noteID, int writtenById, int appointmentId, int medicalRecordId)
         {
             NoteID = noteID;
@@ -42,7 +40,6 @@ namespace Business
             MedicalRecord = MedicalRecord.FindMedicalRecordByID(medicalRecordId);
             _mode = EnMode.Update;
         }
-
         public static SOAPNote FromDto(SOAPNoteDto noteDto)
         {
             if (noteDto == null)
@@ -62,7 +59,6 @@ namespace Business
                 MedicalRecordID = noteDto.MedicalRecordID
             };
         }
-
         public static SOAPNoteDto ToDto(SOAPNote note)
         {
             if (note == null)
@@ -82,30 +78,30 @@ namespace Business
                 MedicalRecordID = note.MedicalRecordID
             };
         }
-
         private static OperationResult CheckDoctorAccess()
         {
             return Util.CanAccessForm(EnRole.Doctor);
         }
-
         private bool AddNewSOAPNote()
         {
             NoteID = SOAPNoteData.AddNewSOAPNote(ToDto(this));
 
             return NoteID > 0;
         }
-
         private bool UpdateSOAPNote()
         {
             return SOAPNoteData.UpdateSOAPNote(ToDto(this));
         }
-
         public OperationResult Save()
         {
             OperationResult result = CheckDoctorAccess();
 
             if (!result.IsSuccess)
                 return result;
+
+            if (Global.CurrentLoggedInStaff == null)
+                return new OperationResult("No user is logged in.", "Not Logged", false);
+
 
             if (_mode == EnMode.Add)
                 WrittenByID = Global.CurrentLoggedInStaff.StaffId;
@@ -172,7 +168,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static SOAPNote FindSOAPNoteByID(int noteID)
         {
             if (!CheckDoctorAccess().IsSuccess)
@@ -180,7 +175,6 @@ namespace Business
 
             return FromDto(SOAPNoteData.FindSOAPNoteByID(noteID));
         }
-
         public static SOAPNote FindSOAPNoteByAppointmentID(int appointmentID)
         {
             if (!CheckDoctorAccess().IsSuccess)
@@ -188,7 +182,6 @@ namespace Business
 
             return FromDto(SOAPNoteData.FindSOAPNoteByAppointmentID(appointmentID));
         }
-
         private OperationResult IsNoteValidToSave()
         {
             if (Util.IsValidId(WrittenByID) &&

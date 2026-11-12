@@ -7,7 +7,6 @@ namespace Business
         public string Title { get; set; }
         public bool IsSuccess { get; set; }
         public DateTime TimeStamp { get; set; }
-
         public OperationResult(string message, string title, bool isSuccess)
         {
             Message = message;

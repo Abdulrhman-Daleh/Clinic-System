@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.ListingDTOs;
 using System;
 using System.ComponentModel;
@@ -13,7 +14,6 @@ namespace Business
         public string PatientName { get; set; }
         public DateTime RequestDate { get; set; }
         public string TestStatusText { get; set; }
-
         public string Age
         {
             get
@@ -29,9 +29,10 @@ namespace Business
                 return $"{age.Minutes}m";
             }
         }
-
         private static LabTestQueueListing FromDto(LabTestQueueListingDto labTestDto)
         {
+            if (labTestDto == null) return null;
+
             return new LabTestQueueListing()
             {
                 LabID = labTestDto.LabID,
@@ -41,9 +42,11 @@ namespace Business
                 TestStatusText = labTestDto.TestStatusText
             };
         }
-
         public static async Task<BindingList<LabTestQueueListing>> GetMyLabQueue()
         {
+            if (!Util.CanAccessForm(EnRole.Nurse, EnRole.Doctor).IsSuccess)
+                return null;
+
             BindingList<LabTestQueueListing> list =
                 new BindingList<LabTestQueueListing>();
 

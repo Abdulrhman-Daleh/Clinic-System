@@ -11,7 +11,6 @@ namespace Business
         public string Name { get; set; }
         public string Relationship { get; set; }
         public DateTime PatientSince { get; set; }
-
         private static PatientInsuranceInfo FromDto(PatientInsuranceInfoDto dto)
         {
             return new PatientInsuranceInfo()
@@ -21,7 +20,6 @@ namespace Business
                 PatientSince = dto.PatientSince
             };
         }
-
         public static async Task<BindingList<PatientInsuranceInfo>> GetPatientInsurance(int InsuranceId)
         {
             BindingList<PatientInsuranceInfo> list = new BindingList<PatientInsuranceInfo>();

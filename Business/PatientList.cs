@@ -16,8 +16,6 @@ namespace Business
         public string Status { get; set; }
         public int Visits { get; set; }
         public string InsuranceName { get; set; }
-
-
         private static PatientList FromDto(PatientListingDto dto)
         {
             return new PatientList()
@@ -31,7 +29,6 @@ namespace Business
                 InsuranceName = dto.InsuranceName,
             };
         }
-
         public static PatientList FindPatientByIdList(int patientId)
         {
             return FromDto(PatientData.FindPatientByIdList(patientId));

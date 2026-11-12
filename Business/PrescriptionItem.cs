@@ -10,7 +10,6 @@ namespace Business
     public class PrescriptionItem
     {
         private EnMode _mode;
-
         public int ItemID { get; set; }
         public int MedicineID { get; set; }
         public Medicine Medicine { get; set; }
@@ -19,12 +18,11 @@ namespace Business
         public string Frequency { get; set; }
         public byte Quantity { get; set; }
         public string Duration { get; set; }
-
+        public Prescription Prescription { get; set; }
         public bool IsAddMode()
         {
             return _mode == EnMode.Add;
         }
-
         public PrescriptionItem()
         {
             ItemID = -1;
@@ -34,19 +32,18 @@ namespace Business
             Duration = string.Empty;
             _mode = EnMode.Add;
         }
-
-        private PrescriptionItem(int itemID)
+        private PrescriptionItem(int itemID, int prescriptionId)
         {
             ItemID = itemID;
             _mode = EnMode.Update;
+            Prescription = Prescription.FindPrescriptionByID(itemID);
         }
-
         public static PrescriptionItem FromDto(PrescriptionItemDto itemDto)
         {
             if (itemDto == null)
                 return null;
 
-            return new PrescriptionItem(itemDto.ItemID)
+            return new PrescriptionItem(itemDto.ItemID, itemDto.PrescriptionID)
             {
                 ItemID = itemDto.ItemID,
                 MedicineID = itemDto.MedicineID,
@@ -57,7 +54,6 @@ namespace Business
                 Duration = itemDto.Duration
             };
         }
-
         public static PrescriptionItemDto ToDto(PrescriptionItem item)
         {
             if (item == null)
@@ -74,24 +70,20 @@ namespace Business
                 Duration = item.Duration
             };
         }
-
         private bool AddNewPrescriptionItem()
         {
             ItemID = PrescriptionItemData.AddNewPrescriptionItem(ToDto(this));
 
             return ItemID > 0;
         }
-
         private bool UpdatePrescriptionItem()
         {
             return PrescriptionItemData.UpdatePrescriptionItem(ToDto(this));
         }
-
         public decimal CalculateLineTotal()
         {
             return Quantity * Medicine.UnitPrice;
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
@@ -103,6 +95,9 @@ namespace Business
 
             if (!result.IsSuccess)
                 return result;
+
+            if (Global.CurrentLoggedInStaff == null)
+                return new OperationResult("Doctor is not logged in", "Invalid", false);
 
             string performedBy = $"StaffID {Global.CurrentLoggedInStaff.StaffId}";
 
@@ -156,7 +151,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static PrescriptionItem FindPrescriptionItemByID(int itemID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
@@ -164,7 +158,6 @@ namespace Business
 
             return FromDto(PrescriptionItemData.FindPrescriptionItemByID(itemID));
         }
-
         public static async Task<BindingList<PrescriptionItemListing>> GetPrescriptionItemsListing(int prescriptionID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
@@ -172,7 +165,6 @@ namespace Business
 
             return await PrescriptionItemListing.GetPrescriptionItems(prescriptionID);
         }
-
         private OperationResult IsPrescriptionItemValidToSave()
         {
             if (Util.IsValidId(MedicineID) &&

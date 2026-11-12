@@ -16,7 +16,6 @@ namespace Business
         public decimal PaymentAmount { get; set; }
         public Appointment Appointment { get; set; }
         public Staff ProccessBy { get; set; }
-
         public static PaymentDto ToDTO(Payment payment)
         {
             if (payment == null)
@@ -43,17 +42,20 @@ namespace Business
             PaymentAmount = 0;
             PaymentDate = DateTime.MinValue;
         }
-
         private bool AddNewPayment()
         {
             PaymentID = PaymentData.AddNewPayment(ToDTO(this));
 
             return PaymentID > 0;
         }
-
         public OperationResult Save()
         {
             OperationResult result = IsPaymentValidtoSave();
+
+            if (!result.IsSuccess)
+                return result;
+
+            result = Util.CanAccessForm(EnRole.Receptionist, EnRole.Doctor);
 
             if (!result.IsSuccess)
                 return result;
@@ -77,7 +79,6 @@ namespace Business
                         "Failed",
                         false);
         }
-
         private OperationResult IsPaymentValidtoSave()
         {
             if (!Util.IsValidId(this.AppointmentID ?? -1) && !Util.IsValidId(this.PenaltyID ?? -1))

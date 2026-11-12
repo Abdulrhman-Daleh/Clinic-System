@@ -10,9 +10,7 @@ namespace Business
 {
     public class Staff : Person
     {
-        private enum Mode { Add = 1, Update }
-        private Mode _mode;
-
+        private EnMode _mode;
         public int StaffId { get; set; }
         public int ScheduleId { get; set; }
         public (EnRole RoleId, string RoleName) RoleInfo { get; set; }
@@ -22,7 +20,6 @@ namespace Business
         public DateTime HireDate { get; set; }
         public bool IsActive { get; set; }
         public Schedule Schedule { get; set; }
-
         private static StaffDto ToDto(Staff staff)
         {
             return new StaffDto()
@@ -41,7 +38,6 @@ namespace Business
                 Gender = staff.Gender == EnGender.Male ? 'M' : 'F'
             };
         }
-
         private static Staff FromDto(StaffDto staffDto)
         {
             if (staffDto is null)
@@ -62,12 +58,11 @@ namespace Business
                 Gender = staffDto.Gender == 'M' ? EnGender.Male : EnGender.Female,
             };
         }
-
         private OperationResult CheckStaffManagementAccess()
         {
             if (Global.CurrentLoggedInStaff == null)
             {
-                if (_mode == Mode.Add && IsFirstStaff())
+                if (_mode == EnMode.Add && IsFirstStaff())
                     return new OperationResult("Initial staff setup is allowed.", "Access Granted", true);
 
                 return new OperationResult("You must be logged in to manage staff.", "Access Denied", false);
@@ -90,21 +85,18 @@ namespace Business
             Lastname = string.Empty;
             Schedule = new Schedule();
             Gender = EnGender.Male;
-            _mode = Mode.Add;
+            _mode = EnMode.Add;
         }
-
         private Staff(int staffId, int scheduleId)
         {
             StaffId = staffId;
-            _mode = Mode.Update;
+            _mode = EnMode.Update;
             Schedule = Schedule.FindScheduleByID(scheduleId);
         }
-
         public static async Task<BindingList<string>> GetRolesNames()
         {
             return await StaffData.GetRolesNames();
         }
-
         private bool AddNewStaff()
         {
             (int staffId, int personId, string staffNumber) result =
@@ -116,12 +108,10 @@ namespace Business
 
             return StaffId > 0;
         }
-
         private bool UpdateStaff()
         {
             return StaffData.UpdateStaff(ToDto(this));
         }
-
         public override OperationResult Save()
         {
             OperationResult result = CheckStaffManagementAccess();
@@ -145,11 +135,11 @@ namespace Business
 
             switch (_mode)
             {
-                case Mode.Add:
+                case EnMode.Add:
 
                     if (AddNewStaff())
                     {
-                        _mode = Mode.Update;
+                        _mode = EnMode.Update;
 
                         Auditor.Log(
                             "Staff Added",
@@ -167,7 +157,7 @@ namespace Business
                         "Failed",
                         false);
 
-                case Mode.Update:
+                case EnMode.Update:
 
                     if (UpdateStaff())
                     {
@@ -193,32 +183,26 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static bool DoesExistsByUsername(string username)
         {
             return StaffData.DoesExistsByUsername(username);
         }
-
         public bool IsAddMode()
         {
-            return _mode == Mode.Add;
+            return _mode == EnMode.Add;
         }
-
         public static Staff FindStaffById(int staffId)
         {
             return FromDto(StaffData.FindStaffById(staffId));
         }
-
         public static Staff FindStaffByPersonId(int personId)
         {
             return FromDto(StaffData.FindStaffByPersonId(personId));
         }
-
         public static Staff FindStaffByUsername(string userName)
         {
             return FromDto(StaffData.FindStaffByUsername(userName));
         }
-
         public bool DeactivateStaff()
         {
             if (Global.CurrentLoggedInStaff?.IsOwner() != true)
@@ -226,21 +210,17 @@ namespace Business
 
             return StaffData.DeactivateStaff(StaffId);
         }
-
         public bool IsOwner() =>
             RoleInfo.RoleId == EnRole.Owner;
-
         public bool IsRoleApplicableForAppointment()
         {
             return RoleInfo.RoleId == EnRole.Nurse ||
                    RoleInfo.RoleId == EnRole.Doctor;
         }
-
         public static bool IsFirstStaff()
         {
             return StaffData.IsFirstStaff();
         }
-
         private OperationResult IsStaffValidToSave()
         {
             if (Util.IsRequired(Username) &&

@@ -9,7 +9,6 @@ namespace Business
     public class MedicalRecord
     {
         private EnMode _mode;
-
         public int MedicalRecordID { get; set; }
         public int PatientID { get; set; }
         public string MedicalNumber { get; set; }
@@ -23,26 +22,24 @@ namespace Business
         public string Classification { get; set; }
         public string Allergies { get; set; }
         public Patient Patient { get; set; }
-
         public MedicalRecord()
         {
             MedicalRecordID = -1;
             PatientID = -1;
             _mode = EnMode.Add;
         }
-
-        private MedicalRecord(int medicalRecordID)
+        private MedicalRecord(int medicalRecordID, int patientId)
         {
             MedicalRecordID = medicalRecordID;
+            Patient = Patient.FindPatientById(patientId);
             _mode = EnMode.Update;
         }
-
         private static MedicalRecord FromDto(MedicalRecordDto recordDto)
         {
             if (recordDto is null)
                 return null;
 
-            return new MedicalRecord(recordDto.MedicalRecordID)
+            return new MedicalRecord(recordDto.MedicalRecordID, recordDto.PatientID)
             {
                 MedicalRecordID = recordDto.MedicalRecordID,
                 PatientID = recordDto.PatientID,
@@ -59,7 +56,6 @@ namespace Business
                 Patient = Patient.FindPatientById(recordDto.PatientID)
             };
         }
-
         private static MedicalRecordDto ToDto(MedicalRecord record)
         {
             return new MedicalRecordDto()
@@ -78,19 +74,16 @@ namespace Business
                 Allergies = record.Allergies
             };
         }
-
         private bool AddMedicalRecord()
         {
             MedicalRecordID = MedicalRecordData.AddMedicalRecord(ToDto(this));
 
             return MedicalRecordID > 0;
         }
-
         private bool UpdateMedicalRecord()
         {
             return MedicalRecordData.UpdateMedicalRecord(ToDto(this));
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
@@ -155,7 +148,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static MedicalRecord FindMedicalRecordByID(int medicalRecordID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
@@ -163,7 +155,6 @@ namespace Business
 
             return FromDto(MedicalRecordData.FindMedicalRecordByID(medicalRecordID));
         }
-
         public static MedicalRecord FindMedicalRecordByPatientID(int patientId)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
@@ -171,12 +162,10 @@ namespace Business
 
             return FromDto(MedicalRecordData.FindMedicalRecordByPatientID(patientId));
         }
-
         public string GetCareText()
         {
             return ConcentToCare ? "Care" : "No Care";
         }
-
         private OperationResult IsMedicalRecordValidToSave()
         {
             if (Util.IsValidId(PatientID) &&

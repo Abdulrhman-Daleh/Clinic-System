@@ -10,7 +10,6 @@ namespace Business
         {
             return string.IsNullOrWhiteSpace(inputValue);
         }
-
         public static void RefreshRecordsList<T>(BindingList<T> records, T record, int recordIndex)
         {
             if (recordIndex < records.Count && recordIndex != -1)
@@ -20,17 +19,14 @@ namespace Business
             else
                 records.Add(record);
         }
-
         public static bool IsRequired(string value)
         {
             return !string.IsNullOrWhiteSpace(value);
         }
-
         public static bool IsValidId(int id)
         {
             return id > 0;
         }
-
         public static OperationResult CanAccessForm(params EnRole[] allowedRoles)
         {
             var currentStaff = Global.CurrentLoggedInStaff;

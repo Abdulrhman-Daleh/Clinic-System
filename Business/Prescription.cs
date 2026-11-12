@@ -12,7 +12,6 @@ namespace Business
     public class Prescription
     {
         private EnMode _mode;
-
         public int PrescriptionID { get; set; }
         public int AppointmentID { get; set; }
         public Appointment Appointment { get; set; }
@@ -21,12 +20,10 @@ namespace Business
         public DateTime WriteDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public List<Business.PrescriptionItem> PrescriptionItems { get; set; }
-
         public bool IsAddMode()
         {
             return _mode == EnMode.Add;
         }
-
         public Prescription()
         {
             PrescriptionID = -1;
@@ -38,14 +35,12 @@ namespace Business
             PrescriptionItems = new List<PrescriptionItem>();
             Appointment = new Appointment();
         }
-
         public Prescription(int prescriptionID, int appointmentId)
         {
             PrescriptionID = prescriptionID;
             Appointment = Business.Appointment.FindAppointmentByID(appointmentId);
             _mode = EnMode.Update;
         }
-
         public static Prescription FromDto(PrescriptionDto prescriptionDto)
         {
             if (prescriptionDto == null)
@@ -61,7 +56,6 @@ namespace Business
                 ExpirationDate = prescriptionDto.ExpirationDate
             };
         }
-
         public static PrescriptionDto ToDto(Prescription prescription)
         {
             if (prescription == null)
@@ -77,7 +71,6 @@ namespace Business
                 ExpirationDate = prescription.ExpirationDate
             };
         }
-
         private bool AddNewPrescription()
         {
             List<PrescriptionItemDto> list = new List<PrescriptionItemDto>();
@@ -89,12 +82,10 @@ namespace Business
 
             return PrescriptionID > 0;
         }
-
         private bool UpdatePrescription()
         {
             return PrescriptionData.UpdatePrescription(ToDto(this));
         }
-
         public decimal CalculateTotalPrice()
         {
             decimal totalPrice = 0;
@@ -104,7 +95,6 @@ namespace Business
 
             return totalPrice;
         }
-
         public OperationResult Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
@@ -174,7 +164,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         private OperationResult CheckAppointmentAccess()
         {
             if (_mode == EnMode.Update)
@@ -214,14 +203,12 @@ namespace Business
                 "Access Granted",
                 true);
         }
-
         private static bool IsAssignedToCurrentDoctor(Business.Appointment appointment)
         {
             return appointment?.Staff != null &&
                    Global.CurrentLoggedInStaff != null &&
                    appointment.Staff.StaffId == Global.CurrentLoggedInStaff.StaffId;
         }
-
         public static Prescription FindPrescriptionByID(int prescriptionID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
@@ -236,7 +223,6 @@ namespace Business
 
             return prescription;
         }
-
         public static Prescription FindPrescriptionByAppointmentID(int appointmentID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
@@ -251,7 +237,6 @@ namespace Business
 
             return prescription;
         }
-
         public static async Task<BindingList<Prescription>> GetPrescriptions()
         {
             BindingList<Prescription> prescriptions = new BindingList<Prescription>();
@@ -269,7 +254,6 @@ namespace Business
 
             return prescriptions;
         }
-
         private OperationResult IsPrescriptionValidToSave()
         {
             if (PrescriptionItems.Count == 0)
@@ -293,10 +277,8 @@ namespace Business
                 "Invalid",
                 false);
         }
-
         public string SignedByName() =>
             DoctorDidSign ? Appointment.Staff.GetFullName() : "Not Signed";
-
         public string GetValidUntilDate() =>
             DateTime.Now >= ExpirationDate
                 ? "Expired"

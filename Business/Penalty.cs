@@ -16,7 +16,6 @@ namespace Business
         public Policy Policy { get; set; }
         public DateTime PenaltyDueDate { get; set; }
         public DateTime? PenaltyClosedDate { get; set; }
-
         public Penalty()
         {
             PenaltyID = -1;
@@ -38,7 +37,6 @@ namespace Business
                 PenaltyDueDate = penalty.PenaltyDueDate
             };
         }
-
         public Penalty CreatePenalty(Policy policy, Appointment appointment)
         {
             Penalty penalty = new Penalty();

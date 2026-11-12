@@ -13,7 +13,6 @@ namespace Business
         public DateTime RegisterDate { get; set; }
         public DateTime? EndOfBookingFreeze { get; set; }
         public bool? HasUnPaidFees { get; set; }
-
         public static PatientDto ToDto(Patient patient)
         {
             return new PatientDto()
@@ -29,7 +28,6 @@ namespace Business
                 Gender = patient.Gender == EnGender.Male ? 'M' : 'F',
             };
         }
-
         private static Patient FromDto(PatientDto patientDto)
         {
             if (patientDto is null)
@@ -48,7 +46,6 @@ namespace Business
                 Gender = patientDto.Gender == 'M' ? EnGender.Male : EnGender.Female
             };
         }
-
         public Patient()
         {
             PatientId = -1;
@@ -58,7 +55,6 @@ namespace Business
             EndOfBookingFreeze = null;
             HasUnPaidFees = null;
         }
-
         public bool AddNewPatient()
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
@@ -81,7 +77,6 @@ namespace Business
 
             return false;
         }
-
         public static Patient FindPatientById(int patientId)
         {
             if (!Util.CanAccessForm(
@@ -93,7 +88,6 @@ namespace Business
 
             return FromDto(PatientData.FindPatientById(patientId));
         }
-
         public int FreezeUnlockDays()
         {
             if (EndOfBookingFreeze == null)
@@ -101,15 +95,13 @@ namespace Business
 
             return (EndOfBookingFreeze - DateTime.Now).Value.Days;
         }
-
         public string ISUnpaidText()
         {
             if (HasUnPaidFees == null)
-                return "No";
+                return "No Fees";
 
             return HasUnPaidFees == true ? "Yes" : "No";
         }
-
         public int GetTotalVisits()
         {
             if (!Util.CanAccessForm(
@@ -121,7 +113,6 @@ namespace Business
 
             return PatientData.GetTotalVisits(PatientId);
         }
-
         private bool IsPatientValidToSave()
         {
             return Util.IsValidId(PersonId);

@@ -9,7 +9,6 @@ namespace Business
     public class LabTest
     {
         private EnMode _mode;
-
         public int LabID { get; set; }
         public int AppointmentID { get; set; }
         public Appointment Appointment { get; set; }
@@ -23,12 +22,6 @@ namespace Business
         public DateTime RequestDate { get; set; }
         public DateTime? PerformDate { get; set; }
         public DateTime? ResultRecordedAt { get; set; }
-
-        public bool IsAddMode()
-        {
-            return _mode == EnMode.Add;
-        }
-
         public LabTest()
         {
             LabID = -1;
@@ -44,7 +37,6 @@ namespace Business
             ResultRecordedAt = null;
             _mode = EnMode.Add;
         }
-
         public LabTest(int labID, int appointmentId, int staffId)
         {
             LabID = labID;
@@ -52,7 +44,6 @@ namespace Business
             Nurse = Staff.FindStaffById(staffId);
             _mode = EnMode.Update;
         }
-
         public static LabTest FromDto(LabTestDto labTestDto)
         {
             if (labTestDto == null)
@@ -73,7 +64,6 @@ namespace Business
                 ResultRecordedAt = labTestDto.ResultRecordedAt
             };
         }
-
         public static LabTestDto ToDto(LabTest labTest)
         {
             if (labTest == null)
@@ -94,19 +84,16 @@ namespace Business
                 ResultRecordedAt = labTest.ResultRecordedAt
             };
         }
-
         private bool AddNewLabTest()
         {
             LabID = LabTestData.AddNewLabTest(ToDto(this));
 
             return LabID > 0;
         }
-
         private bool UpdateLabTest()
         {
             return LabTestData.UpdateLabTest(ToDto(this));
         }
-
         private OperationResult CheckAddAccess()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
@@ -114,11 +101,10 @@ namespace Business
             if (!result.IsSuccess)
                 return result;
 
-            Appointment appointment = Business.Appointment.FindAppointmentByID(AppointmentID);
 
-            if (appointment == null ||
-                appointment.Staff == null ||
-                appointment.Staff.StaffId != Global.CurrentLoggedInStaff.StaffId)
+            if (Appointment == null ||
+                Appointment.Staff == null ||
+                Appointment.Staff.StaffId != Global.CurrentLoggedInStaff.StaffId)
             {
                 return new OperationResult(
                     "You are not authorized to order lab tests for this appointment.",
@@ -126,11 +112,10 @@ namespace Business
                     false);
             }
 
-            Staff nurse = Staff.FindStaffById(NurseID);
 
-            if (nurse == null ||
-                nurse.RoleInfo.RoleId != EnRole.Nurse ||
-                !nurse.IsActive)
+            if (Nurse == null ||
+                Nurse.RoleInfo.RoleId != EnRole.Nurse ||
+                !Nurse.IsActive)
             {
                 return new OperationResult(
                     "The selected nurse is invalid or inactive.",
@@ -138,15 +123,11 @@ namespace Business
                     false);
             }
 
-            Appointment = appointment;
-            Nurse = nurse;
-
             return new OperationResult(
                 "Lab test ordering access granted.",
                 "Access Granted",
                 true);
         }
-
         private OperationResult CheckUpdateAccess()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Nurse);
@@ -194,7 +175,6 @@ namespace Business
                 "Access Granted",
                 true);
         }
-
         public OperationResult Save()
         {
             OperationResult result;
@@ -264,7 +244,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static LabTest FindLabTestByID(int labID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Nurse).IsSuccess)
@@ -292,7 +271,6 @@ namespace Business
 
             return FromDto(labTestDto);
         }
-
         private OperationResult IsLabTestValidToSave()
         {
             if (Util.IsValidId(AppointmentID) &&

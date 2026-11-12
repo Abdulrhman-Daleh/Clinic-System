@@ -22,7 +22,6 @@ namespace Business
         public TimeSpan AppointmentEndTime { get; set; }
         public Patient Patient { get; set; }
         public Staff Staff { get; set; }
-
         public Appointment()
         {
             AppointmentID = -1;
@@ -37,9 +36,10 @@ namespace Business
             Staff = new Staff();
             _mode = EnMode.Add;
         }
-
         private static AppointmentDto ToDto(Appointment appointment)
         {
+            if (appointment == null) return null;
+
             return new AppointmentDto()
             {
                 AppointmentID = appointment.AppointmentID,
@@ -52,7 +52,6 @@ namespace Business
                 AppointmentEndTime = appointment.AppointmentEndTime
             };
         }
-
         private static Appointment FromDto(AppointmentDto appointment)
         {
             if (appointment == null) return null;
@@ -72,7 +71,6 @@ namespace Business
                 Patient = Patient.FindPatientById(appointment.PatientID)
             };
         }
-
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
@@ -80,14 +78,12 @@ namespace Business
 
             return await AppointmentData.GetAppointmentTypesNames();
         }
-
         private bool AddNewAppointment()
         {
             AppointmentID = AppointmentData.AddNewAppointment(ToDto(this));
 
             return AppointmentID > 0;
         }
-
         private Penalty GetPenaltyToAppointment(Policy policy, Appointment appointment)
         {
             Penalty peanlty = new Penalty();
@@ -97,7 +93,6 @@ namespace Business
         {
             return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo), Penalty.ToDTO(GetPenaltyToAppointment(policy, this))) > 0;
         }
-
         private OperationResult CheckSaveAccess()
         {
             if (_mode == EnMode.Add)
@@ -193,7 +188,6 @@ namespace Business
                 "Access Granted",
                 true);
         }
-
         public OperationResult Save(Payment paymentInfo = null, Policy policy = null)
         {
             OperationResult result = CheckSaveAccess();
@@ -274,7 +268,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         private OperationResult IsAppointmentValidToComplete()
         {
             if (!Util.IsValidId(AppointmentID) ||
@@ -294,12 +287,10 @@ namespace Business
                 "Valid",
                 true);
         }
-
         public bool NoOverlapWithLastAppointment()
         {
             return AppointmentData.NoOverlapWithLastAppointment(ToDto(this));
         }
-
         public static Appointment FindAppointmentByID(int appointmentId)
         {
             if (!Util.CanAccessForm(
@@ -322,7 +313,6 @@ namespace Business
 
             return FromDto(appointmentDto);
         }
-
         private bool CanAccessCurrentAppointment()
         {
             if (Global.CurrentLoggedInStaff == null)
@@ -342,31 +332,24 @@ namespace Business
                     return false;
             }
         }
-
         public bool HasSOAPNotes() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasSOAPNotes(AppointmentID);
-
         public bool HasPrescription() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasPrescription(AppointmentID);
-
         public bool HasLabTests() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasLabTests(AppointmentID);
-
         public bool HasReferral() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasReferral(AppointmentID);
-
         public bool HasPayment() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasPayment(AppointmentID);
-
         public bool HasPenalty() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasPenalty(AppointmentID);
-
         private OperationResult IsAppointmentValidToSave()
         {
             if (!Util.IsValidId(PatientID) ||
@@ -403,7 +386,6 @@ namespace Business
                 "Valid",
                 true);
         }
-
         public bool IsStillActive() =>
             AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed &&
             AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Cancelled &&

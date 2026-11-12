@@ -18,7 +18,6 @@ namespace Business
         public DateTime? PerformDateValue { get; set; }
         public DateTime? ResultRecordedAtValue { get; set; }
         public string TestResultValue { get; set; }
-
         private static LabTestListing FromDto(LabTestListingDto labTestDto)
         {
             if (labTestDto == null)
@@ -36,14 +35,13 @@ namespace Business
                 TestResultValue = labTestDto.TestResult
             };
         }
-
         public static async Task<BindingList<LabTestListing>> GetLabTestsByAppointmentID(int appointmentID)
         {
-            BindingList<LabTestListing> list = new BindingList<LabTestListing>();
-
             OperationResult result = Util.CanAccessForm(
                 EnRole.Doctor,
                 EnRole.Nurse);
+
+            BindingList<LabTestListing> list = new BindingList<LabTestListing>();
 
             if (!result.IsSuccess)
                 return list;
@@ -72,23 +70,11 @@ namespace Business
 
             return list;
         }
-
-        public static async Task<BindingList<LabTestListing>> GetLabTests()
-        {
-            BindingList<LabTestListingDto> labTestDtos =
-                await LabTestData.GetLabTests();
-
-            BindingList<LabTestListing> labTests =
-                new BindingList<LabTestListing>();
-
-            foreach (LabTestListingDto labTestDto in labTestDtos)
-                labTests.Add(FromDto(labTestDto));
-
-            return labTests;
-        }
-
         public static LabTestListing FindLabTestByID(int labId)
         {
+            if (!Util.CanAccessForm(EnRole.Nurse).IsSuccess)
+                return null;
+
             return FromDto(LabTestData.FindLabTestListByID(labId));
         }
     }

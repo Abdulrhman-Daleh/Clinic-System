@@ -10,29 +10,20 @@ namespace Business
     public class Medicine
     {
         private EnMode _mode;
-
         public int MedicineID { get; set; }
         public string DrugName { get; set; }
         public decimal StrengthValue { get; set; }
-
-        [Browsable(false)]
         public (EnStrengthUnits StrengthTypeID, string StrengthTypeName) StrengthType { get; set; }
-
-        [Browsable(false)]
         public (EnDosageForms DosageFormID, string DosageFormName) DosageForm { get; set; }
-
         public decimal UnitPrice { get; set; }
         public int StrengthUnitID => (int)StrengthType.StrengthTypeID;
         public string StrengthUnitText => StrengthType.StrengthTypeName;
-
         public int DosageFormID => (int)DosageForm.DosageFormID;
         public string DosageFormText => DosageForm.DosageFormName;
-
         public bool IsAddMode()
         {
             return _mode == EnMode.Add;
         }
-
         public static async Task<BindingList<string>> GetMedicineStrengthUnits()
         {
             BindingList<string> list = new BindingList<string>();
@@ -45,7 +36,6 @@ namespace Business
 
             return list;
         }
-
         public static async Task<BindingList<string>> GetMedicineDosageForms()
         {
             BindingList<string> list = new BindingList<string>();
@@ -58,7 +48,6 @@ namespace Business
 
             return list;
         }
-
         public Medicine()
         {
             MedicineID = -1;
@@ -67,13 +56,11 @@ namespace Business
             DosageForm = ((EnDosageForms)0, "None");
             _mode = EnMode.Add;
         }
-
         public Medicine(int medicineID)
         {
             MedicineID = medicineID;
             _mode = EnMode.Update;
         }
-
         public static Medicine FromDto(MedicineDto medicineDto)
         {
             if (medicineDto == null)
@@ -89,7 +76,6 @@ namespace Business
                 UnitPrice = medicineDto.UnitPrice
             };
         }
-
         public static MedicineDto ToDto(Medicine medicine)
         {
             if (medicine == null)
@@ -105,22 +91,19 @@ namespace Business
                 UnitPrice = medicine.UnitPrice
             };
         }
-
         private bool UpdateMedicine()
         {
             return MedicineData.UpdateMedicine(ToDto(this));
         }
-
         private bool AddMedicine()
         {
             MedicineID = MedicineData.AddNewMedicine(ToDto(this));
 
             return MedicineID > 0;
         }
-
         public OperationResult Save()
         {
-            OperationResult result = Util.CanAccessForm(EnRole.Owner);
+            OperationResult result = Util.CanAccessForm(EnRole.Owner, EnRole.Doctor);
 
             if (!result.IsSuccess)
                 return result;
@@ -182,7 +165,6 @@ namespace Business
                 "Failed",
                 false);
         }
-
         public static Medicine FindMedicineByID(int medicineID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
@@ -190,7 +172,6 @@ namespace Business
 
             return FromDto(MedicineData.FindMedicineByID(medicineID));
         }
-
         public static Medicine FindMedicineByDrugName(string drugName)
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
@@ -198,7 +179,6 @@ namespace Business
 
             return FromDto(MedicineData.FindMedicineByDrugName(drugName));
         }
-
         public static async Task<BindingList<Medicine>> GetMedicines()
         {
             BindingList<Medicine> medicines = new BindingList<Medicine>();
@@ -213,7 +193,6 @@ namespace Business
 
             return medicines;
         }
-
         private OperationResult IsMedicineValidToSave()
         {
             if (Util.IsRequired(DrugName) &&
