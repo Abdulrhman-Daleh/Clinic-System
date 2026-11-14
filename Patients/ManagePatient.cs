@@ -3,7 +3,6 @@ using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Patients
@@ -101,12 +100,8 @@ namespace ClinicSystem.Patients
 
         private void RefreshDgv(Patient p)
         {
-            int targetIndex = -1;
             PatientList patient = PatientList.FindPatientByIdList(p.PatientId);
-
-            if (Patients.Any(x => x.PatientId == patient.PatientId))
-                targetIndex = Patients.IndexOf(Patients.First(x => x.PatientId == patient.PatientId));
-
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Patients, "PatientID", patient);
             CommonOperations.UpdateAfterAdding(Patients, patient, targetIndex);
         }
 

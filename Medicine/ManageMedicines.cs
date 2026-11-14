@@ -1,10 +1,8 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Medicine
@@ -12,12 +10,10 @@ namespace ClinicSystem.Medicine
     public partial class ManageMedicines : FormsDefaultSettings
     {
         private BindingList<Business.Medicine> Medicines { get; set; }
-
         public ManageMedicines()
         {
             InitializeComponent();
         }
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -25,7 +21,6 @@ namespace ClinicSystem.Medicine
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicineID" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 10);
         }
-
         private void SetUp()
         {
             cbFilterBy.Items.AddRange(new object[]
@@ -39,12 +34,10 @@ namespace ClinicSystem.Medicine
 
             cbFilterBy.SelectedIndex = 0;
         }
-
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -54,7 +47,6 @@ namespace ClinicSystem.Medicine
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -70,7 +62,6 @@ namespace ClinicSystem.Medicine
             CommonOperations.LoadDataToDGV(
                 dgvMedicines, temp, lblRecords);
         }
-
         private async void LoadMedicineInfo()
         {
             Medicines = await Business.Medicine.GetMedicines();
@@ -80,7 +71,6 @@ namespace ClinicSystem.Medicine
 
             RefreshFilter(0);
         }
-
         private void ManageMedicines_Load(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -92,45 +82,25 @@ namespace ClinicSystem.Medicine
             LoadMedicineInfo();
             SetUp();
         }
-
         private void btnClose_Click(object sender, EventArgs e) => Close();
-
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void SetControlEnableStatus(bool status)
         {
             updateMedicineToolStripMenuItem.Enabled = status;
         }
-
         private void cmsMedicine_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(
                 !ValidationHelper.IsDgvEmptyOrNull(dgvMedicines));
         }
-
         private void RefreshDgv(Business.Medicine m)
         {
-            int targetIndex = -1;
-
-            Business.Medicine medicine =
-                Business.Medicine.FindMedicineByID(m.MedicineID);
-
-            if (medicine == null)
-                return;
-
-            if (Medicines.Any(x => x.MedicineID == medicine.MedicineID))
-            {
-                targetIndex = Medicines.IndexOf(
-                    Medicines.First(x => x.MedicineID == medicine.MedicineID));
-            }
-
-            CommonOperations.UpdateAfterAdding(
-                Medicines, medicine, targetIndex);
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Medicines, "MedicineID", m);
+            CommonOperations.UpdateAfterAdding(Medicines, m, targetIndex);
         }
-
         private void addNewMedicineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -141,7 +111,6 @@ namespace ClinicSystem.Medicine
             addMedicine.OnSave += RefreshDgv;
             addMedicine.ShowDialog();
         }
-
         private void updateMedicineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -158,7 +127,6 @@ namespace ClinicSystem.Medicine
             updateMedicine.OnSave += RefreshDgv;
             updateMedicine.ShowDialog();
         }
-
         private void dgvMedicines_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {

@@ -15,7 +15,6 @@ namespace ClinicSystem.Medicine.PrescriptionItem
                 lblRecord, lblTotal
             }, "Not Set");
         }
-
         public async void LoadPrescriptionItems(int prescriptionId, decimal totalPrice)
         {
             BindingList<Business.PrescriptionItemListing> prescriptionItems = await Business.PrescriptionItemListing.GetPrescriptionItems(prescriptionId);

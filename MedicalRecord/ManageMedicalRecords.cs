@@ -1,5 +1,5 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,10 @@ namespace ClinicSystem.MedicalRecord
     public partial class ManageMedicalRecord : FormsDefaultSettings
     {
         private BindingList<Business.MedicalRecordList> MedicalRecords { get; set; }
-
         public ManageMedicalRecord()
         {
             InitializeComponent();
         }
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -24,7 +22,6 @@ namespace ClinicSystem.MedicalRecord
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicalRecordID" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 30);
         }
-
         private void SetUp()
         {
             cbConsentToCare.Items.AddRange(new object[]
@@ -48,7 +45,6 @@ namespace ClinicSystem.MedicalRecord
 
             cbFilterBy.SelectedIndex = 0;
         }
-
         private async void LoadMedicalRecordInfo()
         {
             MedicalRecords = await Business.MedicalRecordList.GetMedicalRecords();
@@ -57,7 +53,6 @@ namespace ClinicSystem.MedicalRecord
 
             RefreshFilter(0);
         }
-
         private void ManageMedicalRecord_Load(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor))
@@ -69,7 +64,6 @@ namespace ClinicSystem.MedicalRecord
             SetUp();
             LoadMedicalRecordInfo();
         }
-
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (MedicalRecords == null)
@@ -86,7 +80,6 @@ namespace ClinicSystem.MedicalRecord
 
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void cbConsentToCare_SelectedIndexChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy).ToLower();
@@ -104,12 +97,10 @@ namespace ClinicSystem.MedicalRecord
             List<object> temp = CommonOperations.FilterData(MedicalRecords, filterName, cbConsentToCare.Text.ToLower() == "yes" ? true : false);
             CommonOperations.LoadDataToDGV(dgvMedicalRecords, temp, lblRecords);
         }
-
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -121,7 +112,6 @@ namespace ClinicSystem.MedicalRecord
             else
                 ValidationHelper.HandleInputType(e, true, false);
         }
-
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -133,29 +123,36 @@ namespace ClinicSystem.MedicalRecord
             List<object> temp = CommonOperations.FilterData(MedicalRecords, filterName, value);
             CommonOperations.LoadDataToDGV(dgvMedicalRecords, temp, lblRecords);
         }
-
         private void btnClose_Click(object sender, EventArgs e) => Close();
-
         private void SetControlEnableStatus(bool status)
         {
             updateMedicalRecordToolStripMenuItem.Enabled = status;
             viewToolStripMenuItem.Enabled = status;
         }
-
         private void cmsMedicalRecords_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(
                 !ValidationHelper.IsDgvEmptyOrNull(dgvMedicalRecords));
         }
-
         private void RefreshDgv(Business.MedicalRecord record)
         {
             if (record == null)
                 return;
 
-            LoadMedicalRecordInfo();
-        }
+            MedicalRecordList RecordListing = new MedicalRecordList()
+            {
+                MedicalRecordID = record.MedicalRecordID,
+                CreatedDate = record.CreatedDate,
+                Classification = record.Classification,
+                ConsentToCare = record.ConcentToCare,
+                MedicalNumber = record.MedicalNumber,
+                PatientName = record.Patient.GetFullName()
+            };
 
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(MedicalRecords, "RecordID", RecordListing);
+
+            CommonOperations.UpdateAfterAdding(MedicalRecords, RecordListing, targetIndex);
+        }
         private void addNewMedicalRecordToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
@@ -168,7 +165,6 @@ namespace ClinicSystem.MedicalRecord
             addMedicalRecord.SendMedicalRecordInfo += RefreshDgv;
             addMedicalRecord.ShowDialog();
         }
-
         private void updateMedicalRecordToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
@@ -187,7 +183,6 @@ namespace ClinicSystem.MedicalRecord
             updateMedicalRecord.SendMedicalRecordInfo += RefreshDgv;
             updateMedicalRecord.ShowDialog();
         }
-
         private void dgvMedicalRecords_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -197,7 +192,6 @@ namespace ClinicSystem.MedicalRecord
             updateMedicalRecordToolStripMenuItem_Click(
                 sender, EventArgs.Empty);
         }
-
         private void viewToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor))

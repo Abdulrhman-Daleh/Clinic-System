@@ -13,12 +13,10 @@ namespace ClinicSystem.LabOrderTest
     {
         BindingList<LabTestQueueListing> labTests =
             new BindingList<LabTestQueueListing>();
-
         public ManageMyLabQueue()
         {
             InitializeComponent();
         }
-
         private async void ManageMyLabQueue_Load(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Nurse))
@@ -45,19 +43,15 @@ namespace ClinicSystem.LabOrderTest
             CommonOperations.LoadDataToDGV(
                 dgvLabQueue, labTests, lblRecords);
         }
-
         private void btnClose_Click(object sender, EventArgs e)
             => Close();
-
         private void cbFilterBy_KeyPress(
             object sender, KeyPressEventArgs e)
             => ValidationHelper.LockComboBox(e);
-
         private void cmsLabQueue_Opening(
             object sender, CancelEventArgs e)
             => viewLabTestToolStripMenuItem.Enabled =
                 !ValidationHelper.IsDgvEmptyOrNull(dgvLabQueue);
-
         private void dgvLabQueue_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -66,7 +60,6 @@ namespace ClinicSystem.LabOrderTest
 
             ViewSelectedLabTest();
         }
-
         private void RefreshFilter(int index)
         {
             cbFilterBy.SelectedIndex = index;
@@ -82,13 +75,11 @@ namespace ClinicSystem.LabOrderTest
                 5,
                 40);
         }
-
         private void cbFilterBy_SelectedIndexChanged(
             object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void txtFilter_TextChanged(
             object sender, EventArgs e)
         {
@@ -107,13 +98,11 @@ namespace ClinicSystem.LabOrderTest
             CommonOperations.LoadDataToDGV(
                 dgvLabQueue, temp, lblRecords);
         }
-
         private void viewLabTestToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
             ViewSelectedLabTest();
         }
-
         private void ViewSelectedLabTest()
         {
             if (!ValidationHelper.CheckAccess(EnRole.Nurse))

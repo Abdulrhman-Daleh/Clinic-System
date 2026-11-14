@@ -4,7 +4,6 @@ using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace ClinicSystem.LabOrderTest
 {
@@ -12,18 +11,15 @@ namespace ClinicSystem.LabOrderTest
     {
         BindingList<LabTestListing> labTests = new BindingList<LabTestListing>();
         private int? _appointmentId;
-
         public ManageLabTests()
         {
             InitializeComponent();
         }
-
         public ManageLabTests(int appointmentId)
         {
             InitializeComponent();
             _appointmentId = appointmentId;
         }
-
         private async void SetLoadedAppointment(int appointmentId)
         {
             findAppointmentCtrl1.LoadAppointmentInfo(appointmentId);
@@ -36,14 +32,10 @@ namespace ClinicSystem.LabOrderTest
             labTests = await LabTestListing.GetLabTestsByAppointmentID(appointmentId);
             CommonOperations.LoadDataToDGV(dgvLabTests, labTests, lblRecords);
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
-
         private void cbFilterBy_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e) => ValidationHelper.LockComboBox(e);
-
         private void cmsLabTests_Opening(object sender, System.ComponentModel.CancelEventArgs e)
              => viewLabTestToolStripMenuItem.Enabled = !ValidationHelper.IsDgvEmptyOrNull(dgvLabTests);
-
         private void dgvLabTests_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
@@ -56,7 +48,6 @@ namespace ClinicSystem.LabOrderTest
             ViewLabTestInfo viewLabTest = new ViewLabTestInfo(labTestId);
             viewLabTest.ShowDialog();
         }
-
         private void ManageLabTests_Load(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
@@ -72,7 +63,6 @@ namespace ClinicSystem.LabOrderTest
             if (_appointmentId.HasValue)
                 SetLoadedAppointment(_appointmentId.Value);
         }
-
         private void RefreshFilter(int index)
         {
             cbFilterBy.SelectedIndex = index;
@@ -80,12 +70,10 @@ namespace ClinicSystem.LabOrderTest
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "LabID" }, CommonOperations.GetFilterName(cbFilterBy),
               5, 40);
         }
-
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -102,7 +90,6 @@ namespace ClinicSystem.LabOrderTest
 
             CommonOperations.LoadDataToDGV(dgvLabTests, temp, lblRecords);
         }
-
         private void viewLabTestToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor, EnRole.Nurse))
@@ -115,7 +102,6 @@ namespace ClinicSystem.LabOrderTest
             ViewLabTestInfo viewLabTest = new ViewLabTestInfo(labTestId);
             viewLabTest.ShowDialog();
         }
-
         private void addLabTestToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor))
@@ -125,18 +111,13 @@ namespace ClinicSystem.LabOrderTest
                 return;
 
             AddUpdateLabTest addTest = new AddUpdateLabTest(findAppointmentCtrl1.CurrentAppointment.AppointmentID);
-            addTest.OnSave += ReciveLabInfo;
+            addTest.OnSave += RefreshDGV;
             addTest.ShowDialog();
         }
-
-        private void ReciveLabInfo(LabTest labTest)
+        private void RefreshDGV(LabTest labTest)
         {
-            int targetIndex = -1;
             LabTestListing labList = LabTestListing.FindLabTestByID(labTest.LabID);
-
-            if (labTests.Any(x => x.LabID == labTest.LabID))
-                targetIndex = labTests.IndexOf(labTests.First(x => x.LabID == labTest.LabID));
-
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(labTests, "LabID", labList.LabID);
             CommonOperations.UpdateAfterAdding(labTests, labList, targetIndex);
         }
     }

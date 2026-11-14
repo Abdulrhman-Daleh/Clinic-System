@@ -5,7 +5,6 @@ using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Insurance
@@ -13,12 +12,10 @@ namespace ClinicSystem.Insurance
     public partial class ManageInsurances : FormsDefaultSettings
     {
         private BindingList<InsuranceList> Insurances { get; set; }
-
         public ManageInsurances()
         {
             InitializeComponent();
         }
-
         private async void LoadInsurancesInfo()
         {
             Insurances = await InsuranceList.GetInsurances();
@@ -30,7 +27,6 @@ namespace ClinicSystem.Insurance
 
             RefreshFilter(0);
         }
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -40,7 +36,6 @@ namespace ClinicSystem.Insurance
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "#", "Members" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 25);
         }
-
         private void SetUp()
         {
             cbFilterBy.Items.AddRange(new object[]
@@ -54,7 +49,6 @@ namespace ClinicSystem.Insurance
                 "StatusText"
             });
         }
-
         private void ManageInsurances_Load(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
@@ -66,17 +60,14 @@ namespace ClinicSystem.Insurance
             SetUp();
             LoadInsurancesInfo();
         }
-
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -93,7 +84,6 @@ namespace ClinicSystem.Insurance
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -113,19 +103,16 @@ namespace ClinicSystem.Insurance
 
             CommonOperations.LoadDataToDGV(dgvInsurances, temp, lblRecords);
         }
-
         private void SetControlEnableStatus(bool status)
         {
             updateInsuranceToolStripMenuItem.Enabled = status;
             viewInsuranceToolStripMenuItem.Enabled = status;
         }
-
         private void cmsInsurances_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(
                 !ValidationHelper.IsDgvEmptyOrNull(dgvInsurances));
         }
-
         private void dgvInsurances_CellDoubleClick(
             object sender, DataGridViewCellEventArgs e)
         {
@@ -144,18 +131,12 @@ namespace ClinicSystem.Insurance
             updateInsurance.ShowDialog();
 
         }
-
         private void RefreshDgv(int InsuranceId)
         {
-            int targetIndex = -1;
             InsuranceList Insurance = InsuranceList.FindInsurancebyID(InsuranceId);
-
-            if (Insurances.Any(x => x.InsuranceID == Insurance.InsuranceID))
-                targetIndex = Insurances.IndexOf(Insurances.First(x => x.InsuranceID == Insurance.InsuranceID));
-
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Insurances, "InsuranceID", Insurance.InsuranceID);
             CommonOperations.UpdateAfterAdding(Insurances, Insurance, targetIndex);
         }
-
         private void addNewInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
@@ -166,7 +147,6 @@ namespace ClinicSystem.Insurance
             addInsurance.SendInsuranceId += RefreshDgv;
             addInsurance.ShowDialog();
         }
-
         private void updateInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
@@ -185,7 +165,6 @@ namespace ClinicSystem.Insurance
             updateInsurance.ShowDialog();
 
         }
-
         private void viewInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
         {
@@ -204,7 +183,6 @@ namespace ClinicSystem.Insurance
             viewInsurance.ShowDialog();
 
         }
-
         private void btnClose_Click(object sender, EventArgs e) => Close();
     }
 }

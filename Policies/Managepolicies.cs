@@ -3,7 +3,6 @@ using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -45,19 +44,8 @@ namespace ClinicSystem.Policies
 
         private void RefreshDgv(Policy policy)
         {
-            int targetIndex = -1;
-
-            if (policy == null)
-                return;
-
-            if (Policies.Any(x => x.PolicyID == policy.PolicyID))
-            {
-                targetIndex = Policies.IndexOf(
-                    Policies.First(x => x.PolicyID == policy.PolicyID));
-            }
-
-            CommonOperations.UpdateAfterAdding(
-                Policies, policy, targetIndex);
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Policies, "PolicyID", policy.PolicyID);
+            CommonOperations.UpdateAfterAdding(Policies, policy, targetIndex);
         }
 
         private void addNewPolicyToolStripMenuItem_Click(

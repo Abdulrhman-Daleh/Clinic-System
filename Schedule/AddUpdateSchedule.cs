@@ -17,6 +17,9 @@ namespace ClinicSystem.Schedule
             SetFormTextBasedMode("Add New Schedule", "Add New Schedule", "Save Schedule");
         }
 
+        public delegate void SendScheduleInfo(Business.Schedule schedule);
+        public event SendScheduleInfo OnSave;
+
         public AddUpdateSchedule(int scheduleId)
         {
             InitializeComponent();
@@ -56,6 +59,8 @@ namespace ClinicSystem.Schedule
 
         private void btnAddSchedule_Click(object sender, EventArgs e)
         {
+            ValidateChildren();
+
             CollectData();
             lblDuration.Text = (schedule.WorkEndAt - schedule.WorkStartFrom).ToString();
 
@@ -76,6 +81,7 @@ namespace ClinicSystem.Schedule
             {
                 SetFormTextBasedMode("Update schedule", "Update", "Update");
                 lblScheduleId.Text = $"Sch-{schedule.ScheduleId}";
+                OnSave?.Invoke(schedule);
             }
         }
 
