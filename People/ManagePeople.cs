@@ -5,7 +5,6 @@ using ClinicSystem.People.Controls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.People
@@ -116,11 +115,7 @@ namespace ClinicSystem.People
         }
         private void RefreshDgv(Person person)
         {
-            int targetIndex = -1;
-
-            if (People.Any(x => x.PersonId == person.PersonId))
-                targetIndex = People.IndexOf(People.First(x => x.PersonId == person.PersonId));
-
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(People, "PersonID", person);
             CommonOperations.UpdateAfterAdding(People, person, targetIndex);
         }
         private void updatePersonToolStripMenuItem_Click(object sender, EventArgs e)

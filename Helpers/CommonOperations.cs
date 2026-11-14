@@ -21,7 +21,6 @@ namespace ClinicSystem.Helpers
             dgv.ScrollBars = ScrollBars.Both;
             return true;
         }
-
         public static bool ResetDataGrid<T>(DataGridView dgv, BindingList<T> values, Label lblRecords, string value)
         {
             if (ValidationHelper.IsEmptyOrNull(values) || values.Count == 0)
@@ -41,7 +40,6 @@ namespace ClinicSystem.Helpers
 
             return false;
         }
-
         private static void SwitchingFilterHelper<T>(DataGridView dgv, BindingList<T> people, Label lblRecords, ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, string combBoxFilterName)
         {
             txtFilterBy.Text = string.Empty;
@@ -74,19 +72,16 @@ namespace ClinicSystem.Helpers
             txtFilterBy.Visible = true;
             txtFilterBy.Focus();
         }
-
         public static void HandleSwitchingFilter<T>(ComboBox cbFilterBy, ComboBox cbMisc, TextBox txtFilterBy, DataGridView dgv, BindingList<T> people, Label lblRecords, string combBoxFilterName)
         {
             dgv.DataSource = people;
             lblRecords.Text = $"{dgv.Rows.Count} records";
             SwitchingFilterHelper(dgv, people, lblRecords, cbFilterBy, cbMisc, txtFilterBy, combBoxFilterName);
         }
-
         public static string GetFilterName(ComboBox cbFilterBy)
         {
             return cbFilterBy.Text;
         }
-
         public static List<object> FilterData<T>(BindingList<T> list, string columnName, object valueToCheck)
         {
             List<object> temp = new List<object>();
@@ -126,18 +121,15 @@ namespace ClinicSystem.Helpers
 
             return temp;
         }
-
         public static void SetUpDefaultControlsValue(List<Control> controls, string defaultValue)
         {
             foreach (Control c in controls)
                 c.Text = $"[{defaultValue}]";
         }
-
         public static void UpdateAfterAdding<T>(BindingList<T> list, T obj, int targetIndex = -1)
         {
             Util.RefreshRecordsList(list, obj, targetIndex);
         }
-
         public static void SaveUsernameToFile(string fileName, string userName)
         {
             if (File.Exists(fileName))
@@ -154,7 +146,6 @@ namespace ClinicSystem.Helpers
                 }
             }
         }
-
         public static string ReadRememberedUsername(string fileName)
         {
             if (File.Exists(fileName))
@@ -165,6 +156,18 @@ namespace ClinicSystem.Helpers
 
             return "";
         }
+        public static int FindTargetIndexOfObj<T, U>(BindingList<T> list, string propertyName, U value)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                var convertedValue = Convert.ChangeType(list[i].GetType().GetProperty(propertyName).GetValue(list[i]), TypeCode.Int32);
+                int sendValue = Convert.ToInt32(value);
 
+                if (convertedValue.Equals(sendValue))
+                    return i;
+            }
+
+            return -1;
+        }
     }
 }

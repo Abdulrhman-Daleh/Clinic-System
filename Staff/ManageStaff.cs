@@ -4,19 +4,16 @@ using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 
 namespace ClinicSystem.Staff
 {
     public partial class ManageStaff : FormsDefaultSettings
     {
         BindingList<StaffList> StaffList = new BindingList<StaffList>();
-
         public ManageStaff()
         {
             InitializeComponent();
         }
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -24,31 +21,26 @@ namespace ClinicSystem.Staff
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
-
         private void SetUp()
         {
             cbFilterBy.Items.AddRange(new object[] { "None", "StaffID", "FullName", "Username" });
             cbFilterBy.SelectedIndex = 0;
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
-
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void RefreshDgv(int staffId)
         {
-            int targetIndex = -1;
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(StaffList, "StaffId", staffId);
             StaffList staffList = Business.StaffList.FindStaffById(staffId);
 
-            if (StaffList.Any(x => x.StaffId == staffList.StaffId))
-                targetIndex = StaffList.IndexOf(StaffList.First(x => x.StaffId == staffList.StaffId));
+            if (ValidationHelper.IsEmptyOrNull(staffList, "Invalid access to staff"))
+                return;
 
             CommonOperations.UpdateAfterAdding(StaffList, staffList, targetIndex);
         }
-
         private void addNewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -58,7 +50,6 @@ namespace ClinicSystem.Staff
             addStaff.SendStaffId += RefreshDgv;
             addStaff.ShowDialog();
         }
-
         private void updateStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -70,7 +61,6 @@ namespace ClinicSystem.Staff
             updateStaff.SendStaffId += RefreshDgv;
             updateStaff.ShowDialog();
         }
-
         private void viewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -82,7 +72,6 @@ namespace ClinicSystem.Staff
             viewStaff.OnChange += RefreshDgv;
             viewStaff.ShowDialog();
         }
-
         private void dgvStaff_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -94,9 +83,9 @@ namespace ClinicSystem.Staff
             int staffId = (int)dgvStaff.CurrentRow.Cells["StaffID"].Value;
 
             ViewStaffInfo viewStaff = new ViewStaffInfo(staffId);
+            viewStaff.OnChange += RefreshDgv;
             viewStaff.ShowDialog();
         }
-
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -108,7 +97,6 @@ namespace ClinicSystem.Staff
             List<object> temp = CommonOperations.FilterData(StaffList, filterName, value);
             CommonOperations.LoadDataToDGV(dgvStaff, temp, lblRecords);
         }
-
         private async void LoadStaffInfo()
         {
             StaffList = await Business.StaffList.GetStaff();
@@ -120,7 +108,6 @@ namespace ClinicSystem.Staff
 
             RefreshFilter(0);
         }
-
         private void ManageStaff_Load(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
@@ -132,7 +119,6 @@ namespace ClinicSystem.Staff
             SetUp();
             LoadStaffInfo();
         }
-
         private void txtFilter_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -142,18 +128,15 @@ namespace ClinicSystem.Staff
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void cbFilterBy_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void SetControlEnableStatus(bool status)
         {
             updateStaffToolStripMenuItem.Enabled = status;
             viewStaffToolStripMenuItem.Enabled = status;
         }
-
         private void cmsStaff_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvStaff));

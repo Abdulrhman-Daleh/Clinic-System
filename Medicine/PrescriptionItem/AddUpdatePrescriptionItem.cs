@@ -18,16 +18,13 @@ namespace ClinicSystem.Medicine.PrescriptionItem
             SetFormTextBasedMode("Add Prescription Item", "Add Item", "Add Item");
             findMedicineCtrl1.AllowAdd = false;
         }
-
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
             Text = pageTitle;
             btnSave.Text = saveButtonText;
         }
-
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
-
         private void ReciveMedicineInfo(Business.Medicine medicine)
         {
             PrescriptionItem.Medicine = medicine;
@@ -37,7 +34,6 @@ namespace ClinicSystem.Medicine.PrescriptionItem
             else
                 PrescriptionItem.MedicineID = medicine.MedicineID;
         }
-
         private void nudDose_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             NumericUpDown nudCurrent = (NumericUpDown)sender;
@@ -47,7 +43,6 @@ namespace ClinicSystem.Medicine.PrescriptionItem
             else
                 errors.SetError(nudCurrent, null);
         }
-
         private void txtFrequency_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             TextBox box = (TextBox)sender;
@@ -57,7 +52,6 @@ namespace ClinicSystem.Medicine.PrescriptionItem
             else
                 errors.SetError(box, null);
         }
-
         private void CollectData()
         {
             PrescriptionItem.Dose = (byte)nudDose.Value;
@@ -65,7 +59,6 @@ namespace ClinicSystem.Medicine.PrescriptionItem
             PrescriptionItem.Frequency = txtFrequency.Text;
             PrescriptionItem.Duration = txtDuration.Text;
         }
-
         private void btnSave_Click(object sender, System.EventArgs e)
         {
             CollectData();
