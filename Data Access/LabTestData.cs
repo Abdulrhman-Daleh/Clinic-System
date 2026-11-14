@@ -49,40 +49,11 @@ namespace Data_Access
                 return null;
             }
         }
-
         public static int AddNewLabTest(LabTestDto labTestDto)
         {
             int labID = -1;
 
-            string query = @"
-                INSERT INTO LabTests
-                (
-                    AppointmentID,
-                    TestStatusID,
-                    NurseID,
-                    Reason,
-                    Instructions,
-                    TestResult,
-                    TestName,
-                    RequestDate,
-                    PerformDate,
-                    ResultRecordedAt
-                )
-                VALUES
-                (
-                    @AppointmentID,
-                    @TestStatusID,
-                    @NurseID,
-                    @Reason,
-                    @Instructions,
-                    @TestResult,
-                    @TestName,
-                    @RequestDate,
-                    @PerformDate,
-                    @ResultRecordedAt
-                );
-
-                SELECT SCOPE_IDENTITY();";
+            string query = @"sp_AddNewLabTest";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
@@ -132,14 +103,18 @@ namespace Data_Access
                  }
             };
 
-            object result = DataAccessHelper.ExecuteScalar(query, parameters);
+            List<SqlParameter> outputParamters = new List<SqlParameter>()
+            {
+                new SqlParameter("@LabID", SqlDbType.Int) { Direction = ParameterDirection.Output}
+            };
 
-            if (result != null && result != DBNull.Value)
-                labID = Convert.ToInt32(result);
+            bool result = DataAccessHelper.ExecuteNonQueryStoredProcedure<bool>(query, parameters, outputParamters);
+
+            if (result == true)
+                labID = Convert.ToInt32(outputParamters[0].Value ?? -1);
 
             return labID;
         }
-
         public static bool UpdateLabTest(LabTestDto labTestDto)
         {
             string query = @"
@@ -202,7 +177,6 @@ namespace Data_Access
 
             return affectedRows > 0;
         }
-
         public static LabTestDto FindLabTestByID(int labID)
         {
             string query = @"
@@ -237,7 +211,6 @@ namespace Data_Access
                 parameters,
                 LabTestMapper);
         }
-
         public static LabTestListingDto FindLabTestListByID(int labID)
         {
             string query = @"
@@ -271,7 +244,6 @@ namespace Data_Access
                 parameters,
                 LabTestListingMapper);
         }
-
         private static LabTestListingDto LabTestListingMapper(SqlDataReader reader)
         {
             try
@@ -305,8 +277,6 @@ namespace Data_Access
                 return null;
             }
         }
-
-
         public static async Task<BindingList<LabTestListingDto>> GetLabTestsByAppointmentID(
             int appointmentID, int? doctorStaffId, int? nurseStaffId)
         {
@@ -368,8 +338,6 @@ namespace Data_Access
                 parameters,
                 LabTestListingMapper);
         }
-
-
         public static async Task<BindingList<LabTestListingDto>> GetLabTests()
         {
             string query = @"
@@ -394,7 +362,6 @@ namespace Data_Access
                 null,
                 LabTestListingMapper);
         }
-
         private static LabTestQueueListingDto LabTestQueueMapper(SqlDataReader reader)
         {
             try
@@ -419,7 +386,6 @@ namespace Data_Access
                 return null;
             }
         }
-
         public static async Task<BindingList<LabTestQueueListingDto>> GetMyLabQueue(int nurseID)
         {
             string query = @"

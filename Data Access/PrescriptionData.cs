@@ -87,7 +87,6 @@ namespace Data_Access
 
             bool result = DataAccessHelper.ExecuteNonQueryStoredProcedure<PrescriptionDto>(query, parameters, outputParameters);
 
-
             if (result)
                 prescriptionId = Convert.ToInt32(outputParameters[0].Value ?? -1);
 
