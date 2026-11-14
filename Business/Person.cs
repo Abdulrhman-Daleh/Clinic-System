@@ -61,18 +61,18 @@ namespace Business
         }
         public virtual OperationResult Save()
         {
-            OperationResult result = Util.CanAccessForm(
-                EnRole.Receptionist,
-                EnRole.Owner);
-
-            if (!result.IsSuccess)
-                return result;
-
             if (_mode == EnMode.Add)
             {
                 _mode = EnMode.Update;
                 return new OperationResult("Person Info send", "PersonSend", true);
             }
+
+            OperationResult result = Util.CanAccessForm(
+              EnRole.Receptionist,
+              EnRole.Owner);
+
+            if (!result.IsSuccess)
+                return result;
 
             if (Global.CurrentLoggedInStaff.PersonId != PersonId)
             {

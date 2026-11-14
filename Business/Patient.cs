@@ -60,9 +60,6 @@ namespace Business
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
                 return false;
 
-            if (!IsPatientValidToSave())
-                return false;
-
             PatientId = PatientData.AddNewPatient(ToDto(this));
 
             if (PatientId > 0)
@@ -112,10 +109,6 @@ namespace Business
                 return 0;
 
             return PatientData.GetTotalVisits(PatientId);
-        }
-        private bool IsPatientValidToSave()
-        {
-            return Util.IsValidId(PersonId);
         }
     }
 }
