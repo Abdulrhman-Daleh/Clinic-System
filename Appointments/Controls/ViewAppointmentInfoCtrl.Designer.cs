@@ -492,7 +492,7 @@
             // lblPatientId
             // 
             this.lblPatientId.AutoSize = true;
-            this.lblPatientId.Location = new System.Drawing.Point(155, 75);
+            this.lblPatientId.Location = new System.Drawing.Point(144, 81);
             this.lblPatientId.Name = "lblPatientId";
             this.lblPatientId.Size = new System.Drawing.Size(0, 25);
             this.lblPatientId.TabIndex = 59;
