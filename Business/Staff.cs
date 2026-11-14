@@ -205,7 +205,7 @@ namespace Business
         }
         public bool DeactivateStaff()
         {
-            if (Global.CurrentLoggedInStaff?.IsOwner() != true)
+            if (Global.CurrentLoggedInStaff?.IsOwner() == true)
                 return false;
 
             return StaffData.DeactivateStaff(StaffId);

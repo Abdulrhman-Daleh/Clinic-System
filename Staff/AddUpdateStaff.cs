@@ -195,19 +195,23 @@ namespace ClinicSystem.Staff
 
         private void txtPassword_Validating(object sender, CancelEventArgs e)
         {
-            OperationResult result = ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
-            if (!result.IsSuccess)
-            {
-                errors.SetError(txtPassword, result.Message);
-                return;
-            }
-            else
-                errors.SetError(txtPassword, null);
 
-            if (!ValidationHelper.CheckAcceptablePasswordStrength(txtPassword.Text))
+            if (staff.IsAddMode())
             {
-                errors.SetError(txtPassword, "Password is weak. Rules length >= 10, contains digit, contains punc");
-                return;
+                OperationResult result = ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
+                if (!result.IsSuccess)
+                {
+                    errors.SetError(txtPassword, result.Message);
+                    return;
+                }
+                else
+                    errors.SetError(txtPassword, null);
+
+                if (!ValidationHelper.CheckAcceptablePasswordStrength(txtPassword.Text))
+                {
+                    errors.SetError(txtPassword, "Password is weak. Rules length >= 10, contains digit, contains punc");
+                    return;
+                }
             }
         }
     }
