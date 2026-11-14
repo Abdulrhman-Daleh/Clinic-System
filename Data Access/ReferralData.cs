@@ -43,34 +43,11 @@ namespace Data_Access
                 return null;
             }
         }
-
         public static int AddNewReferral(ReferralDto referralDto)
         {
             int referralId = -1;
 
-            string query = @"
-                INSERT INTO Referrals
-                (
-                    DoctorID,
-                    AppointmentID,
-                    NoteID,
-                    ReferralReason,
-                    ReferralDate,
-                    ReferralUrgencyID,
-                    Speciality
-                )
-                VALUES
-                (
-                    @DoctorID,
-                    @AppointmentID,
-                    @NoteID,
-                    @ReferralReason,
-                    @ReferralDate,
-                    @ReferralUrgencyID,
-                    @Speciality
-                );
-
-                SELECT SCOPE_IDENTITY();";
+            string query = @"sp_AddNewReferral";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
@@ -96,14 +73,18 @@ namespace Data_Access
                     { Value = referralDto.Speciality }
             };
 
-            object result = DataAccessHelper.ExecuteScalar(query, parameters);
+            List<SqlParameter> outputparameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@ReferralID", SqlDbType.Int) {Direction = ParameterDirection.Output}
+            };
 
-            if (result != null && int.TryParse(result.ToString(), out referralId))
-                return referralId;
+            bool result = DataAccessHelper.ExecuteNonQueryStoredProcedure<bool>(query, parameters, outputparameters);
 
-            return -1;
+            if (result)
+                referralId = Convert.ToInt32(outputparameters[0].Value ?? -1);
+
+            return referralId;
         }
-
         public static bool UpdateReferral(ReferralDto referralDto)
         {
             string query = @"
@@ -151,7 +132,6 @@ namespace Data_Access
 
             return result != null && Convert.ToInt32(result) > 0;
         }
-
         public static ReferralDto FindReferralByID(int referralID)
         {
             string query = @"
@@ -179,7 +159,6 @@ namespace Data_Access
             return DataAccessHelper.ExecuteOneObject(
                 query, parameters, ReferralMapper);
         }
-
         public static async Task<BindingList<ReferralDto>> GetReferralsByAppointmentID(int appointmentID)
         {
             string query = @"
@@ -208,7 +187,6 @@ namespace Data_Access
             return await DataAccessHelper.ExecuteObjectList<ReferralDto>(
                 query, parameters, ReferralMapper);
         }
-
         public static async Task<BindingList<ReferralDto>> GetReferrals()
         {
             string query = @"
@@ -230,7 +208,6 @@ namespace Data_Access
             return await DataAccessHelper.ExecuteObjectList<ReferralDto>(
                 query, null, ReferralMapper);
         }
-
         public static ReferralDto FindReferralByAppointmentID(int appointmentID, int staffId)
         {
             string query = @"SELECT
