@@ -72,31 +72,23 @@ namespace Data_Access
             end
             if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=3)begin
                 insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(3, N'Remainder Viewed')
+                values(3, N'In Room')
             end
             if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=4)begin
                 insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(4, N'Arrived')
+                values(4, N'Completed')
             end
             if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=5)begin
                 insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(5, N'In Room')
+                values(5, N'Cancelled')
             end
             if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=6)begin
                 insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(6, N'Completed')
+                values(6, N'No Show')
             end
             if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=7)begin
                 insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(7, N'Cancelled')
-            end
-            if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=8)begin
-                insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(8, N'No Show')
-            end
-            if NOT EXISTS (select 1 from AppointmentStatuses where AppointmentStatusID=9)begin
-                insert into AppointmentStatuses(AppointmentStatusID, AppointmentStatusText)
-                values(9, N'Rescheduled')
+                values(7, N'Rescheduled')
             end
             SET Identity_Insert AppointmentStatuses OFF
             
@@ -106,23 +98,19 @@ namespace Data_Access
             SET Identity_Insert AppointmentTypes ON
             if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=1)begin
                 insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)
-                values(1, N'New Register')
+                values(1, N'Routine Test')
             end
             if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=2)begin
                 insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)
-                values(2, N'Routine Test')
+                values(2, N'Routine Care')
             end
             if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=3)begin
                 insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)
-                values(3, N'Routine Care')
+                values(3, N'Chronic Care')
             end
             if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=4)begin
                 insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)
-                values(4, N'Chronic Care')
-            end
-            if NOT EXISTS (select 1 from AppointmentTypes where AppointmentTypeID=5)begin
-                insert into AppointmentTypes(AppointmentTypeID, AppointmentTypeText)
-                values(5, N'Treatment')
+                values(4, N'Treatment')
             end
             SET Identity_Insert AppointmentTypes OFF
             -- AppointmentTypes seed ends

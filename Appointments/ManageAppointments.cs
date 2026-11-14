@@ -83,7 +83,7 @@ namespace ClinicSystem.Appointments
         }
         private void RefreshDgv(Appointment appointment)
         {
-            AppointmentList appointmentList = AppointmentList.FindAppointmentListByID(appointment.AppointmentID);
+            AppointmentList appointmentList = AppointmentList.FindAppointmentListByID(appointment.StaffID);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Appointments, "AppointmentID", appointmentList.AppointmentID);
             CommonOperations.UpdateAfterAdding(Appointments, appointmentList, targetIndex);
         }
@@ -106,10 +106,14 @@ namespace ClinicSystem.Appointments
             rescheduleToolStripMenuItem.Enabled = status;
             viewAppointmentToolStripMenuItem.Enabled = status;
             goToAppointmentToolStripMenuItem.Enabled = status;
+            cancelAppointmentToolStripMenuItem.Enabled = status;
+            sendReminderToolStripMenuItem.Enabled = status;
+            viewAppointmentRemindersToolStripMenuItem.Enabled = status;
         }
         private void cmsAppointments_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
+
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
                 return;
 
@@ -133,7 +137,7 @@ namespace ClinicSystem.Appointments
             goToAppointmentToolStripMenuItem.Enabled = app.IsStillActive();
             sendReminderToolStripMenuItem.Enabled = app.IsStillActive();
             cancelAppointmentToolStripMenuItem.Enabled = app.IsStillActive();
-
+            viewAppointmentRemindersToolStripMenuItem.Enabled = app.DoesHasAppointmentReminders(app.AppointmentID);
         }
         private void dgvAppointments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -194,6 +198,23 @@ namespace ClinicSystem.Appointments
 
             ManageAppointmentReminders reminders = new ManageAppointmentReminders(appointmentId);
             reminders.ShowDialog();
+        }
+
+        private void cancelAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+            Appointment appointment = Appointment.FindAppointmentByID(appointmentId);
+            OperationResult result = appointment.CancelAppointment(appointmentId);
+
+            MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
+
+            if (!result.IsSuccess)
+                return;
+
+            RefreshDgv(appointment);
         }
     }
 }

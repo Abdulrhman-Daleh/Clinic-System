@@ -41,7 +41,6 @@ namespace Data_Access
 
             return appointmentId;
         }
-
         public static int UpdateAppointment(AppointmentDto appointmentDto, PaymentDto paymentDto, PenaltyDto penalty)
         {
             string query = "sp_UpdateAppointment";
@@ -68,7 +67,6 @@ namespace Data_Access
 
             return DataAccessHelper.ExecuteNonQueryStoredProcedure<int>(query, parameters);
         }
-
         private static string AppointmentTypeMapper(SqlDataReader reader)
         {
             try
@@ -81,7 +79,6 @@ namespace Data_Access
                 return string.Empty;
             }
         }
-
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
             BindingList<string> types = new BindingList<string>();
@@ -92,7 +89,6 @@ namespace Data_Access
 
             return types;
         }
-
         public static bool NoOverlapWithLastAppointment(AppointmentDto appointmentDto)
         {
             string spName = "NoOverlapWithLastAppointment";
@@ -114,7 +110,6 @@ namespace Data_Access
 
             return Convert.ToInt32(returnValue.Value) == 1;
         }
-
         private static AppointmentListDto AppointmentListDtoMapper(SqlDataReader reader)
         {
             return new AppointmentListDto()
@@ -127,7 +122,6 @@ namespace Data_Access
                 Status = (string)reader["Status"]
             };
         }
-
         public static async Task<BindingList<AppointmentListDto>> GetAppointment(int doctorId)
         {
             BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
@@ -143,20 +137,17 @@ namespace Data_Access
 
             return appointments;
         }
-
-        public static AppointmentListDto FindAppointmentListByID(int appointmentId)
+        public static AppointmentListDto FindAppointmentListByID(int staffId)
         {
-            string query = @"select AppointmentID, TIme, Patient, Doctor, Type, Status From vw_AppointmentsList
-	        where AppointmentID = @AppointmentId;";
+            string query = @"select * from GetAppointmentsList(@staffId)";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
-                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value =  appointmentId}
+                new SqlParameter("@staffId", SqlDbType.Int) {Value =  staffId}
             };
 
             return DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentListDtoMapper);
         }
-
         private static AppointmentDto AppointmentDtoMapper(SqlDataReader reader)
         {
             return new AppointmentDto()
@@ -171,7 +162,6 @@ namespace Data_Access
                 AppointmentEndTime = reader.GetDateTime(reader.GetOrdinal("AppointmentEndTime")).TimeOfDay
             };
         }
-
         public static AppointmentDto FindAppointmentByID(int appointmentId, int staffId)
         {
             string query = @"select AppointmentID, PatientID, StaffID, appo.AppointmentStatusID, aStatus.AppointmentStatusText, appo.AppointmentTypeID,
@@ -190,7 +180,6 @@ namespace Data_Access
 
             return DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentDtoMapper);
         }
-
         public static bool HasSOAPNotes(int appointmentId)
         {
             string query = @"select case
@@ -213,7 +202,6 @@ namespace Data_Access
 
             return int.Parse(obj.ToString()) == 1;
         }
-
         public static bool HasPrescription(int appointmentId)
         {
             string query = @"select case
@@ -235,7 +223,6 @@ namespace Data_Access
 
             return int.Parse(obj.ToString()) == 1;
         }
-
         public static bool HasLabTests(int appointmentId)
         {
             string query = @"select case
@@ -257,7 +244,6 @@ namespace Data_Access
 
             return int.Parse(obj.ToString()) == 1;
         }
-
         public static bool HasReferral(int appointmentId)
         {
             string query = @"select case
@@ -279,7 +265,6 @@ namespace Data_Access
 
             return int.Parse(obj.ToString()) == 1;
         }
-
         public static bool HasPayment(int appointmentId)
         {
             string query = @"select case
@@ -301,7 +286,6 @@ namespace Data_Access
 
             return int.Parse(obj.ToString()) == 1;
         }
-
         public static bool HasPenalty(int appointmentId)
         {
             string query = @"select case
@@ -322,6 +306,35 @@ namespace Data_Access
             object obj = DataAccessHelper.ExecuteScalar(query, parameters);
 
             return int.Parse(obj.ToString()) == 1;
+        }
+        public static bool CancelAppointment(int appointmentId)
+        {
+            string query = @"update Appointments set AppointmentStatusID = (select AppointmentStatusID from AppointmentStatuses where           AppointmentStatusText
+		      = 'Cancelled')
+		      where AppointmentID = @AppointmentID;";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentID", SqlDbType.Int) {Value=appointmentId}
+            };
+
+            return DataAccessHelper.ExecuteNonQuery(query, parameters) > 0;
+        }
+        public static bool DoesHasAppointmentReminders(int appointmentId)
+        {
+            string query = @"select 1 from AppointmentReminders where AppointmentID = @appointmentId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@appointmentId", SqlDbType.Int) {Value = appointmentId}
+            };
+
+            object result = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            if (result != null && int.TryParse(result.ToString(), out int r))
+                return r > 0;
+
+            return false;
         }
     }
 }
