@@ -77,34 +77,22 @@ END;
 IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 3)
 BEGIN
     INSERT INTO dbo.AppointmentStatuses (AppointmentStatusID, AppointmentStatusText)
-    VALUES (3, N'Reminder Viewed');
+    VALUES (5, N'In Room');
 END;
 
 IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 4)
 BEGIN
     INSERT INTO dbo.AppointmentStatuses (AppointmentStatusID, AppointmentStatusText)
-    VALUES (4, N'Arrived');
+    VALUES (6, N'Completed');
 END;
 
 IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 5)
 BEGIN
     INSERT INTO dbo.AppointmentStatuses (AppointmentStatusID, AppointmentStatusText)
-    VALUES (5, N'In Room');
-END;
-
-IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 6)
-BEGIN
-    INSERT INTO dbo.AppointmentStatuses (AppointmentStatusID, AppointmentStatusText)
-    VALUES (6, N'Completed');
-END;
-
-IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 7)
-BEGIN
-    INSERT INTO dbo.AppointmentStatuses (AppointmentStatusID, AppointmentStatusText)
     VALUES (7, N'Cancelled');
 END;
 
-IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 8)
+IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentStatuses WHERE AppointmentStatusID = 6)
 BEGIN
     INSERT INTO dbo.AppointmentStatuses (AppointmentStatusID, AppointmentStatusText)
     VALUES (8, N'No Show');
@@ -126,28 +114,22 @@ SET IDENTITY_INSERT dbo.AppointmentTypes ON;
 IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentTypes WHERE AppointmentTypeID = 1)
 BEGIN
     INSERT INTO dbo.AppointmentTypes (AppointmentTypeID, AppointmentTypeText)
-    VALUES (1, N'New Patient');
+    VALUES (2, N'Routine Test');
 END;
 
 IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentTypes WHERE AppointmentTypeID = 2)
 BEGIN
     INSERT INTO dbo.AppointmentTypes (AppointmentTypeID, AppointmentTypeText)
-    VALUES (2, N'Routine Test');
+    VALUES (3, N'Routine Care');
 END;
 
 IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentTypes WHERE AppointmentTypeID = 3)
 BEGIN
     INSERT INTO dbo.AppointmentTypes (AppointmentTypeID, AppointmentTypeText)
-    VALUES (3, N'Routine Care');
-END;
-
-IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentTypes WHERE AppointmentTypeID = 4)
-BEGIN
-    INSERT INTO dbo.AppointmentTypes (AppointmentTypeID, AppointmentTypeText)
     VALUES (4, N'Chronic Care');
 END;
 
-IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentTypes WHERE AppointmentTypeID = 5)
+IF NOT EXISTS (SELECT 1 FROM dbo.AppointmentTypes WHERE AppointmentTypeID = 4)
 BEGIN
     INSERT INTO dbo.AppointmentTypes (AppointmentTypeID, AppointmentTypeText)
     VALUES (5, N'Treatment');

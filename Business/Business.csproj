@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Appointment.cs" />
     <Compile Include="AppointmentList.cs" />
+    <Compile Include="AppointmentReminder.cs" />
     <Compile Include="Auditor.cs" />
     <Compile Include="Global.cs" />
     <Compile Include="Insurance.cs" />

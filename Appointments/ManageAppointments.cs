@@ -1,11 +1,10 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using Business;
+using ClinicSystem.AppointmentReminder;
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Appointments
@@ -13,12 +12,10 @@ namespace ClinicSystem.Appointments
     public partial class ManageAppointments : FormsDefaultSettings
     {
         private BindingList<AppointmentList> Appointments { get; set; }
-
         public ManageAppointments()
         {
             InitializeComponent();
         }
-
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -30,18 +27,15 @@ namespace ClinicSystem.Appointments
             List<object> temp = CommonOperations.FilterData(Appointments, filterName, value);
             CommonOperations.LoadDataToDGV(dgvAppointments, temp, lblRecords);
         }
-
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void SetUp()
         {
             cbFilterBy.Items.AddRange(new object[] { "None", "AppointmentID", "Patient", "Doctor", "Status" });
             cbFilterBy.SelectedIndex = 0;
         }
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -49,14 +43,12 @@ namespace ClinicSystem.Appointments
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
-
         private async void LoadAppointments()
         {
             Appointments = await AppointmentList.GetAppointment();
             CommonOperations.LoadDataToDGV(dgvAppointments, Appointments, lblRecords);
             RefreshFilter(0);
         }
-
         private void ManageAppointments_Load(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
@@ -68,12 +60,10 @@ namespace ClinicSystem.Appointments
             SetUp();
             LoadAppointments();
         }
-
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (cbFilterBy.Text == "AppointmentID")
@@ -81,9 +71,7 @@ namespace ClinicSystem.Appointments
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void btnClose_Click(object sender, EventArgs e) => Close();
-
         private void bookAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
@@ -93,18 +81,12 @@ namespace ClinicSystem.Appointments
             appointment.OnSave += RefreshDgv;
             appointment.ShowDialog();
         }
-
         private void RefreshDgv(Appointment appointment)
         {
-            int targetIndex = -1;
             AppointmentList appointmentList = AppointmentList.FindAppointmentListByID(appointment.AppointmentID);
-
-            if (Appointments.Any(x => x.AppointmentID == appointment.AppointmentID))
-                targetIndex = Appointments.IndexOf(Appointments.First(x => x.AppointmentID == appointment.AppointmentID));
-
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Appointments, "AppointmentID", appointmentList.AppointmentID);
             CommonOperations.UpdateAfterAdding(Appointments, appointmentList, targetIndex);
         }
-
         private void viewAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
@@ -119,14 +101,12 @@ namespace ClinicSystem.Appointments
             viewAppointment.OnSave += RefreshDgv;
             viewAppointment.ShowDialog();
         }
-
         private void SetControlEnableStatus(bool status)
         {
             rescheduleToolStripMenuItem.Enabled = status;
             viewAppointmentToolStripMenuItem.Enabled = status;
             goToAppointmentToolStripMenuItem.Enabled = status;
         }
-
         private void cmsAppointments_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
@@ -151,8 +131,10 @@ namespace ClinicSystem.Appointments
 
             rescheduleToolStripMenuItem.Enabled = app.IsStillActive();
             goToAppointmentToolStripMenuItem.Enabled = app.IsStillActive();
-        }
+            sendReminderToolStripMenuItem.Enabled = app.IsStillActive();
+            cancelAppointmentToolStripMenuItem.Enabled = app.IsStillActive();
 
+        }
         private void dgvAppointments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
@@ -166,7 +148,6 @@ namespace ClinicSystem.Appointments
             ViewAppointment viewAppointment = new ViewAppointment(appointmentId);
             viewAppointment.ShowDialog();
         }
-
         private void rescheduleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
@@ -181,7 +162,6 @@ namespace ClinicSystem.Appointments
             viewAppointment.OnSave += RefreshDgv;
             viewAppointment.ShowDialog();
         }
-
         private void goToAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor))
@@ -195,6 +175,25 @@ namespace ClinicSystem.Appointments
             PerformAppointment performAppointment = new PerformAppointment(appointmentId);
             performAppointment.OnSave += RefreshDgv;
             performAppointment.ShowDialog();
+        }
+        private void sendRemainderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+            AddAppointmentReminder addReminder = new AddAppointmentReminder(appointmentId);
+            addReminder.ShowDialog();
+        }
+        private void viewAppointmentRemindersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
+            int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
+
+            ManageAppointmentReminders reminders = new ManageAppointmentReminders(appointmentId);
+            reminders.ShowDialog();
         }
     }
 }
