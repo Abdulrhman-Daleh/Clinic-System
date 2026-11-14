@@ -1,4 +1,5 @@
-﻿using Business;
+﻿using AppEnums.cs;
+using Business;
 using ClinicSystem.Helpers;
 
 namespace ClinicSystem.Appointments
@@ -49,7 +50,10 @@ namespace ClinicSystem.Appointments
 
         private void btnReschedule_Click(object sender, System.EventArgs e)
         {
-            BookAppointment rescheduleAppointment = new BookAppointment(findAppointmentCtrl1.CurrentAppointment.AppointmentID, AppEnums.cs.EnAppointmentStatuses.Rescheduled);
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+
+            BookAppointment rescheduleAppointment = new BookAppointment(findAppointmentCtrl1.CurrentAppointment.AppointmentID, EnAppointmentStatuses.Rescheduled);
 
             rescheduleAppointment.OnSave += RescheduleAppointment_OnSave;
             rescheduleAppointment.ShowDialog();

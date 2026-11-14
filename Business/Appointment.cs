@@ -332,6 +332,34 @@ namespace Business
                     return false;
             }
         }
+        public OperationResult CancelAppointment(int appointmentId)
+        {
+            if (!CanAccessCurrentAppointment())
+                return new OperationResult("Can't access this appointment", "Not Allowed", false);
+
+            if (!IsStillActive())
+                return new OperationResult("Appointment is not longer active", "Not Active", false);
+
+            OperationResult result = CheckSaveAccess();
+
+            if (!result.IsSuccess)
+                return result;
+
+            if (AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.InRoom)
+                return new OperationResult("Patient is currently in room getting treated", "Not Allowed", false);
+
+            if (AppointmentData.CancelAppointment(appointmentId))
+            {
+                Auditor.Log(
+                           "Appointment cancelled",
+                           $"Appointment type '{AppointmentTypes.AppointmentTypeText}' for PatientID {PatientID} with StaffID {StaffID} was cancelled on {DateTime.Now:d} performed by staff {Staff.StaffId} => {Staff.GetFullName()}.",
+                           $"AppointmentID {AppointmentID}");
+
+                return new OperationResult("appointment got cancelled succssfully", "Cancelled", true);
+            }
+
+            return new OperationResult("failed to cancel appointment", "Failed", false);
+        }
         public bool HasSOAPNotes() =>
             CanAccessCurrentAppointment() &&
             AppointmentData.HasSOAPNotes(AppointmentID);
@@ -390,5 +418,6 @@ namespace Business
             AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed &&
             AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Cancelled &&
             AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.NoShow;
+        public bool DoesHasAppointmentReminders(int appointmentId) => AppointmentData.DoesHasAppointmentReminders(appointmentId);
     }
 }

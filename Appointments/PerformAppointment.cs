@@ -1,5 +1,4 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using Business;
 using ClinicSystem.Appointments.SOAPNotes;
 using ClinicSystem.Helpers;

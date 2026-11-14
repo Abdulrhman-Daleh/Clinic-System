@@ -37,9 +37,9 @@ namespace Business
 
             return appointments;
         }
-        public static AppointmentList FindAppointmentListByID(int appointmentId)
+        public static AppointmentList FindAppointmentListByID(int staffId)
         {
-            return FromDto(AppointmentData.FindAppointmentListByID(appointmentId));
+            return FromDto(AppointmentData.FindAppointmentListByID(staffId));
         }
     }
 }
