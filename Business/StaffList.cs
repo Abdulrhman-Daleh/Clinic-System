@@ -49,10 +49,7 @@ namespace Business
         }
         public static StaffList FindStaffById(int staffId)
         {
-            if (Util.CanAccessForm(EnRole.Receptionist).IsSuccess)
-                return null;
-
-            if (staffId != Global.CurrentLoggedInStaff.StaffId)
+            if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
                 return null;
 
             return FromDto(StaffData.FindStaffByIdList(staffId));
