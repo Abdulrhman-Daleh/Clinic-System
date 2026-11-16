@@ -115,7 +115,7 @@ namespace ClinicSystem.People
         }
         private void RefreshDgv(Person person)
         {
-            int targetIndex = CommonOperations.FindTargetIndexOfObj(People, "PersonID", person);
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(People, "PersonId", person.PersonId);
             CommonOperations.UpdateAfterAdding(People, person, targetIndex);
         }
         private void updatePersonToolStripMenuItem_Click(object sender, EventArgs e)

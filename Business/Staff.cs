@@ -13,7 +13,7 @@ namespace Business
         private EnMode _mode;
         public int StaffId { get; set; }
         public int ScheduleId { get; set; }
-        public (EnRole RoleId, string RoleName) RoleInfo { get; set; }
+        public EnRole Role { get; set; }
         public string Username { get; set; }
         public string HashedPassword { get; set; }
         public string StaffNumber { get; set; }
@@ -26,7 +26,7 @@ namespace Business
             {
                 StaffId = staff.StaffId,
                 ScheduleId = staff.ScheduleId,
-                RoleInfo = (staff.RoleInfo.RoleId, staff.RoleInfo.RoleName),
+                Role = staff.Role,
                 PersonId = staff.PersonId,
                 Username = staff.Username,
                 HashedPassword = staff.HashedPassword,
@@ -46,7 +46,7 @@ namespace Business
             return new Staff(staffDto.StaffId, staffDto.ScheduleId)
             {
                 ScheduleId = staffDto.ScheduleId,
-                RoleInfo = ((EnRole)staffDto.RoleInfo.RoleId, staffDto.RoleInfo.RoleName),
+                Role = staffDto.Role,
                 PersonId = staffDto.PersonId,
                 Username = staffDto.Username,
                 HashedPassword = staffDto.HashedPassword,
@@ -74,7 +74,7 @@ namespace Business
         {
             StaffId = -1;
             ScheduleId = -1;
-            RoleInfo = ((EnRole)0, "None");
+            Role = 0;
             PersonId = -1;
             Username = string.Empty;
             HashedPassword = string.Empty;
@@ -143,7 +143,7 @@ namespace Business
 
                         Auditor.Log(
                             "Staff Added",
-                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {RoleInfo.RoleName}) was added by {performedBy}.",
+                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {Role.ToString()}) was added by {performedBy}.",
                             $"StaffID {StaffId}");
 
                         return new OperationResult(
@@ -163,7 +163,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Staff Updated",
-                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {RoleInfo.RoleName}) was updated by {performedBy}.",
+                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {Role.ToString()}) was updated by {performedBy}.",
                             $"StaffID {StaffId}");
 
                         return new OperationResult(
@@ -211,11 +211,11 @@ namespace Business
             return StaffData.DeactivateStaff(StaffId);
         }
         public bool IsOwner() =>
-            RoleInfo.RoleId == EnRole.Owner;
+            Role == EnRole.Owner;
         public bool IsRoleApplicableForAppointment()
         {
-            return RoleInfo.RoleId == EnRole.Nurse ||
-                   RoleInfo.RoleId == EnRole.Doctor;
+            return Role == EnRole.Nurse ||
+                   Role == EnRole.Doctor;
         }
         public static bool IsFirstStaff()
         {
@@ -226,7 +226,7 @@ namespace Business
             if (Util.IsRequired(Username) &&
                 Util.IsRequired(HashedPassword) &&
                 Util.IsValidId(ScheduleId) &&
-                Util.IsValidId((int)RoleInfo.RoleId))
+                Util.IsValidId((int)Role))
             {
                 return new OperationResult(
                     "Staff information is valid to save.",

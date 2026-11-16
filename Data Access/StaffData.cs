@@ -23,7 +23,7 @@ namespace Data_Access
                 {
                     StaffId = (int)reader["StaffID"],
                     ScheduleId = (int)reader["ScheduleID"],
-                    RoleInfo = ((EnRole)reader["RoleID"], (string)reader["RoleName"]),
+                    Role = (EnRole)reader["RoleID"],
                     PersonId = (int)reader["PersonID"],
                     Username = (string)reader["Username"],
                     HashedPassword = (string)reader["HashedPassword"],
@@ -83,7 +83,7 @@ namespace Data_Access
                     new SqlParameter("@Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
                     new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = staffInfo.Gender},
                     new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
-                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.RoleInfo.RoleId},
+                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.Role},
                     new SqlParameter("@Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
                     new SqlParameter("@HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword}
                 };
@@ -117,7 +117,7 @@ namespace Data_Access
                     new SqlParameter("@Lastname", SqlDbType.VarChar, 40) {Value = staffInfo.Lastname},
                     new SqlParameter("@Gender", SqlDbType.VarChar, 1) {Value = staffInfo.Gender},
                     new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = staffInfo.ScheduleId},
-                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.RoleInfo.RoleId},
+                    new SqlParameter("@RoleId", SqlDbType.Int) {Value = staffInfo.Role},
                     new SqlParameter("@Username", SqlDbType.VarChar, 40) {Value = staffInfo.Username},
                     new SqlParameter("@HashedPassword", SqlDbType.VarChar, 200) {Value = staffInfo.HashedPassword},
                     new SqlParameter("@StaffId", SqlDbType.Int) {Value = staffInfo.StaffId}

@@ -31,13 +31,13 @@ namespace Business
         {
             var currentStaff = Global.CurrentLoggedInStaff;
 
-            if (currentStaff?.RoleInfo == null)
+            if (currentStaff?.Role == null)
                 return new OperationResult("User is not logged in.", "Access Denied", false);
 
             if (allowedRoles == null || allowedRoles.Count() == 0)
                 return new OperationResult("No allowed roles specified.", "Access Denied", false);
 
-            if (!allowedRoles.Contains(currentStaff.RoleInfo.RoleId))
+            if (!allowedRoles.Contains(currentStaff.Role))
                 return new OperationResult("You do not have permission to access this form.", "Access Denied", false);
 
             return new OperationResult("Access granted.", "Access Granted", true);

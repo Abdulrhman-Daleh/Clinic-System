@@ -34,10 +34,10 @@ namespace ClinicSystem.People.Controls
             }
 
             btnEdit.Enabled = true;
-            pbGender.Image = this.person.Gender == AppEnums.cs.EnGender.Male ? Resources.male_32 : Resources.female_32;
+            pbGender.Image = this.person.Gender == EnGender.Male ? Resources.male_32 : Resources.female_32;
             viewPersonContacts1.LoadUpPersonContact(person.PersonId);
-            findPersonCtrl1.RecivePersonInfo(person);
             lblName.Text = $"Person #{person.PersonId} - {this.person.GetFullName()}";
+            findPersonCtrl1.RecivePersonInfo(person);
         }
 
         public ViewPerson(int personId)
