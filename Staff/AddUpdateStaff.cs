@@ -4,6 +4,7 @@ using ClinicSystem.Helpers;
 using Log;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Staff
@@ -37,7 +38,6 @@ namespace ClinicSystem.Staff
 
         public delegate void SendStaffInfo(int staffId);
         public event SendStaffInfo SendStaffId;
-
         private void HandleFirstStaff()
         {
             if (Business.Staff.IsFirstStaff())
@@ -46,10 +46,9 @@ namespace ClinicSystem.Staff
                 findPersonCtrl1.AllowFindButton = false
                     ;
                 cbRoles.Enabled = false;
-                staff.RoleInfo = (EnRole.Owner, "Owner");
+                staff.Role = EnRole.Owner;
             }
         }
-
         public AddUpdateStaff(int staffId)
         {
             InitializeComponent();
@@ -64,14 +63,12 @@ namespace ClinicSystem.Staff
             findPersonCtrl1.RecivePersonInfo(staff);
             txtPassword.Enabled = false;
         }
-
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
             this.Text = pageTitle;
             btnSave.Text = saveButtonText;
         }
-
         private void SetControls(int staffId = -1, string staffNumber = null, string userName = "", string password = "")
         {
             txtUsername.Text = userName;
@@ -79,56 +76,44 @@ namespace ClinicSystem.Staff
             SetStaffId(staffId);
             SetStaffNumber(staffNumber);
         }
-
-        private async void LoadSchedules()
+        private async Task LoadSchedules()
         {
             cbSchedules.DataSource = await Business.Schedule.GetSchedulesNames();
         }
-
-        private async void LoadRoles()
+        private async Task LoadRoles()
         {
             cbRoles.DataSource = await Business.Staff.GetRolesNames();
         }
-
-        private void ValidateInputValues(object sender, CancelEventArgs e)
-        {
-        }
-
         private void ValidateInputKeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void SetStaffId(int staffId)
         {
             lblStaffId.Text = staffId != -1 ? $"STF-{staffId}" : "[Not Set]";
         }
-
         private void SetStaffNumber(string staffNumber)
         {
             lblStaffNumber.Text = ValidationHelper.IsEmptyOrNull(staffNumber) ? "[Not Set]" : staffNumber;
         }
-
-        private void AddUpdateStaff_Load(object sender, System.EventArgs e)
+        private async void AddUpdateStaff_Load(object sender, System.EventArgs e)
         {
-            LoadSchedules();
-            LoadRoles();
+            await LoadSchedules();
+            await LoadRoles();
+            cbRoles.SelectedIndex = (int)staff.Role - 1;
         }
-
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
-
         private void CollectData()
         {
             staff.Username = txtUsername.Text;
             staff.ScheduleId = (int)cbSchedules.SelectedIndex + 1;
 
             if (cbRoles.Enabled)
-                staff.RoleInfo = ((EnRole)cbRoles.SelectedIndex + 1, cbRoles.SelectedItem.ToString());
+                staff.Role = ((EnRole)cbRoles.SelectedIndex + 1);
 
             if (txtPassword.Enabled)
                 staff.HashedPassword = PasswordHasher.HashPassword(txtPassword.Text);
         }
-
         private void btnSave_Click(object sender, System.EventArgs e)
         {
             this.ValidateChildren();
@@ -171,7 +156,6 @@ namespace ClinicSystem.Staff
                 Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "AddUpdateStaff", "Application", System.Diagnostics.EventLogEntryType.Error));
             }
         }
-
         private void txtUsername_Validating(object sender, CancelEventArgs e)
         {
             OperationResult result = ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
@@ -187,12 +171,10 @@ namespace ClinicSystem.Staff
 
             errors.SetError(txtUsername, null);
         }
-
         private void LockComboFromEditing(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtPassword_Validating(object sender, CancelEventArgs e)
         {
 

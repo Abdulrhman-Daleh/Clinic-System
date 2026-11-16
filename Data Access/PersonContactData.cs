@@ -24,7 +24,7 @@ namespace Data_Access
                     PersonId = (int)reader["PersonID"],
                     Email = (reader["Email"] == DBNull.Value) ? "No Email" : (string)reader["Email"],
                     PhoneNumber = (string)reader["PhoneNumber"],
-                    ContactType = ((EnContactTypes)reader["ContactTypeId"], (string)reader["ContactTypeName"])
+                    ContactType = ((EnContactTypes)reader["ContactTypeID"], (string)reader["ContactTypeName"])
                 };
             }
             catch (Exception ex)
@@ -95,12 +95,19 @@ namespace Data_Access
         public static async Task<BindingList<PersonContactDto>> GetShortContactInfo(int personId)
         {
             BindingList<PersonContactDto> contactDtos = new BindingList<PersonContactDto>();
-            string query = @"select ContactID, PhoneNumber, Email, PersonID, ContactTypeID
-                from ContactInformations where PersonID = @PersonID";
+            string query = @"select ContactID, PhoneNumber, Email, PersonID, cType.ContactTypeID, cType.ContactTypeName
+                from ContactInformations as cInfo
+                    inner join ContactTypes as cType on cType.ContactTypeID = cInfo.ContactTypeID
+                where PersonID = @PersonID";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@PersonID", SqlDbType.Int) { Value  = personId }
+            };
 
             SqlParameter param = new SqlParameter("@PersonID", SqlDbType.Int) { Value = personId };
 
-            contactDtos = await DataAccessHelper.ExecuteObjectList(query, new List<SqlParameter>() { param }, ContactMapper);
+            contactDtos = await DataAccessHelper.ExecuteObjectList(query, parameters, ContactMapper);
 
             return contactDtos;
         }

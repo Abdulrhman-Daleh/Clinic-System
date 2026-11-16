@@ -7,7 +7,7 @@ namespace Data_Access.DTOs
     {
         public int StaffId { get; set; }
         public int ScheduleId { get; set; }
-        public (EnRole RoleId, string RoleName) RoleInfo { get; set; }
+        public EnRole Role { get; set; }
         public string Username { get; set; }
         public string HashedPassword { get; set; }
         public string StaffNumber { get; set; }

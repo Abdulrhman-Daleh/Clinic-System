@@ -25,12 +25,12 @@ namespace ClinicSystem.Staff.Controls
 
             lblFullName.Text = staffInfo.GetFullName();
             lblStatus.Text = staffInfo.IsActive ? "Active" : "InActive";
-            lblRole.Text = staffInfo.RoleInfo.RoleName;
+            lblRole.Text = staffInfo.Role.ToString();
             lblShift.Text = staffInfo.Schedule.ShiftName;
             lblStaffNumber.Text = staffInfo.StaffNumber;
             lblUsername.Text = $"{staffInfo.Username}";
             lblHired.Text = staffInfo.HireDate.ToShortDateString();
-            lblRoleTitle.Text = $"[{staffInfo.RoleInfo.RoleName}]";
+            lblRoleTitle.Text = $"[{staffInfo.Role.ToString()}]";
         }
 
 
