@@ -31,7 +31,7 @@ namespace ClinicSystem.Appointments
             appointment.AppointmentStatuses = (appointmentNewStatus, appointmentNewStatus.ToString());
         }
 
-        private async Task SetUpdateFrom(Appointment appointment)
+        private async void SetUpdateFrom(Appointment appointment)
         {
             if (ValidationHelper.IsEmptyOrNull(appointment))
             {
@@ -74,7 +74,7 @@ namespace ClinicSystem.Appointments
 
         private void BtnCancel_Click(object sender, EventArgs e) => Close();
 
-        private async Task SetUp(int index)
+        private async void SetUp(int index)
         {
             dtpAppointmentDate.MinDate = DateTime.Now;
             dtpAppointmentDate.MaxDate = DateTime.Now.AddMonths(1);

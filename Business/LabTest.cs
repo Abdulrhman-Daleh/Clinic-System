@@ -114,7 +114,7 @@ namespace Business
 
 
             if (Nurse == null ||
-                Nurse.RoleInfo.RoleId != EnRole.Nurse ||
+                Nurse.Role != EnRole.Nurse ||
                 !Nurse.IsActive)
             {
                 return new OperationResult(
@@ -254,12 +254,12 @@ namespace Business
             if (labTestDto == null)
                 return null;
 
-            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Nurse)
+            if (Global.CurrentLoggedInStaff.Role == EnRole.Nurse)
             {
                 if (labTestDto.NurseID != Global.CurrentLoggedInStaff.StaffId)
                     return null;
             }
-            else if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Doctor)
+            else if (Global.CurrentLoggedInStaff.Role == EnRole.Doctor)
             {
                 Appointment appointment =
                     Business.Appointment.FindAppointmentByID(labTestDto.AppointmentID);

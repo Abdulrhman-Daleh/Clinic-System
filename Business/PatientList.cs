@@ -48,7 +48,7 @@ namespace Business
             int? doctorStaffId = null;
             int? nurseStaffId = null;
 
-            switch (Global.CurrentLoggedInStaff.RoleInfo.RoleId)
+            switch (Global.CurrentLoggedInStaff.Role)
             {
                 case EnRole.Doctor:
                     doctorStaffId = Global.CurrentLoggedInStaff.StaffId;

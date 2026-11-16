@@ -108,8 +108,8 @@ namespace Business
                     false);
             }
 
-            if (currentStaff.RoleInfo.RoleId == EnRole.Receptionist ||
-                currentStaff.RoleInfo.RoleId == EnRole.Owner)
+            if (currentStaff.Role == EnRole.Receptionist ||
+                currentStaff.Role == EnRole.Owner)
             {
                 OperationResult result = Util.CanAccessForm(
                     EnRole.Receptionist,
@@ -129,7 +129,7 @@ namespace Business
                 return result;
             }
 
-            if (currentStaff.RoleInfo.RoleId != EnRole.Doctor)
+            if (currentStaff.Role != EnRole.Doctor)
             {
                 return new OperationResult(
                     "You do not have permission to modify appointments.",
@@ -201,7 +201,7 @@ namespace Business
             // schedule availability or staff activation again.
 
             if (_mode == EnMode.Update &&
-                currentStaff.RoleInfo.RoleId == EnRole.Doctor)
+                currentStaff.Role == EnRole.Doctor)
             {
                 result = IsAppointmentValidToComplete();
 
@@ -307,7 +307,7 @@ namespace Business
                 return null;
 
             // A doctor can only retrieve their own appointments.
-            if (Global.CurrentLoggedInStaff.RoleInfo.RoleId == EnRole.Doctor &&
+            if (Global.CurrentLoggedInStaff.Role == EnRole.Doctor &&
                 appointmentDto.StaffID != Global.CurrentLoggedInStaff.StaffId)
                 return null;
 
@@ -318,7 +318,7 @@ namespace Business
             if (Global.CurrentLoggedInStaff == null)
                 return false;
 
-            switch (Global.CurrentLoggedInStaff.RoleInfo.RoleId)
+            switch (Global.CurrentLoggedInStaff.Role)
             {
                 case EnRole.Receptionist:
                 case EnRole.Owner:

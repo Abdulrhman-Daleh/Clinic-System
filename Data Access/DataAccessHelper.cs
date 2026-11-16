@@ -99,7 +99,7 @@ namespace Data_Access
                 Logger.LogMessage(logInfo);
             }
 
-            return default(T);
+            return default;
         }
 
         public static async Task<BindingList<T>> ExecuteObjectList<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map,

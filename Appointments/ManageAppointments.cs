@@ -199,7 +199,6 @@ namespace ClinicSystem.Appointments
             ManageAppointmentReminders reminders = new ManageAppointmentReminders(appointmentId);
             reminders.ShowDialog();
         }
-
         private void cancelAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
