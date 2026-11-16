@@ -29,7 +29,7 @@ namespace ClinicSystem.LabOrderTest
             if (ValidationHelper.IsEmptyOrNull(staff, "Staff is not found"))
                 return;
 
-            if (staff.RoleInfo.RoleId != AppEnums.cs.EnRole.Nurse)
+            if (staff.Role != EnRole.Nurse)
             {
                 errors.SetError(findStaffCtrl1, "Selected staff is not a nurse.");
                 Test.Nurse = null;

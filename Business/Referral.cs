@@ -121,7 +121,7 @@ namespace Business
 
 
             if (Doctor == null ||
-                Doctor.RoleInfo.RoleId != EnRole.Doctor ||
+                Doctor.Role != EnRole.Doctor ||
                 !Doctor.IsActive)
             {
                 return new OperationResult(
