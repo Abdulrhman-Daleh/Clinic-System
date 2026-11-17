@@ -46,12 +46,12 @@ namespace Business
 
             return list;
         }
-        public static InsuranceList FindInsurancebyID(int InsuranceId)
+        public static async Task<InsuranceList> FindInsurancebyID(int InsuranceId)
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(InsuranceData.FindInsuranceListByID(InsuranceId));
+            return FromDto(await InsuranceData.FindInsuranceListByID(InsuranceId));
         }
     }
 }

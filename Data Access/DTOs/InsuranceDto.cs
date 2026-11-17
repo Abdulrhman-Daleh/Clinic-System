@@ -8,8 +8,8 @@ namespace Data_Access.DTOs
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
-        public (EnInsuranceTypes InsuranceTypeId, string InsuranceTypeName) InsuranceType { get; set; }
-        public (EnInsuranceStatuses InsuranceStatusId, string InsuranceStatusName) InsuranceStatus { get; set; }
+        public EnInsuranceTypes InsuranceType { get; set; }
+        public EnInsuranceStatuses InsuranceStatus { get; set; }
         public DateTime UploadedDate { get; set; }
         public string InsuranceProvider { get; set; }
         public string PolicyNumber { get; set; }

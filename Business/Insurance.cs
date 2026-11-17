@@ -14,8 +14,8 @@ namespace Business
         public int InsuranceID { get; set; }
         public int PolicyId { get; set; }
         public int RecordedBy { get; set; }
-        public (EnInsuranceTypes InsuranceTypeId, string InsuranceTypeName) InsuranceType { get; set; }
-        public (EnInsuranceStatuses InsuranceStatusId, string InsuranceStatusName) InsuranceStatus { get; set; }
+        public EnInsuranceTypes InsuranceType { get; set; }
+        public EnInsuranceStatuses InsuranceStatus { get; set; }
         public DateTime UploadedDate { get; set; }
         public string InsuranceProvider { get; set; }
         public string PolicyNumber { get; set; }
@@ -35,8 +35,8 @@ namespace Business
         {
             InsuranceID = -1;
             RecordedBy = -1;
-            InsuranceType = ((EnInsuranceTypes)0, "None");
-            InsuranceStatus = ((EnInsuranceStatuses)0, "None");
+            InsuranceType = 0;
+            InsuranceStatus = 0;
             PolicyNumber = string.Empty;
             CoverageStartDate = DateTime.Now.AddYears(-1);
             CoverageEndDate = DateTime.Now.AddYears(1);
@@ -48,20 +48,17 @@ namespace Business
             RecorderStaff = null;
             _mode = EnMode.Add;
         }
-        public Insurance(int insuranceId, int policyId, int policyHolderPatientId, int staffId)
+        public Insurance(int insuranceId)
         {
             InsuranceID = insuranceId;
-            Policy = Policy.FindPolicyByID(policyId);
-            PolicyPatientHolder = Patient.FindPatientById(policyHolderPatientId);
-            RecorderStaff = Staff.FindStaffById(staffId);
             _mode = EnMode.Update;
         }
-        public static Insurance FromDto(InsuranceDto insuranceDto)
+        public static async Task<Insurance> FromDto(InsuranceDto insuranceDto)
         {
             if (insuranceDto == null)
                 return null;
 
-            return new Insurance(insuranceDto.InsuranceID, insuranceDto.PolicyId, insuranceDto.PolicyholderPatientId, insuranceDto.RecordedBy)
+            Insurance insurance = new Insurance(insuranceDto.InsuranceID)
             {
                 InsuranceID = insuranceDto.InsuranceID,
                 PolicyId = insuranceDto.PolicyId,
@@ -77,6 +74,12 @@ namespace Business
                 PolicyholderPatientId = insuranceDto.PolicyholderPatientId,
                 Relationship = insuranceDto.Relationship,
             };
+
+            insurance.Policy = await Policy.FindPolicyByID(insurance.PolicyId);
+            insurance.PolicyPatientHolder = await Patient.FindPatientById(insurance.PolicyholderPatientId);
+            insurance.RecorderStaff = await Staff.FindStaffById(insurance.RecordedBy);
+
+            return insurance;
         }
         public static InsuranceDto ToDto(Insurance insurance)
         {
@@ -154,7 +157,7 @@ namespace Business
 
                         Auditor.Log(
                             "Insurance Added",
-                            $"Insurance type '{InsuranceType.InsuranceTypeName}' ({InsuranceStatus.InsuranceStatusName}) from '{InsuranceProvider}' for PatientID {PolicyholderPatientId} was added by {performedBy}.",
+                            $"Insurance type '{InsuranceType}' ({InsuranceStatus}) from '{InsuranceProvider}' for PatientID {PolicyholderPatientId} was added by {performedBy}.",
                             $"InsuranceID {InsuranceID}");
 
                         return new OperationResult(
@@ -174,7 +177,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Insurance Updated",
-                            $"Insurance type '{InsuranceType.InsuranceTypeName}' ({InsuranceStatus.InsuranceStatusName}) from '{InsuranceProvider}' for PatientID {PolicyholderPatientId} was updated by {performedBy}.",
+                            $"Insurance type '{InsuranceType}' ({InsuranceStatus}) from '{InsuranceProvider}' for PatientID {PolicyholderPatientId} was updated by {performedBy}.",
                             $"InsuranceID {InsuranceID}");
 
                         return new OperationResult(
@@ -194,7 +197,7 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static Insurance FindInsuranceByID(int insuranceId)
+        public static async Task<Insurance> FindInsuranceByID(int insuranceId)
         {
             if (!Util.CanAccessForm(
                 EnRole.Receptionist,
@@ -202,9 +205,11 @@ namespace Business
                 EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(InsuranceData.FindInsuranceByID(insuranceId));
+            InsuranceDto insuranceDto = await InsuranceData.FindInsuranceByID(insuranceId);
+
+            return await FromDto(insuranceDto);
         }
-        public static Insurance FindInsuranceByPatientId(int patientId)
+        public static async Task<Insurance> FindInsuranceByPatientId(int patientId)
         {
             if (!Util.CanAccessForm(
                 EnRole.Receptionist,
@@ -212,7 +217,9 @@ namespace Business
                 EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(InsuranceData.FindInsuranceByPatientId(patientId));
+            InsuranceDto insuranceDto = await InsuranceData.FindInsuranceByPatientId(patientId);
+
+            return await FromDto(insuranceDto);
         }
         public static async Task<BindingList<string>> GetInsuranceTypesNames()
         {
@@ -259,8 +266,8 @@ namespace Business
                 Util.IsValidId(PolicyId) &&
                 Util.IsValidId(RecordedBy) &&
                 Util.IsValidId(PolicyholderPatientId) &&
-                Util.IsValidId((int)InsuranceType.InsuranceTypeId) &&
-                Util.IsValidId((int)InsuranceStatus.InsuranceStatusId))
+                Util.IsValidId((int)InsuranceType) &&
+                Util.IsValidId((int)InsuranceStatus))
             {
                 return new OperationResult(
                     "Insurance information is valid to save.",

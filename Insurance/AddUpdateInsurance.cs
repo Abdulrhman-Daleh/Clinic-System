@@ -13,6 +13,7 @@ namespace ClinicSystem.Insurance
     {
         private Business.Insurance insurance;
 
+        private readonly int InsuranceId;
         public delegate void SendInsuranceInfo(int insuranceId);
         public event SendInsuranceInfo SendInsuranceId;
 
@@ -30,9 +31,6 @@ namespace ClinicSystem.Insurance
             lblInsuranceId.Text = "[Not Set]";
 
             findPatientCtrl1.SendPatient += RecivePatient;
-
-            insurance.RecorderStaff = Global.CurrentLoggedInStaff;
-            insurance.RecordedBy = insurance.RecorderStaff.StaffId;
         }
 
         private void RecivePatient(Patient patient)
@@ -44,15 +42,12 @@ namespace ClinicSystem.Insurance
         {
             InitializeComponent();
 
-            insurance = Business.Insurance.FindInsuranceByID(insuranceId);
-
-            if (ValidationHelper.IsEmptyOrNull(insurance, "Insurance not found"))
-                return;
 
             SetFormTextBasedMode(
                 "Update Insurance", "Update Insurance", "Update");
 
             findPatientCtrl1.AllowedFind = false;
+            InsuranceId = insuranceId;
 
             findPatientCtrl1.LoadPatientInfo(insurance.PolicyholderPatientId);
             SetControls();
@@ -94,8 +89,8 @@ namespace ClinicSystem.Insurance
             dtpCoverageStart.Value = insurance.CoverageStartDate;
             dtpCoverageEnd.Value = insurance.CoverageEndDate;
 
-            cbTypes.SelectedIndex = (int)insurance.InsuranceType.InsuranceTypeId - 1;
-            cbStatuses.SelectedIndex = (int)insurance.InsuranceStatus.InsuranceStatusId - 1;
+            cbTypes.SelectedIndex = (int)insurance.InsuranceType - 1;
+            cbStatuses.SelectedIndex = (int)insurance.InsuranceStatus - 1;
             txtRelationship.Text = insurance.Relationship;
         }
 
@@ -125,7 +120,7 @@ namespace ClinicSystem.Insurance
             ValidationHelper.ValidateRequiredTextBox((TextBox)sender, errors);
         }
 
-        private void CollectData()
+        private async Task CollectData()
         {
             insurance.InsuranceProvider = txtProviderName.Text.Trim();
             insurance.PatientClaims = txtPatientClaims.Text.Trim();
@@ -133,18 +128,18 @@ namespace ClinicSystem.Insurance
             insurance.CoverageStartDate = dtpCoverageStart.Value;
             insurance.CoverageEndDate = dtpCoverageEnd.Value;
 
-            insurance.InsuranceType = ((EnInsuranceTypes)cbTypes.SelectedIndex + 1, cbTypes.SelectedItem.ToString());
-            insurance.InsuranceStatus = ((EnInsuranceStatuses)cbStatuses.SelectedIndex + 1, cbTypes.SelectedItem.ToString());
+            insurance.InsuranceType = (EnInsuranceTypes)cbTypes.SelectedIndex + 1;
+            insurance.InsuranceStatus = (EnInsuranceStatuses)cbStatuses.SelectedIndex + 1;
 
             insurance.UploadedDate = DateTime.Now;
             (int policyId, string display) po = ((int policyId, string display))cbPolicies.SelectedValue;
 
             insurance.PolicyId = po.policyId;
-            insurance.Policy = Policy.FindPolicyByID(po.policyId);
+            insurance.Policy = await Policy.FindPolicyByID(po.policyId);
             insurance.Relationship = txtRelationship.Text;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             ValidateChildren();
 
@@ -161,7 +156,7 @@ namespace ClinicSystem.Insurance
                 return;
             }
 
-            CollectData();
+            await CollectData();
 
             result = insurance.Save();
 
@@ -216,6 +211,17 @@ namespace ClinicSystem.Insurance
                 errors.SetError(cbStatuses, "Select an insurance status");
             else
                 errors.SetError(cbStatuses, null);
+        }
+
+        private async void AddUpdateInsurance_Load(object sender, EventArgs e)
+        {
+            insurance = await Business.Insurance.FindInsuranceByID(InsuranceId);
+
+            if (ValidationHelper.IsEmptyOrNull(insurance, "Insurance not found"))
+                return;
+
+            insurance.RecorderStaff = Global.CurrentLoggedInStaff;
+            insurance.RecordedBy = insurance.RecorderStaff.StaffId;
         }
     }
 }

@@ -6,11 +6,12 @@ namespace ClinicSystem.Insurance
 {
     public partial class ViewInsuranceInfo : FormsDefaultSettings
     {
+        private readonly int InsuranceId;
         public ViewInsuranceInfo(int insuranceId)
         {
             InitializeComponent();
             btnEdit.Enabled = false;
-            viewInsuranceInfoCtrl1.LoadInsuranceInfo(insuranceId);
+            InsuranceId = insuranceId;
             viewPatientsUnderInsurance.LoadUpPatientsInsurance(insuranceId);
             SetForm();
         }
@@ -30,7 +31,7 @@ namespace ClinicSystem.Insurance
             btnEdit.Enabled = true;
             lblStatus.Text = ValidationHelper.Date1BeforeDate2(InsuranceObj.CoverageStartDate, InsuranceObj.CoverageEndDate) ? "Active" : "Not Active";
 
-            lblInsuranceId.Text = $"{InsuranceObj.InsuranceProvider} — {InsuranceObj.PolicyNumber} - {InsuranceObj.InsuranceType.InsuranceTypeName}";
+            lblInsuranceId.Text = $"{InsuranceObj.InsuranceProvider} — {InsuranceObj.PolicyNumber} - {InsuranceObj.InsuranceType}";
         }
 
         private void btnEdit_Click(object sender, System.EventArgs e)
@@ -42,10 +43,15 @@ namespace ClinicSystem.Insurance
 
         public delegate void OnChangeEvent(int insuranceId);
         public event OnChangeEvent OnChange;
-        private void ReciveInsuranceId(int insuranceId)
+        private async void ReciveInsuranceId(int insuranceId)
         {
-            viewInsuranceInfoCtrl1.LoadInsuranceInfo(insuranceId);
+            await viewInsuranceInfoCtrl1.LoadInsuranceInfo(insuranceId);
             OnChange?.Invoke(insuranceId);
+        }
+
+        private async void ViewInsuranceInfo_Load(object sender, System.EventArgs e)
+        {
+            await viewInsuranceInfoCtrl1.LoadInsuranceInfo(InsuranceId);
         }
     }
 }

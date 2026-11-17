@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewInsuranceInfoCtrl));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.lblTypeLongInfo = new System.Windows.Forms.Label();
             this.lblPatientClaims = new System.Windows.Forms.TextBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -48,8 +50,6 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.lblTypeLongInfo = new System.Windows.Forms.Label();
-            this.lblStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
@@ -88,6 +88,22 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Insurance Info";
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(580, 18);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(0, 25);
+            this.lblStatus.TabIndex = 86;
+            // 
+            // lblTypeLongInfo
+            // 
+            this.lblTypeLongInfo.AutoSize = true;
+            this.lblTypeLongInfo.Location = new System.Drawing.Point(78, 27);
+            this.lblTypeLongInfo.Name = "lblTypeLongInfo";
+            this.lblTypeLongInfo.Size = new System.Drawing.Size(0, 25);
+            this.lblTypeLongInfo.TabIndex = 85;
             // 
             // lblPatientClaims
             // 
@@ -251,22 +267,6 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 54;
             this.pictureBox4.TabStop = false;
-            // 
-            // lblTypeLongInfo
-            // 
-            this.lblTypeLongInfo.AutoSize = true;
-            this.lblTypeLongInfo.Location = new System.Drawing.Point(78, 27);
-            this.lblTypeLongInfo.Name = "lblTypeLongInfo";
-            this.lblTypeLongInfo.Size = new System.Drawing.Size(0, 25);
-            this.lblTypeLongInfo.TabIndex = 85;
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.AutoSize = true;
-            this.lblStatus.Location = new System.Drawing.Point(580, 18);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(0, 25);
-            this.lblStatus.TabIndex = 86;
             // 
             // ViewInsuranceInfoCtrl
             // 

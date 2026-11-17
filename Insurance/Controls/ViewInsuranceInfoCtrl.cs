@@ -1,5 +1,6 @@
 ﻿using ClinicSystem.Helpers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Insurance.Controls
@@ -18,9 +19,9 @@ namespace ClinicSystem.Insurance.Controls
             get => insurance;
         }
 
-        public void LoadInsuranceInfo(int insuranceId)
+        public async Task LoadInsuranceInfo(int insuranceId)
         {
-            insurance = Business.Insurance.FindInsuranceByID(insuranceId);
+            insurance = await Business.Insurance.FindInsuranceByID(insuranceId);
             if (ValidationHelper.IsEmptyOrNull(insurance, "insurance is not found"))
             {
                 CommonOperations.SetUpDefaultControlsValue(new List<Control>() { lblTypeLongInfo, lblCoverage, lblPolicy, lblProvider, lblRecordedBy, lblType, lblPatientClaims }, "Not Set");
@@ -30,11 +31,11 @@ namespace ClinicSystem.Insurance.Controls
             lblProvider.Text = insurance.InsuranceProvider;
             lblCoverage.Text = insurance.CoverageStartDate.ToShortDateString();
             lblPolicy.Text = insurance.PolicyNumber;
-            lblType.Text = insurance.InsuranceType.InsuranceTypeName;
+            lblType.Text = insurance.InsuranceType.ToString();
             lblRecordedBy.Text = insurance.RecorderStaff.GetFullName();
             lblPatientClaims.Text = insurance.PatientClaims;
             lblTypeLongInfo.Text = insurance.PolicyNumber + " - " + insurance.PolicyNumber;
-            lblStatus.Text = $"[{insurance.InsuranceStatus.InsuranceStatusName}]";
+            lblStatus.Text = $"[{insurance.InsuranceStatus}]";
         }
     }
 }
