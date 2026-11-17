@@ -19,10 +19,6 @@ namespace Business
         public byte Quantity { get; set; }
         public string Duration { get; set; }
         public Prescription Prescription { get; set; }
-        public bool IsAddMode()
-        {
-            return _mode == EnMode.Add;
-        }
         public PrescriptionItem()
         {
             ItemID = -1;
@@ -32,18 +28,17 @@ namespace Business
             Duration = string.Empty;
             _mode = EnMode.Add;
         }
-        private PrescriptionItem(int itemID, int prescriptionId)
+        private PrescriptionItem(int itemID)
         {
             ItemID = itemID;
             _mode = EnMode.Update;
-            Prescription = Prescription.FindPrescriptionByID(itemID);
         }
-        public static PrescriptionItem FromDto(PrescriptionItemDto itemDto)
+        public static async Task<PrescriptionItem> FromDto(PrescriptionItemDto itemDto)
         {
             if (itemDto == null)
                 return null;
 
-            return new PrescriptionItem(itemDto.ItemID, itemDto.PrescriptionID)
+            var item = new PrescriptionItem(itemDto.ItemID)
             {
                 ItemID = itemDto.ItemID,
                 MedicineID = itemDto.MedicineID,
@@ -53,6 +48,10 @@ namespace Business
                 Quantity = itemDto.Quantity,
                 Duration = itemDto.Duration
             };
+
+            item.Prescription = await Prescription.FindPrescriptionByID(item.PrescriptionID);
+
+            return item;
         }
         public static PrescriptionItemDto ToDto(PrescriptionItem item)
         {
@@ -151,12 +150,14 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static PrescriptionItem FindPrescriptionItemByID(int itemID)
+        public static async Task<PrescriptionItem> FindPrescriptionItemByID(int itemID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
                 return null;
 
-            return FromDto(PrescriptionItemData.FindPrescriptionItemByID(itemID));
+            PrescriptionItemDto itemDto = await PrescriptionItemData.FindPrescriptionItemByID(itemID);
+
+            return await FromDto(itemDto);
         }
         public static async Task<BindingList<PrescriptionItemListing>> GetPrescriptionItemsListing(int prescriptionID)
         {
