@@ -2,6 +2,7 @@
 using Data_Access;
 using Data_Access.DTOs;
 using System;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -17,7 +18,7 @@ namespace Business
         public SOAPNote Note { get; set; }
         public string ReferralReason { get; set; }
         public DateTime ReferralDate { get; set; }
-        public (EnReferralUrgencies ReferralUrgencyID, string ReferralUrgencyText) ReferralUrgencies { get; set; }
+        public EnReferralUrgencies ReferralUrgency { get; set; }
         public string Speciality { get; set; }
         public Referral()
         {
@@ -27,34 +28,22 @@ namespace Business
             NoteID = -1;
             ReferralReason = string.Empty;
             ReferralDate = DateTime.Now;
-            ReferralUrgencies = ((EnReferralUrgencies)0, "None");
+            ReferralUrgency = 0;
             Speciality = string.Empty;
 
             _mode = EnMode.Add;
         }
-        public Referral(int referralID, int doctorID, int appointmentID, int noteId)
+        public Referral(int referralID)
         {
             ReferralID = referralID;
-            DoctorID = doctorID;
-            AppointmentID = appointmentID;
-            NoteID = noteId;
-
-            Doctor = Staff.FindStaffById(doctorID);
-            Appointment = Appointment.FindAppointmentByID(appointmentID);
-            Note = SOAPNote.FindSOAPNoteByID(noteId);
-
             _mode = EnMode.Update;
         }
-        public static Referral FromDto(ReferralDto referralDto)
+        public static async Task<Referral> FromDto(ReferralDto referralDto)
         {
             if (referralDto == null)
                 return null;
 
-            return new Referral(
-                referralDto.ReferralID,
-                referralDto.DoctorID,
-                referralDto.AppointmentID,
-                referralDto.NoteID)
+            var referral = new Referral(referralDto.ReferralID)
             {
                 ReferralID = referralDto.ReferralID,
                 DoctorID = referralDto.DoctorID,
@@ -62,9 +51,15 @@ namespace Business
                 NoteID = referralDto.NoteID,
                 ReferralReason = referralDto.ReferralReason,
                 ReferralDate = referralDto.ReferralDate,
-                ReferralUrgencies = referralDto.ReferralUrgencies,
+                ReferralUrgency = referralDto.ReferralUrgency,
                 Speciality = referralDto.Speciality
             };
+
+            referral.Doctor = await Staff.FindStaffById(referral.DoctorID);
+            referral.Appointment = await Appointment.FindAppointmentByID(referral.AppointmentID);
+            referral.Note = await SOAPNote.FindSOAPNoteByID(referral.NoteID);
+
+            return referral;
         }
         public static ReferralDto ToDto(Referral referral)
         {
@@ -79,7 +74,7 @@ namespace Business
                 NoteID = referral.NoteID,
                 ReferralReason = referral.ReferralReason,
                 ReferralDate = referral.ReferralDate,
-                ReferralUrgencies = referral.ReferralUrgencies,
+                ReferralUrgency = referral.ReferralUrgency,
                 Speciality = referral.Speciality
             };
         }
@@ -144,7 +139,7 @@ namespace Business
                 "Access Granted",
                 true);
         }
-        private OperationResult CheckUpdateAccess()
+        private async Task<OperationResult> CheckUpdateAccess()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
 
@@ -183,23 +178,23 @@ namespace Business
             NoteID = NoteID;
             ReferralDate = ReferralDate;
 
-            Doctor = Business.Staff.FindStaffById(DoctorID);
-            Appointment = Business.Appointment.FindAppointmentByID(AppointmentID);
-            Note = SOAPNote.FindSOAPNoteByID(NoteID);
+            Doctor = await Staff.FindStaffById(DoctorID);
+            Appointment = await Appointment.FindAppointmentByID(AppointmentID);
+            Note = await SOAPNote.FindSOAPNoteByID(NoteID);
 
             return new OperationResult(
                 "Referral update access granted.",
                 "Access Granted",
                 true);
         }
-        public OperationResult Save()
+        public async Task<OperationResult> Save()
         {
             OperationResult result;
 
             if (_mode == EnMode.Add)
                 result = CheckAddAccess();
             else
-                result = CheckUpdateAccess();
+                result = await CheckUpdateAccess();
 
             if (!result.IsSuccess)
                 return result;
@@ -222,7 +217,7 @@ namespace Business
 
                         Auditor.Log(
                             "Referral Added",
-                            $"Referral for AppointmentID {AppointmentID} (Speciality: {Speciality}, Urgency: {ReferralUrgencies.ReferralUrgencyText}) was created by {performedBy}.",
+                            $"Referral for AppointmentID {AppointmentID} (Speciality: {Speciality}, Urgency: {ReferralUrgency}) was created by {performedBy}.",
                             $"ReferralID {ReferralID}");
 
                         return new OperationResult(
@@ -242,7 +237,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Referral Updated",
-                            $"Referral for AppointmentID {AppointmentID} (Speciality: {Speciality}, Urgency: {ReferralUrgencies.ReferralUrgencyText}) was updated by {performedBy}.",
+                            $"Referral for AppointmentID {AppointmentID} (Speciality: {Speciality}, Urgency: {ReferralUrgency}) was updated by {performedBy}.",
                             $"ReferralID {ReferralID}");
 
                         return new OperationResult(
@@ -262,16 +257,21 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static Referral FindReferralByAppointmentID(int appointmentID)
+        public static async Task<Referral> FindReferralByAppointmentID(int appointmentID)
         {
-            return FromDto(ReferralData.FindReferralByAppointmentID(appointmentID, Global.CurrentLoggedInStaff.StaffId));
+            if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
+                return null;
+
+            var referral = await ReferralData.FindReferralByAppointmentID(appointmentID, Global.CurrentLoggedInStaff.StaffId);
+
+            return await FromDto(referral);
         }
         private OperationResult IsReferralValidToSave()
         {
             if (Util.IsValidId(DoctorID) &&
                 Util.IsValidId(AppointmentID) &&
                 Util.IsValidId(NoteID) &&
-                Enum.IsDefined(typeof(EnReferralUrgencies), ReferralUrgencies.ReferralUrgencyID) &&
+                Enum.IsDefined(typeof(EnReferralUrgencies), ReferralUrgency) &&
                 Util.IsRequired(ReferralReason) &&
                 Util.IsRequired(Speciality) &&
                 ReferralDate != DateTime.MinValue)

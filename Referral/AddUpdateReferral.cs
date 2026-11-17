@@ -3,6 +3,7 @@ using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Referral
@@ -10,20 +11,22 @@ namespace ClinicSystem.Referral
     public partial class AddUpdateReferral : FormsDefaultSettings
     {
         private Business.Referral referral;
+        private int AppointmentId;
+        private EnMode Mode;
         public AddUpdateReferral(int appointmentId, EnMode mode)
         {
             InitializeComponent();
             lblReferralId.Text = "Not Set";
 
-            cbReferralUrgency.DataSource =
-                Enum.GetValues(typeof(EnReferralUrgencies));
+            cbReferralUrgency.DataSource = Enum.GetValues(typeof(EnReferralUrgencies));
+            AppointmentId = appointmentId;
+            Mode = mode;
 
             viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
             Load += AddUpdateReferral_Load;
-            SetUpForm(appointmentId, mode);
         }
 
-        private void SetUpForm(int appointmentId, EnMode mode)
+        private async Task SetUpForm(int appointmentId, EnMode mode)
         {
             if (mode == EnMode.Add)
             {
@@ -40,10 +43,10 @@ namespace ClinicSystem.Referral
                     "Update Referral",
                     "Update");
 
-            referral = Business.Referral.FindReferralByAppointmentID(appointmentId);
+            referral = await Business.Referral.FindReferralByAppointmentID(appointmentId);
             txtReferralReason.Text = referral.ReferralReason;
             txtSpeciality.Text = referral.Speciality;
-            cbReferralUrgency.SelectedIndex = (int)referral.ReferralUrgencies.ReferralUrgencyID - 1;
+            cbReferralUrgency.SelectedIndex = (int)referral.ReferralUrgency - 1;
             lblReferralId.Text = $"Ref-{referral.ReferralID}";
             btnSave.Enabled = referral.Appointment.IsStillActive();
             gbReferral.Enabled = referral.Appointment.IsStillActive();
@@ -68,9 +71,10 @@ namespace ClinicSystem.Referral
             SetControls();
         }
 
-        private void AddUpdateReferral_Load(object sender, EventArgs e)
+        private async void AddUpdateReferral_Load(object sender, EventArgs e)
         {
             SetPage();
+            await SetUpForm(AppointmentId, Mode);
         }
 
         private void SetControls()
@@ -98,9 +102,7 @@ namespace ClinicSystem.Referral
 
             referral.ReferralReason = txtReferralReason.Text.Trim();
 
-            referral.ReferralUrgencies = (
-                (EnReferralUrgencies)cbReferralUrgency.SelectedItem,
-                cbReferralUrgency.SelectedItem.ToString());
+            referral.ReferralUrgency = (EnReferralUrgencies)cbReferralUrgency.SelectedItem;
 
             referral.Speciality = txtSpeciality.Text.Trim();
         }
@@ -137,7 +139,7 @@ namespace ClinicSystem.Referral
             errors.SetError(cbReferralUrgency, null);
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             ValidateChildren();
 
@@ -157,7 +159,7 @@ namespace ClinicSystem.Referral
 
             CollectData();
 
-            OperationResult result = referral.Save();
+            OperationResult result = await referral.Save();
 
             MessageBox.Show(
                 result.Message,

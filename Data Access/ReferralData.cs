@@ -1,4 +1,5 @@
-﻿using Data_Access.DTOs;
+﻿using AppEnums.cs;
+using Data_Access.DTOs;
 using Log;
 using LoggerMessage;
 using System;
@@ -25,10 +26,7 @@ namespace Data_Access
                     NoteID = (int)reader["NoteID"],
                     ReferralReason = (string)reader["ReferralReason"],
                     ReferralDate = (DateTime)reader["ReferralDate"],
-                    ReferralUrgencies = (
-                        (AppEnums.cs.EnReferralUrgencies)(int)reader["ReferralUrgencyID"],
-                        (string)reader["ReferralUrgencyLevel"]
-                    ),
+                    ReferralUrgency = (EnReferralUrgencies)(int)reader["ReferralUrgencyID"],
                     Speciality = (string)reader["Speciality"]
                 };
             }
@@ -67,7 +65,7 @@ namespace Data_Access
                     { Value = referralDto.ReferralDate },
 
                 new SqlParameter("@ReferralUrgencyID", SqlDbType.Int)
-                    { Value = (int)referralDto.ReferralUrgencies.ReferralUrgencyID },
+                    { Value = (int)referralDto.ReferralUrgency },
 
                 new SqlParameter("@Speciality", SqlDbType.VarChar)
                     { Value = referralDto.Speciality }
@@ -122,7 +120,7 @@ namespace Data_Access
                     { Value = referralDto.ReferralDate },
 
                 new SqlParameter("@ReferralUrgencyID", SqlDbType.Int)
-                    { Value = (int)referralDto.ReferralUrgencies.ReferralUrgencyID },
+                    { Value = (int)referralDto.ReferralUrgency },
 
                 new SqlParameter("@Speciality", SqlDbType.VarChar)
                     { Value = referralDto.Speciality }
@@ -132,7 +130,7 @@ namespace Data_Access
 
             return result != null && Convert.ToInt32(result) > 0;
         }
-        public static ReferralDto FindReferralByID(int referralID)
+        public static async Task<ReferralDto> FindReferralByID(int referralID)
         {
             string query = @"
                 SELECT
@@ -156,7 +154,7 @@ namespace Data_Access
                     { Value = referralID }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query, parameters, ReferralMapper);
         }
         public static async Task<BindingList<ReferralDto>> GetReferralsByAppointmentID(int appointmentID)
@@ -208,7 +206,7 @@ namespace Data_Access
             return await DataAccessHelper.ExecuteObjectList<ReferralDto>(
                 query, null, ReferralMapper);
         }
-        public static ReferralDto FindReferralByAppointmentID(int appointmentID, int staffId)
+        public static async Task<ReferralDto> FindReferralByAppointmentID(int appointmentID, int staffId)
         {
             string query = @"SELECT
                     r.ReferralID,
@@ -232,7 +230,7 @@ namespace Data_Access
                 new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentID}
             };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, ReferralMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, ReferralMapper);
         }
     }
 }

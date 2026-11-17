@@ -11,7 +11,7 @@ namespace Data_Access.DTOs
         public int NoteID { get; set; }
         public string ReferralReason { get; set; }
         public DateTime ReferralDate { get; set; }
-        public (EnReferralUrgencies ReferralUrgencyID, string ReferralUrgencyText) ReferralUrgencies { get; set; }
+        public EnReferralUrgencies ReferralUrgency { get; set; }
         public string Speciality { get; set; }
     }
 }
