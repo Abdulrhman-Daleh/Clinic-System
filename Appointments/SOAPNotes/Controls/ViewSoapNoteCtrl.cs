@@ -12,9 +12,9 @@ namespace ClinicSystem.Appointments.SOAPNotes.Controls
             InitializeComponent();
         }
 
-        public void LoadSOAPNoteInfoByAppointmentId(int appointmentId)
+        public async void LoadSOAPNoteInfoByAppointmentId(int appointmentId)
         {
-            note = SOAPNote.FindSOAPNoteByAppointmentID(appointmentId);
+            note = await SOAPNote.FindSOAPNoteByAppointmentID(appointmentId);
 
             if (ValidationHelper.IsEmptyOrNull(note, "Note is not available"))
             {
