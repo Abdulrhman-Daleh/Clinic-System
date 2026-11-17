@@ -126,7 +126,7 @@
             this.cbDosageForm.Name = "cbDosageForm";
             this.cbDosageForm.Size = new System.Drawing.Size(180, 33);
             this.cbDosageForm.TabIndex = 27;
-            this.cbDosageForm.Validating += new System.ComponentModel.CancelEventHandler(this.cbDosageForm_Validating);
+            this.cbDosageForm.Validating += new System.ComponentModel.CancelEventHandler(this.cbDosageForm_Validatitng);
             // 
             // cbStrengthType
             // 
