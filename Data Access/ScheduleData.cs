@@ -84,7 +84,7 @@ namespace Data_Access
 
         public static bool UpdateSchedule(ScheduleDto scheduleDto)
         {
-            int affectedRows = -1;
+            int affectedRows;
             string query = @"update Schedules
             set WorkStartFrom = @WorkStartFrom, WorkEndAt = @WorkEndAt, ShiftName = @ShiftName
             where ScheduleID = @scheduleId";
@@ -113,7 +113,7 @@ namespace Data_Access
             return schedules;
         }
 
-        public static ScheduleDto FindScheduleByID(int scheduleId)
+        public static async Task<ScheduleDto> FindScheduleByID(int scheduleId)
         {
             ScheduleDto scheduleDto = new ScheduleDto();
 
@@ -125,7 +125,7 @@ namespace Data_Access
                     new SqlParameter("@ScheduleId", SqlDbType.Int) {Value = scheduleId}
                 };
 
-            scheduleDto = DataAccessHelper.ExecuteOneObject(query, paramters, ScheduleMapper);
+            scheduleDto = await DataAccessHelper.ExecuteOneObject(query, paramters, ScheduleMapper);
 
             return scheduleDto;
         }
