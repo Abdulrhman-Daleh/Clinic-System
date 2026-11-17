@@ -71,7 +71,7 @@ namespace Data_Access
             return affactedRows;
         }
 
-        public static T ExecuteOneObject<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map, [CallerMemberName] string callerName = "")
+        public static async Task<T> ExecuteOneObject<T>(string query, List<SqlParameter> paramters, Func<SqlDataReader, T> map, [CallerMemberName] string callerName = "")
         {
             try
             {
@@ -82,9 +82,9 @@ namespace Data_Access
                         if (paramters != null)
                             command.Parameters.AddRange(paramters.ToArray());
 
-                        connection.Open();
+                        await connection.OpenAsync();
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
                             if (reader.Read())
                                 return map(reader);
