@@ -7,7 +7,7 @@ namespace Data_Access.DTOs
     {
         public int LabID { get; set; }
         public int AppointmentID { get; set; }
-        public (EnTestStatuses TestStatusID, string TestStatusText) TestStatuses { get; set; }
+        public EnTestStatuses TestStatuses { get; set; }
         public int NurseID { get; set; }
         public string Reason { get; set; }
         public string Instructions { get; set; }

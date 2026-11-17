@@ -1,8 +1,8 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -12,7 +12,7 @@ namespace Business
         public int LabID { get; set; }
         public int AppointmentID { get; set; }
         public Appointment Appointment { get; set; }
-        public (EnTestStatuses TestStatusID, string TestStatusText) TestStatuses { get; set; }
+        public EnTestStatuses TestStatuses { get; set; }
         public int NurseID { get; set; }
         public Staff Nurse { get; set; }
         public string Reason { get; set; }
@@ -27,7 +27,7 @@ namespace Business
             LabID = -1;
             AppointmentID = -1;
             NurseID = -1;
-            TestStatuses = ((EnTestStatuses)0, "None");
+            TestStatuses = 0;
             Reason = string.Empty;
             Instructions = string.Empty;
             TestResult = string.Empty;
@@ -37,19 +37,17 @@ namespace Business
             ResultRecordedAt = null;
             _mode = EnMode.Add;
         }
-        public LabTest(int labID, int appointmentId, int staffId)
+        public LabTest(int labID)
         {
             LabID = labID;
-            Appointment = Appointment.FindAppointmentByID(appointmentId);
-            Nurse = Staff.FindStaffById(staffId);
             _mode = EnMode.Update;
         }
-        public static LabTest FromDto(LabTestDto labTestDto)
+        public static async Task<LabTest> FromDto(LabTestDto labTestDto)
         {
             if (labTestDto == null)
                 return null;
 
-            return new LabTest(labTestDto.LabID, labTestDto.AppointmentID, labTestDto.NurseID)
+            LabTest lab = new LabTest(labTestDto.LabID)
             {
                 LabID = labTestDto.LabID,
                 AppointmentID = labTestDto.AppointmentID,
@@ -63,6 +61,12 @@ namespace Business
                 PerformDate = labTestDto.PerformDate,
                 ResultRecordedAt = labTestDto.ResultRecordedAt
             };
+
+            lab.Appointment = await Appointment.FindAppointmentByID(lab.AppointmentID);
+            lab.Nurse = await Staff.FindStaffById(lab.NurseID);
+
+            return lab;
+
         }
         public static LabTestDto ToDto(LabTest labTest)
         {
@@ -128,14 +132,14 @@ namespace Business
                 "Access Granted",
                 true);
         }
-        private OperationResult CheckUpdateAccess()
+        private async Task<OperationResult> CheckUpdateAccess()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Nurse);
 
             if (!result.IsSuccess)
                 return result;
 
-            LabTestDto existingLabTest = LabTestData.FindLabTestByID(LabID);
+            LabTestDto existingLabTest = await LabTestData.FindLabTestByID(LabID);
 
             if (existingLabTest == null)
             {
@@ -175,14 +179,14 @@ namespace Business
                 "Access Granted",
                 true);
         }
-        public OperationResult Save()
+        public async Task<OperationResult> Save()
         {
             OperationResult result;
 
             if (_mode == EnMode.Add)
                 result = CheckAddAccess();
             else
-                result = CheckUpdateAccess();
+                result = await CheckUpdateAccess();
 
             if (!result.IsSuccess)
                 return result;
@@ -204,7 +208,7 @@ namespace Business
 
                         Auditor.Log(
                             "Lab Test Added",
-                            $"Test '{TestName}' for AppointmentID {AppointmentID} (Status: {TestStatuses.TestStatusText}) was requested by {performedBy}.",
+                            $"Test '{TestName}' for AppointmentID {AppointmentID} (Status: {TestStatuses}) was requested by {performedBy}.",
                             $"LabID {LabID}");
 
                         return new OperationResult(
@@ -224,7 +228,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Lab Test Updated",
-                            $"Test '{TestName}' for AppointmentID {AppointmentID} (Status: {TestStatuses.TestStatusText}) was updated by {performedBy}.",
+                            $"Test '{TestName}' for AppointmentID {AppointmentID} (Status: {TestStatuses}) was updated by {performedBy}.",
                             $"LabID {LabID}");
 
                         return new OperationResult(
@@ -244,12 +248,12 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static LabTest FindLabTestByID(int labID)
+        public static async Task<LabTest> FindLabTestByID(int labID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Nurse).IsSuccess)
                 return null;
 
-            LabTestDto labTestDto = LabTestData.FindLabTestByID(labID);
+            LabTestDto labTestDto = await LabTestData.FindLabTestByID(labID);
 
             if (labTestDto == null)
                 return null;
@@ -261,21 +265,20 @@ namespace Business
             }
             else if (Global.CurrentLoggedInStaff.Role == EnRole.Doctor)
             {
-                Appointment appointment =
-                    Business.Appointment.FindAppointmentByID(labTestDto.AppointmentID);
+                Appointment appointment = await Appointment.FindAppointmentByID(labTestDto.AppointmentID);
 
                 if (appointment?.Staff == null ||
                     appointment.Staff.StaffId != Global.CurrentLoggedInStaff.StaffId)
                     return null;
             }
 
-            return FromDto(labTestDto);
+            return await FromDto(labTestDto);
         }
         private OperationResult IsLabTestValidToSave()
         {
             if (Util.IsValidId(AppointmentID) &&
                 Util.IsValidId(NurseID) &&
-                Util.IsValidId((int)TestStatuses.TestStatusID) &&
+                Util.IsValidId((int)TestStatuses) &&
                 Util.IsRequired(TestName))
             {
                 return new OperationResult(

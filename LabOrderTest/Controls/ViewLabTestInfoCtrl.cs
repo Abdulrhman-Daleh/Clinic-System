@@ -17,9 +17,9 @@ namespace ClinicSystem.LabOrderTest.Controls
             }, "Not Set");
         }
 
-        public void LoadLabTestInfo(int testId)
+        public async void LoadLabTestInfo(int testId)
         {
-            CurrentLabTest = LabTest.FindLabTestByID(testId);
+            CurrentLabTest = await LabTest.FindLabTestByID(testId);
 
             if (ValidationHelper.IsEmptyOrNull(CurrentLabTest, "Test is not present"))
             {
@@ -31,7 +31,7 @@ namespace ClinicSystem.LabOrderTest.Controls
             }
 
             lblTestname.Text = CurrentLabTest.TestName;
-            lblStatus.Text = $"[{CurrentLabTest.TestStatuses.TestStatusText}]";
+            lblStatus.Text = $"[{CurrentLabTest.TestStatuses}]";
             lblNurse.Text = CurrentLabTest.Appointment.Staff.GetFullName();
             lblRequestedDate.Text = CurrentLabTest.RequestDate.ToShortDateString();
 

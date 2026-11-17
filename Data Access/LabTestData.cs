@@ -24,9 +24,7 @@ namespace Data_Access
                     LabID = (int)reader["LabID"],
                     AppointmentID = (int)reader["AppointmentID"],
 
-                    TestStatuses = (
-                        (EnTestStatuses)reader["TestStatusID"],
-                        (string)reader["TestStatusText"]),
+                    TestStatuses = (EnTestStatuses)reader["TestStatusID"],
 
                     NurseID = (int)reader["NurseID"],
                     Reason = reader["Reason"] == DBNull.Value ? null : (string)reader["Reason"],
@@ -63,7 +61,7 @@ namespace Data_Access
                 },
                 new SqlParameter("@TestStatusID", SqlDbType.Int)
                 {
-                    Value = (int)labTestDto.TestStatuses.TestStatusID
+                    Value = (int)labTestDto.TestStatuses
                 },
                 new SqlParameter("@NurseID", SqlDbType.Int)
                 {
@@ -137,7 +135,7 @@ namespace Data_Access
                 },
                 new SqlParameter("@TestStatusID", SqlDbType.Int)
                 {
-                    Value = (int)labTestDto.TestStatuses.TestStatusID
+                    Value = (int)labTestDto.TestStatuses
                 },
                 new SqlParameter("@NurseID", SqlDbType.Int)
                 {
@@ -177,7 +175,7 @@ namespace Data_Access
 
             return affectedRows > 0;
         }
-        public static LabTestDto FindLabTestByID(int labID)
+        public static async Task<LabTestDto> FindLabTestByID(int labID)
         {
             string query = @"
                 SELECT
@@ -206,12 +204,12 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 LabTestMapper);
         }
-        public static LabTestListingDto FindLabTestListByID(int labID)
+        public static async Task<LabTestListingDto> FindLabTestListByID(int labID)
         {
             string query = @"
         SELECT
@@ -239,7 +237,7 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 LabTestListingMapper);

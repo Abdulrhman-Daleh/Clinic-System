@@ -114,9 +114,9 @@ namespace ClinicSystem.LabOrderTest
             addTest.OnSave += RefreshDGV;
             addTest.ShowDialog();
         }
-        private void RefreshDGV(LabTest labTest)
+        private async void RefreshDGV(LabTest labTest)
         {
-            LabTestListing labList = LabTestListing.FindLabTestByID(labTest.LabID);
+            LabTestListing labList = await LabTestListing.FindLabTestByID(labTest.LabID);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(labTests, "LabID", labList.LabID);
             CommonOperations.UpdateAfterAdding(labTests, labList, targetIndex);
         }

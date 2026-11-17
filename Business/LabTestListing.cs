@@ -1,5 +1,4 @@
-﻿
-using AppEnums.cs;
+﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.ListingDTOs;
 using System;
@@ -23,7 +22,7 @@ namespace Business
             if (labTestDto == null)
                 return null;
 
-            return new LabTestListing()
+            LabTestListing labTest = new LabTestListing()
             {
                 LabID = labTestDto.LabID,
                 TestName = labTestDto.TestName,
@@ -34,6 +33,8 @@ namespace Business
                 ResultRecordedAtValue = labTestDto.ResultRecordedAt,
                 TestResultValue = labTestDto.TestResult
             };
+
+            return labTest;
         }
         public static async Task<BindingList<LabTestListing>> GetLabTestsByAppointmentID(int appointmentID)
         {
@@ -70,12 +71,14 @@ namespace Business
 
             return list;
         }
-        public static LabTestListing FindLabTestByID(int labId)
+        public static async Task<LabTestListing> FindLabTestByID(int labId)
         {
             if (!Util.CanAccessForm(EnRole.Nurse).IsSuccess)
                 return null;
 
-            return FromDto(LabTestData.FindLabTestListByID(labId));
+            LabTestListingDto labTestListing = await LabTestData.FindLabTestListByID(labId);
+
+            return FromDto(labTestListing);
         }
     }
 }

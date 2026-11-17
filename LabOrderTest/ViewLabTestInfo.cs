@@ -1,16 +1,24 @@
 ﻿using ClinicSystem.Helpers;
+using System.Threading.Tasks;
 
 namespace ClinicSystem.LabOrderTest
 {
     public partial class ViewLabTestInfo : FormsDefaultSettings
     {
+        private readonly int TestId;
         public ViewLabTestInfo(int testId)
         {
             InitializeComponent();
-            SetUpCtrl(testId);
+            TestId = testId;
+            Load += ViewLabTestInfo_Load;
         }
 
-        private void SetUpCtrl(int testId)
+        private async void ViewLabTestInfo_Load(object sender, System.EventArgs e)
+        {
+            await SetUpCtrl(TestId);
+        }
+
+        private async Task SetUpCtrl(int testId)
         {
             viewLabTestInfoCtrl1.LoadLabTestInfo(testId);
 
@@ -20,7 +28,7 @@ namespace ClinicSystem.LabOrderTest
                 return;
 
             viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(test.AppointmentID);
-            viewMRecordInfo1.LoadMedicalRecordInfo(Business.MedicalRecord.FindMedicalRecordByPatientID(test.Appointment.PatientID));
+            viewMRecordInfo1.LoadMedicalRecordInfo(await Business.MedicalRecord.FindMedicalRecordByPatientID(test.Appointment.PatientID));
             viewPersonInfoCtrl1.SetData(test.Appointment.Patient);
         }
 
