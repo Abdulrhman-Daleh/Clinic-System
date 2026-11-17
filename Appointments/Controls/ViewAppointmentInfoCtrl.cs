@@ -33,7 +33,7 @@ namespace ClinicSystem.Appointments.Controls
             }, "Not Set");
         }
 
-        public void LoadUpAppointmentInfo(int appointmentId)
+        public async void LoadUpAppointmentInfo(int appointmentId)
         {
             if (!ValidationHelper.CheckAccess(
                 EnRole.Receptionist,
@@ -42,7 +42,7 @@ namespace ClinicSystem.Appointments.Controls
                 EnRole.Owner))
                 return;
 
-            Appointment = Appointment.FindAppointmentByID(appointmentId);
+            Appointment = await Appointment.FindAppointmentByID(appointmentId);
 
             if (ValidationHelper.IsEmptyOrNull(Appointment))
             {
@@ -59,9 +59,9 @@ namespace ClinicSystem.Appointments.Controls
             lblDate.Text = Appointment.AppointmentDate.ToShortDateString() + ". . " + Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
 
             lblDoctor.Text = Appointment.Staff.GetFullName();
-            lblType.Text = Appointment.AppointmentTypes.AppointmentTypeText;
-            lblStatus.Text = Appointment.AppointmentStatuses.AppointmentStatusText;
-            lblTypeTitle.Text = $"[{Appointment.AppointmentTypes.AppointmentTypeText}]";
+            lblType.Text = Appointment.AppointmentTypes.ToString();
+            lblStatus.Text = Appointment.AppointmentStatuses.ToString();
+            lblTypeTitle.Text = $"[{Appointment.AppointmentTypes}]";
 
             if (Appointment.Patient.IsFrozen ?? false)
                 lblFrozen.Text = "Frozen until " + Appointment.Patient.EndOfBookingFreeze;

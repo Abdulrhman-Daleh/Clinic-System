@@ -51,7 +51,7 @@ namespace Business
                 return null;
 
 
-            penalty.Appointment.AppointmentStatuses = (EnAppointmentStatuses.NoShow, "NoShow");
+            penalty.Appointment.AppointmentStatuses = EnAppointmentStatuses.NoShow;
             penalty.AppointmentID = AppointmentID;
             penalty.PenaltyWrittenDate = DateTime.Now;
             penalty.PenaltyDueDate = DateTime.Now.AddDays(7);

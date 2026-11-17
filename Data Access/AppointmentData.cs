@@ -28,8 +28,8 @@ namespace Data_Access
             {
                 new SqlParameter("@PatientID", SqlDbType.Int) {Value = appointmentDto.PatientID },
                 new SqlParameter("@StaffID", SqlDbType.Int) {Value = appointmentDto.StaffID },
-                new SqlParameter("@AppointmentStatusID", SqlDbType.Int) {Value = appointmentDto.AppointmentStatuses.AppointmentStatusID },
-                new SqlParameter("@AppointmentTypeID", SqlDbType.Int) {Value = appointmentDto.AppointmentTypes.AppointmentTypeID },
+                new SqlParameter("@AppointmentStatusID", SqlDbType.Int) {Value = appointmentDto.AppointmentStatuses },
+                new SqlParameter("@AppointmentTypeID", SqlDbType.Int) {Value = appointmentDto.AppointmentTypes },
                 new SqlParameter("@AppointmentTime", SqlDbType.Time) {Value = appointmentDto.AppointmentTime },
                 new SqlParameter("@AppointmentEndTime", SqlDbType.Time) {Value = appointmentDto.AppointmentEndTime }
             };
@@ -48,8 +48,8 @@ namespace Data_Access
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
                 new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = appointmentDto.AppointmentID },
-                new SqlParameter("@AppointmentStatusID", SqlDbType.Int) {Value = appointmentDto.AppointmentStatuses.AppointmentStatusID },
-                new SqlParameter("@AppointmentTypeID", SqlDbType.Int) {Value = appointmentDto.AppointmentTypes.AppointmentTypeID },
+                new SqlParameter("@AppointmentStatusID", SqlDbType.Int) {Value = appointmentDto.AppointmentStatuses },
+                new SqlParameter("@AppointmentTypeID", SqlDbType.Int) {Value = appointmentDto.AppointmentTypes },
                 new SqlParameter("@AppointmentTime", SqlDbType.Time) {Value = appointmentDto.AppointmentTime },
                 new SqlParameter("@AppointmentEndTime", SqlDbType.Time) {Value = appointmentDto.AppointmentEndTime },
                 new SqlParameter("@AppointmentDate", SqlDbType.Date) {Value = appointmentDto.AppointmentDate },
@@ -137,7 +137,7 @@ namespace Data_Access
 
             return appointments;
         }
-        public static AppointmentListDto FindAppointmentListByID(int staffId)
+        public static async Task<AppointmentListDto> FindAppointmentListByID(int staffId)
         {
             string query = @"select * from GetAppointmentsList(@staffId)";
 
@@ -146,7 +146,7 @@ namespace Data_Access
                 new SqlParameter("@staffId", SqlDbType.Int) {Value =  staffId}
             };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentListDtoMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentListDtoMapper);
         }
         private static AppointmentDto AppointmentDtoMapper(SqlDataReader reader)
         {
@@ -155,14 +155,14 @@ namespace Data_Access
                 AppointmentID = (int)reader["AppointmentID"],
                 PatientID = (int)reader["PatientID"],
                 StaffID = (int)reader["StaffID"],
-                AppointmentStatuses = ((EnAppointmentStatuses)reader["AppointmentStatusID"], (string)reader["AppointmentStatusText"]),
-                AppointmentTypes = ((EnAppointmentTypes)reader["AppointmentTypeID"], (string)reader["AppointmentTypeText"]),
+                AppointmentStatuses = (EnAppointmentStatuses)reader["AppointmentStatusID"],
+                AppointmentTypes = (EnAppointmentTypes)reader["AppointmentTypeID"],
                 AppointmentDate = (DateTime)reader["AppointmentDate"],
                 AppointmentTime = reader.GetDateTime(reader.GetOrdinal("AppointmentTime")).TimeOfDay,
                 AppointmentEndTime = reader.GetDateTime(reader.GetOrdinal("AppointmentEndTime")).TimeOfDay
             };
         }
-        public static AppointmentDto FindAppointmentByID(int appointmentId, int staffId)
+        public static async Task<AppointmentDto> FindAppointmentByID(int appointmentId, int staffId)
         {
             string query = @"select AppointmentID, PatientID, StaffID, appo.AppointmentStatusID, aStatus.AppointmentStatusText, appo.AppointmentTypeID,
             appoType.AppointmentTypeText, AppointmentDate,
@@ -178,7 +178,7 @@ namespace Data_Access
 
             };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentDtoMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentDtoMapper);
         }
         public static bool HasSOAPNotes(int appointmentId)
         {

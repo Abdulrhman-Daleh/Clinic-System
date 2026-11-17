@@ -11,12 +11,11 @@ namespace Business
     public class Appointment
     {
         private EnMode _mode;
-
         public int AppointmentID { get; set; }
         public int PatientID { get; set; }
         public int StaffID { get; set; }
-        public (EnAppointmentStatuses AppointmentStatusID, string AppointmentStatusText) AppointmentStatuses { get; set; }
-        public (EnAppointmentTypes AppointmentTypeID, string AppointmentTypeText) AppointmentTypes { get; set; }
+        public EnAppointmentStatuses AppointmentStatuses { get; set; }
+        public EnAppointmentTypes AppointmentTypes { get; set; }
         public DateTime AppointmentDate { get; set; }
         public TimeSpan AppointmentTime { get; set; }
         public TimeSpan AppointmentEndTime { get; set; }
@@ -27,8 +26,8 @@ namespace Business
             AppointmentID = -1;
             PatientID = -1;
             StaffID = -1;
-            AppointmentStatuses = ((EnAppointmentStatuses)EnAppointmentStatuses.Scheduled, "Scheduled");
-            AppointmentTypes = ((EnAppointmentTypes)0, "None");
+            AppointmentStatuses = 0;
+            AppointmentTypes = 0;
             AppointmentDate = DateTime.Now;
             AppointmentTime = new TimeSpan();
             AppointmentEndTime = new TimeSpan();
@@ -45,32 +44,36 @@ namespace Business
                 AppointmentID = appointment.AppointmentID,
                 PatientID = appointment.PatientID,
                 StaffID = appointment.StaffID,
-                AppointmentStatuses = (appointment.AppointmentStatuses.AppointmentStatusID, appointment.AppointmentStatuses.AppointmentStatusText),
-                AppointmentTypes = (appointment.AppointmentTypes.AppointmentTypeID, appointment.AppointmentTypes.AppointmentTypeText),
+                AppointmentStatuses = appointment.AppointmentStatuses,
+                AppointmentTypes = appointment.AppointmentTypes,
                 AppointmentDate = appointment.AppointmentDate,
                 AppointmentTime = appointment.AppointmentTime,
                 AppointmentEndTime = appointment.AppointmentEndTime
             };
         }
-        private static Appointment FromDto(AppointmentDto appointment)
+        private static async Task<Appointment> FromDto(AppointmentDto appointmentDto)
         {
-            if (appointment == null) return null;
+            if (appointmentDto == null) return null;
 
-            return new Appointment()
+            Appointment appointment = new Appointment()
             {
-                AppointmentID = appointment.AppointmentID,
-                PatientID = appointment.PatientID,
-                StaffID = appointment.StaffID,
-                AppointmentStatuses = appointment.AppointmentStatuses,
-                AppointmentTypes = appointment.AppointmentTypes,
-                AppointmentDate = appointment.AppointmentDate,
-                AppointmentTime = appointment.AppointmentTime,
-                AppointmentEndTime = appointment.AppointmentEndTime,
+                AppointmentID = appointmentDto.AppointmentID,
+                PatientID = appointmentDto.PatientID,
+                StaffID = appointmentDto.StaffID,
+                AppointmentStatuses = appointmentDto.AppointmentStatuses,
+                AppointmentTypes = appointmentDto.AppointmentTypes,
+                AppointmentDate = appointmentDto.AppointmentDate,
+                AppointmentTime = appointmentDto.AppointmentTime,
+                AppointmentEndTime = appointmentDto.AppointmentEndTime,
                 _mode = EnMode.Update,
-                Staff = Staff.FindStaffById(appointment.StaffID),
-                Patient = Patient.FindPatientById(appointment.PatientID)
             };
+
+            appointment.Staff = await Staff.FindStaffById(appointmentDto.StaffID);
+            appointment.Patient = await Patient.FindPatientById(appointmentDto.PatientID);
+
+            return appointment;
         }
+
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
@@ -93,7 +96,7 @@ namespace Business
         {
             return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo), Penalty.ToDTO(GetPenaltyToAppointment(policy, this))) > 0;
         }
-        private OperationResult CheckSaveAccess()
+        private async Task<OperationResult> CheckSaveAccess()
         {
             if (_mode == EnMode.Add)
                 return Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner);
@@ -118,7 +121,7 @@ namespace Business
                 if (!result.IsSuccess)
                     return result;
 
-                if (AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.Completed)
+                if (AppointmentStatuses == EnAppointmentStatuses.Completed)
                 {
                     return new OperationResult(
                         "Only the assigned doctor can complete an appointment.",
@@ -138,7 +141,7 @@ namespace Business
             }
 
             AppointmentDto existingAppointment =
-                AppointmentData.FindAppointmentByID(AppointmentID, Global.CurrentLoggedInStaff.StaffId);
+                await AppointmentData.FindAppointmentByID(AppointmentID, Global.CurrentLoggedInStaff.StaffId);
 
             if (existingAppointment == null)
             {
@@ -156,9 +159,9 @@ namespace Business
                     false);
             }
 
-            if (existingAppointment.AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.Completed ||
-                existingAppointment.AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.Cancelled ||
-                existingAppointment.AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.NoShow)
+            if (existingAppointment.AppointmentStatuses == EnAppointmentStatuses.Completed ||
+                existingAppointment.AppointmentStatuses == EnAppointmentStatuses.Cancelled ||
+                existingAppointment.AppointmentStatuses == EnAppointmentStatuses.NoShow)
             {
                 return new OperationResult(
                     "This appointment can no longer be completed.",
@@ -169,10 +172,10 @@ namespace Business
             // Doctors can only change the appointment status to Completed.
             // They cannot change the patient, assigned staff, type, date, or time.
 
-            if (AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed ||
+            if (AppointmentStatuses != EnAppointmentStatuses.Completed ||
                 PatientID != existingAppointment.PatientID ||
                 StaffID != existingAppointment.StaffID ||
-                AppointmentTypes.AppointmentTypeID != existingAppointment.AppointmentTypes.AppointmentTypeID ||
+                AppointmentTypes != existingAppointment.AppointmentTypes ||
                 AppointmentDate != existingAppointment.AppointmentDate ||
                 AppointmentTime != existingAppointment.AppointmentTime ||
                 AppointmentEndTime != existingAppointment.AppointmentEndTime)
@@ -188,9 +191,9 @@ namespace Business
                 "Access Granted",
                 true);
         }
-        public OperationResult Save(Payment paymentInfo = null, Policy policy = null)
+        public async Task<OperationResult> Save(Payment paymentInfo = null, Policy policy = null)
         {
-            OperationResult result = CheckSaveAccess();
+            OperationResult result = await CheckSaveAccess();
 
             if (!result.IsSuccess)
                 return result;
@@ -228,7 +231,7 @@ namespace Business
 
                         Auditor.Log(
                             "Appointment Added",
-                            $"Appointment type '{AppointmentTypes.AppointmentTypeText}' for PatientID {PatientID} with StaffID {StaffID} was scheduled on {AppointmentDate:d} from {AppointmentTime:hh\\:mm} to {AppointmentEndTime:hh\\:mm} by {performedBy}.",
+                            $"Appointment type '{AppointmentTypes}' for PatientID {PatientID} with StaffID {StaffID} was scheduled on {AppointmentDate:d} from {AppointmentTime:hh\\:mm} to {AppointmentEndTime:hh\\:mm} by {performedBy}.",
                             $"AppointmentID {AppointmentID}");
 
                         return new OperationResult(
@@ -248,7 +251,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Appointment Updated",
-                            $"Appointment type '{AppointmentTypes.AppointmentTypeText}' for PatientID {PatientID} with StaffID {StaffID} was updated to {AppointmentDate:d} from {AppointmentTime:hh\\:mm} to {AppointmentEndTime:hh\\:mm} (Status: {AppointmentStatuses.AppointmentStatusText}) by {performedBy}.",
+                            $"Appointment type '{AppointmentTypes}' for PatientID {PatientID} with StaffID {StaffID} was updated to {AppointmentDate:d} from {AppointmentTime:hh\\:mm} to {AppointmentEndTime:hh\\:mm} (Status: {AppointmentStatuses}) by {performedBy}.",
                             $"AppointmentID {AppointmentID}");
 
                         return new OperationResult(
@@ -291,7 +294,7 @@ namespace Business
         {
             return AppointmentData.NoOverlapWithLastAppointment(ToDto(this));
         }
-        public static Appointment FindAppointmentByID(int appointmentId)
+        public static async Task<Appointment> FindAppointmentByID(int appointmentId)
         {
             if (!Util.CanAccessForm(
                 EnRole.Receptionist,
@@ -301,7 +304,7 @@ namespace Business
                 return null;
 
             AppointmentDto appointmentDto =
-                AppointmentData.FindAppointmentByID(appointmentId, Global.CurrentLoggedInStaff.StaffId);
+                await AppointmentData.FindAppointmentByID(appointmentId, Global.CurrentLoggedInStaff.StaffId);
 
             if (appointmentDto == null)
                 return null;
@@ -311,7 +314,7 @@ namespace Business
                 appointmentDto.StaffID != Global.CurrentLoggedInStaff.StaffId)
                 return null;
 
-            return FromDto(appointmentDto);
+            return await FromDto(appointmentDto);
         }
         private bool CanAccessCurrentAppointment()
         {
@@ -332,7 +335,7 @@ namespace Business
                     return false;
             }
         }
-        public OperationResult CancelAppointment(int appointmentId)
+        public async Task<OperationResult> CancelAppointment(int appointmentId)
         {
             if (!CanAccessCurrentAppointment())
                 return new OperationResult("Can't access this appointment", "Not Allowed", false);
@@ -340,19 +343,19 @@ namespace Business
             if (!IsStillActive())
                 return new OperationResult("Appointment is not longer active", "Not Active", false);
 
-            OperationResult result = CheckSaveAccess();
+            OperationResult result = await CheckSaveAccess();
 
             if (!result.IsSuccess)
                 return result;
 
-            if (AppointmentStatuses.AppointmentStatusID == EnAppointmentStatuses.InRoom)
+            if (AppointmentStatuses == EnAppointmentStatuses.InRoom)
                 return new OperationResult("Patient is currently in room getting treated", "Not Allowed", false);
 
             if (AppointmentData.CancelAppointment(appointmentId))
             {
                 Auditor.Log(
                            "Appointment cancelled",
-                           $"Appointment type '{AppointmentTypes.AppointmentTypeText}' for PatientID {PatientID} with StaffID {StaffID} was cancelled on {DateTime.Now:d} performed by staff {Staff.StaffId} => {Staff.GetFullName()}.",
+                           $"Appointment type '{AppointmentTypes}' for PatientID {PatientID} with StaffID {StaffID} was cancelled on {DateTime.Now:d} performed by staff {Staff.StaffId} => {Staff.GetFullName()}.",
                            $"AppointmentID {AppointmentID}");
 
                 return new OperationResult("appointment got cancelled succssfully", "Cancelled", true);
@@ -415,9 +418,9 @@ namespace Business
                 true);
         }
         public bool IsStillActive() =>
-            AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Completed &&
-            AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Cancelled &&
-            AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.NoShow;
+            AppointmentStatuses != EnAppointmentStatuses.Completed &&
+            AppointmentStatuses != EnAppointmentStatuses.Cancelled &&
+            AppointmentStatuses != EnAppointmentStatuses.NoShow;
         public bool DoesHasAppointmentReminders(int appointmentId) => AppointmentData.DoesHasAppointmentReminders(appointmentId);
     }
 }

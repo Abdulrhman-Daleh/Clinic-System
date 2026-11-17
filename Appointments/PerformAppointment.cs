@@ -39,7 +39,7 @@ namespace ClinicSystem.Appointments
         public delegate void SendAppointmentInfo(Appointment appointment);
         public event SendAppointmentInfo OnSave;
 
-        private void PerformAppointment_Load(object sender, System.EventArgs e)
+        private async void PerformAppointment_Load(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor))
             {
@@ -47,11 +47,11 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
-            Appointment = Business.Appointment.FindAppointmentByID(_appointmentId);
+            Appointment = await Appointment.FindAppointmentByID(_appointmentId);
             SetUpForm();
         }
 
-        private void SetUpForm()
+        private async void SetUpForm()
         {
             if (ValidationHelper.IsEmptyOrNull(Appointment))
             {
@@ -65,15 +65,15 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
-            MedicalRecord = Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID);
-            Insurance = Business.Insurance.FindInsuranceByPatientId(Appointment.PatientID);
+            MedicalRecord = await Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID);
+            Insurance = await Business.Insurance.FindInsuranceByPatientId(Appointment.PatientID);
 
             lblAppointmentId.Text = Appointment.AppointmentDate.ToShortDateString() + " . " + Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
             lblName.Text = Appointment.Patient.GetFullName() + " . Dr. " + Appointment.Staff.GetFullName();
 
-            lblType.Text = $"[{Appointment.AppointmentTypes.AppointmentTypeText}]";
+            lblType.Text = $"[{Appointment.AppointmentTypes}]";
 
-            lblStatus.Text = $"[{Appointment.AppointmentStatuses.AppointmentStatusText}]";
+            lblStatus.Text = $"[{Appointment.AppointmentStatuses}]";
 
             lblPatientName.Text = $"{Appointment.Patient.GetFullName()} . since {Appointment.Patient.RegisterDate.ToShortDateString()} . {Appointment.Patient.GetTotalVisits()} vists";
 
@@ -105,7 +105,7 @@ namespace ClinicSystem.Appointments
 
             lblAllergies.Text = $"Allergies - {Allergies}";
             lblCurrentMedication.Text = $"Current medication - {CurrentMedication}";
-            lblMedicalRecord.Text = $"Medical record - {MedicalRecord.MedicalNumber} . {Appointment.AppointmentTypes.AppointmentTypeText}";
+            lblMedicalRecord.Text = $"Medical record - {MedicalRecord.MedicalNumber} . {Appointment.AppointmentTypes}";
         }
 
         private void SetUpInsurance()
@@ -173,7 +173,7 @@ namespace ClinicSystem.Appointments
 
         private void ReciveNotifyOnNoteSave() => lnkSOAPNote.Enabled = false;
 
-        private void btnSave_Click(object sender, System.EventArgs e)
+        private async void btnSave_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Doctor))
                 return;
@@ -181,9 +181,9 @@ namespace ClinicSystem.Appointments
             if (Appointment == null)
                 return;
 
-            Appointment.AppointmentStatuses = (EnAppointmentStatuses.Completed, "Completed");
+            Appointment.AppointmentStatuses = EnAppointmentStatuses.Completed;
 
-            OperationResult result = Appointment.Save(addedPayment, policy);
+            OperationResult result = await Appointment.Save(addedPayment, policy);
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             if (!result.IsSuccess)

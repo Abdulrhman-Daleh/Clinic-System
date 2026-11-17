@@ -37,9 +37,9 @@ namespace Business
 
             return appointments;
         }
-        public static AppointmentList FindAppointmentListByID(int staffId)
+        public static async Task<AppointmentList> FindAppointmentListByID(int staffId)
         {
-            return FromDto(AppointmentData.FindAppointmentListByID(staffId));
+            return FromDto(await AppointmentData.FindAppointmentListByID(staffId));
         }
     }
 }

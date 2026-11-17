@@ -17,7 +17,7 @@ namespace ClinicSystem.Appointments
             InitializeComponent();
             SetUp(0);
             appointment = new Appointment();
-            appointment.AppointmentStatuses = (appointmentStatus, appointmentStatus.ToString());
+            appointment.AppointmentStatuses = appointmentStatus;
             SetFormTextBasedMode("Add New Appointment", "Add New Appointment", "Add Appointment");
         }
 
@@ -26,13 +26,14 @@ namespace ClinicSystem.Appointments
             InitializeComponent();
 
             SetFormTextBasedMode($"{appointmentNewStatus} Appointment", $"{appointmentNewStatus} Appointment", $"Update Appointment");
-            appointment = Appointment.FindAppointmentByID(appointmentId);
-            SetUpdateFrom(appointment);
-            appointment.AppointmentStatuses = (appointmentNewStatus, appointmentNewStatus.ToString());
+            SetUpdateFrom(appointmentId);
+            appointment.AppointmentStatuses = appointmentNewStatus;
         }
 
-        private async void SetUpdateFrom(Appointment appointment)
+        private async void SetUpdateFrom(int appointmentId)
         {
+            appointment = await Appointment.FindAppointmentByID(appointmentId);
+
             if (ValidationHelper.IsEmptyOrNull(appointment))
             {
                 lblAppointmentId.Text = "Not Set";
@@ -40,9 +41,9 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
-            if (appointment.AppointmentStatuses.AppointmentStatusID != EnAppointmentStatuses.Scheduled)
+            if (appointment.AppointmentStatuses != EnAppointmentStatuses.Scheduled)
             {
-                MessageBox.Show($"you can't reschedule : {appointment.AppointmentStatuses.AppointmentStatusText} appointment", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"you can't reschedule : {appointment.AppointmentStatuses} appointment", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 btnSave.Enabled = false;
                 return;
             }
@@ -51,7 +52,7 @@ namespace ClinicSystem.Appointments
             lblAppointmentId.Text = $"Appo-" + appointment.AppointmentID;
             findPatientCtrl1.LoadPatientInfo(appointment.PatientID);
             findStaffCtrl1.LoadData(appointment.Staff);
-            lblStatus.Text = appointment.AppointmentStatuses.AppointmentStatusText;
+            lblStatus.Text = appointment.AppointmentStatuses.ToString();
             await LoadAppointmentTypes();
 
             dtpStart.Value = DateTime.Parse(appointment.AppointmentTime.ToString());
@@ -59,7 +60,7 @@ namespace ClinicSystem.Appointments
             dtpAppointmentDate.Value = appointment.AppointmentDate;
             findPatientCtrl1.AllowedFind = false;
             findStaffCtrl1.AllowFind = false;
-            cbType.SelectedIndex = (int)appointment.AppointmentTypes.AppointmentTypeID - 1;
+            cbType.SelectedIndex = (int)appointment.AppointmentTypes - 1;
         }
 
         public delegate void SendAppointmentOnSave(Appointment appointment);
@@ -105,7 +106,7 @@ namespace ClinicSystem.Appointments
 
         private void CollectData()
         {
-            appointment.AppointmentTypes = ((EnAppointmentTypes)cbType.SelectedIndex + 1, (string)cbType.SelectedItem.ToString());
+            appointment.AppointmentTypes = (EnAppointmentTypes)cbType.SelectedIndex + 1;
             appointment.AppointmentDate = dtpAppointmentDate.Value;
             appointment.AppointmentTime = new TimeSpan(dtpStart.Value.Hour, dtpStart.Value.Minute, dtpStart.Value.Second);
             appointment.AppointmentEndTime = new TimeSpan(dtpEnd.Value.Hour, dtpEnd.Value.Minute, dtpEnd.Value.Second);
@@ -151,7 +152,7 @@ namespace ClinicSystem.Appointments
             appointment.PatientID = patient.PatientId;
         }
 
-        private void Save()
+        private async Task Save()
         {
             ValidateChildren();
 
@@ -170,7 +171,7 @@ namespace ClinicSystem.Appointments
 
             CollectData();
 
-            result = appointment.Save(null);
+            result = await appointment.Save(null);
 
             MessageBox.Show(
                 result.Message,
@@ -188,9 +189,9 @@ namespace ClinicSystem.Appointments
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
-            Save();
+            await Save();
         }
     }
 }

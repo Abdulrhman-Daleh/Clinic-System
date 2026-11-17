@@ -39,7 +39,7 @@ namespace ClinicSystem.Appointments
             viewPersonContacts1.LoadUpPersonContact(appointment.Patient.PersonId);
             viewPersonInfoCtrl1.SetData(appointment.Staff);
             lblAppointmentId.Text = appointment.Patient.GetFullName() + " . " + appointment.Staff.Role.ToString() + " . " + appointment.Staff.GetFullName();
-            lblStatus.Text = appointment.AppointmentStatuses.AppointmentStatusText;
+            lblStatus.Text = appointment.AppointmentStatuses.ToString();
             btnReschedule.Enabled = true;
             lblAppointmentId.Text = "Appo-" + appointment.AppointmentID.ToString();
             btnReschedule.Enabled = appointment.IsStillActive();
