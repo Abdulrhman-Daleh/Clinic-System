@@ -25,13 +25,9 @@ namespace Data_Access
                     DrugName = (string)reader["DrugName"],
                     StrengthValue = (decimal)reader["StrengthValue"],
 
-                    StrengthType = (
-                   (EnStrengthUnits)Convert.ToInt32(reader["StrengthUnitID"]),
-                   (string)reader["StrengthUnitText"]),
+                    StrengthType = (EnStrengthUnits)reader["StrengthUnitID"],
 
-                    DosageForm = (
-                   (EnDosageForms)Convert.ToInt32(reader["DosageFormID"]),
-                   (string)reader["DosageFormText"]),
+                    DosageForm = (EnDosageForms)reader["DosageFormID"],
 
                     UnitPrice = (decimal)reader["UnitPrice"]
                 };
@@ -47,12 +43,10 @@ namespace Data_Access
                 return null;
             }
         }
-
         private static string DosageFormsMapper(SqlDataReader reader)
         {
             return (string)reader["DosageFormText"];
         }
-
         private static string StrengthUnitsMapper(SqlDataReader reader)
         {
             return (string)reader["StrengthUnitText"];
@@ -93,12 +87,12 @@ namespace Data_Access
                 },
                new SqlParameter("@StrengthUnitID", SqlDbType.Int)
                 {
-                    Value = (int)medicineDto.StrengthType.StrengthTypeID
+                    Value = (int)medicineDto.StrengthType
                 },
 
                 new SqlParameter("@DosageFormID", SqlDbType.Int)
                 {
-                    Value = (int)medicineDto.DosageForm.DosageFormID
+                    Value = (int)medicineDto.DosageForm
                 },
                 new SqlParameter("@UnitPrice", SqlDbType.Decimal)
                 {
@@ -114,7 +108,6 @@ namespace Data_Access
 
             return medicineId;
         }
-
         public static bool UpdateMedicine(MedicineDto medicineDto)
         {
             string query = @"
@@ -142,11 +135,11 @@ namespace Data_Access
                 },
                 new SqlParameter("@StrengthUnitID", SqlDbType.Int)
                 {
-                    Value = medicineDto.StrengthType.StrengthTypeID
+                    Value = medicineDto.StrengthType
                 },
                 new SqlParameter("@DosageFormID", SqlDbType.Int)
                 {
-                    Value = medicineDto.DosageForm.DosageFormID
+                    Value = medicineDto.DosageForm
                 },
                 new SqlParameter("@UnitPrice", SqlDbType.Decimal)
                 {
@@ -158,8 +151,7 @@ namespace Data_Access
 
             return affectedRows > 0;
         }
-
-        public static MedicineDto FindMedicineByID(int medicineId)
+        public static async Task<MedicineDto> FindMedicineByID(int medicineId)
         {
             string query = @"
                 SELECT
@@ -186,12 +178,11 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 MedicineMapper);
         }
-
         public static async Task<BindingList<MedicineDto>> GetMedicines()
         {
             string query = @"
@@ -215,7 +206,6 @@ namespace Data_Access
                 null,
                 MedicineMapper);
         }
-
         public static async Task<BindingList<string>> GetMedicineStrengthUnits()
         {
             string query = @"SELECT
@@ -227,7 +217,6 @@ namespace Data_Access
                 null,
                 StrengthUnitsMapper);
         }
-
         public static async Task<BindingList<string>> GetMedicineDosageForms()
         {
             string query = @"select DosageFormText from DosageForms";
@@ -237,8 +226,7 @@ namespace Data_Access
                 null,
                 DosageFormsMapper);
         }
-
-        public static MedicineDto FindMedicineByDrugName(string drugName)
+        public static async Task<MedicineDto> FindMedicineByDrugName(string drugName)
         {
             string query = @"
                 SELECT
@@ -265,11 +253,10 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 MedicineMapper);
         }
-
     }
 }

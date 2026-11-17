@@ -4,6 +4,7 @@ using Business;
 using ClinicSystem.Helpers;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +13,7 @@ namespace ClinicSystem.Medicine
     public partial class AddUpdateMedicine : FormsDefaultSettings
     {
         private Business.Medicine medicine;
+        private readonly int MedicineID;
         public AddUpdateMedicine()
         {
             InitializeComponent();
@@ -27,13 +29,7 @@ namespace ClinicSystem.Medicine
         {
             InitializeComponent();
 
-            medicine = Business.Medicine.FindMedicineByID(medicineID);
-
-            if (ValidationHelper.IsEmptyOrNull(medicine, "Medicine not found"))
-                return;
-
-            Load += AddUpdateMedicine_Load;
-
+            MedicineID = medicineID;
             SetFormTextBasedMode("Update Medicine", "Update Medicine", "Update");
         }
 
@@ -73,6 +69,11 @@ namespace ClinicSystem.Medicine
         }
         private async void AddUpdateMedicine_Load(object sender, EventArgs e)
         {
+            medicine = await Business.Medicine.FindMedicineByID(MedicineID);
+
+            if (ValidationHelper.IsEmptyOrNull(medicine, "Medicine not found"))
+                return;
+
             await SetPage();
         }
         private void SetControls()
@@ -80,8 +81,8 @@ namespace ClinicSystem.Medicine
             txtDrugName.Text = medicine.DrugName;
             txtStrength.Text = medicine.StrengthValue.ToString();
 
-            cbStrengthType.SelectedIndex = (int)medicine.StrengthType.StrengthTypeID - 1;
-            cbDosageForm.SelectedIndex = (int)medicine.DosageForm.DosageFormID - 1;
+            cbStrengthType.SelectedIndex = (int)medicine.StrengthType - 1;
+            cbDosageForm.SelectedIndex = (int)medicine.DosageForm - 1;
             lblMedicineId.Text = $"Med-{medicine.MedicineID.ToString()}";
 
             mtxtUnitPrice.Text = medicine.UnitPrice.ToString("0.00");
@@ -93,15 +94,12 @@ namespace ClinicSystem.Medicine
             decimal.TryParse(txtStrength.Text.Trim(), out decimal strength);
             medicine.StrengthValue = strength;
 
-            medicine.StrengthType = (
-                (EnStrengthUnits)(cbStrengthType.SelectedIndex + 1),
-                cbStrengthType.SelectedItem.ToString());
+            medicine.StrengthType = (EnStrengthUnits)cbStrengthType.SelectedIndex + 1;
 
-            medicine.DosageForm = (
-                (EnDosageForms)(cbDosageForm.SelectedIndex + 1),
-                cbDosageForm.SelectedItem.ToString());
+            medicine.DosageForm = (EnDosageForms)cbDosageForm.SelectedIndex + 1;
 
-            decimal.TryParse(mtxtUnitPrice.Text, out decimal unitPrice);
+            decimal.TryParse(mtxtUnitPrice.Text, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal unitPrice);
+
             medicine.UnitPrice = unitPrice;
         }
         private void txtDrugName_Validating(object sender, CancelEventArgs e)
@@ -128,7 +126,7 @@ namespace ClinicSystem.Medicine
 
             errors.SetError(cbStrengthType, null);
         }
-        private void cbDosageForm_Validating(object sender, CancelEventArgs e)
+        private void cbDosageForm_Validatitng(object sender, CancelEventArgs e)
         {
             if (cbDosageForm.SelectedIndex == -1)
             {

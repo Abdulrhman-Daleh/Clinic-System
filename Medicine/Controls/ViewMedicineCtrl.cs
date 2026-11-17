@@ -28,9 +28,9 @@ namespace ClinicSystem.Medicine.Controls
             }
 
             lblDrugName.Text = medicine.DrugName;
-            lblStrength.Text = medicine.StrengthUnitText;
+            lblStrength.Text = medicine.StrengthValue.ToString();
             lblUnitPrice.Text = medicine.UnitPrice.ToString();
-            lblDosageForm.Text = medicine.DosageFormText;
+            lblDosageForm.Text = medicine.DosageForm.ToString();
         }
     }
 }

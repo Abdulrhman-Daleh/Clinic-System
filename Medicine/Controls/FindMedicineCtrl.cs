@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Medicine.Controls
@@ -25,13 +26,11 @@ namespace ClinicSystem.Medicine.Controls
         {
             get => viewMedicineCtrl1.CurrentMedicine;
         }
-
         public bool AllowAdd
         {
             get => btnAddNew.Enabled;
             set => btnAddNew.Enabled = value;
         }
-
         public bool AllowFind
         {
             get => gbFilter.Enabled;
@@ -40,8 +39,7 @@ namespace ClinicSystem.Medicine.Controls
 
         public delegate void FindMedicineCtrlEventHandler(Business.Medicine medicine);
         public event FindMedicineCtrlEventHandler OnFind;
-
-        private void Find()
+        private async Task Find()
         {
             this.ValidateChildren();
 
@@ -52,42 +50,36 @@ namespace ClinicSystem.Medicine.Controls
                 return;
             }
 
-            FindFilterHelper();
+            await FindFilterHelper();
 
             if (AllowFind)
                 OnFind?.Invoke(CurrentMedicine);
         }
-
-        private void FindFilterHelper()
+        private async Task FindFilterHelper()
         {
             string findBy = CommonOperations.GetFilterName(cbFindBy);
 
             if (findBy.ToLower() == "medicineid")
-                viewMedicineCtrl1.LoadMedicineInfo(Business.Medicine.FindMedicineByID(Convert.ToInt32(txtFindBy.Text.Trim())));
+                viewMedicineCtrl1.LoadMedicineInfo(await Business.Medicine.FindMedicineByID(Convert.ToInt32(txtFindBy.Text.Trim())));
             else
-                viewMedicineCtrl1.LoadMedicineInfo(Business.Medicine.FindMedicineByDrugName(txtFindBy.Text.Trim()));
+                viewMedicineCtrl1.LoadMedicineInfo(await Business.Medicine.FindMedicineByDrugName(txtFindBy.Text.Trim()));
 
         }
-
-        private void btnFind_Click(object sender, System.EventArgs e)
+        private async void btnFind_Click(object sender, System.EventArgs e)
         {
-            Find();
+            await Find();
         }
-
         private void btnAddNew_Click(object sender, System.EventArgs e)
         {
             AddUpdateMedicine addMedicine = new AddUpdateMedicine();
             addMedicine.OnSave += ReciveMedicineInfo;
             addMedicine.ShowDialog();
         }
-
         private void ReciveMedicineInfo(Business.Medicine medicine)
         {
             viewMedicineCtrl1.LoadMedicineInfo(medicine);
         }
-
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e) => ValidationHelper.LockComboBox(e);
-
         private void txtFindBy_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ValidationHelper.IsEmptyOrNull(txtFindBy.Text))
@@ -95,13 +87,11 @@ namespace ClinicSystem.Medicine.Controls
             else
                 errors.SetError(txtFindBy, null);
         }
-
         private void cbFindBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             txtFindBy.Text = string.Empty;
             txtFindBy.Focus();
         }
-
         private void txtFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             string findBy = CommonOperations.GetFilterName(cbFindBy);

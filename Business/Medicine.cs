@@ -13,13 +13,9 @@ namespace Business
         public int MedicineID { get; set; }
         public string DrugName { get; set; }
         public decimal StrengthValue { get; set; }
-        public (EnStrengthUnits StrengthTypeID, string StrengthTypeName) StrengthType { get; set; }
-        public (EnDosageForms DosageFormID, string DosageFormName) DosageForm { get; set; }
+        public EnStrengthUnits StrengthType { get; set; }
+        public EnDosageForms DosageForm { get; set; }
         public decimal UnitPrice { get; set; }
-        public int StrengthUnitID => (int)StrengthType.StrengthTypeID;
-        public string StrengthUnitText => StrengthType.StrengthTypeName;
-        public int DosageFormID => (int)DosageForm.DosageFormID;
-        public string DosageFormText => DosageForm.DosageFormName;
         public bool IsAddMode()
         {
             return _mode == EnMode.Add;
@@ -52,8 +48,8 @@ namespace Business
         {
             MedicineID = -1;
             DrugName = string.Empty;
-            StrengthType = ((EnStrengthUnits)0, "None");
-            DosageForm = ((EnDosageForms)0, "None");
+            StrengthType = 0;
+            DosageForm = 0;
             _mode = EnMode.Add;
         }
         public Medicine(int medicineID)
@@ -125,7 +121,7 @@ namespace Business
 
                         Auditor.Log(
                             "Medicine Added",
-                            $"Medicine '{DrugName}' ({StrengthValue} {StrengthType.StrengthTypeName}, {DosageForm.DosageFormName}) was added by {performedBy}.",
+                            $"Medicine '{DrugName}' ({StrengthValue} {StrengthType}, {DosageForm}) was added by {performedBy}.",
                             $"MedicineID {MedicineID}");
 
                         return new OperationResult(
@@ -145,7 +141,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Medicine Updated",
-                            $"Medicine '{DrugName}' ({StrengthValue} {StrengthType.StrengthTypeName}, {DosageForm.DosageFormName}) was updated by {performedBy}.",
+                            $"Medicine '{DrugName}' ({StrengthValue} {StrengthType}, {DosageForm}) was updated by {performedBy}.",
                             $"MedicineID {MedicineID}");
 
                         return new OperationResult(
@@ -165,19 +161,23 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static Medicine FindMedicineByID(int medicineID)
+        public static async Task<Medicine> FindMedicineByID(int medicineID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(MedicineData.FindMedicineByID(medicineID));
+            MedicineDto medicineDto = await MedicineData.FindMedicineByID(medicineID);
+
+            return FromDto(medicineDto);
         }
-        public static Medicine FindMedicineByDrugName(string drugName)
+        public static async Task<Medicine> FindMedicineByDrugName(string drugName)
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(MedicineData.FindMedicineByDrugName(drugName));
+            MedicineDto medicineDto = await MedicineData.FindMedicineByDrugName(drugName);
+
+            return FromDto(medicineDto);
         }
         public static async Task<BindingList<Medicine>> GetMedicines()
         {
@@ -186,10 +186,10 @@ namespace Business
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
                 return medicines;
 
-            foreach (MedicineDto medicineDto in await MedicineData.GetMedicines())
-            {
-                medicines.Add(FromDto(medicineDto));
-            }
+            BindingList<MedicineDto> medicinesDto = await MedicineData.GetMedicines();
+
+            foreach (MedicineDto row in medicinesDto)
+                medicines.Add(FromDto(row));
 
             return medicines;
         }
@@ -197,8 +197,8 @@ namespace Business
         {
             if (Util.IsRequired(DrugName) &&
                 StrengthValue > 0 &&
-                Util.IsValidId((int)StrengthType.StrengthTypeID) &&
-                Util.IsValidId((int)DosageForm.DosageFormID) &&
+                Util.IsValidId((int)StrengthType) &&
+                Util.IsValidId((int)DosageForm) &&
                 UnitPrice >= 0)
             {
                 return new OperationResult(
