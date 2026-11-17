@@ -11,7 +11,7 @@ namespace ClinicSystem.Policies
     public partial class AddUpdatePolicy : FormsDefaultSettings
     {
         Business.Policy policy = new Business.Policy();
-
+        private readonly int PolicyID;
         public AddUpdatePolicy()
         {
             InitializeComponent();
@@ -24,6 +24,7 @@ namespace ClinicSystem.Policies
                 true, true, true);
 
             findStaffCtrl1.OnFound += _ReciveStaffInfo;
+            PolicyID = -1;
         }
 
         private void _ReciveStaffInfo(Business.Staff owner)
@@ -45,31 +46,7 @@ namespace ClinicSystem.Policies
         public AddUpdatePolicy(int policyID)
         {
             InitializeComponent();
-
-            policy = Business.Policy.FindPolicyByID(policyID);
-
-            if (ValidationHelper.IsEmptyOrNull(policy, "Policy does not exist"))
-                return;
-
-            SetControls(
-                policy.PolicyID,
-                (int)policy.PolicyStatus.PolicyStatusID,
-                policy.ActiveFrom,
-                policy.ActiveTo,
-                policy.NoShowFreezeDays,
-                policy.LateFeesPerDay,
-                policy.NoShowFee);
-
-            SetFormTextBasedMode(
-                "Update policy",
-                "Update Policy",
-                "Update",
-                policy.NoShowFee.HasValue,
-                policy.LateFeesPerDay.HasValue,
-                policy.NoShowFreezeDays.HasValue);
-
-            findStaffCtrl1.AllowFind = false;
-            findStaffCtrl1.LoadData(policy.Owner);
+            PolicyID = policyID;
         }
 
         private void SetFormTextBasedMode(
@@ -133,22 +110,50 @@ namespace ClinicSystem.Policies
             cbPolicyStatus.DataSource =
                 await Business.Policy.GetPolicyStatusesNames();
 
-            if (policy.PolicyStatus.PolicyStatusID > 0)
-                cbPolicyStatus.SelectedIndex = (int)policy.PolicyStatus.PolicyStatusID - 1;
+            if ((int)policy.PolicyStatus > 0)
+                cbPolicyStatus.SelectedIndex = (int)policy.PolicyStatus - 1;
             else
                 cbPolicyStatus.SelectedIndex = 0;
         }
 
-        private void AddUpdatePolicy_Load(object sender, EventArgs e)
+        private async void AddUpdatePolicy_Load(object sender, EventArgs e)
         {
             UpdatePolicyFieldsVisibility();
+
+            if (PolicyID > 0)
+            {
+                policy = await Business.Policy.FindPolicyByID(PolicyID);
+
+                if (ValidationHelper.IsEmptyOrNull(policy, "Policy does not exist"))
+                    return;
+
+                SetControls(
+                    policy.PolicyID,
+                    (int)policy.PolicyStatus,
+                    policy.ActiveFrom,
+                    policy.ActiveTo,
+                    policy.NoShowFreezeDays,
+                    policy.LateFeesPerDay,
+                    policy.NoShowFee);
+
+                SetFormTextBasedMode(
+                    "Update policy",
+                    "Update Policy",
+                    "Update",
+                    policy.NoShowFee.HasValue,
+                    policy.LateFeesPerDay.HasValue,
+                    policy.NoShowFreezeDays.HasValue);
+
+                findStaffCtrl1.AllowFind = false;
+                findStaffCtrl1.LoadData(policy.Owner);
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e) => Close();
 
         private void CollectData()
         {
-            policy.PolicyStatus = ((EnPolicyStatuses)cbPolicyStatus.SelectedIndex + 1, cbPolicyStatus.SelectedItem.ToString());
+            policy.PolicyStatus = (EnPolicyStatuses)cbPolicyStatus.SelectedIndex + 1;
             policy.ActiveFrom = dtpActiveFrom.Value;
             policy.ActiveTo = dtpActiveTo.Value;
 

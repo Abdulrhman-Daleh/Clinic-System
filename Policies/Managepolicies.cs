@@ -116,7 +116,7 @@ namespace ClinicSystem.Policies
         }
 
         private void cbFilterBy_KeyPress(
-            object sender, System.Windows.Forms.KeyPressEventArgs e)
+            object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
@@ -130,7 +130,7 @@ namespace ClinicSystem.Policies
             archiveToolStripMenuItem.Enabled = status;
         }
 
-        private void cmsPolicies_Opening(
+        private async void cmsPolicies_Opening(
             object sender, CancelEventArgs e)
         {
             bool EmptyDGV = ValidationHelper.IsDgvEmptyOrNull(dgvPolicies);
@@ -140,7 +140,7 @@ namespace ClinicSystem.Policies
             {
                 int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
 
-                Policy policyInfo = Policy.FindPolicyByID(policyId);
+                Policy policyInfo = await Policy.FindPolicyByID(policyId);
 
                 if (ValidationHelper.IsEmptyOrNull(policyInfo))
                 {
@@ -148,13 +148,13 @@ namespace ClinicSystem.Policies
                     return;
                 }
 
-                if (policyInfo.IsActive() && policyInfo.PolicyStatus.PolicyStatusID == EnPolicyStatuses.Active)
+                if (policyInfo.IsActive() && policyInfo.PolicyStatus == EnPolicyStatuses.Active)
                 {
                     approveToolStripMenuItem.Enabled = false;
                     suspendToolStripMenuItem.Enabled = true;
                     archiveToolStripMenuItem.Enabled = true;
                 }
-                else if (policyInfo.IsActive() && policyInfo.PolicyStatus.PolicyStatusID == EnPolicyStatuses.AwaitingApprovel)
+                else if (policyInfo.IsActive() && policyInfo.PolicyStatus == EnPolicyStatuses.AwaitingApprovel)
                 {
                     approveToolStripMenuItem.Enabled = true;
                     suspendToolStripMenuItem.Enabled = false;
@@ -196,7 +196,7 @@ namespace ClinicSystem.Policies
             CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
         }
 
-        private void archiveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private async void archiveToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
             if (!Policy.UpdatePolicyStatus(policyId, EnPolicyStatuses.Archived))
@@ -206,10 +206,10 @@ namespace ClinicSystem.Policies
             }
 
             MessageBox.Show("Policy got archive successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RefreshDgv(Policy.FindPolicyByID(policyId));
+            RefreshDgv(await Policy.FindPolicyByID(policyId));
         }
 
-        private void suspendToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private async void suspendToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
             if (!Policy.UpdatePolicyStatus(policyId, EnPolicyStatuses.Suspended))
@@ -219,7 +219,7 @@ namespace ClinicSystem.Policies
             }
 
             MessageBox.Show("Policy got suspend successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RefreshDgv(Policy.FindPolicyByID(policyId));
+            RefreshDgv(await Policy.FindPolicyByID(policyId));
         }
 
         private async Task LoadPolicyStatuses()
@@ -236,7 +236,7 @@ namespace ClinicSystem.Policies
             CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
         }
 
-        private void approveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private async void approveToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
             if (!Policy.UpdatePolicyStatus(policyId, EnPolicyStatuses.Active))
@@ -246,7 +246,7 @@ namespace ClinicSystem.Policies
             }
 
             MessageBox.Show("Policy got archive successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            RefreshDgv(Policy.FindPolicyByID(policyId));
+            RefreshDgv(await Policy.FindPolicyByID(policyId));
         }
     }
 }

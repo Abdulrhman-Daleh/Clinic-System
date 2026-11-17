@@ -9,6 +9,7 @@ namespace ClinicSystem.Policies
     public partial class ViewPolicyInfo : FormsDefaultSettings
     {
         private Policy _policy = null;
+        private readonly int PolicyId;
         public ViewPolicyInfo()
         {
             InitializeComponent();
@@ -16,14 +17,13 @@ namespace ClinicSystem.Policies
             findPolicyInfo1.SendPolicy += RecivePolicyInfo;
             btnEdit.Enabled = false;
         }
-
         public ViewPolicyInfo(int policyId)
         {
             InitializeComponent();
             findPolicyInfo1.AllowedFind = false;
-            findPolicyInfo1.LoadPolicyInfo(policyId);
-            _policy = Policy.FindPolicyByID(policyId);
-            RecivePolicyInfo(_policy);
+            PolicyId = policyId;
+
+            Load += ViewPolicyInfo_Load;
         }
 
         private void RecivePolicyInfo(Policy policy)
@@ -54,10 +54,17 @@ namespace ClinicSystem.Policies
         public delegate void SendNotificationOnChange(Policy policy);
         public event SendNotificationOnChange OnChange;
 
-        private void RecivePolicyId(Policy policy)
+        private async void RecivePolicyId(Policy policy)
         {
-            findPolicyInfo1.LoadPolicyInfo(policy.PolicyID);
+            await findPolicyInfo1.LoadPolicyInfo(policy.PolicyID);
             OnChange?.Invoke(_policy);
+        }
+
+        private async void ViewPolicyInfo_Load(object sender, EventArgs e)
+        {
+            await findPolicyInfo1.LoadPolicyInfo(PolicyId);
+            _policy = await Policy.FindPolicyByID(PolicyId);
+            RecivePolicyInfo(_policy);
         }
     }
 }
