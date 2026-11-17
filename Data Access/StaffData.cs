@@ -41,7 +41,6 @@ namespace Data_Access
                 return null;
             }
         }
-
         private static StaffListingDto StaffListingMapper(SqlDataReader reader)
         {
             try
@@ -65,12 +64,10 @@ namespace Data_Access
                 return null;
             }
         }
-
         private static string MapStaffRole(SqlDataReader reader)
         {
             return (string)reader["RoleName"];
         }
-
         public static (int staffId, int personId, string staffNumber) AddNewStaff(StaffDto staffInfo)
         {
             (int staffId, int personId, string staffNumber) result = (0, 0, "");
@@ -106,7 +103,6 @@ namespace Data_Access
 
             return result;
         }
-
         public static bool UpdateStaff(StaffDto staffInfo)
         {
             int affectedRows;
@@ -127,7 +123,6 @@ namespace Data_Access
 
             return affectedRows > 0;
         }
-
         public static async Task<BindingList<string>> GetRolesNames()
         {
             BindingList<string> roles = new BindingList<string>();
@@ -139,7 +134,6 @@ namespace Data_Access
 
             return roles;
         }
-
         public static bool DoesExistsByUsername(string username)
         {
             bool result = false;
@@ -158,8 +152,7 @@ namespace Data_Access
 
             return result;
         }
-
-        public static StaffDto FindStaffById(int staffId)
+        public static async Task<StaffDto> FindStaffById(int staffId)
         {
             StaffDto staffDto = new StaffDto();
 
@@ -185,12 +178,11 @@ namespace Data_Access
                     new SqlParameter("@staffId", SqlDbType.Int ) {Value = staffId}
                 };
 
-            staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
+            staffDto = await DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
 
             return staffDto;
         }
-
-        public static StaffDto FindStaffByPersonId(int personId)
+        public static async Task<StaffDto> FindStaffByPersonId(int personId)
         {
             StaffDto staffDto = new StaffDto();
 
@@ -216,12 +208,11 @@ namespace Data_Access
                     new SqlParameter("@personId", SqlDbType.Int) {Value = personId}
                 };
 
-            staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
+            staffDto = await DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
 
             return staffDto;
         }
-
-        public static StaffDto FindStaffByUsername(string userName)
+        public static async Task<StaffDto> FindStaffByUsername(string userName)
         {
             StaffDto staffDto = new StaffDto();
 
@@ -247,11 +238,10 @@ namespace Data_Access
                     new SqlParameter("@userName", SqlDbType.VarChar, 50) {Value = userName}
                 };
 
-            staffDto = DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
+            staffDto = await DataAccessHelper.ExecuteOneObject(query, parameters, StaffMapper);
 
             return staffDto;
         }
-
         public static bool DeactivateStaff(int staffId)
         {
             int affectedRows = -1;
@@ -274,7 +264,6 @@ namespace Data_Access
 
             return affectedRows > 0;
         }
-
         public static async Task<BindingList<StaffListingDto>> GetStaff()
         {
             BindingList<StaffListingDto> list = new BindingList<StaffListingDto>();
@@ -285,8 +274,7 @@ namespace Data_Access
 
             return list;
         }
-
-        public static StaffListingDto FindStaffByIdList(int staffId)
+        public static async Task<StaffListingDto> FindStaffByIdList(int staffId)
         {
             StaffListingDto staffList = new StaffListingDto();
             string query = @"select 
@@ -308,11 +296,10 @@ namespace Data_Access
                 };
 
 
-            staffList = DataAccessHelper.ExecuteOneObject(query, parameters, StaffListingMapper);
+            staffList = await DataAccessHelper.ExecuteOneObject(query, parameters, StaffListingMapper);
 
             return staffList;
         }
-
         public static bool IsFirstStaff()
         {
             string query = @"select count(*) as count from Staff";

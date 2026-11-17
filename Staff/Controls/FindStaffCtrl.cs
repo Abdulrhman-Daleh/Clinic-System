@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Staff.Controls
@@ -43,12 +44,12 @@ namespace ClinicSystem.Staff.Controls
             ValidationHelper.HandleInputType(e, true, false);
         }
 
-        private void BtnFindStaff_Click(object sender, EventArgs e)
+        private async void BtnFindStaff_Click(object sender, EventArgs e)
         {
-            Find();
+            await Find();
         }
 
-        private void Find()
+        private async Task Find()
         {
             OperationResult result = ValidationHelper.ValidateForm(this, errors);
 
@@ -62,11 +63,11 @@ namespace ClinicSystem.Staff.Controls
             switch (searchType)
             {
                 case "StaffID":
-                    viewStaffInfoCtrl.LoadStaffInfo(Business.Staff.FindStaffById(Id));
+                    viewStaffInfoCtrl.LoadStaffInfo(await Business.Staff.FindStaffById(Id));
                     break;
 
                 case "PersonID":
-                    viewStaffInfoCtrl.LoadStaffInfo(Business.Staff.FindStaffByPersonId(Id));
+                    viewStaffInfoCtrl.LoadStaffInfo(await Business.Staff.FindStaffByPersonId(Id));
                     break;
             }
 
@@ -103,12 +104,12 @@ namespace ClinicSystem.Staff.Controls
             addStaff.ShowDialog();
         }
 
-        private void ReciveStaffId(int staffId)
+        private async void ReciveStaffId(int staffId)
         {
             cbFindBy.SelectedIndex = 0;
             txtFindBy.Text = staffId.ToString();
 
-            Find();
+            await Find();
         }
     }
 }
