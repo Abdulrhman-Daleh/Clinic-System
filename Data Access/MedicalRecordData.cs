@@ -110,7 +110,7 @@ namespace Data_Access
                     CurrentMedication = reader["CurrentMedication"] == DBNull.Value
                         ? null : (string)reader["CurrentMedication"],
                     CurrentMedicationDuration = reader["CurrentMedicationDuration"] == DBNull.Value
-                        ? default(DateTime) : (DateTime)reader["CurrentMedicationDuration"],
+                        ? default : (DateTime)reader["CurrentMedicationDuration"],
                     PastSocialHistory = reader["PastSocialHistory"] == DBNull.Value
                         ? null : (string)reader["PastSocialHistory"],
                     PastSurgeries = reader["PastSurgeries"] == DBNull.Value
@@ -136,7 +136,7 @@ namespace Data_Access
             }
         }
 
-        public static MedicalRecordDto FindMedicalRecordByID(int medicalRecordID)
+        public static async Task<MedicalRecordDto> FindMedicalRecordByID(int medicalRecordID)
         {
             string query = @"SELECT MedicalRecordID
       ,PatientID
@@ -161,10 +161,10 @@ namespace Data_Access
                  }
              };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
         }
 
-        public static MedicalRecordDto FindMedicalRecordByPatientID(int patientId)
+        public static async Task<MedicalRecordDto> FindMedicalRecordByPatientID(int patientId)
         {
             string query = @"SELECT MedicalRecordID
                ,PatientID
@@ -189,7 +189,7 @@ namespace Data_Access
                  }
              };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, MedicalRecordMapper);
         }
 
         private static MedicalRecordListDto MedicalRecordListMapper(SqlDataReader reader)

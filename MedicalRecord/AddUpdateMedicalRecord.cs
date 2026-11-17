@@ -10,7 +10,7 @@ namespace ClinicSystem.MedicalRecord
     public partial class AddUpdateMedicalRecord : FormsDefaultSettings
     {
         private Business.MedicalRecord medicalRecord;
-
+        private readonly int MedicalRecordID;
         public AddUpdateMedicalRecord()
         {
             InitializeComponent();
@@ -32,14 +32,7 @@ namespace ClinicSystem.MedicalRecord
         public AddUpdateMedicalRecord(int medicalRecordID)
         {
             InitializeComponent();
-
-            medicalRecord = Business.MedicalRecord.FindMedicalRecordByID(medicalRecordID);
-
-            if (ValidationHelper.IsEmptyOrNull(medicalRecord, "Medical record is not found"))
-                return;
-
-            SetControls(medicalRecord.MedicalRecordID);
-
+            MedicalRecordID = medicalRecordID;
             SetFormTextBasedMode(
                 "Update medical record",
                 "Update Medical Record",
@@ -170,7 +163,7 @@ namespace ClinicSystem.MedicalRecord
             }
         }
 
-        private void AddUpdateMedicalRecord_Load(object sender, EventArgs e)
+        private async void AddUpdateMedicalRecord_Load(object sender, EventArgs e)
         {
             findPatientCtrl1.AllowAddNew = false;
             cbSocialStatus.Items.Clear();
@@ -196,6 +189,13 @@ namespace ClinicSystem.MedicalRecord
 
             SetComboBoxValue(cbSocialStatus, medicalRecord.SocialStatus);
             SetComboBoxValue(cbClassification, medicalRecord.Classification);
+
+            medicalRecord = await Business.MedicalRecord.FindMedicalRecordByID(MedicalRecordID);
+
+            if (ValidationHelper.IsEmptyOrNull(medicalRecord, "Medical record is not found"))
+                return;
+
+            SetControls(medicalRecord.MedicalRecordID);
         }
 
         private void SetComboBoxValue(ComboBox comboBox, string value)

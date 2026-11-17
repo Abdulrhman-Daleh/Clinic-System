@@ -3,6 +3,7 @@ using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -28,18 +29,17 @@ namespace Business
             PatientID = -1;
             _mode = EnMode.Add;
         }
-        private MedicalRecord(int medicalRecordID, int patientId)
+        private MedicalRecord(int medicalRecordID)
         {
             MedicalRecordID = medicalRecordID;
-            Patient = Patient.FindPatientById(patientId);
             _mode = EnMode.Update;
         }
-        private static MedicalRecord FromDto(MedicalRecordDto recordDto)
+        private static async Task<MedicalRecord> FromDto(MedicalRecordDto recordDto)
         {
             if (recordDto is null)
                 return null;
 
-            return new MedicalRecord(recordDto.MedicalRecordID, recordDto.PatientID)
+            var medicalRecord = new MedicalRecord(recordDto.MedicalRecordID)
             {
                 MedicalRecordID = recordDto.MedicalRecordID,
                 PatientID = recordDto.PatientID,
@@ -53,8 +53,11 @@ namespace Business
                 SocialStatus = recordDto.SocialStatus,
                 Classification = recordDto.Classification,
                 Allergies = recordDto.Allergies,
-                Patient = Patient.FindPatientById(recordDto.PatientID)
             };
+
+            medicalRecord.Patient = await Patient.FindPatientById(medicalRecord.PatientID);
+
+            return medicalRecord;
         }
         private static MedicalRecordDto ToDto(MedicalRecord record)
         {
@@ -148,19 +151,23 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static MedicalRecord FindMedicalRecordByID(int medicalRecordID)
+        public static async Task<MedicalRecord> FindMedicalRecordByID(int medicalRecordID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
                 return null;
 
-            return FromDto(MedicalRecordData.FindMedicalRecordByID(medicalRecordID));
+            MedicalRecordDto medicalRecordDto = await MedicalRecordData.FindMedicalRecordByID(medicalRecordID);
+
+            return await FromDto(medicalRecordDto);
         }
-        public static MedicalRecord FindMedicalRecordByPatientID(int patientId)
+        public static async Task<MedicalRecord> FindMedicalRecordByPatientID(int patientId)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
                 return null;
 
-            return FromDto(MedicalRecordData.FindMedicalRecordByPatientID(patientId));
+            MedicalRecordDto medicalRecordDto = await MedicalRecordData.FindMedicalRecordByPatientID(patientId);
+
+            return await FromDto(medicalRecordDto);
         }
         public string GetCareText()
         {

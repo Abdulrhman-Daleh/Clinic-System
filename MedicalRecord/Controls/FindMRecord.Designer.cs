@@ -80,6 +80,7 @@
             this.txtFindBy.Name = "txtFindBy";
             this.txtFindBy.Size = new System.Drawing.Size(150, 30);
             this.txtFindBy.TabIndex = 0;
+            this.txtFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFindBy_KeyPress);
             this.txtFindBy.Validating += new System.ComponentModel.CancelEventHandler(this.txtFindBy_Validating);
             // 
             // label1
@@ -98,6 +99,7 @@
             this.cbFindBy.Name = "cbFindBy";
             this.cbFindBy.Size = new System.Drawing.Size(189, 33);
             this.cbFindBy.TabIndex = 1;
+            this.cbFindBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFindBy_KeyPress);
             // 
             // errors
             // 
