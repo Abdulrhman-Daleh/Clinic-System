@@ -47,12 +47,12 @@ namespace Business
 
             return list;
         }
-        public static StaffList FindStaffById(int staffId)
+        public static async Task<StaffList> FindStaffById(int staffId)
         {
             if (!Util.CanAccessForm(EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(StaffData.FindStaffByIdList(staffId));
+            return FromDto(await StaffData.FindStaffByIdList(staffId));
         }
     }
 }

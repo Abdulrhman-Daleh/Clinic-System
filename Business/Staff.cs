@@ -38,12 +38,12 @@ namespace Business
                 Gender = staff.Gender == EnGender.Male ? 'M' : 'F'
             };
         }
-        private static Staff FromDto(StaffDto staffDto)
+        private static async Task<Staff> FromDto(StaffDto staffDto)
         {
             if (staffDto is null)
                 return null;
 
-            return new Staff(staffDto.StaffId, staffDto.ScheduleId)
+            Staff staff = new Staff(staffDto.StaffId)
             {
                 ScheduleId = staffDto.ScheduleId,
                 Role = staffDto.Role,
@@ -57,6 +57,10 @@ namespace Business
                 Lastname = staffDto.Lastname,
                 Gender = staffDto.Gender == 'M' ? EnGender.Male : EnGender.Female,
             };
+
+            staff.Schedule = await Schedule.FindScheduleByID(staffDto.ScheduleId);
+
+            return staff;
         }
         private OperationResult CheckStaffManagementAccess()
         {
@@ -87,11 +91,10 @@ namespace Business
             Gender = EnGender.Male;
             _mode = EnMode.Add;
         }
-        private Staff(int staffId, int scheduleId)
+        private Staff(int staffId)
         {
             StaffId = staffId;
             _mode = EnMode.Update;
-            Schedule = Schedule.FindScheduleByID(scheduleId);
         }
         public static async Task<BindingList<string>> GetRolesNames()
         {
@@ -143,7 +146,7 @@ namespace Business
 
                         Auditor.Log(
                             "Staff Added",
-                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {Role.ToString()}) was added by {performedBy}.",
+                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {Role}) was added by {performedBy}.",
                             $"StaffID {StaffId}");
 
                         return new OperationResult(
@@ -163,7 +166,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Staff Updated",
-                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {Role.ToString()}) was updated by {performedBy}.",
+                            $"Staff {StaffNumber} ({Firstname} {Lastname}, {Role}) was updated by {performedBy}.",
                             $"StaffID {StaffId}");
 
                         return new OperationResult(
@@ -191,17 +194,29 @@ namespace Business
         {
             return _mode == EnMode.Add;
         }
-        public static Staff FindStaffById(int staffId)
+        public static async Task<Staff> FindStaffById(int staffId)
         {
-            return FromDto(StaffData.FindStaffById(staffId));
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
+                return null;
+
+            StaffDto staffDto = await StaffData.FindStaffById(staffId);
+
+            return await FromDto(staffDto);
         }
-        public static Staff FindStaffByPersonId(int personId)
+        public static async Task<Staff> FindStaffByPersonId(int personId)
         {
-            return FromDto(StaffData.FindStaffByPersonId(personId));
+            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
+                return null;
+
+            StaffDto staffDto = await StaffData.FindStaffByPersonId(personId);
+
+            return await FromDto(staffDto);
         }
-        public static Staff FindStaffByUsername(string userName)
+        public static async Task<Staff> FindStaffByUsername(string userName)
         {
-            return FromDto(StaffData.FindStaffByUsername(userName));
+            StaffDto staffDto = await StaffData.FindStaffByUsername(userName);
+
+            return await FromDto(staffDto);
         }
         public bool DeactivateStaff()
         {

@@ -31,10 +31,10 @@ namespace ClinicSystem.Staff
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-        private void RefreshDgv(int staffId)
+        private async void RefreshDgv(int staffId)
         {
             int targetIndex = CommonOperations.FindTargetIndexOfObj(StaffList, "StaffId", staffId);
-            StaffList staffList = Business.StaffList.FindStaffById(staffId);
+            StaffList staffList = await Business.StaffList.FindStaffById(staffId);
 
             if (ValidationHelper.IsEmptyOrNull(staffList, "Invalid access to staff"))
                 return;

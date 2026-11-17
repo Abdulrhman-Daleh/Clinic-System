@@ -73,7 +73,7 @@ namespace ClinicSystem.Login
             txtPassword.UseSystemPasswordChar = !chkRememberMe.Checked;
         }
 
-        private void BtnSignIn_Click(object sender, System.EventArgs e)
+        private async void BtnSignIn_Click(object sender, System.EventArgs e)
         {
             OperationResult result = ValidationHelper.ValidateForm(this, errors);
 
@@ -83,7 +83,7 @@ namespace ClinicSystem.Login
             string username = txtUsername.Text.Trim();
             string plainPassword = txtPassword.Text.Trim();
 
-            Business.Staff foundStaff = Business.Staff.FindStaffByUsername(username);
+            Business.Staff foundStaff = await Business.Staff.FindStaffByUsername(username);
 
             if (ValidationHelper.IsEmptyOrNull(foundStaff, "Invalid username/password try again..."))
                 return;

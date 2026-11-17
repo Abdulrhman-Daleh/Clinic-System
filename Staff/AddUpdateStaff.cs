@@ -12,6 +12,8 @@ namespace ClinicSystem.Staff
     public partial class AddUpdateStaff : FormsDefaultSettings
     {
         Business.Staff staff = new Business.Staff();
+
+        private readonly int StaffId = -1;
         public AddUpdateStaff()
         {
             InitializeComponent();
@@ -20,6 +22,7 @@ namespace ClinicSystem.Staff
             findPersonCtrl1.OnFind += RecivePersonData;
             findPersonCtrl1.AllowFindButton = false;
             HandleFirstStaff();
+            StaffId = -1;
         }
         private void RecivePersonData(Person person)
         {
@@ -52,16 +55,8 @@ namespace ClinicSystem.Staff
         public AddUpdateStaff(int staffId)
         {
             InitializeComponent();
-            staff = Business.Staff.FindStaffById(staffId);
-
-            if (ValidationHelper.IsEmptyOrNull(staff, "Staff is not found"))
-                return;
-
-            SetControls(staff.StaffId, staff.StaffNumber, staff.Username, "Not Allowed To Show");
-            SetFormTextBasedMode("Update staff", "Update Staff", "Update");
-            findPersonCtrl1.AllowFind = false;
+            StaffId = staffId;
             findPersonCtrl1.RecivePersonInfo(staff);
-            txtPassword.Enabled = false;
         }
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
@@ -101,6 +96,18 @@ namespace ClinicSystem.Staff
             await LoadSchedules();
             await LoadRoles();
             cbRoles.SelectedIndex = (int)staff.Role - 1;
+
+            if (StaffId > 0)
+            {
+                staff = await Business.Staff.FindStaffById(StaffId);
+
+                if (ValidationHelper.IsEmptyOrNull(staff, "Staff is not found"))
+                    return;
+
+                SetControls(staff.StaffId, staff.StaffNumber, staff.Username, "Not Allowed To Show");
+                SetFormTextBasedMode("Update staff", "Update Staff", "Update");
+                findPersonCtrl1.AllowFind = false;
+            }
         }
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
         private void CollectData()

@@ -7,6 +7,8 @@ namespace ClinicSystem.Staff
     {
 
         public Business.Staff ViewedStaff;
+        private readonly int StaffId;
+
         public ViewStaffInfo()
         {
             InitializeComponent();
@@ -19,9 +21,13 @@ namespace ClinicSystem.Staff
         {
             InitializeComponent();
             findStaffCtrl1.AllowFind = false;
-            ReciveStaffInfo(Business.Staff.FindStaffById(staffId));
+            StaffId = staffId;
+
+            Load += ViewStaffInfo_Load;
             findStaffCtrl1.LoadData(ViewedStaff);
         }
+
+        private async void ViewStaffInfo_Load(object sender, System.EventArgs e) => ReciveStaffInfo(await Business.Staff.FindStaffById(StaffId));
 
         public delegate void SendStaffOnChange(int staffId);
         public event SendStaffOnChange OnChange;
