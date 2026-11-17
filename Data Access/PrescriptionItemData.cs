@@ -154,7 +154,7 @@ namespace Data_Access
             return affectedRows > 0;
         }
 
-        public static PrescriptionItemDto FindPrescriptionItemByID(int itemId)
+        public static async Task<PrescriptionItemDto> FindPrescriptionItemByID(int itemId)
         {
             string query = @"
                 SELECT
@@ -176,7 +176,7 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 PrescriptionItemMapper);

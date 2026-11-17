@@ -131,6 +131,7 @@
             this.Controls.Add(this.btnClose);
             this.Name = "ViewPrescription";
             this.Text = "View Prescription";
+            this.Load += new System.EventHandler(this.ViewPrescription_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

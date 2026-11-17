@@ -1,5 +1,6 @@
 ﻿using ClinicSystem.Helpers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Medicine.Prescription
@@ -20,9 +21,9 @@ namespace ClinicSystem.Medicine.Prescription
             }, "Not Set");
         }
 
-        public void LoadPrescriptionInfo(int appointmetnId)
+        public async Task LoadPrescriptionInfo(int appointmetnId)
         {
-            Prescription = Business.Prescription.FindPrescriptionByAppointmentID(appointmetnId);
+            Prescription = await Business.Prescription.FindPrescriptionByAppointmentID(appointmetnId);
 
             if (ValidationHelper.IsEmptyOrNull(Prescription, "Prescription Is not present"))
             {

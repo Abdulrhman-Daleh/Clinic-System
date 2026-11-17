@@ -19,7 +19,7 @@ namespace Business
         public bool DoctorDidSign { get; set; }
         public DateTime WriteDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public List<Business.PrescriptionItem> PrescriptionItems { get; set; }
+        public List<PrescriptionItem> PrescriptionItems { get; set; }
         public bool IsAddMode()
         {
             return _mode == EnMode.Add;
@@ -35,18 +35,17 @@ namespace Business
             PrescriptionItems = new List<PrescriptionItem>();
             Appointment = new Appointment();
         }
-        public Prescription(int prescriptionID, int appointmentId)
+        public Prescription(int prescriptionID)
         {
             PrescriptionID = prescriptionID;
-            Appointment = Business.Appointment.FindAppointmentByID(appointmentId);
             _mode = EnMode.Update;
         }
-        public static Prescription FromDto(PrescriptionDto prescriptionDto)
+        public static async Task<Prescription> FromDto(PrescriptionDto prescriptionDto)
         {
             if (prescriptionDto == null)
                 return null;
 
-            return new Prescription(prescriptionDto.PrescriptionID, prescriptionDto.AppointmentID)
+            Prescription prescription = new Prescription(prescriptionDto.PrescriptionID)
             {
                 PrescriptionID = prescriptionDto.PrescriptionID,
                 AppointmentID = prescriptionDto.AppointmentID,
@@ -55,6 +54,10 @@ namespace Business
                 WriteDate = prescriptionDto.WriteDate,
                 ExpirationDate = prescriptionDto.ExpirationDate
             };
+
+            prescription.Appointment = await Appointment.FindAppointmentByID(prescriptionDto.AppointmentID);
+
+            return prescription;
         }
         public static PrescriptionDto ToDto(Prescription prescription)
         {
@@ -95,14 +98,14 @@ namespace Business
 
             return totalPrice;
         }
-        public OperationResult Save()
+        public async Task<OperationResult> Save()
         {
             OperationResult result = Util.CanAccessForm(EnRole.Doctor);
 
             if (!result.IsSuccess)
                 return result;
 
-            result = CheckAppointmentAccess();
+            result = await CheckAppointmentAccess();
 
             if (!result.IsSuccess)
                 return result;
@@ -164,12 +167,12 @@ namespace Business
                 "Failed",
                 false);
         }
-        private OperationResult CheckAppointmentAccess()
+        private async Task<OperationResult> CheckAppointmentAccess()
         {
             if (_mode == EnMode.Update)
             {
                 PrescriptionDto existingPrescription =
-                    PrescriptionData.FindPrescriptionByID(PrescriptionID);
+                   await PrescriptionData.FindPrescriptionByID(PrescriptionID);
 
                 if (existingPrescription == null)
                     return new OperationResult(
@@ -178,7 +181,7 @@ namespace Business
                         false);
 
                 Appointment existingAppointment =
-                    Business.Appointment.FindAppointmentByID(existingPrescription.AppointmentID);
+                    await Appointment.FindAppointmentByID(existingPrescription.AppointmentID);
 
                 if (!IsAssignedToCurrentDoctor(existingAppointment))
                     return new OperationResult(
@@ -188,7 +191,7 @@ namespace Business
             }
 
             Appointment appointment =
-                Business.Appointment.FindAppointmentByID(AppointmentID);
+                await Appointment.FindAppointmentByID(AppointmentID);
 
             if (!IsAssignedToCurrentDoctor(appointment))
                 return new OperationResult(
@@ -209,13 +212,14 @@ namespace Business
                    Global.CurrentLoggedInStaff != null &&
                    appointment.Staff.StaffId == Global.CurrentLoggedInStaff.StaffId;
         }
-        public static Prescription FindPrescriptionByID(int prescriptionID)
+        public static async Task<Prescription> FindPrescriptionByID(int prescriptionID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
                 return null;
 
-            Prescription prescription =
-                FromDto(PrescriptionData.FindPrescriptionByID(prescriptionID));
+            PrescriptionDto prescriptionDto = await PrescriptionData.FindPrescriptionByID(prescriptionID);
+
+            Prescription prescription = await FromDto(prescriptionDto);
 
             if (prescription == null ||
                 !IsAssignedToCurrentDoctor(prescription.Appointment))
@@ -223,13 +227,14 @@ namespace Business
 
             return prescription;
         }
-        public static Prescription FindPrescriptionByAppointmentID(int appointmentID)
+        public static async Task<Prescription> FindPrescriptionByAppointmentID(int appointmentID)
         {
             if (!Util.CanAccessForm(EnRole.Doctor).IsSuccess)
                 return null;
 
-            Prescription prescription =
-                FromDto(PrescriptionData.FindPrescriptionByAppointmentID(appointmentID));
+            PrescriptionDto prescriptionDto = await PrescriptionData.FindPrescriptionByAppointmentID(appointmentID);
+
+            Prescription prescription = await FromDto(prescriptionDto);
 
             if (prescription == null ||
                 !IsAssignedToCurrentDoctor(prescription.Appointment))
@@ -246,7 +251,7 @@ namespace Business
 
             foreach (PrescriptionDto prescriptionDto in await PrescriptionData.GetPrescriptions(Global.CurrentLoggedInStaff.StaffId))
             {
-                Prescription prescription = FromDto(prescriptionDto);
+                Prescription prescription = await FromDto(prescriptionDto);
 
                 if (IsAssignedToCurrentDoctor(prescription?.Appointment))
                     prescriptions.Add(prescription);

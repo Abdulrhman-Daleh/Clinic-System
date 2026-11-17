@@ -127,7 +127,7 @@ namespace Data_Access
             return affectedRows > 0;
         }
 
-        public static PrescriptionDto FindPrescriptionByID(int prescriptionID)
+        public static async Task<PrescriptionDto> FindPrescriptionByID(int prescriptionID)
         {
             string query = @"
                 SELECT
@@ -148,13 +148,13 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 PrescriptionMapper);
         }
 
-        public static PrescriptionDto FindPrescriptionByAppointmentID(int appointmentID)
+        public static async Task<PrescriptionDto> FindPrescriptionByAppointmentID(int appointmentID)
         {
             string query = @"
                 SELECT
@@ -175,7 +175,7 @@ namespace Data_Access
                 }
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query,
                 parameters,
                 PrescriptionMapper);

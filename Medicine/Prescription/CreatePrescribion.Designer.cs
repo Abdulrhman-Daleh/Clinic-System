@@ -273,6 +273,7 @@
             this.Controls.Add(this.pbModeImage);
             this.Name = "CreatePrescribion";
             this.Text = "Create New Prescription";
+            this.Load += new System.EventHandler(this.CreatePrescribion_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
