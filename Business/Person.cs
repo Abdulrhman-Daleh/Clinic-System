@@ -14,11 +14,11 @@ namespace Business
         public string Lastname { get; set; } = string.Empty;
         public EnGender Gender { get; set; } = EnGender.Male;
         public BindingList<PersonContact> Contacts { get; set; }
-        public static Person FromDto(PersonDto personDto)
+        public static async Task<Person> FromDto(PersonDto personDto)
         {
             if (personDto == null) return null;
 
-            return new Person(personDto.PersonId)
+            Person person = new Person(personDto.PersonId)
             {
                 PersonId = personDto.PersonId,
                 Firstname = personDto.Firstname,
@@ -26,6 +26,10 @@ namespace Business
                 Gender = personDto.Gender == 'M' ? EnGender.Male : EnGender.Female,
                 _mode = EnMode.Update
             };
+
+            person.Contacts = await PersonContact.GetShortContactInfo(person.PersonId);
+
+            return person;
         }
         public static PersonDto ToDto(Person person)
         {
@@ -45,15 +49,10 @@ namespace Business
             _mode = EnMode.Add;
             Contacts = new BindingList<PersonContact>();
         }
-        private async void LoadPersonContacts()
-        {
-            Contacts = await PersonContact.GetShortContactInfo(this.PersonId);
-        }
         public Person(int personId)
         {
             PersonId = personId;
             _mode = EnMode.Update;
-            LoadPersonContacts();
         }
         private bool UpdatePerson()
         {
@@ -100,24 +99,17 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static Person FindPersonById(int personId)
+        public static async Task<Person> FindPersonById(int personId)
         {
-            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
-                return null;
+            PersonDto personDto = await PersonData.FindPersonById(personId);
 
-            return FromDto(PersonData.FindPersonById(personId));
+            return await FromDto(personDto);
         }
-        public static Person FindPersonByFirstname(string Firstname)
+        public static async Task<Person> FindPersonByFirstname(string Firstname)
         {
-            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
-                return null;
+            PersonDto personDto = await PersonData.FindPersonByFirstname(Firstname);
 
-            PersonDto personDto = PersonData.FindPersonByFirstname(Firstname);
-
-            if (personDto == null)
-                return null;
-
-            return FromDto(personDto);
+            return await FromDto(personDto);
         }
         public static async Task<BindingList<Person>> GetPeople()
         {
@@ -129,7 +121,7 @@ namespace Business
             BindingList<PersonDto> peopleDto = await PersonData.GetPeople(Global.CurrentLoggedInStaff.PersonId);
 
             foreach (PersonDto row in peopleDto)
-                people.Add(FromDto(row));
+                people.Add(await FromDto(row));
 
             return people;
         }

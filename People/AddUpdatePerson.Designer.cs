@@ -244,6 +244,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "AddUpdatePerson";
             this.Text = "Add New Person";
+            this.Load += new System.EventHandler(this.AddUpdatePerson_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

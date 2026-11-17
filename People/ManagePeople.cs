@@ -97,6 +97,7 @@ namespace ClinicSystem.People
         {
             updatePersonToolStripMenuItem.Enabled = status;
             viewPersonToolStripMenuItem.Enabled = status;
+            addPersonContactToolStripMenuItem.Enabled = status;
         }
         private void cmsPeople_Opening(object sender, CancelEventArgs e)
         {

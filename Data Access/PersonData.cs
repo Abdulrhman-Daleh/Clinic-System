@@ -53,21 +53,19 @@ namespace Data_Access
             return affactedRows > 0;
         }
 
-        public static PersonDto FindPersonById(int personId)
+        public static async Task<PersonDto> FindPersonById(int personId)
         {
-            PersonDto person = null;
             string query = @"select PersonID, Firstname, Lastname, Gender from People where PersonID = @PersonId";
 
             List<SqlParameter> paramters = new List<SqlParameter>()
-                {
-                    new SqlParameter("@PersonId", SqlDbType.Int) {Value = personId},
-                };
+            {
+                new SqlParameter("@PersonId", SqlDbType.Int) {Value = personId},
+            };
 
-            person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
-            return person;
+            return await DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
         }
 
-        public static PersonDto FindPersonByFirstname(string Firstname)
+        public static async Task<PersonDto> FindPersonByFirstname(string Firstname)
         {
             PersonDto person = null;
             string query = @"select PersonID, Firstname, Lastname, Gender from People where Firstname = @Firstname";
@@ -77,7 +75,7 @@ namespace Data_Access
                     new SqlParameter("@Firstname", SqlDbType.VarChar, 50) {Value = Firstname},
                 };
 
-            person = DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
+            person = await DataAccessHelper.ExecuteOneObject(query, paramters, PersonMapper);
 
             return person;
         }

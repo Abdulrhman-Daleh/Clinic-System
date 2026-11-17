@@ -9,7 +9,7 @@ namespace Business
     public class PersonContact
     {
         private EnMode _mode;
-        public (EnContactTypes ContactTypeId, string ContactTypeName) ContactType { get; set; }
+        public EnContactTypes ContactType { get; set; }
         public int ContactId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -25,7 +25,7 @@ namespace Business
                 PhoneNumber = contactDto.PhoneNumber,
                 PersonId = contactDto.PersonId,
                 ContactId = contactDto.ContactId,
-                ContactType = (contactDto.ContactType.ContactTypeId, contactDto.ContactType.ContactTypeName),
+                ContactType = (contactDto.ContactType),
                 _mode = EnMode.Update
             };
         }
@@ -40,13 +40,13 @@ namespace Business
                 Email = contact.Email,
                 PhoneNumber = contact.PhoneNumber,
                 PersonId = contact.PersonId,
-                ContactType = (contact.ContactType.ContactTypeId, contact.ContactType.ContactTypeName)
+                ContactType = (contact.ContactType)
             };
         }
         public PersonContact()
         {
             ContactId = -1;
-            ContactType = ((EnContactTypes)0, "None");
+            ContactType = 0;
             _mode = EnMode.Add;
         }
         private bool AddNewContact()
@@ -81,7 +81,7 @@ namespace Business
 
                         Auditor.Log(
                             "Contact Added",
-                            $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was added by {performedBy}.",
+                            $"Contact type '{ContactType}' for PersonID {PersonId} was added by {performedBy}.",
                             $"ContactID {ContactId}");
 
                         return new OperationResult(
@@ -101,7 +101,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Contact Updated",
-                            $"Contact type '{ContactType.ContactTypeName}' for PersonID {PersonId} was updated by {performedBy}.",
+                            $"Contact type '{ContactType}' for PersonID {PersonId} was updated by {performedBy}.",
                             $"ContactID {ContactId}");
 
                         return new OperationResult(

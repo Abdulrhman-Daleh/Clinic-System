@@ -35,6 +35,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.findPersonCtrl1 = new ClinicSystem.People.Controls.FindPersonCtrl();
             this.pbGender = new System.Windows.Forms.PictureBox();
+            this.BtnReset = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbGender)).BeginInit();
             this.SuspendLayout();
@@ -71,7 +72,7 @@
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
             this.btnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnClose.Location = new System.Drawing.Point(368, 573);
+            this.btnClose.Location = new System.Drawing.Point(368, 577);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(160, 66);
             this.btnClose.TabIndex = 13;
@@ -83,7 +84,7 @@
             // 
             this.btnEdit.Image = global::ClinicSystem.Properties.Resources.update_32;
             this.btnEdit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEdit.Location = new System.Drawing.Point(535, 573);
+            this.btnEdit.Location = new System.Drawing.Point(535, 577);
             this.btnEdit.Name = "btnEdit";
             this.btnEdit.Size = new System.Drawing.Size(160, 66);
             this.btnEdit.TabIndex = 14;
@@ -111,11 +112,24 @@
             this.pbGender.TabIndex = 10;
             this.pbGender.TabStop = false;
             // 
+            // BtnReset
+            // 
+            this.BtnReset.Image = global::ClinicSystem.Properties.Resources.refresh_32;
+            this.BtnReset.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.BtnReset.Location = new System.Drawing.Point(202, 576);
+            this.BtnReset.Name = "BtnReset";
+            this.BtnReset.Size = new System.Drawing.Size(160, 66);
+            this.BtnReset.TabIndex = 16;
+            this.BtnReset.Text = "Reset";
+            this.BtnReset.UseVisualStyleBackColor = true;
+            this.BtnReset.Click += new System.EventHandler(this.BtnReset_Click);
+            // 
             // ViewPerson
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(708, 650);
+            this.Controls.Add(this.BtnReset);
             this.Controls.Add(this.findPersonCtrl1);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnClose);
@@ -142,5 +156,6 @@
         private System.Windows.Forms.Button btnEdit;
         private FindPersonCtrl findPersonCtrl1;
         private System.Windows.Forms.PictureBox pbGender;
+        private System.Windows.Forms.Button BtnReset;
     }
 }
