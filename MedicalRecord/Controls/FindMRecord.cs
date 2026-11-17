@@ -1,5 +1,6 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.MedicalRecord.Controls
@@ -7,13 +8,11 @@ namespace ClinicSystem.MedicalRecord.Controls
     public partial class FindMRecord : UserCtrlDefaultSettings
     {
         private Business.MedicalRecord medicalRecord;
-
         public FindMRecord()
         {
             InitializeComponent();
             DefaultForm();
         }
-
         public bool AllowedFind
         {
             get => gbFilter.Enabled;
@@ -23,25 +22,20 @@ namespace ClinicSystem.MedicalRecord.Controls
 
         public delegate void SendMedicalRecordInfo(Business.MedicalRecord medicalRecord);
         public event SendMedicalRecordInfo SendMedicalRecord;
-
         private void DefaultForm()
         {
             cbFindBy.Items.Add("MedicalRecordID");
             cbFindBy.SelectedIndex = 0;
         }
-
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.HandleInputType(e, true, false);
         }
-
-
-        public void Find()
+        public async Task Find()
         {
             ValidateChildren();
 
@@ -56,41 +50,22 @@ namespace ClinicSystem.MedicalRecord.Controls
                 return;
             }
 
-            medicalRecord = Business.MedicalRecord.FindMedicalRecordByID(medicalRecordID);
+            medicalRecord = await Business.MedicalRecord.FindMedicalRecordByID(medicalRecordID);
 
             viewMRecordInfo1.LoadMedicalRecordInfo(medicalRecord);
 
             if (AllowedFind)
                 SendMedicalRecord?.Invoke(medicalRecord);
         }
-
-        private void btnFind_Click(object sender, System.EventArgs e)
+        private async void btnFind_Click(object sender, System.EventArgs e)
         {
-            Find();
+            await Find();
         }
-
-        public void LoadMedicalRecordInfo(int medicalRecordID)
+        public async void LoadMedicalRecordInfo(int medicalRecordID)
         {
             txtFindBy.Text = medicalRecordID.ToString();
-            Find();
+            await Find();
         }
-
-        private void btnAddNew_Click(object sender, System.EventArgs e)
-        {
-            AddUpdateMedicalRecord addMedicalRecord = new AddUpdateMedicalRecord();
-            addMedicalRecord.SendMedicalRecordInfo += ReciveMedicalRecordInfo;
-            addMedicalRecord.ShowDialog();
-        }
-
-        private void ReciveMedicalRecordInfo(Business.MedicalRecord medicalRecord)
-        {
-            if (medicalRecord == null)
-                return;
-
-            txtFindBy.Text = medicalRecord.MedicalRecordID.ToString();
-            Find();
-        }
-
         private void txtFindBy_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ValidationHelper.IsEmptyOrNull(txtFindBy.Text))
