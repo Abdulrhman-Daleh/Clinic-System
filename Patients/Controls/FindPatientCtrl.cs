@@ -1,5 +1,6 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Patients.Controls
@@ -50,7 +51,7 @@ namespace ClinicSystem.Patients.Controls
                 errors.SetError(txtFindBy, null);
         }
 
-        public void Find()
+        public async Task Find()
         {
             this.ValidateChildren();
 
@@ -61,7 +62,7 @@ namespace ClinicSystem.Patients.Controls
 
             int.TryParse(txtFindBy.Text, out int patientId);
 
-            patient = Patient.FindPatientById(patientId);
+            patient = await Patient.FindPatientById(patientId);
 
             patientInfoCtrl1.LoadPatientInfo(patient);
 
@@ -69,15 +70,15 @@ namespace ClinicSystem.Patients.Controls
                 SendPatient?.Invoke(patient);
         }
 
-        private void btnFind_Click(object sender, System.EventArgs e)
+        private async void btnFind_Click(object sender, System.EventArgs e)
         {
-            Find();
+            await Find();
         }
 
-        public void LoadPatientInfo(int patientId)
+        public async void LoadPatientInfo(int patientId)
         {
             txtFindBy.Text = patientId.ToString();
-            Find();
+            await Find();
         }
 
         private void btnAddNew_Click(object sender, System.EventArgs e)
@@ -87,7 +88,7 @@ namespace ClinicSystem.Patients.Controls
             addPatient.ShowDialog();
         }
 
-        private void RecivePatientId(Patient patient)
+        private async void RecivePatientId(Patient patient)
         {
             this.patient = patient;
             LoadPatientInfo(patient.PatientId);

@@ -3,6 +3,7 @@ using AppEnums.cs;
 using Data_Access;
 using Data_Access.DTOs;
 using System;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -74,7 +75,7 @@ namespace Business
 
             return false;
         }
-        public static Patient FindPatientById(int patientId)
+        public static async Task<Patient> FindPatientById(int patientId)
         {
             if (!Util.CanAccessForm(
                 EnRole.Receptionist,
@@ -83,7 +84,7 @@ namespace Business
                 EnRole.Owner).IsSuccess)
                 return null;
 
-            return FromDto(PatientData.FindPatientById(patientId));
+            return FromDto(await PatientData.FindPatientById(patientId));
         }
         public int FreezeUnlockDays()
         {

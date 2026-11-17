@@ -98,9 +98,9 @@ namespace ClinicSystem.Patients
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPatients));
         }
 
-        private void RefreshDgv(Patient p)
+        private async void RefreshDgv(Patient p)
         {
-            PatientList patient = PatientList.FindPatientByIdList(p.PatientId);
+            PatientList patient = await PatientList.FindPatientByIdList(p.PatientId);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Patients, "PatientID", patient);
             CommonOperations.UpdateAfterAdding(Patients, patient, targetIndex);
         }

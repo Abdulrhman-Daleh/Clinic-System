@@ -134,7 +134,7 @@ namespace Data_Access
                 PatientListMapper);
         }
 
-        public static PatientListingDto FindPatientByIdList(int patientId)
+        public static async Task<PatientListingDto> FindPatientByIdList(int patientId)
         {
             PatientListingDto patientListing = new PatientListingDto();
 
@@ -146,11 +146,11 @@ namespace Data_Access
                     new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
                 };
 
-            patientListing = DataAccessHelper.ExecuteOneObject(query, paramters, PatientListMapper);
+            patientListing = await DataAccessHelper.ExecuteOneObject(query, paramters, PatientListMapper);
 
             return patientListing;
         }
-        public static PatientDto FindPatientById(int patientId)
+        public static async Task<PatientDto> FindPatientById(int patientId)
         {
             PatientDto patient = new PatientDto();
 
@@ -164,7 +164,7 @@ namespace Data_Access
                     new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
                 };
 
-            patient = DataAccessHelper.ExecuteOneObject(query, paramters, PatientMapper);
+            patient = await DataAccessHelper.ExecuteOneObject(query, paramters, PatientMapper);
 
             return patient;
         }

@@ -29,9 +29,9 @@ namespace Business
                 InsuranceName = dto.InsuranceName,
             };
         }
-        public static PatientList FindPatientByIdList(int patientId)
+        public static async Task<PatientList> FindPatientByIdList(int patientId)
         {
-            return FromDto(PatientData.FindPatientByIdList(patientId));
+            return FromDto(await PatientData.FindPatientByIdList(patientId));
         }
         public static async Task<BindingList<PatientList>> GetPatientListingDatas()
         {
