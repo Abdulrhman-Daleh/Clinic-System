@@ -3,6 +3,7 @@ using AppEnums.cs;
 using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
 using System;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -32,20 +33,18 @@ namespace Business
             CreationDate = DateTime.Now;
             _mode = EnMode.Add;
         }
-        private SOAPNote(int noteID, int writtenById, int appointmentId, int medicalRecordId)
+        private SOAPNote(int noteID)
         {
             NoteID = noteID;
-            WrittenBy = Staff.FindStaffById(writtenById);
-            Appointment = Appointment.FindAppointmentByID(appointmentId);
-            MedicalRecord = MedicalRecord.FindMedicalRecordByID(medicalRecordId);
+
             _mode = EnMode.Update;
         }
-        public static SOAPNote FromDto(SOAPNoteDto noteDto)
+        public static async Task<SOAPNote> FromDto(SOAPNoteDto noteDto)
         {
             if (noteDto == null)
                 return null;
 
-            return new SOAPNote(noteDto.NoteID, noteDto.WrittenByID, noteDto.AppointmentID, noteDto.MedicalRecordID)
+            SOAPNote Note = new SOAPNote(noteDto.NoteID)
             {
                 NoteID = noteDto.NoteID,
                 WrittenByID = noteDto.WrittenByID,
@@ -58,6 +57,12 @@ namespace Business
                 IsActive = noteDto.IsActive,
                 MedicalRecordID = noteDto.MedicalRecordID
             };
+
+            Note.WrittenBy = await Staff.FindStaffById(Note.WrittenByID);
+            Note.Appointment = await Appointment.FindAppointmentByID(Note.AppointmentID);
+            Note.MedicalRecord = await MedicalRecord.FindMedicalRecordByID(Note.MedicalRecordID);
+
+            return Note;
         }
         public static SOAPNoteDto ToDto(SOAPNote note)
         {
@@ -168,19 +173,23 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static SOAPNote FindSOAPNoteByID(int noteID)
+        public static async Task<SOAPNote> FindSOAPNoteByID(int noteID)
         {
             if (!CheckDoctorAccess().IsSuccess)
                 return null;
 
-            return FromDto(SOAPNoteData.FindSOAPNoteByID(noteID));
+            SOAPNoteDto noteDto = await SOAPNoteData.FindSOAPNoteByID(noteID);
+
+            return await FromDto(noteDto);
         }
-        public static SOAPNote FindSOAPNoteByAppointmentID(int appointmentID)
+        public static async Task<SOAPNote> FindSOAPNoteByAppointmentID(int appointmentID)
         {
             if (!CheckDoctorAccess().IsSuccess)
                 return null;
 
-            return FromDto(SOAPNoteData.FindSOAPNoteByAppointmentID(appointmentID));
+            SOAPNoteDto noteDto = await SOAPNoteData.FindSOAPNoteByAppointmentID(appointmentID);
+
+            return await FromDto(noteDto);
         }
         private OperationResult IsNoteValidToSave()
         {

@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Appointments.SOAPNotes
@@ -9,14 +10,14 @@ namespace ClinicSystem.Appointments.SOAPNotes
     {
         private Appointment Appointment { get; set; }
         private SOAPNote Note { get; set; }
+        private readonly int AppointmentId;
         public AddUpdateSOAPNote(int appointmentId)
         {
             InitializeComponent();
             lblNoteId.Text = "[Not Set]";
             SetFormTextBasedMode("Add SOAP Note", "Add SOAP Note", "Add Note");
-            Appointment = Appointment.FindAppointmentByID(appointmentId);
+            AppointmentId = appointmentId;
             Note = new SOAPNote();
-            SetUpInfo();
         }
 
         public delegate void SendNotifyOnSOAPNoteSave();
@@ -30,7 +31,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
 
         private void btnCancel_Click(object sender, EventArgs e) => Close();
 
-        private void SetUpInfo()
+        private async Task SetUpInfo()
         {
             if (ValidationHelper.IsEmptyOrNull(Appointment))
             {
@@ -41,7 +42,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
 
             findAppointmentCtrl1.LoadAppointmentInfo(Appointment.AppointmentID);
             findPersonCtrl1.RecivePersonInfo(Appointment.Patient);
-            viewMRecordInfo1.LoadMedicalRecordInfo(Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID));
+            viewMRecordInfo1.LoadMedicalRecordInfo(await Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID));
             findAppointmentCtrl1.AllowFind = false;
             findPersonCtrl1.AllowFind = false;
         }
@@ -77,6 +78,12 @@ namespace ClinicSystem.Appointments.SOAPNotes
             findAppointmentCtrl1.LoadAppointmentInfo(Note.AppointmentID);
             OnSave?.Invoke();
 
+        }
+
+        private async void AddUpdateSOAPNote_Load(object sender, EventArgs e)
+        {
+            Appointment = await Appointment.FindAppointmentByID(AppointmentId);
+            await SetUpInfo();
         }
     }
 }

@@ -283,6 +283,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "AddUpdateSOAPNote";
             this.Text = "Add Update SOAP Note";
+            this.Load += new System.EventHandler(this.AddUpdateSOAPNote_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

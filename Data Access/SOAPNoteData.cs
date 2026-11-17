@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Data_Access.ListingDTOs
 {
@@ -123,7 +124,7 @@ namespace Data_Access.ListingDTOs
             return affectedRows > 0;
         }
 
-        public static SOAPNoteDto FindSOAPNoteByID(int noteId)
+        public static async Task<SOAPNoteDto> FindSOAPNoteByID(int noteId)
         {
             string query = @"
                 SELECT *
@@ -135,10 +136,10 @@ namespace Data_Access.ListingDTOs
                 new SqlParameter("@NoteID", SqlDbType.Int) { Value = noteId }
             };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, SOAPNoteMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, SOAPNoteMapper);
         }
 
-        public static SOAPNoteDto FindSOAPNoteByAppointmentID(int appointmentId)
+        public static async Task<SOAPNoteDto> FindSOAPNoteByAppointmentID(int appointmentId)
         {
             string query = @"
                 SELECT *
@@ -150,7 +151,7 @@ namespace Data_Access.ListingDTOs
                 new SqlParameter("@AppointmentID", SqlDbType.Int) { Value = appointmentId }
             };
 
-            return DataAccessHelper.ExecuteOneObject(query, parameters, SOAPNoteMapper);
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, SOAPNoteMapper);
         }
     }
 }
