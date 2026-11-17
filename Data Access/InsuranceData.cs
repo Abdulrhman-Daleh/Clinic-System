@@ -21,8 +21,8 @@ namespace Data_Access
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@RecordedBy", insuranceDto.RecordedBy),
-                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceType.InsuranceTypeId),
-                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatus.InsuranceStatusId),
+                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceType),
+                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatus),
                     new SqlParameter("@InsuranceProvider", (object)insuranceDto.InsuranceProvider ?? DBNull.Value),
                     new SqlParameter("@PolicyNumber", (object)insuranceDto.PolicyNumber ?? DBNull.Value),
                     new SqlParameter("@CoverageStartDate", insuranceDto.CoverageStartDate),
@@ -66,15 +66,14 @@ namespace Data_Access
 
             return result;
         }
-
         public static bool UpdateInsurance(InsuranceDto insuranceDto)
         {
             List<SqlParameter> parameters = new List<SqlParameter>()
                 {
                     new SqlParameter("@InsuranceId", insuranceDto.InsuranceID),
                     new SqlParameter("@PolicyId", insuranceDto.PolicyId),
-                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceType.InsuranceTypeId),
-                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatus.InsuranceStatusId),
+                    new SqlParameter("@InsuranceTypeId", insuranceDto.InsuranceType),
+                    new SqlParameter("@InsuranceStatusId", insuranceDto.InsuranceStatus),
                     new SqlParameter("@InsuranceProvider", (object)insuranceDto.InsuranceProvider ?? DBNull.Value),
                     new SqlParameter("@CoverageStartDate", insuranceDto.CoverageStartDate),
                     new SqlParameter("@CoverageEndDate", insuranceDto.CoverageEndDate),
@@ -86,8 +85,7 @@ namespace Data_Access
             return DataAccessHelper.ExecuteNonQueryStoredProcedure<InsuranceDto>(
                 "UpdateInsurance", parameters, new List<SqlParameter>());
         }
-
-        public static InsuranceDto FindInsuranceByID(int insuranceId)
+        public static async Task<InsuranceDto> FindInsuranceByID(int insuranceId)
         {
             string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InStatus.insuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
                 PatientClaims, PolicyholderPatientID, PolicyID, InsuranceTypeName, insuranceStatusText
@@ -101,11 +99,10 @@ namespace Data_Access
                     new SqlParameter("@InsuranceId", insuranceId)
                 };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query, parameters, InsuranceMapper);
         }
-
-        public static InsuranceDto FindInsuranceByPatientId(int patientId)
+        public static async Task<InsuranceDto> FindInsuranceByPatientId(int patientId)
         {
             string query = @"SELECT InsuranceID, RecordedBy, InsuranceTypeID, InStatus.InsuranceStatusID, UploadedDate, InsuranceProvider, PolicyNumber, CoverageStartDate, CoverageEndDate,
                 PatientClaims, PolicyholderPatientID, PolicyID, InsuranceTypeName, insuranceStatusText
@@ -120,10 +117,9 @@ namespace Data_Access
                     new SqlParameter("@PatientId", patientId)
                 };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query, parameters, InsuranceMapper);
         }
-
         private static InsuranceDto InsuranceMapper(SqlDataReader reader)
         {
             try
@@ -133,8 +129,8 @@ namespace Data_Access
                     InsuranceID = (int)reader["InsuranceID"],
                     PolicyId = (int)reader["PolicyID"],
                     RecordedBy = (int)reader["RecordedBy"],
-                    InsuranceType = ((EnInsuranceTypes)reader["InsuranceTypeID"], (string)reader["InsuranceTypeName"]),
-                    InsuranceStatus = ((EnInsuranceStatuses)reader["InsuranceStatusID"], (string)reader["insuranceStatusText"]),
+                    InsuranceType = (EnInsuranceTypes)reader["InsuranceTypeID"],
+                    InsuranceStatus = (EnInsuranceStatuses)reader["InsuranceStatusID"],
                     UploadedDate = (DateTime)reader["UploadedDate"],
 
                     InsuranceProvider = reader["InsuranceProvider"] == DBNull.Value
@@ -158,7 +154,6 @@ namespace Data_Access
                 return null;
             }
         }
-
         private static string InsuranceTypeMapper(SqlDataReader reader)
         {
             try
@@ -171,7 +166,6 @@ namespace Data_Access
                 return string.Empty;
             }
         }
-
         private static string InsuranceStatusMapper(SqlDataReader reader)
         {
             try
@@ -184,7 +178,6 @@ namespace Data_Access
                 return string.Empty;
             }
         }
-
         public static async Task<BindingList<string>> GetInsuranceTypesNames()
         {
             BindingList<string> types = new BindingList<string>();
@@ -194,7 +187,6 @@ namespace Data_Access
 
             return types;
         }
-
         public static async Task<BindingList<string>> GetInsuranceStatusesNames()
         {
             BindingList<string> types = new BindingList<string>();
@@ -204,7 +196,6 @@ namespace Data_Access
 
             return types;
         }
-
         private static InsuranceListDto InsuranceListMapper(SqlDataReader reader)
         {
             try
@@ -234,7 +225,6 @@ namespace Data_Access
                 return null;
             }
         }
-
         public static async Task<BindingList<InsuranceListDto>> GetInsurances(int staffId)
         {
             BindingList<InsuranceListDto> list = new BindingList<InsuranceListDto>();
@@ -249,8 +239,7 @@ namespace Data_Access
 
             return list;
         }
-
-        public static InsuranceListDto FindInsuranceListByID(int insuranceId)
+        public static async Task<InsuranceListDto> FindInsuranceListByID(int insuranceId)
         {
             InsuranceListDto insurance = new InsuranceListDto();
             string query = @"select InsuranceID, PolicyNumber, InsuranceProvider, InsuranceType, HolderName, Members, CoverageStart, CoverageEnd, StatusText from vw_InsuranceList
@@ -262,11 +251,10 @@ namespace Data_Access
                     new SqlParameter("@InsuranceId", SqlDbType.Int) { Value = insuranceId },
                 };
 
-            insurance = DataAccessHelper.ExecuteOneObject(query, parameters, InsuranceListMapper);
+            insurance = await DataAccessHelper.ExecuteOneObject(query, parameters, InsuranceListMapper);
 
             return insurance;
         }
-
         private static PatientInsuranceInfoDto PatientInsuranceMapper(SqlDataReader reader)
         {
             return new PatientInsuranceInfoDto
@@ -276,7 +264,6 @@ namespace Data_Access
                 PatientSince = (DateTime)reader["PatientSince"]
             };
         }
-
         public static async Task<BindingList<PatientInsuranceInfoDto>> GetPatientsUnderInsurance(int insuranceId)
         {
             BindingList<PatientInsuranceInfoDto> list = new BindingList<PatientInsuranceInfoDto>();

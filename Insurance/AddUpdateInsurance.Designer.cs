@@ -435,6 +435,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Name = "AddUpdateInsurance";
             this.Text = "Add Update Insurance";
+            this.Load += new System.EventHandler(this.AddUpdateInsurance_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();

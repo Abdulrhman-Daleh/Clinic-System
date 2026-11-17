@@ -131,9 +131,9 @@ namespace ClinicSystem.Insurance
             updateInsurance.ShowDialog();
 
         }
-        private void RefreshDgv(int InsuranceId)
+        private async void RefreshDgv(int InsuranceId)
         {
-            InsuranceList Insurance = InsuranceList.FindInsurancebyID(InsuranceId);
+            InsuranceList Insurance = await InsuranceList.FindInsurancebyID(InsuranceId);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Insurances, "InsuranceID", Insurance.InsuranceID);
             CommonOperations.UpdateAfterAdding(Insurances, Insurance, targetIndex);
         }
