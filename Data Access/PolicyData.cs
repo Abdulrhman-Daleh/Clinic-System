@@ -22,7 +22,7 @@ namespace Data_Access
                 {
                     PolicyID = (int)reader["PolicyID"],
                     OwnerID = (int)reader["OwnerID"],
-                    PolicyStatus = ((EnPolicyStatuses)reader["PolicyStatusID"], (string)reader["PolicyStatusText"]),
+                    PolicyStatus = (EnPolicyStatuses)reader["PolicyStatusID"],
                     ActiveFrom = (DateTime)reader["ActiveFrom"],
                     ActiveTo = (DateTime)reader["ActiveTo"],
                     NoShowFreezeDays = reader["NoShowFreezeDays"] == DBNull.Value ? (byte?)null : (byte)reader["NoShowFreezeDays"],
@@ -81,7 +81,7 @@ namespace Data_Access
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
                 new SqlParameter("@OwnerID", policy.OwnerID),
-                new SqlParameter("@PolicyStatusID", policy.PolicyStatus.PolicyStatusID),
+                new SqlParameter("@PolicyStatusID", (int)policy.PolicyStatus),
                 new SqlParameter("@ActiveFrom", policy.ActiveFrom),
                 new SqlParameter("@ActiveTo", policy.ActiveTo),
                 new SqlParameter("@NoShowFreezeDays", (object)policy.NoShowFreezeDays ?? DBNull.Value),
@@ -118,7 +118,7 @@ namespace Data_Access
             {
                 new SqlParameter("@PolicyID", policy.PolicyID),
                 new SqlParameter("@OwnerID", policy.OwnerID),
-                new SqlParameter("@PolicyStatusID", policy.PolicyStatus.PolicyStatusID),
+                new SqlParameter("@PolicyStatusID", policy.PolicyStatus),
                 new SqlParameter("@ActiveFrom", policy.ActiveFrom),
                 new SqlParameter("@ActiveTo", policy.ActiveTo),
                 new SqlParameter("@NoShowFreezeDays", (object)policy.NoShowFreezeDays ?? DBNull.Value),
@@ -129,7 +129,7 @@ namespace Data_Access
             return DataAccessHelper.ExecuteNonQuery(query, parameters) > 0;
         }
 
-        public static PolicyDto FindPolicyByID(int policyID)
+        public static async Task<PolicyDto> FindPolicyByID(int policyID)
         {
             string query = @"SELECT PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom, ActiveTo,
                     ps.PolicyStatusID, ps.PolicyStatusText
@@ -141,11 +141,11 @@ namespace Data_Access
                 new SqlParameter("@PolicyID", policyID)
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query, parameters, PolicyMapper);
         }
 
-        public static PolicyDto FindPolicyByOwnerID(int ownerID)
+        public static async Task<PolicyDto> FindPolicyByOwnerID(int ownerID)
         {
             string query = @"SELECT PolicyID, OwnerID, NoShowFee, LateFeesPerDay, NoShowFreezeDays, ActiveFrom, ActiveTo,
                     ps.PolicyStatusID, ps.PolicyStatusText
@@ -157,7 +157,7 @@ namespace Data_Access
                 new SqlParameter("@OwnerID", ownerID)
             };
 
-            return DataAccessHelper.ExecuteOneObject(
+            return await DataAccessHelper.ExecuteOneObject(
                 query, parameters, PolicyMapper);
         }
 

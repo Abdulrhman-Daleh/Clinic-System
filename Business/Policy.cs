@@ -13,7 +13,7 @@ namespace Business
         private EnMode _mode;
         public int PolicyID { get; set; }
         public int OwnerID { get; set; }
-        public (EnPolicyStatuses PolicyStatusID, string PolicyStatusText) PolicyStatus { get; set; }
+        public EnPolicyStatuses PolicyStatus { get; set; }
         public DateTime ActiveFrom { get; set; }
         public DateTime ActiveTo { get; set; }
         public short? NoShowFreezeDays { get; set; }
@@ -21,13 +21,13 @@ namespace Business
         public decimal? NoShowFee { get; set; }
         public Staff Owner { get; set; }
         [Browsable(true)]
-        public string Status => PolicyStatus.PolicyStatusText;
-        private static Policy FromDto(PolicyDto policyDto)
+        public string Status => PolicyStatus.ToString();
+        private static async Task<Policy> FromDto(PolicyDto policyDto)
         {
             if (policyDto == null)
                 return null;
 
-            return new Policy(policyDto.PolicyID, policyDto.OwnerID)
+            Policy policy = new Policy(policyDto.PolicyID)
             {
                 PolicyID = policyDto.PolicyID,
                 OwnerID = policyDto.OwnerID,
@@ -37,8 +37,11 @@ namespace Business
                 NoShowFreezeDays = policyDto.NoShowFreezeDays,
                 LateFeesPerDay = policyDto.LateFeesPerDay,
                 NoShowFee = policyDto.NoShowFee,
-                Owner = Staff.FindStaffById(policyDto.OwnerID)
             };
+
+            policy.Owner = await Staff.FindStaffById(policy.OwnerID);
+
+            return policy;
         }
         private static PolicyDto ToDto(Policy policy)
         {
@@ -57,19 +60,19 @@ namespace Business
         public string BookingFreezeDaysText()
         {
             return NoShowFreezeDays != null
-                ? $"{NoShowFreezeDays.ToString()} days after a no-show"
+                ? $"{NoShowFreezeDays} days after a no-show"
                 : "No freeze days";
         }
         public string LateFeesPerDayText()
         {
             return LateFeesPerDay != null
-                ? $"$ {LateFeesPerDay.ToString()} per day"
+                ? $"$ {LateFeesPerDay} per day"
                 : "No late fees";
         }
         public string NoShowFeesText()
         {
             return NoShowFee != null
-                ? $"$ {NoShowFee.ToString()}"
+                ? $"$ {NoShowFee}"
                 : "Empty No show fees";
         }
         public Policy()
@@ -77,12 +80,12 @@ namespace Business
             PolicyID = -1;
             _mode = EnMode.Add;
         }
-        public Policy(int policyID, int ownerId)
+        public Policy(int policyID)
         {
             PolicyID = policyID;
-            Owner = Staff.FindStaffById(ownerId);
             _mode = EnMode.Update;
         }
+
         private bool AddNewPolicy()
         {
             PolicyID = PolicyData.AddNewPolicy(ToDto(this));
@@ -116,7 +119,7 @@ namespace Business
 
                         Auditor.Log(
                             "Policy Added",
-                            $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}, Active: {ActiveFrom:d} - {ActiveTo:d}) was added by {performedBy}.",
+                            $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus}, Active: {ActiveFrom:d} - {ActiveTo:d}) was added by {performedBy}.",
                             $"PolicyID {PolicyID}");
 
                         return new OperationResult(
@@ -136,7 +139,7 @@ namespace Business
                     {
                         Auditor.Log(
                             "Policy Updated",
-                            $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus.PolicyStatusText}, Active: {ActiveFrom:d} - {ActiveTo:d}) was updated by {performedBy}.",
+                            $"Policy for OwnerID {OwnerID} (Status: {PolicyStatus}, Active: {ActiveFrom:d} - {ActiveTo:d}) was updated by {performedBy}.",
                             $"PolicyID {PolicyID}");
 
                         return new OperationResult(
@@ -156,13 +159,17 @@ namespace Business
                 "Failed",
                 false);
         }
-        public static Policy FindPolicyByID(int policyID)
+        public static async Task<Policy> FindPolicyByID(int policyID)
         {
-            return FromDto(PolicyData.FindPolicyByID(policyID));
+            PolicyDto policyDto = await PolicyData.FindPolicyByID(policyID);
+
+            return await FromDto(policyDto);
         }
-        public static Policy FindPolicyByOwnerID(int ownerID)
+        public static async Task<Policy> FindPolicyByOwnerID(int ownerID)
         {
-            return FromDto(PolicyData.FindPolicyByOwnerID(ownerID));
+            PolicyDto policyDto = await PolicyData.FindPolicyByOwnerID(ownerID);
+
+            return await FromDto(policyDto);
         }
         public static async Task<BindingList<string>> GetPolicyStatusesNames()
         {
@@ -179,8 +186,8 @@ namespace Business
 
             BindingList<Policy> list = new BindingList<Policy>();
 
-            foreach (PolicyDto p in await PolicyData.GetPolicies(Global.CurrentLoggedInStaff.StaffId))
-                list.Add(FromDto(p));
+            foreach (PolicyDto policyDto in await PolicyData.GetPolicies(Global.CurrentLoggedInStaff.StaffId))
+                list.Add(await FromDto(policyDto));
 
             return list;
         }

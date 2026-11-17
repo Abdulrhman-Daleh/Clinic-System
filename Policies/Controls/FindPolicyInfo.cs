@@ -1,5 +1,6 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Policies.Controls
@@ -47,7 +48,7 @@ namespace ClinicSystem.Policies.Controls
         }
 
 
-        public void Find()
+        public async Task Find()
         {
             this.ValidateChildren();
 
@@ -59,7 +60,7 @@ namespace ClinicSystem.Policies.Controls
             int policyId = -1;
             int.TryParse(txtFindBy.Text, out policyId);
 
-            policy = Policy.FindPolicyByID(policyId);
+            policy = await Policy.FindPolicyByID(policyId);
 
             viewPolicyInfoCtrl1.LoadPolicyInfo(policy);
 
@@ -68,17 +69,17 @@ namespace ClinicSystem.Policies.Controls
 
         }
 
-        private void btnFind_Click(object sender, System.EventArgs e)
+        private async void btnFind_Click(object sender, System.EventArgs e)
         {
-            Find();
+            await Find();
         }
 
 
-        public void LoadPolicyInfo(int policyId)
+        public async Task LoadPolicyInfo(int policyId)
         {
             txtFindBy.Text = policyId.ToString();
 
-            Find();
+            await Find();
         }
 
         private void btnAddNew_Click(object sender, System.EventArgs e)
@@ -88,11 +89,11 @@ namespace ClinicSystem.Policies.Controls
             addPolicy.ShowDialog();
         }
 
-        private void RecivePolicyId(Policy policy)
+        private async void RecivePolicyId(Policy policy)
         {
             txtFindBy.Text = policy.PolicyID.ToString();
             this.policy = policy;
-            Find();
+            await Find();
         }
     }
 }
