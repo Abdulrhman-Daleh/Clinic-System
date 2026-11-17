@@ -24,7 +24,7 @@ namespace Data_Access
                     PersonId = (int)reader["PersonID"],
                     Email = (reader["Email"] == DBNull.Value) ? "No Email" : (string)reader["Email"],
                     PhoneNumber = (string)reader["PhoneNumber"],
-                    ContactType = ((EnContactTypes)reader["ContactTypeID"], (string)reader["ContactTypeName"])
+                    ContactType = (EnContactTypes)reader["ContactTypeID"]
                 };
             }
             catch (Exception ex)
@@ -53,7 +53,7 @@ namespace Data_Access
                     emailParam,
                     new SqlParameter("@PhoneNumber", SqlDbType.VarChar, 20) {Value = contactDto.PhoneNumber },
                     new SqlParameter("@PersonID", SqlDbType.Int) {Value = contactDto.PersonId},
-                    new SqlParameter("@ContactTypeID", SqlDbType.Int) {Value = contactDto.ContactType.ContactTypeId},
+                    new SqlParameter("@ContactTypeID", SqlDbType.Int) {Value = (int)contactDto.ContactType},
                 };
 
             object result = DataAccessHelper.ExecuteScalar(query, parameters);
@@ -84,7 +84,7 @@ namespace Data_Access
                     new SqlParameter("@PhoneNumber", SqlDbType.VarChar, 20) {Value = contactDto.PhoneNumber },
                     new SqlParameter("@PersonID", SqlDbType.Int) {Value = contactDto.PersonId},
                     new SqlParameter("@ContactId", SqlDbType.Int) {Value = contactDto.ContactId},
-                    new SqlParameter("@ContactTypeID", SqlDbType.Int) {Value = contactDto.ContactType.ContactTypeId},
+                    new SqlParameter("@ContactTypeID", SqlDbType.Int) {Value = (int) contactDto.ContactType},
                 };
 
             affectedRows = DataAccessHelper.ExecuteNonQuery(query, parameters);

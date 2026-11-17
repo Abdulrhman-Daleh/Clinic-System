@@ -2,6 +2,7 @@
 using ClinicSystem.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.People.Controls
@@ -16,13 +17,11 @@ namespace ClinicSystem.People.Controls
 
         public delegate void SendOnFind(Person person);
         public event SendOnFind OnFind;
-
         public bool AllowFind
         {
             get => gbFilter.Enabled;
             set => gbFilter.Enabled = value;
         }
-
         public bool AllowFindButton
         {
             get => btnFind.Enabled;
@@ -36,12 +35,10 @@ namespace ClinicSystem.People.Controls
             cbFindBy.Items.Add("Firstname");
             cbFindBy.SelectedIndex = 0;
         }
-
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (cbFindBy.Text == "PersonID")
@@ -52,8 +49,7 @@ namespace ClinicSystem.People.Controls
 
             ValidationHelper.HandleInputType(e, false, true);
         }
-
-        private void Find()
+        private async Task Find()
         {
             if (ValidationHelper.IsEmptyOrNull(txtFindBy.Text, "not allowed to search with empty value"))
             {
@@ -66,29 +62,33 @@ namespace ClinicSystem.People.Controls
             switch (cbFindBy.Text)
             {
                 case "PersonID":
-                    person = Person.FindPersonById(Convert.ToInt32(txtFindBy.Text));
+                    person = await Person.FindPersonById(Convert.ToInt32(txtFindBy.Text));
                     break;
 
                 default:
-                    person = Person.FindPersonByFirstname(txtFindBy.Text);
+                    person = await Person.FindPersonByFirstname(txtFindBy.Text);
                     break;
             }
+
+            if (person == null)
+            {
+                txtFindBy.Text = string.Empty;
+                txtFindBy.Focus();
+            }
+
             viewPersonInfoCtrl1.SetData(person);
 
             if (AllowFind)
                 OnFind?.Invoke(person);
         }
-
-        private void btnFind_Click(object sender, EventArgs e)
+        private async void btnFind_Click(object sender, EventArgs e)
         {
-            Find();
+            await Find();
         }
-
         private void txtFindBy_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox(txtFindBy, errors);
         }
-
         private void cbFindBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             ValidationHelper.ResetDefaultFilter(txtFindBy);
@@ -97,15 +97,21 @@ namespace ClinicSystem.People.Controls
 
         public void RecivePersonInfo(Person person)
         {
+            if (ValidationHelper.IsEmptyOrNull(person))
+            {
+                SetUp();
+                viewPersonInfoCtrl1.SetData(person, "Person info was reseted");
+                return;
+            }
+
             cbFindBy.SelectedIndex = 0;
-            txtFindBy.Text = person.PersonId.ToString()
-                ;
+            txtFindBy.Text = person.PersonId.ToString();
+
             viewPersonInfoCtrl1.SetData(person);
 
             if (AllowFind)
                 OnFind?.Invoke(person);
         }
-
         private void btnAddNew_Click(object sender, EventArgs e)
         {
             AddUpdatePerson addPerson = new AddUpdatePerson();

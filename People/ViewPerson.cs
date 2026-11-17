@@ -8,6 +8,7 @@ namespace ClinicSystem.People.Controls
     public partial class ViewPerson : FormsDefaultSettings
     {
         private Person person;
+        private readonly int personId;
         public ViewPerson()
         {
             InitializeComponent();
@@ -24,17 +25,19 @@ namespace ClinicSystem.People.Controls
             lblName.Text = "[Not Set]";
             viewPersonContacts1.LoadUpPersonContact(-1);
         }
-        private void SetInfo(Person person)
+        private void SetInfo(Person per)
         {
+            person = per;
 
-            if (ValidationHelper.IsEmptyOrNull(person, "Person does not exists"))
+            if (ValidationHelper.IsEmptyOrNull(person))
             {
                 ResetEmptyControls();
                 return;
             }
 
+            findPersonCtrl1.AllowFind = false;
             btnEdit.Enabled = true;
-            pbGender.Image = this.person.Gender == EnGender.Male ? Resources.male_32 : Resources.female_32;
+            pbGender.Image = person.Gender == EnGender.Male ? Resources.male_32 : Resources.female_32;
             viewPersonContacts1.LoadUpPersonContact(person.PersonId);
             lblName.Text = $"Person #{person.PersonId} - {this.person.GetFullName()}";
             findPersonCtrl1.RecivePersonInfo(person);
@@ -43,9 +46,7 @@ namespace ClinicSystem.People.Controls
         public ViewPerson(int personId)
         {
             InitializeComponent();
-            person = Person.FindPersonById(personId);
-            findPersonCtrl1.AllowFind = false;
-            SetInfo(person);
+            this.personId = personId;
         }
 
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
@@ -60,9 +61,12 @@ namespace ClinicSystem.People.Controls
             updatePerson.ShowDialog();
         }
 
-        private void ViewPerson_Load(object sender, System.EventArgs e)
+        private async void ViewPerson_Load(object sender, System.EventArgs e)
         {
             findPersonCtrl1.OnFind += RecivePersonObj;
+
+            if (personId > 0)
+                SetInfo(await Person.FindPersonById(personId));
         }
 
         private void RecivePersonObj(Person person)
@@ -70,6 +74,13 @@ namespace ClinicSystem.People.Controls
             this.person = person;
             SetInfo(person);
             OnEdit?.Invoke(person);
+        }
+
+        private void BtnReset_Click(object sender, System.EventArgs e)
+        {
+            ResetEmptyControls();
+            findPersonCtrl1.RecivePersonInfo(null);
+            findPersonCtrl1.AllowFind = true;
         }
     }
 }

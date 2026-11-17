@@ -2,6 +2,7 @@
 using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.People
@@ -9,38 +10,33 @@ namespace ClinicSystem.People
     public partial class AddPersonContacts : FormsDefaultSettings
     {
         private Person Person;
-
+        private int personId;
         public AddPersonContacts()
         {
             InitializeComponent();
             SetFormTextBasedMode("Add Person Contact", "Add Person Contact", "Add Contact");
         }
-
         public AddPersonContacts(int personId)
         {
             InitializeComponent();
             SetFormTextBasedMode("Add Person Contact", "Add Person Contact", "Add Contact");
-
-            Person = Person.FindPersonById(personId);
-            SetUpdate(Person);
+            this.personId = personId;
         }
-
-        private void SetUpdate(Person person)
+        private async Task SetUpdate(int personId)
         {
-            if (ValidationHelper.IsEmptyOrNull(person, "Person does not exists"))
+            Person = await Person.FindPersonById(personId);
+
+            if (ValidationHelper.IsEmptyOrNull(Person, "Person does not exists"))
                 return;
 
             findPersonCtrl1.AllowFind = false;
-            findPersonCtrl1.RecivePersonInfo(person);
+            findPersonCtrl1.RecivePersonInfo(Person);
         }
-
         private void RecivePersonInfo(Person person)
         {
             Person = person;
         }
-
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
-
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
@@ -48,7 +44,6 @@ namespace ClinicSystem.People
             btnSave.Text = saveButtonText;
             findPersonCtrl1.OnFind += RecivePersonInfo;
         }
-
         private void SetPage()
         {
             cbContactType.Items.Add("Normal");
@@ -57,15 +52,13 @@ namespace ClinicSystem.People
             txtPhoneNumber.Text = string.Empty;
             txtEmail.Text = string.Empty;
         }
-
         private void FillData()
         {
             Person.contactInfo.Email = txtEmail.Text.Trim();
             Person.contactInfo.PhoneNumber = txtPhoneNumber.Text.Trim();
-            Person.contactInfo.ContactType = ((EnContactTypes)cbContactType.SelectedIndex + 1, cbContactType.SelectedItem.ToString());
+            Person.contactInfo.ContactType = (EnContactTypes)cbContactType.SelectedIndex + 1;
             Person.contactInfo.PersonId = Person.PersonId;
         }
-
         private bool IsPersonSelected()
         {
             if (ValidationHelper.IsEmptyOrNull(Person, "Person is not selected"))
@@ -74,7 +67,6 @@ namespace ClinicSystem.People
             Person.contactInfo.PersonId = Person.PersonId;
             return true;
         }
-
         private void btnSave_Click(object sender, System.EventArgs e)
         {
             if (!IsPersonSelected())
@@ -115,9 +107,7 @@ namespace ClinicSystem.People
                 CommonOperations.UpdateAfterAdding(Person.Contacts, Person.contactInfo);
             }
         }
-
         public void PrintContactId(int contactId) => lblContactId.Text = contactId != -1 ? $"C-{contactId}" : "[Not Set]";
-
         private void txtPhoneNumber_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             ValidationHelper.ValidateRequiredTextBox((MaskedTextBox)sender, errors);
@@ -130,12 +120,10 @@ namespace ClinicSystem.People
 
             errors.SetError(txtPhoneNumber, null);
         }
-
         private void txtPhoneNumber_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.HandleInputType(e, true, false);
         }
-
         private void txtEmail_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!ValidationHelper.IsEmailValid(txtEmail.Text.Trim()))
@@ -146,10 +134,12 @@ namespace ClinicSystem.People
 
             errors.SetError(txtEmail, null);
         }
-
-        private void AddPersonContacts_Load(object sender, System.EventArgs e)
+        private async void AddPersonContacts_Load(object sender, System.EventArgs e)
         {
             SetPage();
+
+            if (personId > 0)
+                await SetUpdate(personId);
         }
     }
 }

@@ -5,6 +5,7 @@ using ClinicSystem.People;
 using ClinicSystem.Properties;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem
@@ -12,6 +13,7 @@ namespace ClinicSystem
     public partial class AddUpdatePerson : FormsDefaultSettings
     {
         private Person _person;
+        private int personId;
 
         public delegate void SendPersonInfoOnSave(Person person);
         public event SendPersonInfoOnSave SendPersonInfo;
@@ -39,7 +41,11 @@ namespace ClinicSystem
         {
             InitializeComponent();
             SetFormTextBasedMode("Update person info", "Update person info", "Update", Resources.update_32);
-            _person = Person.FindPersonById(personId);
+            this.personId = personId;
+        }
+        private async Task SetUpdate(int personId)
+        {
+            _person = await Person.FindPersonById(personId);
 
             if (ValidationHelper.IsEmptyOrNull(_person))
                 return;
@@ -116,6 +122,10 @@ namespace ClinicSystem
             AddPersonContacts addContact = new AddPersonContacts(_person.PersonId);
             addContact.ShowDialog();
             SendPersonInfo?.Invoke(_person);
+        }
+        private async void AddUpdatePerson_Load(object sender, System.EventArgs e)
+        {
+            await SetUpdate(personId);
         }
     }
 }

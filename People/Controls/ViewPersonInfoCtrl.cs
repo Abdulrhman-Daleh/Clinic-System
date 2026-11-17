@@ -14,11 +14,11 @@ namespace ClinicSystem.People
             SetUp();
         }
 
-        public void SetData(Person person)
+        public void SetData(Person person, string message = "Person is not found")
         {
             lblRegisteredAs.Text = "";
 
-            if (ValidationHelper.IsEmptyOrNull(person))
+            if (ValidationHelper.IsEmptyOrNull(person, message))
             {
                 SetUp();
                 return;
@@ -42,6 +42,7 @@ namespace ClinicSystem.People
             CommonOperations.SetUpDefaultControlsValue(
                 new List<Control>() { lblFirstname, lblLastname, lblGender, lblTopGender },
                 "Not Set");
+
         }
     }
 }
