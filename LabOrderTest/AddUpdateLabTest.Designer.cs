@@ -360,6 +360,7 @@
             this.Controls.Add(this.findStaffCtrl1);
             this.Name = "AddUpdateLabTest";
             this.Text = "Add Update Lab Test";
+            this.Load += new System.EventHandler(this.AddUpdateLabTest_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
