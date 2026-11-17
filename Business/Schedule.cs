@@ -157,9 +157,11 @@ namespace Business
 
             return list;
         }
-        public static Schedule FindScheduleByID(int scheduleId)
+        public static async Task<Schedule> FindScheduleByID(int scheduleId)
         {
-            return FromDto(ScheduleData.FindScheduleByID(scheduleId));
+            ScheduleDto scheduleDto = await ScheduleData.FindScheduleByID(scheduleId);
+
+            return FromDto(scheduleDto);
         }
     }
 }
