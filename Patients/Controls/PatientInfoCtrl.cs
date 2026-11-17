@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Patients.Controls
@@ -12,8 +13,7 @@ namespace ClinicSystem.Patients.Controls
             InitializeComponent();
             CommonOperations.SetUpDefaultControlsValue(new List<Control> { lblFrozen, lblMedicalRecord, lblRegistered, lblTotalVisits, lblUnpaidFees }, "Not Set");
         }
-
-        public void LoadPatientInfo(Patient patient)
+        public async void LoadPatientInfo(Patient patient)
         {
 
             if (ValidationHelper.IsEmptyOrNull((patient), "patient is not found"))
@@ -30,12 +30,11 @@ namespace ClinicSystem.Patients.Controls
             lblRegistered.Text = patient.RegisterDate.ToString();
             lblUnpaidFees.Text = patient.ISUnpaidText();
             lblTotalVisits.Text = patient.GetTotalVisits().ToString();
-            SetMedicalRecordInfo(patient);
+            await SetMedicalRecordInfo(patient);
         }
-
-        private void SetMedicalRecordInfo(Patient patient)
+        private async Task SetMedicalRecordInfo(Patient patient)
         {
-            Business.MedicalRecord medicalRecord = Business.MedicalRecord.FindMedicalRecordByPatientID(patient.PatientId);
+            Business.MedicalRecord medicalRecord = await Business.MedicalRecord.FindMedicalRecordByPatientID(patient.PatientId);
 
             if (ValidationHelper.IsEmptyOrNull(medicalRecord))
             {
@@ -45,7 +44,5 @@ namespace ClinicSystem.Patients.Controls
 
             lblMedicalRecord.Text = medicalRecord.MedicalNumber + " " + medicalRecord.SocialStatus;
         }
-
-
     }
 }

@@ -6,15 +6,17 @@ namespace ClinicSystem.Patients
     public partial class ViewPatient : FormsDefaultSettings
     {
         private Patient patient = null;
+        private readonly int PatientId;
         public ViewPatient(int patientId)
         {
             InitializeComponent();
             lblFullname.Text = "[Not Set]";
-            patient = Patient.FindPatientById(patientId);
+            PatientId = patientId;
         }
-
-        private void ViewPatient_Load(object sender, System.EventArgs e)
+        private async void ViewPatient_Load(object sender, System.EventArgs e)
         {
+            patient = await Patient.FindPatientById(PatientId);
+
             if (ValidationHelper.IsEmptyOrNull(patient))
                 return;
 
@@ -23,7 +25,6 @@ namespace ClinicSystem.Patients
             viewPersonContacts1.LoadUpPersonContact(patient.PersonId);
             patientInfoCtrl1.LoadPatientInfo(patient);
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
     }
 }
