@@ -32,12 +32,9 @@ namespace Business
             Appointment = null;
             Staff = Global.CurrentLoggedInStaff;
         }
-        private AppointmentReminder(int staffId, int appointmentId)
+        private AppointmentReminder(int staffId)
         {
             StaffID = staffId;
-            AppointmentID = appointmentId;
-            Appointment = Appointment.FindAppointmentByID(appointmentId);
-            Staff = Staff.FindStaffById(staffId);
         }
         private static ReminderDto ToDTO(AppointmentReminder reminder)
         {
@@ -51,15 +48,20 @@ namespace Business
                 StaffID = reminder.StaffID
             };
         }
-        private static AppointmentReminder FromDTO(ReminderDto reminderDto)
+        private static async Task<AppointmentReminder> FromDTO(ReminderDto reminderDto)
         {
-            return new AppointmentReminder(reminderDto.StaffID, reminderDto.AppointmentID)
+            AppointmentReminder appReminder = new AppointmentReminder(reminderDto.StaffID)
             {
                 ReminderDate = reminderDto.ReminderDate,
                 Title = reminderDto.Title,
                 Subject = reminderDto.Subject,
                 Message = reminderDto.Message
             };
+
+            appReminder.Appointment = await Appointment.FindAppointmentByID(appReminder.AppointmentID);
+            appReminder.Staff = await Staff.FindStaffById(appReminder.StaffID);
+
+            return appReminder;
         }
         private bool AddNewReminder()
         {
@@ -133,7 +135,7 @@ namespace Business
             BindingList<AppointmentReminder> reminders = new BindingList<AppointmentReminder>();
 
             foreach (var r in await ReminderData.GetAppointmentReminders(appointmentId))
-                reminders.Add(FromDTO(r));
+                reminders.Add(await FromDTO(r));
 
             return reminders;
         }

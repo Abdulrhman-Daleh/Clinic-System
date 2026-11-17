@@ -81,9 +81,9 @@ namespace ClinicSystem.Appointments
             appointment.OnSave += RefreshDgv;
             appointment.ShowDialog();
         }
-        private void RefreshDgv(Appointment appointment)
+        private async void RefreshDgv(Appointment appointment)
         {
-            AppointmentList appointmentList = AppointmentList.FindAppointmentListByID(appointment.StaffID);
+            AppointmentList appointmentList = await AppointmentList.FindAppointmentListByID(appointment.StaffID);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Appointments, "AppointmentID", appointmentList.AppointmentID);
             CommonOperations.UpdateAfterAdding(Appointments, appointmentList, targetIndex);
         }
@@ -110,7 +110,7 @@ namespace ClinicSystem.Appointments
             sendReminderToolStripMenuItem.Enabled = status;
             viewAppointmentRemindersToolStripMenuItem.Enabled = status;
         }
-        private void cmsAppointments_Opening(object sender, CancelEventArgs e)
+        private async void cmsAppointments_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
 
@@ -122,7 +122,7 @@ namespace ClinicSystem.Appointments
 
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
 
-            Appointment app = Appointment.FindAppointmentByID(appointmentId);
+            Appointment app = await Appointment.FindAppointmentByID(appointmentId);
 
             if (ValidationHelper.IsEmptyOrNull(app, "Appointment is not found"))
                 return;
@@ -199,14 +199,14 @@ namespace ClinicSystem.Appointments
             ManageAppointmentReminders reminders = new ManageAppointmentReminders(appointmentId);
             reminders.ShowDialog();
         }
-        private void cancelAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void cancelAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
             int appointmentId = (int)dgvAppointments.CurrentRow.Cells[0].Value;
-            Appointment appointment = Appointment.FindAppointmentByID(appointmentId);
-            OperationResult result = appointment.CancelAppointment(appointmentId);
+            Appointment appointment = await Appointment.FindAppointmentByID(appointmentId);
+            OperationResult result = await appointment.CancelAppointment(appointmentId);
 
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
