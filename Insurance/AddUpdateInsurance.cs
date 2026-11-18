@@ -23,13 +23,10 @@ namespace ClinicSystem.Insurance
 
             insurance = new Business.Insurance();
 
-            SetControls();
-
             SetFormTextBasedMode(
                 "Add New Insurance", "Add Insurance", "Add Insurance");
 
             lblInsuranceId.Text = "[Not Set]";
-
             findPatientCtrl1.SendPatient += RecivePatient;
         }
 
@@ -50,7 +47,6 @@ namespace ClinicSystem.Insurance
             InsuranceId = insuranceId;
 
             findPatientCtrl1.LoadPatientInfo(insurance.PolicyholderPatientId);
-            SetControls();
 
             lblInsuranceId.Text = $"Ins-{insuranceId}";
         }
@@ -76,7 +72,7 @@ namespace ClinicSystem.Insurance
             await LoadPolicies();
         }
 
-        private async void SetControls()
+        private async Task SetControls()
         {
             await SetNeededComboBoxes();
 
@@ -215,6 +211,14 @@ namespace ClinicSystem.Insurance
 
         private async void AddUpdateInsurance_Load(object sender, EventArgs e)
         {
+            if (InsuranceId <= 0)
+            {
+                await SetControls();
+                return;
+            }
+
+            await SetControls();
+
             insurance = await Business.Insurance.FindInsuranceByID(InsuranceId);
 
             if (ValidationHelper.IsEmptyOrNull(insurance, "Insurance not found"))
