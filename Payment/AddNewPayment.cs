@@ -9,7 +9,7 @@ namespace ClinicSystem.Payment
     public partial class AddNewPayment : FormsDefaultSettings
     {
         public enum EnAddMode { AddImmediately = 1, ReturnDtaft }
-        private EnAddMode _AddMode;
+        private readonly EnAddMode _AddMode;
         Business.Payment payment { get; set; }
         public AddNewPayment(int? appointmentId, int? penaltyId, EnAddMode addMode)
         {
@@ -22,13 +22,13 @@ namespace ClinicSystem.Payment
         public delegate void SendPaymentOnSave(Business.Payment paymentInfo);
         public event SendPaymentOnSave OnSave;
 
-        private void SetUp(int? appointmentId, int? penaltyId)
+        private async void SetUp(int? appointmentId, int? penaltyId)
         {
             payment = new Business.Payment();
             payment.AppointmentID = appointmentId;
             payment.PenaltyID = penaltyId;
 
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId ?? -1);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId ?? -1);
 
             if (ValidationHelper.IsEmptyOrNull(viewAppointmentInfoCtrl1.CurrentAppointment))
                 return;
