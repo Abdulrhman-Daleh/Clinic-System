@@ -19,9 +19,6 @@ namespace ClinicSystem.Medicine
             InitializeComponent();
 
             medicine = new Business.Medicine();
-
-            Load += AddUpdateMedicine_Load;
-
             SetFormTextBasedMode("Add New Medicine", "Add Medicine", "Add Medicine");
             lblMedicineId.Text = "Not Set";
         }
@@ -69,6 +66,12 @@ namespace ClinicSystem.Medicine
         }
         private async void AddUpdateMedicine_Load(object sender, EventArgs e)
         {
+            if (MedicineID <= 0)
+            {
+                await SetPage();
+                return;
+            }
+
             medicine = await Business.Medicine.FindMedicineByID(MedicineID);
 
             if (ValidationHelper.IsEmptyOrNull(medicine, "Medicine not found"))

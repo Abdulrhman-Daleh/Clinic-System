@@ -100,6 +100,8 @@ namespace ClinicSystem.Medicine
         {
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Medicines, "MedicineID", m);
             CommonOperations.UpdateAfterAdding(Medicines, m, targetIndex);
+
+            lblRecords.Text = $"{dgvMedicines.Rows.Count} records";
         }
         private void addNewMedicineToolStripMenuItem_Click(object sender, EventArgs e)
         {
