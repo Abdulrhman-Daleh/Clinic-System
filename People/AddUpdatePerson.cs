@@ -13,7 +13,7 @@ namespace ClinicSystem
     public partial class AddUpdatePerson : FormsDefaultSettings
     {
         private Person _person;
-        private int personId;
+        private readonly int personId;
 
         public delegate void SendPersonInfoOnSave(Person person);
         public event SendPersonInfoOnSave SendPersonInfo;
@@ -23,6 +23,7 @@ namespace ClinicSystem
             lblPersonId.Text = "[Not Set]";
             SetFormTextBasedMode("Add new person", "Add new person", "Add Person", Resources.update_32);
             _person = new Person();
+            personId = -1;
             SetControls();
             lnkAddContact.Enabled = false;
         }
@@ -125,7 +126,10 @@ namespace ClinicSystem
         }
         private async void AddUpdatePerson_Load(object sender, System.EventArgs e)
         {
-            await SetUpdate(personId);
+            if (personId > 0)
+            {
+                await SetUpdate(personId);
+            }
         }
     }
 }
