@@ -19,7 +19,7 @@ namespace ClinicSystem.Appointments
         private Business.MedicalRecord MedicalRecord { get; set; }
         private Business.Insurance Insurance { get; set; }
 
-        private int _appointmentId;
+        private readonly int _appointmentId;
 
         public PerformAppointment(int appointmentId)
         {
@@ -30,7 +30,7 @@ namespace ClinicSystem.Appointments
             findPolicyInfo1.SendPolicy += FindPolicyInfo1_SendPolicy;
         }
 
-        private Policy policy = new Policy();
+        private Policy policy = null;
         private void FindPolicyInfo1_SendPolicy(Policy policy)
         {
             this.policy = policy;
@@ -69,7 +69,7 @@ namespace ClinicSystem.Appointments
             Insurance = await Business.Insurance.FindInsuranceByPatientId(Appointment.PatientID);
 
             lblAppointmentId.Text = Appointment.AppointmentDate.ToShortDateString() + " . " + Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
-            lblName.Text = Appointment.Patient.GetFullName() + " . Dr. " + Appointment.Staff.GetFullName();
+            lblName.Text = Appointment.Patient.GetFullName() + " . Dr. " + Global.CurrentLoggedInStaff.GetFullName();
 
             lblType.Text = $"[{Appointment.AppointmentTypes}]";
 

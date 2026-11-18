@@ -208,8 +208,14 @@ namespace Business
             {
                 result = IsAppointmentValidToComplete();
 
-                if (policy == null)
-                    result = new OperationResult("policy is required to be selected", "Not Valid", false);
+                if (AppointmentStatuses == EnAppointmentStatuses.Completed)
+                {
+                    if (policy == null)
+                        return new OperationResult("No policy was selected", "No Policy", false);
+
+                    if (paymentInfo == null)
+                        return new OperationResult("No payment was added", "Not allowed", false);
+                }
             }
             else
             {
@@ -296,23 +302,28 @@ namespace Business
         }
         public static async Task<Appointment> FindAppointmentByID(int appointmentId)
         {
-            if (!Util.CanAccessForm(
-                EnRole.Receptionist,
-                EnRole.Doctor,
-                EnRole.Nurse,
-                EnRole.Owner).IsSuccess)
-                return null;
 
-            AppointmentDto appointmentDto =
-                await AppointmentData.FindAppointmentByID(appointmentId, Global.CurrentLoggedInStaff.StaffId);
+            AppointmentDto appointmentDto = null;
 
-            if (appointmentDto == null)
-                return null;
+            if (Global.CurrentLoggedInStaff.Role == EnRole.Receptionist || Global.CurrentLoggedInStaff.Role == EnRole.Owner)
+            {
+                appointmentDto = await AppointmentData.FindAppointmentByID(appointmentId);
 
-            // A doctor can only retrieve their own appointments.
-            if (Global.CurrentLoggedInStaff.Role == EnRole.Doctor &&
-                appointmentDto.StaffID != Global.CurrentLoggedInStaff.StaffId)
-                return null;
+                if (appointmentDto == null)
+                    return null;
+            }
+            else
+            {
+                appointmentDto = await AppointmentData.FindAppointmentByID(appointmentId, Global.CurrentLoggedInStaff.StaffId);
+
+                if (appointmentDto == null)
+                    return null;
+
+                // A doctor can only retrieve their own appointments.
+                if (Global.CurrentLoggedInStaff.Role == EnRole.Doctor &&
+                    appointmentDto.StaffID != Global.CurrentLoggedInStaff.StaffId)
+                    return null;
+            }
 
             return await FromDto(appointmentDto);
         }

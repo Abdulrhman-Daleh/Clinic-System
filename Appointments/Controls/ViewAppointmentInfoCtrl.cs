@@ -8,6 +8,7 @@ using ClinicSystem.Medicine.Prescription;
 using ClinicSystem.Referral;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Appointments.Controls
@@ -21,7 +22,7 @@ namespace ClinicSystem.Appointments.Controls
         }
 
         private Appointment Appointment { get; set; }
-        public Appointment CurrentAppointment { get => Appointment; }
+        public Appointment CurrentAppointment => Appointment;
 
         private static HashSet<Form> activeForms = new HashSet<Form>();
 
@@ -33,15 +34,8 @@ namespace ClinicSystem.Appointments.Controls
             }, "Not Set");
         }
 
-        public async void LoadUpAppointmentInfo(int appointmentId)
+        public async Task LoadUpAppointmentInfo(int appointmentId)
         {
-            if (!ValidationHelper.CheckAccess(
-                EnRole.Receptionist,
-                EnRole.Doctor,
-                EnRole.Nurse,
-                EnRole.Owner))
-                return;
-
             Appointment = await Appointment.FindAppointmentByID(appointmentId);
 
             if (ValidationHelper.IsEmptyOrNull(Appointment))
@@ -58,10 +52,11 @@ namespace ClinicSystem.Appointments.Controls
 
             lblDate.Text = Appointment.AppointmentDate.ToShortDateString() + ". . " + Appointment.AppointmentTime.ToString(@"hh\mm") + " - " + Appointment.AppointmentEndTime.ToString(@"hh\mm");
 
-            lblDoctor.Text = Appointment.Staff.GetFullName();
+            lblDoctor.Text = Appointment.Staff?.GetFullName();
             lblType.Text = Appointment.AppointmentTypes.ToString();
             lblStatus.Text = Appointment.AppointmentStatuses.ToString();
             lblTypeTitle.Text = $"[{Appointment.AppointmentTypes}]";
+
 
             if (Appointment.Patient.IsFrozen ?? false)
                 lblFrozen.Text = "Frozen until " + Appointment.Patient.EndOfBookingFreeze;
