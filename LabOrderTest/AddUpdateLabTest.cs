@@ -53,7 +53,7 @@ namespace ClinicSystem.LabOrderTest
         }
         private async Task SetUpCtrlsInfo(int appointmentId)
         {
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
 
             Appointment appointment = viewAppointmentInfoCtrl1.CurrentAppointment;
 
@@ -97,7 +97,7 @@ namespace ClinicSystem.LabOrderTest
             findStaffCtrl1.AllowFind = false;
             lblStatus.Text = Test.TestStatuses.ToString();
             lblRequestdate.Text = Test.RequestDate.ToShortDateString();
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(Test.AppointmentID);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(Test.AppointmentID);
             lblTestId.Text = $"Appt-{Test.AppointmentID} . Te-{Test.LabID}";
             OnSave?.Invoke(Test);
         }

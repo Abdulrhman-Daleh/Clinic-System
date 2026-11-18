@@ -27,7 +27,7 @@ namespace ClinicSystem.LabOrderTest
             if (ValidationHelper.IsEmptyOrNull(test))
                 return;
 
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(test.AppointmentID);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(test.AppointmentID);
             viewMRecordInfo1.LoadMedicalRecordInfo(await Business.MedicalRecord.FindMedicalRecordByPatientID(test.Appointment.PatientID));
             viewPersonInfoCtrl1.SetData(test.Appointment.Patient);
         }

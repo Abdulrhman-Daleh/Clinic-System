@@ -10,7 +10,7 @@ namespace ClinicSystem.LabOrderTest
     public partial class ManageLabTests : FormsDefaultSettings
     {
         BindingList<LabTestListing> labTests = new BindingList<LabTestListing>();
-        private int? _appointmentId;
+        private readonly int? _appointmentId;
         public ManageLabTests()
         {
             InitializeComponent();
@@ -22,7 +22,7 @@ namespace ClinicSystem.LabOrderTest
         }
         private async void SetLoadedAppointment(int appointmentId)
         {
-            findAppointmentCtrl1.LoadAppointmentInfo(appointmentId);
+            await findAppointmentCtrl1.LoadAppointmentInfo(appointmentId);
             findAppointmentCtrl1.AllowFind = false;
             var appo = findAppointmentCtrl1.CurrentAppointment;
 
@@ -119,6 +119,9 @@ namespace ClinicSystem.LabOrderTest
             LabTestListing labList = await LabTestListing.FindLabTestByID(labTest.LabID);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(labTests, "LabID", labList.LabID);
             CommonOperations.UpdateAfterAdding(labTests, labList, targetIndex);
+
+            lblRecords.Text = $"{dgvLabTests.Rows.Count} records";
+
         }
     }
 }
