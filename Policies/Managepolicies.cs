@@ -46,6 +46,8 @@ namespace ClinicSystem.Policies
         {
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Policies, "PolicyID", policy.PolicyID);
             CommonOperations.UpdateAfterAdding(Policies, policy, targetIndex);
+
+            lblRecords.Text = $"{dgvPolicies.Rows.Count} records";
         }
 
         private void addNewPolicyToolStripMenuItem_Click(
