@@ -21,7 +21,6 @@ namespace ClinicSystem.Patients.Controls
 
         public delegate void SendPatientInfo(Patient patient);
         public event SendPatientInfo SendPatient;
-
         public bool AllowAddNew
         {
             get => AddPatient.Enabled;
@@ -32,17 +31,14 @@ namespace ClinicSystem.Patients.Controls
             cbFindBy.Items.Add("PatientID");
             cbFindBy.SelectedIndex = 0;
         }
-
         private void cbFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void txtFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.HandleInputType(e, true, false);
         }
-
         private void txtFindBy_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ValidationHelper.IsEmptyOrNull(txtFindBy.Text))
@@ -50,7 +46,6 @@ namespace ClinicSystem.Patients.Controls
             else
                 errors.SetError(txtFindBy, null);
         }
-
         public async Task Find()
         {
             this.ValidateChildren();
@@ -69,26 +64,22 @@ namespace ClinicSystem.Patients.Controls
             if (AllowedFind)
                 SendPatient?.Invoke(patient);
         }
-
         private async void btnFind_Click(object sender, System.EventArgs e)
         {
             await Find();
         }
-
         public async void LoadPatientInfo(int patientId)
         {
             txtFindBy.Text = patientId.ToString();
             await Find();
         }
-
         private void btnAddNew_Click(object sender, System.EventArgs e)
         {
             RegisterPatient addPatient = new RegisterPatient();
             addPatient.OnRegisterSave += RecivePatientId;
             addPatient.ShowDialog();
         }
-
-        private async void RecivePatientId(Patient patient)
+        private void RecivePatientId(Patient patient)
         {
             this.patient = patient;
             LoadPatientInfo(patient.PatientId);
