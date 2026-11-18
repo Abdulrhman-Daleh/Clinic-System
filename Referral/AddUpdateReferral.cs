@@ -11,8 +11,8 @@ namespace ClinicSystem.Referral
     public partial class AddUpdateReferral : FormsDefaultSettings
     {
         private Business.Referral referral;
-        private int AppointmentId;
-        private EnMode Mode;
+        private readonly int AppointmentId;
+        private readonly EnMode Mode;
         public AddUpdateReferral(int appointmentId, EnMode mode)
         {
             InitializeComponent();
@@ -22,12 +22,12 @@ namespace ClinicSystem.Referral
             AppointmentId = appointmentId;
             Mode = mode;
 
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
             Load += AddUpdateReferral_Load;
         }
 
         private async Task SetUpForm(int appointmentId, EnMode mode)
         {
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
             if (mode == EnMode.Add)
             {
                 referral = new Business.Referral();
@@ -73,8 +73,8 @@ namespace ClinicSystem.Referral
 
         private async void AddUpdateReferral_Load(object sender, EventArgs e)
         {
-            SetPage();
             await SetUpForm(AppointmentId, Mode);
+            SetPage();
         }
 
         private void SetControls()
@@ -92,7 +92,6 @@ namespace ClinicSystem.Referral
         private void CollectData()
         {
             referral.AppointmentID = viewAppointmentInfoCtrl1.CurrentAppointment.AppointmentID;
-            referral.NoteID = viewSoapNoteCtrl1.CurrentNote.NoteID;
 
             referral.DoctorID = Global.CurrentLoggedInStaff.StaffId;
             referral.Doctor = Global.CurrentLoggedInStaff;
@@ -101,7 +100,6 @@ namespace ClinicSystem.Referral
             referral.NoteID = referral.Note == null ? -1 : referral.Note.NoteID;
 
             referral.ReferralReason = txtReferralReason.Text.Trim();
-
             referral.ReferralUrgency = (EnReferralUrgencies)cbReferralUrgency.SelectedItem;
 
             referral.Speciality = txtSpeciality.Text.Trim();
@@ -177,7 +175,7 @@ namespace ClinicSystem.Referral
                     "Update");
 
 
-                viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(referral.AppointmentID);
+                await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(referral.AppointmentID);
                 OnSave?.Invoke(referral);
 
                 lblReferralId.Text = $"Ref-{referral.ReferralID}";
