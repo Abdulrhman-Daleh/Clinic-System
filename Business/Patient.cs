@@ -77,13 +77,6 @@ namespace Business
         }
         public static async Task<Patient> FindPatientById(int patientId)
         {
-            if (!Util.CanAccessForm(
-                EnRole.Receptionist,
-                EnRole.Doctor,
-                EnRole.Nurse,
-                EnRole.Owner).IsSuccess)
-                return null;
-
             return FromDto(await PatientData.FindPatientById(patientId));
         }
         public int FreezeUnlockDays()

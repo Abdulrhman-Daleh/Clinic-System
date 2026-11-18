@@ -101,8 +101,10 @@ namespace ClinicSystem.Patients
         private async void RefreshDgv(Patient p)
         {
             PatientList patient = await PatientList.FindPatientByIdList(p.PatientId);
-            int targetIndex = CommonOperations.FindTargetIndexOfObj(Patients, "PatientID", patient);
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Patients, "PatientId", patient.PatientId);
             CommonOperations.UpdateAfterAdding(Patients, patient, targetIndex);
+
+            lblRecords.Text = $"{dgvPatients.Rows.Count} records";
         }
 
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
