@@ -122,7 +122,7 @@ namespace Data_Access
                 Status = (string)reader["Status"]
             };
         }
-        public static async Task<BindingList<AppointmentListDto>> GetAppointment(int doctorId)
+        public static async Task<BindingList<AppointmentListDto>> GetStaffAppointments(int doctorId)
         {
             BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
 
@@ -134,6 +134,16 @@ namespace Data_Access
             string query = @"select * From GetAppointmentsList(@DoctorId)";
 
             appointments = await DataAccessHelper.ExecuteObjectList(query, parameters, AppointmentListDtoMapper);
+
+            return appointments;
+        }
+        public static async Task<BindingList<AppointmentListDto>> GetAllAppointments()
+        {
+            BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
+
+            string query = @"select * From GetAppointmentsListNoParams";
+
+            appointments = await DataAccessHelper.ExecuteObjectList(query, null, AppointmentListDtoMapper);
 
             return appointments;
         }
@@ -176,6 +186,22 @@ namespace Data_Access
                 new SqlParameter("@AppointmentId", SqlDbType.Int) {Value =  appointmentId},
                 new SqlParameter("@StaffId", SqlDbType.Int) {Value =  staffId}
 
+            };
+
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentDtoMapper);
+        }
+        public static async Task<AppointmentDto> FindAppointmentByID(int appointmentId)
+        {
+            string query = @"select AppointmentID, PatientID, StaffID, appo.AppointmentStatusID, aStatus.AppointmentStatusText, appo.AppointmentTypeID,
+            appoType.AppointmentTypeText, AppointmentDate,
+            AppointmentTime, AppointmentEndTime from Appointments as appo inner join AppointmentStatuses as aStatus on 
+            appo.AppointmentStatusID = aStatus.AppointmentStatusID inner join AppointmentTypes as appoType on appoType.AppointmentTypeID
+            = appo.AppointmentTypeID
+            where AppointmentID = @AppointmentId";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value =  appointmentId},
             };
 
             return await DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentDtoMapper);

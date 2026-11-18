@@ -6,13 +6,12 @@ namespace ClinicSystem.Appointments
 {
     public partial class ViewAppointment : FormsDefaultSettings
     {
+        private readonly int AppointmentId;
         public ViewAppointment(int appointmentId)
         {
             InitializeComponent();
-            findAppointmentCtrl1.LoadAppointmentInfo(appointmentId);
-            lblAppointmentId.Text = appointmentId.ToString();
-            findAppointmentCtrl1.AllowFind = false;
-            SetAppointment(findAppointmentCtrl1.CurrentAppointment);
+            AppointmentId = appointmentId;
+            Load += ViewAppointment_Load;
         }
         public ViewAppointment()
         {
@@ -23,9 +22,7 @@ namespace ClinicSystem.Appointments
         {
             SetAppointment(appointment);
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
-
         private void SetAppointment(Appointment appointment)
         {
             if (ValidationHelper.IsEmptyOrNull(appointment))
@@ -47,7 +44,6 @@ namespace ClinicSystem.Appointments
 
         public delegate void SendAppointmentOnSave(Appointment appointment);
         public event SendAppointmentOnSave OnSave;
-
         private void btnReschedule_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
@@ -58,10 +54,16 @@ namespace ClinicSystem.Appointments
             rescheduleAppointment.OnSave += RescheduleAppointment_OnSave;
             rescheduleAppointment.ShowDialog();
         }
-
         private void RescheduleAppointment_OnSave(Appointment appointment)
         {
             OnSave?.Invoke(appointment);
+        }
+        private async void ViewAppointment_Load(object sender, System.EventArgs e)
+        {
+            await findAppointmentCtrl1.LoadAppointmentInfo(AppointmentId);
+            lblAppointmentId.Text = $"App- {AppointmentId}";
+
+            SetAppointment(findAppointmentCtrl1.CurrentAppointment);
         }
     }
 }

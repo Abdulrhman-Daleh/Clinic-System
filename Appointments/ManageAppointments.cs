@@ -86,6 +86,8 @@ namespace ClinicSystem.Appointments
             AppointmentList appointmentList = await AppointmentList.FindAppointmentListByID(appointment.StaffID);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Appointments, "AppointmentID", appointmentList.AppointmentID);
             CommonOperations.UpdateAfterAdding(Appointments, appointmentList, targetIndex);
+
+            lblRecords.Text = $"{dgvAppointments.Rows.Count} records";
         }
         private void viewAppointmentToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -114,9 +116,6 @@ namespace ClinicSystem.Appointments
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvAppointments));
 
-            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
-                return;
-
             if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
                 return;
 
@@ -126,12 +125,6 @@ namespace ClinicSystem.Appointments
 
             if (ValidationHelper.IsEmptyOrNull(app, "Appointment is not found"))
                 return;
-
-            if (app.StaffID != Global.CurrentLoggedInStaff.StaffId)
-            {
-                MessageBox.Show("allowed to see only his appointment", "Not allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             rescheduleToolStripMenuItem.Enabled = app.IsStillActive();
             goToAppointmentToolStripMenuItem.Enabled = app.IsStillActive();

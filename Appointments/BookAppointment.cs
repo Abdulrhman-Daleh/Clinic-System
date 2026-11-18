@@ -11,7 +11,8 @@ namespace ClinicSystem.Appointments
     public partial class BookAppointment : FormsDefaultSettings
     {
         private Appointment appointment;
-
+        private readonly int AppointmentId;
+        private readonly EnAppointmentStatuses AppointmentStatuses;
         public BookAppointment(EnAppointmentStatuses appointmentStatus)
         {
             InitializeComponent();
@@ -26,11 +27,11 @@ namespace ClinicSystem.Appointments
             InitializeComponent();
 
             SetFormTextBasedMode($"{appointmentNewStatus} Appointment", $"{appointmentNewStatus} Appointment", $"Update Appointment");
-            SetUpdateFrom(appointmentId);
-            appointment.AppointmentStatuses = appointmentNewStatus;
+            AppointmentId = appointmentId;
+            AppointmentStatuses = appointmentNewStatus;
         }
 
-        private async void SetUpdateFrom(int appointmentId)
+        private async void SetUpdateFrom(int appointmentId, EnAppointmentStatuses newStatus)
         {
             appointment = await Appointment.FindAppointmentByID(appointmentId);
 
@@ -41,10 +42,12 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
+            appointment.AppointmentStatuses = newStatus;
             if (appointment.AppointmentStatuses != EnAppointmentStatuses.Scheduled)
             {
                 MessageBox.Show($"you can't reschedule : {appointment.AppointmentStatuses} appointment", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 btnSave.Enabled = false;
+                Close();
                 return;
             }
 
@@ -116,6 +119,11 @@ namespace ClinicSystem.Appointments
         {
             findPatientCtrl1.SendPatient += RecivePatientInfo;
             findStaffCtrl1.OnFound += ReciveStaffInfo;
+
+            if (AppointmentId > 0)
+            {
+                SetUpdateFrom(AppointmentId, AppointmentStatuses);
+            }
         }
 
         private void ReciveStaffInfo(Business.Staff staff)

@@ -1,4 +1,5 @@
-﻿using Data_Access;
+﻿using AppEnums.cs;
+using Data_Access;
 using Data_Access.ListingDTOs;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -31,8 +32,14 @@ namespace Business
         public static async Task<BindingList<AppointmentList>> GetAppointment()
         {
             BindingList<AppointmentList> appointments = new BindingList<AppointmentList>();
+            var AppointmentList = new BindingList<AppointmentListDto>();
 
-            foreach (var appo in await AppointmentData.GetAppointment(Global.CurrentLoggedInStaff.StaffId))
+            if (Util.CanAccessForm(AppEnums.cs.EnRole.Owner, EnRole.Receptionist).IsSuccess)
+                AppointmentList = await AppointmentData.GetAllAppointments();
+            else
+                AppointmentList = await AppointmentData.GetStaffAppointments(Global.CurrentLoggedInStaff.StaffId);
+
+            foreach (var appo in AppointmentList)
                 appointments.Add(FromDto(appo));
 
             return appointments;
