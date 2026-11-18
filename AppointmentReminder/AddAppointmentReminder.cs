@@ -1,6 +1,7 @@
 ﻿using Business;
 using ClinicSystem.Helpers;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClinicSystem.AppointmentReminder
@@ -8,22 +9,48 @@ namespace ClinicSystem.AppointmentReminder
     public partial class AddAppointmentReminder : FormsDefaultSettings
     {
         Business.AppointmentReminder Reminder { get; set; }
+        private readonly int AppointmentId;
         public AddAppointmentReminder(int appointmentId)
         {
             InitializeComponent();
             Reminder = new Business.AppointmentReminder();
-            LoadCtrl(appointmentId);
+            AppointmentId = appointmentId;
+            Load += AddAppointmentReminder_Load;
+        }
+
+        private async void AddAppointmentReminder_Load(object sender, EventArgs e)
+        {
+            await LoadCtrl(AppointmentId);
         }
 
         public delegate void SendReminderOnSave(Business.AppointmentReminder reminder);
         public event SendReminderOnSave OnSave;
 
-        private void LoadCtrl(int appointmentId)
+        private async Task LoadCtrl(int appointmentId)
         {
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
 
             if (!ValidationHelper.IsEmptyOrNull(Global.CurrentLoggedInStaff))
                 viewStaffInfoCtrl1.LoadStaffInfo(Global.CurrentLoggedInStaff);
+
+            Appointment appointment = viewAppointmentInfoCtrl1.CurrentAppointment;
+
+            if (ValidationHelper.IsEmptyOrNull(appointment))
+                return;
+
+            if (!appointment.IsStillActive())
+            {
+                MessageBox.Show("Appointment is no longer valid", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+                return;
+            }
+
+            if (appointment.AppointmentStatuses == AppEnums.cs.EnAppointmentStatuses.InRoom)
+            {
+                MessageBox.Show("Patient is in room getting treated", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Close();
+                return;
+            }
         }
 
         private void CollectData()

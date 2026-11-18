@@ -8,11 +8,11 @@ namespace ClinicSystem.AppointmentReminder
     public partial class ManageAppointmentReminders : FormsDefaultSettings
     {
         private BindingList<Business.AppointmentReminder> AppointmentReminders { get; set; }
-        private int _AppointmetId { get; set; }
+        private readonly int AppointmetId;
         public ManageAppointmentReminders(int appointmentId)
         {
             InitializeComponent();
-            _AppointmetId = appointmentId;
+            AppointmetId = appointmentId;
         }
 
         private void RefreshFilter(int index)
@@ -24,7 +24,7 @@ namespace ClinicSystem.AppointmentReminder
         }
         private async void LoadInfo(int appointmentId)
         {
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
             AppointmentReminders = await Business.AppointmentReminder.GetAppointmentReminders(appointmentId);
             RefreshFilter(0);
         }
@@ -40,7 +40,7 @@ namespace ClinicSystem.AppointmentReminder
         {
             cbFilterBy.Items.AddRange(new object[] { "None", "ReminderID", "Subject" });
 
-            LoadInfo(_AppointmetId);
+            LoadInfo(AppointmetId);
             RefreshFilter(0);
         }
 
@@ -64,6 +64,8 @@ namespace ClinicSystem.AppointmentReminder
         {
             int targetIndex = CommonOperations.FindTargetIndexOfObj(AppointmentReminders, "ReminderID", reminder.ReminderID);
             CommonOperations.UpdateAfterAdding(AppointmentReminders, reminder, targetIndex);
+
+            lblRecords.Text = $"{dgvReminders.Rows.Count} records";
         }
 
         private void sendReminderToolStripMenuItem_Click(object sender, System.EventArgs e)
