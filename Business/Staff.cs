@@ -196,9 +196,6 @@ namespace Business
         }
         public static async Task<Staff> FindStaffById(int staffId)
         {
-            if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
-                return null;
-
             StaffDto staffDto = await StaffData.FindStaffById(staffId);
 
             return await FromDto(staffDto);

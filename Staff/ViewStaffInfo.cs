@@ -24,10 +24,14 @@ namespace ClinicSystem.Staff
             StaffId = staffId;
 
             Load += ViewStaffInfo_Load;
-            findStaffCtrl1.LoadData(ViewedStaff);
         }
 
-        private async void ViewStaffInfo_Load(object sender, System.EventArgs e) => ReciveStaffInfo(await Business.Staff.FindStaffById(StaffId));
+        private async void ViewStaffInfo_Load(object sender, System.EventArgs e)
+        {
+            ReciveStaffInfo(await Business.Staff.FindStaffById(StaffId));
+
+            findStaffCtrl1.LoadData(ViewedStaff);
+        }
 
         public delegate void SendStaffOnChange(int staffId);
         public event SendStaffOnChange OnChange;
@@ -65,9 +69,10 @@ namespace ClinicSystem.Staff
             MessageBox.Show("Staff failed to get deactivate", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private void ReciveStaffId(int staffId)
+        private async void ReciveStaffId(int staffId)
         {
             OnChange?.Invoke(staffId);
+            ViewedStaff = await Business.Staff.FindStaffById(StaffId);
             findStaffCtrl1.LoadData(ViewedStaff);
         }
 

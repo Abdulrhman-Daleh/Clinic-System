@@ -56,7 +56,6 @@ namespace ClinicSystem.Staff
         {
             InitializeComponent();
             StaffId = staffId;
-            findPersonCtrl1.RecivePersonInfo(staff);
         }
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
@@ -95,7 +94,6 @@ namespace ClinicSystem.Staff
         {
             await LoadSchedules();
             await LoadRoles();
-            cbRoles.SelectedIndex = (int)staff.Role - 1;
 
             if (StaffId > 0)
             {
@@ -107,6 +105,10 @@ namespace ClinicSystem.Staff
                 SetControls(staff.StaffId, staff.StaffNumber, staff.Username, "Not Allowed To Show");
                 SetFormTextBasedMode("Update staff", "Update Staff", "Update");
                 findPersonCtrl1.AllowFind = false;
+                findPersonCtrl1.RecivePersonInfo(staff);
+                txtPassword.Enabled = false;
+                cbRoles.SelectedIndex = (int)staff.Role - 1;
+                cbSchedules.SelectedIndex = staff.ScheduleId - 1;
             }
         }
         private void btnCancel_Click(object sender, System.EventArgs e) => Close();
