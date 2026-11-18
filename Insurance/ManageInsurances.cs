@@ -136,6 +136,8 @@ namespace ClinicSystem.Insurance
             InsuranceList Insurance = await InsuranceList.FindInsurancebyID(InsuranceId);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Insurances, "InsuranceID", Insurance.InsuranceID);
             CommonOperations.UpdateAfterAdding(Insurances, Insurance, targetIndex);
+
+            lblRecords.Text = $"{dgvInsurances.Rows.Count} records";
         }
         private void addNewInsuranceToolStripMenuItem_Click(
             object sender, EventArgs e)
