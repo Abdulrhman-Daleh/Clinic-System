@@ -22,7 +22,7 @@ namespace ClinicSystem.Medicine.Prescription
 
             lblPrescriptionId.Text = $"View Prescription - {Prescription.Appointment.Patient.GetFullName()} . {Prescription.WriteDate.ToShortDateString()}";
             viewMRecordInfo1.LoadMedicalRecordInfo(await Business.MedicalRecord.FindMedicalRecordByPatientID(Prescription.Appointment.PatientID));
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(Prescription.AppointmentID);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(Prescription.AppointmentID);
             patientInfoCtrl1.LoadPatientInfo(Prescription.Appointment.Patient);
 
             btnEdit.Enabled = !Prescription.DoctorDidSign && Prescription.Appointment.IsStillActive();

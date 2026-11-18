@@ -69,12 +69,7 @@ namespace Business
                 Duration = item.Duration
             };
         }
-        private bool AddNewPrescriptionItem()
-        {
-            ItemID = PrescriptionItemData.AddNewPrescriptionItem(ToDto(this));
 
-            return ItemID > 0;
-        }
         private bool UpdatePrescriptionItem()
         {
             return PrescriptionItemData.UpdatePrescriptionItem(ToDto(this));
@@ -104,25 +99,15 @@ namespace Business
             {
                 case EnMode.Add:
 
-                    if (AddNewPrescriptionItem())
-                    {
-                        _mode = EnMode.Update;
-
-                        Auditor.Log(
-                            "Prescription Item Added",
-                            $"MedicineID {MedicineID} was prescribed with dose {Dose}, {Frequency}, quantity {Quantity}, for {Duration} by {performedBy}.",
-                            $"PrescriptionItemID {ItemID}");
-
-                        return new OperationResult(
-                            "Prescription item added successfully.",
-                            "Added",
-                            true);
-                    }
+                    Auditor.Log(
+                        "Prescription Item Added",
+                        $"MedicineID {MedicineID} was prescribed with dose {Dose}, {Frequency}, quantity {Quantity}, for {Duration} by {performedBy}.",
+                        $"PrescriptionItemID {ItemID}");
 
                     return new OperationResult(
-                        "Failed to add prescription item.",
-                        "Failed",
-                        false);
+                        "Prescription item added successfully.",
+                        "Added",
+                        true);
 
                 case EnMode.Update:
 

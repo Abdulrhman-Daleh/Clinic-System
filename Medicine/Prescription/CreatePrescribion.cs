@@ -29,7 +29,7 @@ namespace ClinicSystem.Medicine.Prescription
             if (ValidationHelper.IsEmptyOrNull(Appointment, "Appointment is not found"))
                 return;
 
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
 
             viewPersonInfoCtrl1.SetData(Appointment.Patient);
             viewStaffInfoCtrl1.LoadStaffInfo(Appointment.Staff);
@@ -76,7 +76,7 @@ namespace ClinicSystem.Medicine.Prescription
             SetFormTextBasedMode("Update prescription", "Update prescription", "Update");
             lblPrescriptionId.Text = $"per-{prescription.PrescriptionID}";
             lnkAddItem.Enabled = false;
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(prescription.AppointmentID);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(prescription.AppointmentID);
             OnSave?.Invoke();
         }
         private async void btnSave_Click(object sender, System.EventArgs e)
