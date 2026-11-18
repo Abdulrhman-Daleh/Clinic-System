@@ -40,7 +40,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
                 return;
             }
 
-            findAppointmentCtrl1.LoadAppointmentInfo(Appointment.AppointmentID);
+            await findAppointmentCtrl1.LoadAppointmentInfo(Appointment.AppointmentID);
             findPersonCtrl1.RecivePersonInfo(Appointment.Patient);
             viewMRecordInfo1.LoadMedicalRecordInfo(await Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID));
             findAppointmentCtrl1.AllowFind = false;
@@ -60,7 +60,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
             Note.IsActive = true;
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             CollectData();
             OperationResult result = Note.Save();
@@ -75,7 +75,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
             SetFormTextBasedMode("Update SOAP Note", "Update SOAP Note", "Update Note");
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, MessageBoxIcon.Information);
             lblNoteId.Text = $"No-{Note.NoteID}";
-            findAppointmentCtrl1.LoadAppointmentInfo(Note.AppointmentID);
+            await findAppointmentCtrl1.LoadAppointmentInfo(Note.AppointmentID);
             OnSave?.Invoke();
 
         }

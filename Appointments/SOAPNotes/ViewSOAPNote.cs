@@ -13,7 +13,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
             LoadSOAPNoteInfo(appointmentId);
         }
 
-        public void LoadSOAPNoteInfo(int appointmentId)
+        public async void LoadSOAPNoteInfo(int appointmentId)
         {
             if (ValidationHelper.IsEmptyOrNull(viewSoapNoteCtrl1.CurrentNote))
             {
@@ -22,7 +22,7 @@ namespace ClinicSystem.Appointments.SOAPNotes
             }
 
             lblNoteId.Text = $"SOAP Note - {CurrentNote.WrittenBy.GetFullName()} . {CurrentNote.CreationDate.ToShortDateString()}";
-            viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
+            await viewAppointmentInfoCtrl1.LoadUpAppointmentInfo(appointmentId);
             viewPersonInfoCtrl1.SetData(CurrentNote.WrittenBy);
             viewMRecordInfo1.LoadMedicalRecordInfo(CurrentNote.MedicalRecord);
         }
