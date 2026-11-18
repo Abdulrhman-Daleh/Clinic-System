@@ -281,6 +281,7 @@
             this.Controls.Add(this.pbModeImage);
             this.Name = "AddUpdateMedicine";
             this.Text = "Add Update Medicine";
+            this.Load += new System.EventHandler(this.AddUpdateMedicine_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
