@@ -33,13 +33,14 @@ namespace ClinicSystem.Staff
         }
         private async void RefreshDgv(int staffId)
         {
-            int targetIndex = CommonOperations.FindTargetIndexOfObj(StaffList, "StaffId", staffId);
             StaffList staffList = await Business.StaffList.FindStaffById(staffId);
 
             if (ValidationHelper.IsEmptyOrNull(staffList, "Invalid access to staff"))
                 return;
 
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(StaffList, "StaffId", staffId);
             CommonOperations.UpdateAfterAdding(StaffList, staffList, targetIndex);
+            lblRecords.Text = $"{dgvStaff.Rows.Count} records";
         }
         private void addNewStaffToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
