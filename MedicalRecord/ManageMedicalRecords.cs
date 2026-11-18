@@ -152,6 +152,8 @@ namespace ClinicSystem.MedicalRecord
             int targetIndex = CommonOperations.FindTargetIndexOfObj(MedicalRecords, "RecordID", RecordListing);
 
             CommonOperations.UpdateAfterAdding(MedicalRecords, RecordListing, targetIndex);
+
+            lblRecords.Text = $"{dgvMedicalRecords.Rows.Count} records";
         }
         private void addNewMedicalRecordToolStripMenuItem_Click(
             object sender, EventArgs e)
