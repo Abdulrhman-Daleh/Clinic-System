@@ -73,7 +73,6 @@ namespace Business
 
             return appointment;
         }
-
         public static async Task<BindingList<string>> GetAppointmentTypesNames()
         {
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
@@ -221,6 +220,11 @@ namespace Business
             {
                 result = IsAppointmentValidToSave();
             }
+
+            if (!result.IsSuccess)
+                return result;
+
+            result = EnsureNoBackToBackBooking();
 
             if (!result.IsSuccess)
                 return result;
@@ -433,5 +437,34 @@ namespace Business
             AppointmentStatuses != EnAppointmentStatuses.Cancelled &&
             AppointmentStatuses != EnAppointmentStatuses.NoShow;
         public bool DoesHasAppointmentReminders(int appointmentId) => AppointmentData.DoesHasAppointmentReminders(appointmentId);
+        private OperationResult EnsureNoBackToBackBooking()
+        {
+            if (AppointmentStatuses == EnAppointmentStatuses.InRoom)
+                return new OperationResult("Patient is attending in room treatment try again later.", "Not Allowed", false);
+
+            if ((!AppointmentTypes.Equals(EnAppointmentTypes.ChronicCare))
+                && AppointmentData.DoesPatientHasActiveAppointment(PatientID, AppointmentDate))
+                return new OperationResult("Appointment type is not urgent and patient has an active appointment.", "Not Allowed", false);
+
+            if (AppointmentTypes.Equals(EnAppointmentTypes.ChronicCare))
+            {
+                OperationResult result = PatientAlreadyHas2ActiveChronicAppointment(PatientID);
+
+                if (!result.IsSuccess)
+                    return result;
+            }
+            Auditor.Log("Added Urgent/Immediate Appointment", $"Receptionist {StaffID} => {Staff.GetFullName()} added an urgent appointment on" +
+                $"{DateTime.Now}", "Appointment.EnsureNoBackToBackBooking");
+
+            return new OperationResult("Urgent appointment added successfully", "Added", true);
+        }
+
+        private OperationResult PatientAlreadyHas2ActiveChronicAppointment(int patientId)
+        {
+            if (AppointmentData.PatientAlreadyHas2ActiveChronicAppointment(patientId))
+                return new OperationResult("patient already has 2 chronic active appointment", "Not Allowed", false);
+
+            return new OperationResult("patient is ok to book appointment", "Allowed", true);
+        }
     }
 }

@@ -21,7 +21,6 @@ namespace ClinicSystem.Appointments
             appointment.AppointmentStatuses = appointmentStatus;
             SetFormTextBasedMode("Add New Appointment", "Add New Appointment", "Add Appointment");
         }
-
         public BookAppointment(int appointmentId, EnAppointmentStatuses appointmentNewStatus)
         {
             InitializeComponent();
@@ -30,7 +29,6 @@ namespace ClinicSystem.Appointments
             AppointmentId = appointmentId;
             AppointmentStatuses = appointmentNewStatus;
         }
-
         private async void SetUpdateFrom(int appointmentId, EnAppointmentStatuses newStatus)
         {
             appointment = await Appointment.FindAppointmentByID(appointmentId);
@@ -42,7 +40,7 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
-            appointment.AppointmentStatuses = newStatus;
+
             if (appointment.AppointmentStatuses != EnAppointmentStatuses.Scheduled)
             {
                 MessageBox.Show($"you can't reschedule : {appointment.AppointmentStatuses} appointment", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -51,6 +49,7 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
+            appointment.AppointmentStatuses = newStatus;
             cbType.Enabled = false;
             lblAppointmentId.Text = $"Appo-" + appointment.AppointmentID;
             findPatientCtrl1.LoadPatientInfo(appointment.PatientID);
@@ -68,16 +67,13 @@ namespace ClinicSystem.Appointments
 
         public delegate void SendAppointmentOnSave(Appointment appointment);
         public event SendAppointmentOnSave OnSave;
-
         private void SetFormTextBasedMode(string labelTitle, string pageTitle, string saveButtonText)
         {
             lblTitle.Text = labelTitle;
             Text = pageTitle;
             btnSave.Text = saveButtonText;
         }
-
         private void BtnCancel_Click(object sender, EventArgs e) => Close();
-
         private async void SetUp(int index)
         {
             dtpAppointmentDate.MinDate = DateTime.Now;
@@ -88,12 +84,10 @@ namespace ClinicSystem.Appointments
             findStaffCtrl1.AllowAddNew = false;
             cbType.SelectedIndex = index;
         }
-
         private async Task LoadAppointmentTypes()
         {
             cbType.DataSource = await Appointment.GetAppointmentTypesNames();
         }
-
         private void dtpEnd_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (dtpEnd.Value <= dtpStart.Value)
@@ -101,12 +95,14 @@ namespace ClinicSystem.Appointments
             else
                 errors.SetError(dtpEnd, null);
 
-            if ((dtpEnd.Value - dtpStart.Value).TotalHours > 2 || (dtpEnd.Value - dtpStart.Value).TotalMinutes < 60)
+            int TotalHours = (int)(dtpEnd.Value - dtpStart.Value).TotalHours;
+            int TotalMinutes = (int)(dtpEnd.Value - dtpStart.Value).TotalMinutes;
+
+            if (TotalHours > 2 || TotalMinutes < 60)
                 errors.SetError(dtpEnd, "appointment duration is not appropriate must be < 2h and at least 60min");
             else
                 errors.SetError(dtpEnd, null);
         }
-
         private void CollectData()
         {
             appointment.AppointmentTypes = (EnAppointmentTypes)cbType.SelectedIndex + 1;
@@ -114,7 +110,6 @@ namespace ClinicSystem.Appointments
             appointment.AppointmentTime = new TimeSpan(dtpStart.Value.Hour, dtpStart.Value.Minute, dtpStart.Value.Second);
             appointment.AppointmentEndTime = new TimeSpan(dtpEnd.Value.Hour, dtpEnd.Value.Minute, dtpEnd.Value.Second);
         }
-
         private void BookAppointment_Load(object sender, EventArgs e)
         {
             findPatientCtrl1.SendPatient += RecivePatientInfo;
@@ -125,7 +120,6 @@ namespace ClinicSystem.Appointments
                 SetUpdateFrom(AppointmentId, AppointmentStatuses);
             }
         }
-
         private void ReciveStaffInfo(Business.Staff staff)
         {
             appointment.Staff = staff;
@@ -146,7 +140,6 @@ namespace ClinicSystem.Appointments
 
             appointment.StaffID = staff.StaffId;
         }
-
         private void RecivePatientInfo(Patient patient)
         {
             appointment.Patient = patient;
@@ -159,7 +152,6 @@ namespace ClinicSystem.Appointments
 
             appointment.PatientID = patient.PatientId;
         }
-
         private async Task Save()
         {
             ValidateChildren();
@@ -179,7 +171,7 @@ namespace ClinicSystem.Appointments
 
             CollectData();
 
-            result = await appointment.Save(null);
+            result = await appointment.Save();
 
             MessageBox.Show(
                 result.Message,
@@ -196,7 +188,6 @@ namespace ClinicSystem.Appointments
                 OnSave?.Invoke(appointment);
             }
         }
-
         private async void btnSave_Click(object sender, EventArgs e)
         {
             await Save();

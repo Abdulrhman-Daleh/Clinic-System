@@ -147,13 +147,13 @@ namespace Data_Access
 
             return appointments;
         }
-        public static async Task<AppointmentListDto> FindAppointmentListByID(int staffId)
+        public static async Task<AppointmentListDto> FindAppointmentListByID(int appointmentId)
         {
-            string query = @"select * from GetAppointmentsList(@staffId)";
+            string query = @"select * from GetAppointmentsList(@appointmentId)";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
-                new SqlParameter("@staffId", SqlDbType.Int) {Value =  staffId}
+                new SqlParameter("@appointmentId", SqlDbType.Int) {Value =  appointmentId}
             };
 
             return await DataAccessHelper.ExecuteOneObject(query, parameters, AppointmentListDtoMapper);
@@ -361,6 +361,62 @@ namespace Data_Access
                 return r > 0;
 
             return false;
+        }
+        public static bool DoesPatientHasActiveAppointment(int patientId, DateTime newAppointmentDate)
+        {
+            string query = "DoPatientHasActive24HoursAppointment";
+            bool result = false;
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@patientId", SqlDbType.Int) {Value =  patientId},
+                new SqlParameter("@newAppointmentDate", SqlDbType.DateTime) {Value = newAppointmentDate}
+            };
+
+            List<SqlParameter> outParameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@output", SqlDbType.Int) {Direction = ParameterDirection.Output}
+            };
+
+            DataAccessHelper.ExecuteNonQueryStoredProcedure<int>(query, parameters, outParameters);
+
+            object obj = outParameters[0].Value;
+
+            if (obj != null && int.TryParse(obj.ToString(), out int hasConflict))
+                result = hasConflict > 0;
+
+            return result;
+        }
+        public static bool PatientAlreadyHas2ActiveChronicAppointment(int patientId)
+        {
+            bool Has = false;
+
+            string query = @" select case
+    when exists
+    (
+ select 1 From Appointments as appo
+ inner join AppointmentTypes as appoTypes on appo.AppointmentTypeID = appoTypes.AppointmentTypeID
+     inner join AppointmentStatuses as appS on appo.AppointmentStatusID = appS.AppointmentStatusID  
+     where appS.AppointmentStatusText in ('Scheduled', 'Reminder Sent', 'Rescheduled') and appo.PatientID = @patientId and 
+     appoTypes.AppointmentTypeText = 'Chronic Care'
+    group by AppointmentTypeText
+    Having Count(AppointmentID) >= 2
+    ) then 1
+    else 0
+    end
+";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@patientId", SqlDbType.Int) {Value = patientId}
+            };
+
+            object result = DataAccessHelper.ExecuteScalar(query, parameters);
+
+            if (result != null && int.TryParse(result.ToString(), out int r))
+                Has = r == 1;
+
+            return Has;
+
         }
     }
 }
