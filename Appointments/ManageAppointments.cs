@@ -83,8 +83,9 @@ namespace ClinicSystem.Appointments
         }
         private async void RefreshDgv(Appointment appointment)
         {
-            AppointmentList appointmentList = await AppointmentList.FindAppointmentListByID(appointment.StaffID);
-            int targetIndex = CommonOperations.FindTargetIndexOfObj(Appointments, "AppointmentID", appointmentList.AppointmentID);
+            AppointmentList appointmentList = await AppointmentList.FindAppointmentListByID(appointment.AppointmentID);
+
+            int targetIndex = CommonOperations.FindTargetIndexOfObj(Appointments, "AppointmentID", appointment.AppointmentID);
             CommonOperations.UpdateAfterAdding(Appointments, appointmentList, targetIndex);
 
             lblRecords.Text = $"{dgvAppointments.Rows.Count} records";
