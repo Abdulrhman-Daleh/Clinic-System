@@ -31,7 +31,7 @@ namespace ClinicSystem.Login
                 chkRememberMe.Checked = false;
             }
 
-            txtPassword.Text = "Receptionist12345@";
+            txtPassword.Text = "Khaled12345@";
             txtUsername.Focus();
             ChkShowPassword.Checked = false;
 
