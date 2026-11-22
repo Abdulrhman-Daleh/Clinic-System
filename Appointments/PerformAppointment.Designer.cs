@@ -34,7 +34,7 @@
             this.lblName = new System.Windows.Forms.Label();
             this.lblType = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbPatient = new System.Windows.Forms.GroupBox();
             this.lnkViewMedicalRecord = new System.Windows.Forms.LinkLabel();
             this.lnkViewInsurance = new System.Windows.Forms.LinkLabel();
             this.lblInsurance = new System.Windows.Forms.Label();
@@ -47,12 +47,12 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.lblPatientName = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.gbSOAPNote = new System.Windows.Forms.GroupBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.lnkSOAPNote = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.gbActions = new System.Windows.Forms.GroupBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.lnkPayment = new System.Windows.Forms.LinkLabel();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
@@ -65,16 +65,16 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.findPolicyInfo1 = new ClinicSystem.Policies.Controls.FindPolicyInfo();
-            this.groupBox1.SuspendLayout();
+            this.gbPatient.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.gbSOAPNote.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            this.groupBox3.SuspendLayout();
+            this.gbActions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
@@ -134,26 +134,26 @@
             this.lblStatus.Size = new System.Drawing.Size(0, 25);
             this.lblStatus.TabIndex = 31;
             // 
-            // groupBox1
+            // gbPatient
             // 
-            this.groupBox1.Controls.Add(this.lnkViewMedicalRecord);
-            this.groupBox1.Controls.Add(this.lnkViewInsurance);
-            this.groupBox1.Controls.Add(this.lblInsurance);
-            this.groupBox1.Controls.Add(this.pictureBox5);
-            this.groupBox1.Controls.Add(this.lblMedicalRecord);
-            this.groupBox1.Controls.Add(this.pictureBox4);
-            this.groupBox1.Controls.Add(this.lblCurrentMedication);
-            this.groupBox1.Controls.Add(this.pictureBox3);
-            this.groupBox1.Controls.Add(this.lblAllergies);
-            this.groupBox1.Controls.Add(this.pictureBox2);
-            this.groupBox1.Controls.Add(this.lblPatientName);
-            this.groupBox1.Controls.Add(this.pictureBox1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 115);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(783, 300);
-            this.groupBox1.TabIndex = 32;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Patient Snapshot ";
+            this.gbPatient.Controls.Add(this.lnkViewMedicalRecord);
+            this.gbPatient.Controls.Add(this.lnkViewInsurance);
+            this.gbPatient.Controls.Add(this.lblInsurance);
+            this.gbPatient.Controls.Add(this.pictureBox5);
+            this.gbPatient.Controls.Add(this.lblMedicalRecord);
+            this.gbPatient.Controls.Add(this.pictureBox4);
+            this.gbPatient.Controls.Add(this.lblCurrentMedication);
+            this.gbPatient.Controls.Add(this.pictureBox3);
+            this.gbPatient.Controls.Add(this.lblAllergies);
+            this.gbPatient.Controls.Add(this.pictureBox2);
+            this.gbPatient.Controls.Add(this.lblPatientName);
+            this.gbPatient.Controls.Add(this.pictureBox1);
+            this.gbPatient.Location = new System.Drawing.Point(12, 115);
+            this.gbPatient.Name = "gbPatient";
+            this.gbPatient.Size = new System.Drawing.Size(783, 300);
+            this.gbPatient.TabIndex = 32;
+            this.gbPatient.TabStop = false;
+            this.gbPatient.Text = "Patient Snapshot ";
             // 
             // lnkViewMedicalRecord
             // 
@@ -267,18 +267,18 @@
             this.pictureBox1.TabIndex = 33;
             this.pictureBox1.TabStop = false;
             // 
-            // groupBox2
+            // gbSOAPNote
             // 
-            this.groupBox2.Controls.Add(this.pictureBox7);
-            this.groupBox2.Controls.Add(this.lnkSOAPNote);
-            this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.pictureBox6);
-            this.groupBox2.Location = new System.Drawing.Point(12, 421);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(783, 146);
-            this.groupBox2.TabIndex = 33;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "SOAP Note";
+            this.gbSOAPNote.Controls.Add(this.pictureBox7);
+            this.gbSOAPNote.Controls.Add(this.lnkSOAPNote);
+            this.gbSOAPNote.Controls.Add(this.label1);
+            this.gbSOAPNote.Controls.Add(this.pictureBox6);
+            this.gbSOAPNote.Location = new System.Drawing.Point(12, 421);
+            this.gbSOAPNote.Name = "gbSOAPNote";
+            this.gbSOAPNote.Size = new System.Drawing.Size(783, 146);
+            this.gbSOAPNote.TabIndex = 33;
+            this.gbSOAPNote.TabStop = false;
+            this.gbSOAPNote.Text = "SOAP Note";
             // 
             // pictureBox7
             // 
@@ -320,22 +320,22 @@
             this.pictureBox6.TabIndex = 35;
             this.pictureBox6.TabStop = false;
             // 
-            // groupBox3
+            // gbActions
             // 
-            this.groupBox3.Controls.Add(this.pictureBox11);
-            this.groupBox3.Controls.Add(this.lnkPayment);
-            this.groupBox3.Controls.Add(this.pictureBox10);
-            this.groupBox3.Controls.Add(this.lnkRefer);
-            this.groupBox3.Controls.Add(this.pictureBox9);
-            this.groupBox3.Controls.Add(this.lnkOrderTests);
-            this.groupBox3.Controls.Add(this.pictureBox8);
-            this.groupBox3.Controls.Add(this.lnkPrescribe);
-            this.groupBox3.Location = new System.Drawing.Point(9, 573);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(783, 146);
-            this.groupBox3.TabIndex = 39;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Actions";
+            this.gbActions.Controls.Add(this.pictureBox11);
+            this.gbActions.Controls.Add(this.lnkPayment);
+            this.gbActions.Controls.Add(this.pictureBox10);
+            this.gbActions.Controls.Add(this.lnkRefer);
+            this.gbActions.Controls.Add(this.pictureBox9);
+            this.gbActions.Controls.Add(this.lnkOrderTests);
+            this.gbActions.Controls.Add(this.pictureBox8);
+            this.gbActions.Controls.Add(this.lnkPrescribe);
+            this.gbActions.Location = new System.Drawing.Point(9, 573);
+            this.gbActions.Name = "gbActions";
+            this.gbActions.Size = new System.Drawing.Size(783, 146);
+            this.gbActions.TabIndex = 39;
+            this.gbActions.TabStop = false;
+            this.gbActions.Text = "Actions";
             // 
             // pictureBox11
             // 
@@ -473,9 +473,9 @@
             this.Controls.Add(this.findPolicyInfo1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.BtnCancel);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.gbActions);
+            this.Controls.Add(this.gbSOAPNote);
+            this.Controls.Add(this.gbPatient);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblType);
             this.Controls.Add(this.lblName);
@@ -485,19 +485,19 @@
             this.Controls.Add(this.pbModeImage);
             this.Name = "PerformAppointment";
             this.Text = "Perform Appointment";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbPatient.ResumeLayout(false);
+            this.gbPatient.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gbSOAPNote.ResumeLayout(false);
+            this.gbSOAPNote.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.gbActions.ResumeLayout(false);
+            this.gbActions.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
@@ -517,7 +517,7 @@
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gbPatient;
         private System.Windows.Forms.Label lblInsurance;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.Label lblMedicalRecord;
@@ -530,12 +530,12 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.LinkLabel lnkViewInsurance;
         private System.Windows.Forms.LinkLabel lnkViewMedicalRecord;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox gbSOAPNote;
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.LinkLabel lnkSOAPNote;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gbActions;
         private System.Windows.Forms.PictureBox pictureBox9;
         private System.Windows.Forms.LinkLabel lnkOrderTests;
         private System.Windows.Forms.PictureBox pictureBox8;

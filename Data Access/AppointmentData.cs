@@ -364,7 +364,8 @@ namespace Data_Access
         }
         public static bool DoesPatientHasActiveAppointment(int patientId, DateTime newAppointmentDate)
         {
-            string query = "DoPatientHasActive24HoursAppointment";
+            string query = @"DoPatientHasActive24HoursAppointment";
+
             bool result = false;
             List<SqlParameter> parameters = new List<SqlParameter>()
             {

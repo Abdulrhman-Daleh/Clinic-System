@@ -91,9 +91,10 @@ namespace Business
             Penalty peanlty = new Penalty();
             return peanlty.CreatePenalty(policy, appointment);
         }
-        private bool UpdateAppointment(Payment paymentInfo, Policy policy = null)
+        private bool UpdateAppointment(Payment paymentInfo, Policy policy)
         {
-            return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo), Penalty.ToDTO(GetPenaltyToAppointment(policy, this))) > 0;
+            return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo), Penalty.ToDTO(GetPenaltyToAppointment(policy,
+                this))) > 0;
         }
         private async Task<OperationResult> CheckSaveAccess()
         {
@@ -453,18 +454,23 @@ namespace Business
                 if (!result.IsSuccess)
                     return result;
             }
+
             Auditor.Log("Added Urgent/Immediate Appointment", $"Receptionist {StaffID} => {Staff.GetFullName()} added an urgent appointment on" +
                 $"{DateTime.Now}", "Appointment.EnsureNoBackToBackBooking");
 
             return new OperationResult("Urgent appointment added successfully", "Added", true);
         }
-
         private OperationResult PatientAlreadyHas2ActiveChronicAppointment(int patientId)
         {
             if (AppointmentData.PatientAlreadyHas2ActiveChronicAppointment(patientId))
                 return new OperationResult("patient already has 2 chronic active appointment", "Not Allowed", false);
 
             return new OperationResult("patient is ok to book appointment", "Allowed", true);
+        }
+        public bool IsAppointmentOutDated()
+        {
+            int appointmentLength = (int)(AppointmentEndTime - AppointmentTime).TotalMinutes;
+            return DateTime.Now > (AppointmentDate.AddMinutes(appointmentLength));
         }
     }
 }

@@ -65,6 +65,15 @@ namespace ClinicSystem.Appointments
                 return;
             }
 
+            if (Appointment.IsAppointmentOutDated())
+            {
+                MessageBox.Show("Appointment got outdated it's no longer available choose a policy to close it", "policy required", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                gbActions.Enabled = false;
+                gbPatient.Enabled = false;
+                gbSOAPNote.Enabled = false;
+                return;
+            }
+
             MedicalRecord = await Business.MedicalRecord.FindMedicalRecordByPatientID(Appointment.PatientID);
             Insurance = await Business.Insurance.FindInsuranceByPatientId(Appointment.PatientID);
 

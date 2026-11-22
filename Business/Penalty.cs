@@ -39,6 +39,15 @@ namespace Business
         }
         public Penalty CreatePenalty(Policy policy, Appointment appointment)
         {
+            if (Appointment.IsAppointmentOutDated())
+            {
+                if (appointment.AppointmentStatuses == EnAppointmentStatuses.InRoom)
+                {
+                    appointment.AppointmentStatuses = EnAppointmentStatuses.Completed;
+                    return null;
+                }
+            }
+
             Penalty penalty = new Penalty();
             penalty.PenaltyID = policy.PolicyID;
             penalty.AppointmentID = appointment.AppointmentID;
@@ -52,11 +61,11 @@ namespace Business
 
 
             penalty.Appointment.AppointmentStatuses = EnAppointmentStatuses.NoShow;
+            penalty.PenaltyAmount = policy.NoShowFee ?? 0;
             penalty.AppointmentID = AppointmentID;
             penalty.PenaltyWrittenDate = DateTime.Now;
             penalty.PenaltyDueDate = DateTime.Now.AddDays(7);
             penalty.PolicyID = policy.PolicyID;
-            penalty.PenaltyAmount = policy.NoShowFee ?? 0;
 
             return penalty;
         }

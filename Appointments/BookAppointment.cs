@@ -116,9 +116,7 @@ namespace ClinicSystem.Appointments
             findStaffCtrl1.OnFound += ReciveStaffInfo;
 
             if (AppointmentId > 0)
-            {
                 SetUpdateFrom(AppointmentId, AppointmentStatuses);
-            }
         }
         private void ReciveStaffInfo(Business.Staff staff)
         {
