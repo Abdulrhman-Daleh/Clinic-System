@@ -84,7 +84,6 @@ namespace Data_Access
 
             return patientId;
         }
-
         public static async Task<BindingList<PatientListingDto>> GetPatientListingDatas(
             int? doctorStaffId, int? nurseStaffId)
         {
@@ -133,7 +132,6 @@ namespace Data_Access
                 parameters,
                 PatientListMapper);
         }
-
         public static async Task<PatientListingDto> FindPatientByIdList(int patientId)
         {
             PatientListingDto patientListing = new PatientListingDto();
@@ -188,6 +186,18 @@ namespace Data_Access
                 ;
 
             return totalVisits;
+        }
+        public static int GetTotalUnPaidPatients()
+        {
+            string query = @"select count(*) as UnpaidPatients from Patients
+        where HasUnPaidFees is not null;";
+
+            object result = DataAccessHelper.ExecuteScalar(query, null);
+
+            if (result != null && int.TryParse(result.ToString(), out int total))
+                return total;
+
+            return 0;
         }
     }
 }

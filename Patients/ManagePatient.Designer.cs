@@ -42,6 +42,7 @@
             this.lblRecords = new System.Windows.Forms.Label();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.cbStatus = new System.Windows.Forms.ComboBox();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatients)).BeginInit();
             this.cmsPatient.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -129,7 +130,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(93, 19);
+            this.lblTitle.Location = new System.Drawing.Point(82, 10);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(258, 38);
             this.lblTitle.TabIndex = 16;
@@ -169,7 +170,7 @@
             // pbModeImage
             // 
             this.pbModeImage.Image = global::ClinicSystem.Properties.Resources.People_32;
-            this.pbModeImage.Location = new System.Drawing.Point(12, 12);
+            this.pbModeImage.Location = new System.Drawing.Point(12, 3);
             this.pbModeImage.Name = "pbModeImage";
             this.pbModeImage.Size = new System.Drawing.Size(65, 52);
             this.pbModeImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -186,11 +187,20 @@
             this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
             this.cbStatus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(84, 48);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 26;
+            // 
             // ManagePatient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(809, 549);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.cbStatus);
             this.Controls.Add(this.dgvPatients);
             this.Controls.Add(this.txtFilter);
@@ -228,5 +238,6 @@
         private System.Windows.Forms.Label lblRecords;
         private System.Windows.Forms.PictureBox pbModeImage;
         private System.Windows.Forms.ComboBox cbStatus;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }

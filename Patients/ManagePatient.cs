@@ -72,14 +72,35 @@ namespace ClinicSystem.Patients
             Patients = await PatientList.GetPatientListingDatas();
 
             CommonOperations.LoadDataToDGV(dgvPatients, Patients, lblRecords);
-
+            UpdatePatientSummary();
             RefreshFilter(0);
+        }
+
+        private void UpdatePatientSummary()
+        {
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvPatients))
+            {
+                lblSubTitle.Text = $"Patients — {0} registered · {0} frozen · {0} unpaid";
+                return;
+            }
+
+            int frozenPatients = 0;
+            int unPaidPatients = Patient.GetTotalUnPaidPatients();
+
+            foreach (PatientList patient in Patients)
+            {
+                if (patient.Status.ToLower() != "active")
+                    frozenPatients++;
+            }
+
+            lblSubTitle.Text = $"Patients — {Patients.Count} registered · {frozenPatients} frozen · {unPaidPatients} unpaid";
         }
 
         private void ManagePatient_Load(object sender, System.EventArgs e)
         {
             LoadPatientInfo();
             SetUp();
+            UpdatePatientSummary();
         }
 
         private void btnClose_Click(object sender, EventArgs e) => Close();
@@ -103,7 +124,6 @@ namespace ClinicSystem.Patients
             PatientList patient = await PatientList.FindPatientByIdList(p.PatientId);
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Patients, "PatientId", patient.PatientId);
             CommonOperations.UpdateAfterAdding(Patients, patient, targetIndex);
-
             lblRecords.Text = $"{dgvPatients.Rows.Count} records";
         }
 

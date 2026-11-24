@@ -104,5 +104,9 @@ namespace Business
 
             return PatientData.GetTotalVisits(PatientId);
         }
+        public static int GetTotalUnPaidPatients()
+        {
+            return PatientData.GetTotalUnPaidPatients();
+        }
     }
 }
