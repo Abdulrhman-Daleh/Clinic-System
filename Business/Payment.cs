@@ -2,6 +2,7 @@
 using Data_Access;
 using Data_Access.DTOs;
 using System;
+using System.Threading.Tasks;
 
 namespace Business
 {
@@ -10,7 +11,7 @@ namespace Business
         public int PaymentID { get; set; }
         public int? AppointmentID { get; set; }
         public int? PenaltyID { get; set; }
-        public (EnPaymentStatuses PaymentStatusID, string PaymentStatusText) PaymentStatus { get; set; }
+        public EnPaymentStatuses PaymentStatus { get; set; }
         public int ProccessByID { get; set; }
         public DateTime PaymentDate { get; set; }
         public decimal PaymentAmount { get; set; }
@@ -31,12 +32,34 @@ namespace Business
                 PaymentAmount = payment.PaymentAmount,
             };
         }
+        public static async Task<Payment> FromDto(PaymentDto paymentDto)
+        {
+            if (paymentDto == null)
+                return new Payment();
+
+            Payment payment = new Payment()
+            {
+                AppointmentID = paymentDto.AppointmentID,
+                PenaltyID = paymentDto?.PenaltyID,
+                PaymentStatus = paymentDto.PaymentStatus,
+                PaymentAmount = paymentDto.PaymentAmount,
+                PaymentDate = paymentDto.PaymentDate,
+                PaymentID = paymentDto.PaymentID,
+                ProccessByID = paymentDto.ProccessByID
+            };
+
+            payment.Appointment = await Appointment.FindAppointmentByID(payment.AppointmentID ?? -1);
+            payment.ProccessBy = await Staff.FindStaffById(payment.ProccessByID);
+
+            return payment;
+        }
+
         public Payment()
         {
             PaymentID = -1;
             AppointmentID = null;
             PenaltyID = null;
-            PaymentStatus = ((EnPaymentStatuses)0, "None");
+            PaymentStatus = 0;
             ProccessBy = null;
             ProccessByID = -1;
             PaymentAmount = 0;
@@ -65,7 +88,7 @@ namespace Business
 
                 Auditor.Log(
                     "Payment Added",
-                    $"Payment '{PaymentID}' for AppointmentID {AppointmentID} (Status: {PaymentStatus.PaymentStatusText}) was added by {ProccessBy.GetFullName()}.",
+                    $"Payment '{PaymentID}' for AppointmentID {AppointmentID} (Status: {PaymentStatus}) was added by {ProccessBy.GetFullName()}.",
                     $"LabID {PaymentID}");
 
                 return new OperationResult(
@@ -89,6 +112,23 @@ namespace Business
 
             return new OperationResult("Payment is valid", "Valid", true);
 
+        }
+
+        public static async Task<Payment> FindPaymentByID(int paymentId)
+        {
+            PaymentDto paymentDto = await PaymentData.FindPaymentByID(paymentId);
+
+            return await FromDto(paymentDto);
+        }
+
+        public string GetAppliedTo()
+        {
+            string applied = "";
+
+            if (Appointment != null)
+                applied = "appointment";
+
+            return applied;
         }
     }
 }

@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.dgvPayments = new System.Windows.Forms.DataGridView();
             this.cmsPayments = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.viewPaymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.lblRecords = new System.Windows.Forms.Label();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.txtFilter = new System.Windows.Forms.TextBox();
-            this.viewPaymentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPayments)).BeginInit();
             this.cmsPayments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -72,6 +72,14 @@
             this.cmsPayments.Size = new System.Drawing.Size(236, 42);
             this.cmsPayments.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPayments_Opening);
             // 
+            // viewPaymentToolStripMenuItem
+            // 
+            this.viewPaymentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.money_32;
+            this.viewPaymentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewPaymentToolStripMenuItem.Name = "viewPaymentToolStripMenuItem";
+            this.viewPaymentToolStripMenuItem.Size = new System.Drawing.Size(235, 38);
+            this.viewPaymentToolStripMenuItem.Text = "View Payment";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -88,6 +96,7 @@
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(132, 33);
             this.cbFilterBy.TabIndex = 40;
+            this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
             this.cbFilterBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
             // 
             // lblTitle
@@ -150,14 +159,8 @@
             this.txtFilter.Size = new System.Drawing.Size(150, 30);
             this.txtFilter.TabIndex = 38;
             this.txtFilter.Visible = false;
-            // 
-            // viewPaymentToolStripMenuItem
-            // 
-            this.viewPaymentToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.money_32;
-            this.viewPaymentToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewPaymentToolStripMenuItem.Name = "viewPaymentToolStripMenuItem";
-            this.viewPaymentToolStripMenuItem.Size = new System.Drawing.Size(235, 38);
-            this.viewPaymentToolStripMenuItem.Text = "View Payment";
+            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
+            this.txtFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilter_KeyPress);
             // 
             // ManagePayments
             // 

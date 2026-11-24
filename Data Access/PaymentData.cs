@@ -1,9 +1,11 @@
-﻿using Data_Access.DTOs;
+﻿using AppEnums.cs;
+using Data_Access.DTOs;
 using Data_Access.ListingDTOs;
 using Log;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 
@@ -19,11 +21,11 @@ namespace Data_Access
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
-                new SqlParameter("@AppointmentId", System.Data.SqlDbType.Int) {Value = payment.AppointmentID ?? (object)DBNull.Value},
-                new SqlParameter("@PenaltyId", System.Data.SqlDbType.Int) {Value = payment.PenaltyID ?? (object)DBNull.Value},
-                new SqlParameter("@PaymentStatusId", System.Data.SqlDbType.Int) {Value = payment.PaymentStatus.PaymentStatusID },
-                new SqlParameter("@ProccessById", System.Data.SqlDbType.Int) {Value = payment.ProccessByID },
-                new SqlParameter("@PaymentAmount", System.Data.SqlDbType.Decimal) {Value = payment.PaymentAmount }
+                new SqlParameter("@AppointmentId", SqlDbType.Int) {Value = payment.AppointmentID ?? (object)DBNull.Value},
+                new SqlParameter("@PenaltyId", SqlDbType.Int) {Value = payment.PenaltyID ?? (object)DBNull.Value},
+                new SqlParameter("@PaymentStatusId", SqlDbType.Int) {Value = (int)payment.PaymentStatus },
+                new SqlParameter("@ProccessById", SqlDbType.Int) {Value = payment.ProccessByID },
+                new SqlParameter("@PaymentAmount", SqlDbType.Decimal) {Value = payment.PaymentAmount }
             };
 
             object obj = DataAccessHelper.ExecuteScalar(query, parameters);
@@ -33,8 +35,7 @@ namespace Data_Access
 
             return -1;
         }
-
-        private static PaymentListDto PaymentMapper(SqlDataReader reader)
+        private static PaymentListDto PaymentListMapper(SqlDataReader reader)
         {
             try
             {
@@ -73,7 +74,41 @@ namespace Data_Access
             inner join People as doctorPerson on doctorPerson.PersonID = s.PersonID
             inner join People as RecordBy on RecordBy.PersonID = pay.ProccessByID";
 
-            return await DataAccessHelper.ExecuteObjectList(query, null, PaymentMapper);
+            return await DataAccessHelper.ExecuteObjectList(query, null, PaymentListMapper);
         }
+        private static PaymentDto PaymentMapper(SqlDataReader reader)
+        {
+            try
+            {
+                return new PaymentDto()
+                {
+                    PaymentID = (int)reader["PaymentID"],
+                    AppointmentID = reader["AppointmentID"] == DBNull.Value ? null : (int?)reader["AppointmentID"],
+                    PaymentAmount = (decimal)reader["PaymentAmount"],
+                    ProccessByID = (int)reader["ProccessByID"],
+                    PaymentDate = (DateTime)reader["PaymentDate"],
+                    PenaltyID = reader["PenaltyID"] == DBNull.Value ? null : (int?)reader["PenaltyID"],
+                    PaymentStatus = (EnPaymentStatuses)reader["PaymentStatus"],
+                };
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "PaymentData", "Application", System.Diagnostics.EventLogEntryType.Error));
+                return null;
+            }
+
+        }
+        public static async Task<PaymentDto> FindPaymentByID(int paymentID)
+        {
+            string query = @"";
+
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@PaymentId", SqlDbType.Int) { Value = paymentID }
+            };
+
+            return await DataAccessHelper.ExecuteOneObject(query, parameters, PaymentMapper);
+        }
+
     }
 }

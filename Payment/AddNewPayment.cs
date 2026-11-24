@@ -52,7 +52,7 @@ namespace ClinicSystem.Payment
             payment.PaymentDate = DateTime.Now;
             payment.ProccessByID = Global.CurrentLoggedInStaff.StaffId;
             payment.ProccessBy = Global.CurrentLoggedInStaff;
-            payment.PaymentStatus = (EnPaymentStatuses.Pending, "Pending");
+            payment.PaymentStatus = EnPaymentStatuses.Pending;
             payment.PaymentAmount = Convert.ToDecimal(mskPaymentAmount.Text);
         }
 

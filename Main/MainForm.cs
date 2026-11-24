@@ -8,6 +8,7 @@ using ClinicSystem.Login;
 using ClinicSystem.MedicalRecord;
 using ClinicSystem.Medicine;
 using ClinicSystem.Patients;
+using ClinicSystem.Payment;
 using ClinicSystem.People;
 using ClinicSystem.People.Controls;
 using ClinicSystem.Policies;
@@ -233,6 +234,9 @@ namespace ClinicSystem
         {
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
+
+            ManagePayments managePayments = new ManagePayments();
+            managePayments.ShowDialog();
         }
 
         private void managePenaltiesToolStripMenuItem_Click(object sender, EventArgs e)
