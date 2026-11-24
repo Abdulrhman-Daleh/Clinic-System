@@ -51,14 +51,17 @@
             this.bookAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewAppointmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myLabQueueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.billingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.policiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.insurancesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.manageMedicinesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCurrentInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewCurrentRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.viewCurrentRecordStaffToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.viewPaymentsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.managePenaltiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MSOperations.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -73,6 +76,7 @@
             this.manageStaffToolStripMenuItem,
             this.patientsToolStripMenuItem,
             this.appointmentsToolStripMenuItem,
+            this.billingToolStripMenuItem,
             this.administrationToolStripMenuItem,
             this.viewCurrentInfoToolStripMenuItem});
             this.MSOperations.Location = new System.Drawing.Point(0, 0);
@@ -298,6 +302,17 @@
             this.myLabQueueToolStripMenuItem.Text = "My Lab Queue";
             this.myLabQueueToolStripMenuItem.Click += new System.EventHandler(this.myLabQueueToolStripMenuItem_Click);
             // 
+            // billingToolStripMenuItem
+            // 
+            this.billingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewPaymentsToolStripMenuItem,
+            this.managePenaltiesToolStripMenuItem});
+            this.billingToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.money;
+            this.billingToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.billingToolStripMenuItem.Name = "billingToolStripMenuItem";
+            this.billingToolStripMenuItem.Size = new System.Drawing.Size(151, 68);
+            this.billingToolStripMenuItem.Text = "Billing";
+            // 
             // administrationToolStripMenuItem
             // 
             this.administrationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -357,6 +372,15 @@
             this.viewCurrentRecordToolStripMenuItem.Text = "View Current Record";
             this.viewCurrentRecordToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentRecordToolStripMenuItem_Click);
             // 
+            // viewCurrentRecordStaffToolStripMenuItem
+            // 
+            this.viewCurrentRecordStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_current_32;
+            this.viewCurrentRecordStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewCurrentRecordStaffToolStripMenuItem.Name = "viewCurrentRecordStaffToolStripMenuItem";
+            this.viewCurrentRecordStaffToolStripMenuItem.Size = new System.Drawing.Size(357, 38);
+            this.viewCurrentRecordStaffToolStripMenuItem.Text = "View Current Record Staff";
+            this.viewCurrentRecordStaffToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentRecordStaffToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -368,14 +392,23 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // viewCurrentRecordStaffToolStripMenuItem
+            // viewPaymentsToolStripMenuItem
             // 
-            this.viewCurrentRecordStaffToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_current_32;
-            this.viewCurrentRecordStaffToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewCurrentRecordStaffToolStripMenuItem.Name = "viewCurrentRecordStaffToolStripMenuItem";
-            this.viewCurrentRecordStaffToolStripMenuItem.Size = new System.Drawing.Size(357, 38);
-            this.viewCurrentRecordStaffToolStripMenuItem.Text = "View Current Record Staff";
-            this.viewCurrentRecordStaffToolStripMenuItem.Click += new System.EventHandler(this.viewCurrentRecordStaffToolStripMenuItem_Click);
+            this.viewPaymentsToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.money_bag_32;
+            this.viewPaymentsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewPaymentsToolStripMenuItem.Name = "viewPaymentsToolStripMenuItem";
+            this.viewPaymentsToolStripMenuItem.Size = new System.Drawing.Size(277, 38);
+            this.viewPaymentsToolStripMenuItem.Text = "View Payments";
+            this.viewPaymentsToolStripMenuItem.Click += new System.EventHandler(this.viewPaymentsToolStripMenuItem_Click);
+            // 
+            // managePenaltiesToolStripMenuItem
+            // 
+            this.managePenaltiesToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.warning_32;
+            this.managePenaltiesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.managePenaltiesToolStripMenuItem.Name = "managePenaltiesToolStripMenuItem";
+            this.managePenaltiesToolStripMenuItem.Size = new System.Drawing.Size(277, 38);
+            this.managePenaltiesToolStripMenuItem.Text = "Manage Penalties";
+            this.managePenaltiesToolStripMenuItem.Click += new System.EventHandler(this.managePenaltiesToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -428,5 +461,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewCurrentInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewCurrentRecordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewCurrentRecordStaffToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem billingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewPaymentsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem managePenaltiesToolStripMenuItem;
     }
 }

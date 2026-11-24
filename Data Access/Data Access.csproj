@@ -74,6 +74,7 @@
     <Compile Include="ListingDTOs\LabTestListingDto.cs" />
     <Compile Include="ListingDTOs\LabTestQueueListingDto.cs" />
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
+    <Compile Include="ListingDTOs\PaymentListDto.cs" />
     <Compile Include="ListingDTOs\PrescriptionItemListingDto.cs" />
     <Compile Include="MedicineData.cs" />
     <Compile Include="PaymentData.cs" />

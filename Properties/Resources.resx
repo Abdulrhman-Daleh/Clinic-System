@@ -172,14 +172,8 @@
   <data name="shield_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shield_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="perf_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\perf_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="find_policy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\find_policy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="cancel_appointment_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cancel_appointment_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="manage_appointment_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\manage_appointment_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,14 +205,14 @@
   <data name="Manage_Policy_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Manage_Policy_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\view_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="atm-card_321" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atm-card_321.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_current_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view_current_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ring_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ring_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="save_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -240,6 +234,9 @@
   </data>
   <data name="visit_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\visit_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="remainder_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\remainder_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="surgery_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\surgery_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -298,6 +295,9 @@
   <data name="find_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\find_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="hash_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hash_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -316,14 +316,17 @@
   <data name="Scène clinique moderne et apaisante" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Scène clinique moderne et apaisante.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="atm-card_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atm-card_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="refresh_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ring_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ring_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="perf_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\perf_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="show_password_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\show_password_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -349,16 +352,16 @@
   <data name="add_mdeical_record_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_mdeical_record_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="view_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="key_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\key_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cancel_appointment_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cancel_appointment_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="remainder_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\remainder_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="money" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\money.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

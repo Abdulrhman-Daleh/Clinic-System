@@ -228,5 +228,17 @@ namespace ClinicSystem
             ViewStaffInfo viewStaffRecord = new ViewStaffInfo(Global.CurrentLoggedInStaff.StaffId);
             viewStaffRecord.ShowDialog();
         }
+
+        private void viewPaymentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+        }
+
+        private void managePenaltiesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
+                return;
+        }
     }
 }
