@@ -86,15 +86,15 @@ namespace Business
 
             return AppointmentID > 0;
         }
-        private Penalty GetPenaltyToAppointment(Policy policy, Appointment appointment)
+        private Penalty GetPenaltyToAppointment(Policy policy, Appointment appointment, EnAppointmentStatuses statusBeforeSave = 0)
         {
             Penalty peanlty = new Penalty();
-            return peanlty.CreatePenalty(policy, appointment);
+            return peanlty.CreatePenalty(policy, appointment, statusBeforeSave);
         }
-        private bool UpdateAppointment(Payment paymentInfo, Policy policy)
+        private bool UpdateAppointment(Payment paymentInfo, Policy policy, EnAppointmentStatuses statusBeforeSave = 0)
         {
             return AppointmentData.UpdateAppointment(ToDto(this), Payment.ToDTO(paymentInfo), Penalty.ToDTO(GetPenaltyToAppointment(policy,
-                this))) > 0;
+                this, statusBeforeSave))) > 0;
         }
         private async Task<OperationResult> CheckSaveAccess()
         {
@@ -172,8 +172,7 @@ namespace Business
             // Doctors can only change the appointment status to Completed.
             // They cannot change the patient, assigned staff, type, date, or time.
 
-            if (AppointmentStatuses != EnAppointmentStatuses.Completed ||
-                PatientID != existingAppointment.PatientID ||
+            if (PatientID != existingAppointment.PatientID ||
                 StaffID != existingAppointment.StaffID ||
                 AppointmentTypes != existingAppointment.AppointmentTypes ||
                 AppointmentDate != existingAppointment.AppointmentDate ||
@@ -191,9 +190,10 @@ namespace Business
                 "Access Granted",
                 true);
         }
-        public async Task<OperationResult> Save(Payment paymentInfo = null, Policy policy = null)
+        public async Task<OperationResult> Save(Payment paymentInfo = null, Policy policy = null, EnAppointmentStatuses statusBeforeSave = 0)
         {
             OperationResult result = await CheckSaveAccess();
+            bool closeAppointment = false;
 
             if (!result.IsSuccess)
                 return result;
@@ -210,11 +210,20 @@ namespace Business
 
                 if (AppointmentStatuses == EnAppointmentStatuses.Completed)
                 {
-                    if (policy == null)
-                        return new OperationResult("No policy was selected", "No Policy", false);
+                    if (IsAppointmentOutDated())
+                    {
+                        closeAppointment = true;
+                        if (policy == null)
+                            return new OperationResult("No policy was selected", "No Policy", false);
+                    }
+                    else
+                    {
+                        if (policy == null)
+                            return new OperationResult("No policy was selected", "No Policy", false);
 
-                    if (paymentInfo == null)
-                        return new OperationResult("No payment was added", "Not allowed", false);
+                        if (paymentInfo == null)
+                            return new OperationResult("No payment was added", "Not allowed", false);
+                    }
                 }
             }
             else
@@ -225,7 +234,8 @@ namespace Business
             if (!result.IsSuccess)
                 return result;
 
-            result = EnsureNoBackToBackBooking();
+            if (!closeAppointment)
+                result = EnsureNoBackToBackBooking();
 
             if (!result.IsSuccess)
                 return result;
@@ -258,7 +268,7 @@ namespace Business
 
                 case EnMode.Update:
 
-                    if (UpdateAppointment(paymentInfo, policy))
+                    if (UpdateAppointment(paymentInfo, policy, statusBeforeSave))
                     {
                         Auditor.Log(
                             "Appointment Updated",

@@ -60,8 +60,8 @@ namespace Data_Access
                 new SqlParameter("@penaltyAppointmentId", SqlDbType.Int) {Value = penalty.AppointmentID ?? (object)DBNull.Value },
                 new SqlParameter("@PenaltyStatusID", SqlDbType.Int) {Value = penalty.PenaltyStatusID },
                 new SqlParameter("@PenaltyAmount", SqlDbType.Decimal) {Value = penalty.PenaltyAmount },
-                new SqlParameter("@PolicyID", SqlDbType.Int) {Value = penalty.PolicyID },
-                new SqlParameter("@PenaltyDueDate", SqlDbType.DateTime) {Value = penalty.PenaltyDueDate },
+                new SqlParameter("@PolicyID", SqlDbType.Int) {Value = penalty.PolicyID <= 0 ? (object)DBNull.Value : penalty.PolicyID },
+                new SqlParameter("@PenaltyDueDate", SqlDbType.DateTime) {Value = penalty.PenaltyDueDate == DateTime.MinValue ? (object)DBNull.Value :  penalty.PenaltyDueDate},
                 new SqlParameter("@PenaltyClosedDate", SqlDbType.DateTime) {Value = penalty.PenaltyClosedDate ?? (object)DBNull.Value}
             };
 
@@ -149,7 +149,21 @@ namespace Data_Access
         }
         public static async Task<AppointmentListDto> FindAppointmentListByID(int appointmentId)
         {
-            string query = @"select * from GetAppointmentsList(@appointmentId)";
+            string query = @" select        
+ appo.AppointmentID,        
+ FORMAT(appo.AppointmentTime, 'HH:mm') + '-' + FORMAT(appo.AppointmentEndTime, 'HH:mm') AS Time,        
+ person.Firstname + ' ' + person.Lastname as Patient,        
+ d_person.Firstname + ' ' + d_person.Lastname as Doctor,        
+ appoType.AppointmentTypeText as Type,        
+ appoStatus.AppointmentStatusText as Status        
+ from Appointments as appo        
+  inner join Patients as p on p.PatientID = appo.PatientID        
+  inner join People as person on p.PersonID = person.PersonID        
+  inner join Staff as s on s.StaffID = appo.StaffID        
+  inner join People as d_person on d_person.PersonID = s.PersonID        
+  inner join AppointmentTypes as appoType on appoType.AppointmentTypeID = appo.AppointmentTypeID        
+  inner join AppointmentStatuses as appoStatus on appoStatus.AppointmentStatusID = appo.AppointmentStatusID      
+  where  appo.AppointmentID = @appointmentId";
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {

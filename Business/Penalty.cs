@@ -25,6 +25,9 @@ namespace Business
         }
         public static PenaltyDto ToDTO(Penalty penalty)
         {
+            if (penalty == null)
+                return new PenaltyDto();
+
             return new PenaltyDto()
             {
                 PenaltyID = penalty.PenaltyID,
@@ -37,13 +40,12 @@ namespace Business
                 PenaltyDueDate = penalty.PenaltyDueDate
             };
         }
-        public Penalty CreatePenalty(Policy policy, Appointment appointment)
+        public Penalty CreatePenalty(Policy policy, Appointment appointment, EnAppointmentStatuses currentStatus)
         {
-            if (Appointment.IsAppointmentOutDated())
+            if (appointment.IsAppointmentOutDated())
             {
-                if (appointment.AppointmentStatuses == EnAppointmentStatuses.InRoom)
+                if (currentStatus == EnAppointmentStatuses.InRoom)
                 {
-                    appointment.AppointmentStatuses = EnAppointmentStatuses.Completed;
                     return null;
                 }
             }

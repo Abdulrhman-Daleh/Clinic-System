@@ -190,9 +190,10 @@ namespace ClinicSystem.Appointments
             if (Appointment == null)
                 return;
 
+            var currentStatus = Appointment.AppointmentStatuses;
             Appointment.AppointmentStatuses = EnAppointmentStatuses.Completed;
 
-            OperationResult result = await Appointment.Save(addedPayment, policy);
+            OperationResult result = await Appointment.Save(addedPayment, policy, currentStatus);
             MessageBox.Show(result.Message, result.Title, MessageBoxButtons.OK, result.IsSuccess ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
             if (!result.IsSuccess)
