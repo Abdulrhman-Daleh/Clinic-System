@@ -108,5 +108,26 @@ namespace Business
         {
             return PatientData.GetTotalUnPaidPatients();
         }
+        public string FrozenUntilText()
+        {
+            bool frozen = IsFrozen ?? false;
+
+            if (frozen)
+            {
+                return $"❄ Freeze until{EndOfBookingFreeze?.ToShortDateString()}";
+            }
+            return null;
+        }
+        public string UnpaidFeesText()
+        {
+            bool UnpaidFees = HasUnPaidFees ?? false;
+
+            if (UnpaidFees)
+            {
+                return $"⚠ Unpaid";
+            }
+
+            return null;
+        }
     }
 }

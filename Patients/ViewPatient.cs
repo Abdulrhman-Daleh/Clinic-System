@@ -24,6 +24,7 @@ namespace ClinicSystem.Patients
             viewPersonInfoCtrl1.SetData(patient);
             viewPersonContacts1.LoadUpPersonContact(patient.PersonId);
             patientInfoCtrl1.LoadPatientInfo(patient);
+            lblSubTitle.Text = $"{patient.GetGenderChar()} · patient since {patient.RegisterDate.ToShortDateString()}\n {patient.FrozenUntilText()} {patient.UnpaidFeesText()}";
         }
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
     }

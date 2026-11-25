@@ -34,6 +34,7 @@
             this.viewPersonContacts1 = new ClinicSystem.People.Controls.ViewPersonContacts();
             this.patientInfoCtrl1 = new ClinicSystem.Patients.Controls.PatientInfoCtrl();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,12 +93,22 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(352, 9);
+            this.lblSubTitle.MaximumSize = new System.Drawing.Size(350, 60);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 16;
+            // 
             // ViewPatient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(699, 759);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.patientInfoCtrl1);
             this.Controls.Add(this.viewPersonContacts1);
@@ -122,5 +133,6 @@
         private People.Controls.ViewPersonContacts viewPersonContacts1;
         private Controls.PatientInfoCtrl patientInfoCtrl1;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }
