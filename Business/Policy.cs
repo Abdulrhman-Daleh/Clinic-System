@@ -22,6 +22,7 @@ namespace Business
         public Staff Owner { get; set; }
         [Browsable(true)]
         public string Status => PolicyStatus.ToString();
+        public static (int PolicyCount, int ActivePolicies, int SuspendedPolicies) PolicySummary = (0, 0, 0);
         private static async Task<Policy> FromDto(PolicyDto policyDto)
         {
             if (policyDto == null)
@@ -85,7 +86,6 @@ namespace Business
             PolicyID = policyID;
             _mode = EnMode.Update;
         }
-
         private bool AddNewPolicy()
         {
             PolicyID = PolicyData.AddNewPolicy(ToDto(this));
@@ -186,10 +186,25 @@ namespace Business
 
             BindingList<Policy> list = new BindingList<Policy>();
 
+            PolicySummary = (0, 0, 0);
             foreach (PolicyDto policyDto in await PolicyData.GetPolicies(Global.CurrentLoggedInStaff.StaffId))
-                list.Add(await FromDto(policyDto));
+            {
+                Policy policy = await FromDto(policyDto);
+                list.Add(policy);
+                UpdatePolicySummary(policy);
+            }
+
+            PolicySummary.PolicyCount = list.Count;
 
             return list;
+        }
+
+        private static void UpdatePolicySummary(Policy policy)
+        {
+            if (policy.PolicyStatus.Equals(EnPolicyStatuses.Active) && policy.ActiveTo > DateTime.Now)
+                PolicySummary.ActivePolicies++;
+            else if (policy.PolicyStatus.Equals(EnPolicyStatuses.Suspended))
+                PolicySummary.SuspendedPolicies++;
         }
         public static async Task<BindingList<(int policyId, string ActiveDateRange)>> GetPoliciesRanges()
         {

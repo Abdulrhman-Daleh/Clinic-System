@@ -46,6 +46,7 @@
             this.lblRecords = new System.Windows.Forms.Label();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.cbPolicyStatus = new System.Windows.Forms.ComboBox();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPolicies)).BeginInit();
             this.cmsPolicies.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -81,7 +82,7 @@
             this.archiveToolStripMenuItem});
             this.cmsPolicies.Name = "cmsPeople";
             this.cmsPolicies.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsPolicies.Size = new System.Drawing.Size(231, 260);
+            this.cmsPolicies.Size = new System.Drawing.Size(231, 232);
             this.cmsPolicies.Opening += new System.ComponentModel.CancelEventHandler(this.cmsPolicies_Opening);
             // 
             // addNewPolicyToolStripMenuItem
@@ -173,7 +174,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(93, 25);
+            this.lblTitle.Location = new System.Drawing.Point(83, 18);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(271, 38);
             this.lblTitle.TabIndex = 26;
@@ -230,11 +231,20 @@
             this.cbPolicyStatus.SelectedIndexChanged += new System.EventHandler(this.cbPolicyStatus_SelectedIndexChanged);
             this.cbPolicyStatus.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(85, 55);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 36;
+            // 
             // Managepolicies
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(809, 549);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.cbPolicyStatus);
             this.Controls.Add(this.dgvPolicies);
             this.Controls.Add(this.txtFilter);
@@ -275,5 +285,6 @@
         private System.Windows.Forms.ToolStripMenuItem suspendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem archiveToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbPolicyStatus;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }

@@ -11,12 +11,10 @@ namespace ClinicSystem.Policies
     public partial class Managepolicies : FormsDefaultSettings
     {
         BindingList<Policy> Policies = new BindingList<Policy>();
-
         public Managepolicies()
         {
             InitializeComponent();
         }
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -29,7 +27,6 @@ namespace ClinicSystem.Policies
                 CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
-
         private async Task SetUp()
         {
             await LoadPolicyStatuses();
@@ -41,7 +38,6 @@ namespace ClinicSystem.Policies
 
             cbFilterBy.SelectedIndex = 0;
         }
-
         private void RefreshDgv(Policy policy)
         {
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Policies, "PolicyID", policy.PolicyID);
@@ -49,9 +45,7 @@ namespace ClinicSystem.Policies
 
             lblRecords.Text = $"{dgvPolicies.Rows.Count} records";
         }
-
-        private void addNewPolicyToolStripMenuItem_Click(
-            object sender, System.EventArgs e)
+        private void addNewPolicyToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
@@ -60,9 +54,7 @@ namespace ClinicSystem.Policies
             addPolicy.SendPolicy += RefreshDgv;
             addPolicy.ShowDialog();
         }
-
-        private void updatePolicyToolStripMenuItem_Click(
-            object sender, System.EventArgs e)
+        private void updatePolicyToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
@@ -73,9 +65,7 @@ namespace ClinicSystem.Policies
             updatePolicy.SendPolicy += RefreshDgv;
             updatePolicy.ShowDialog();
         }
-
-        private void viewPolicyToolStripMenuItem_Click(
-            object sender, System.EventArgs e)
+        private void viewPolicyToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
@@ -86,9 +76,7 @@ namespace ClinicSystem.Policies
             viewPolicy.OnChange += RefreshDgv;
             viewPolicy.ShowDialog();
         }
-
-        private void dgvPolicies_CellDoubleClick(
-            object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        private void dgvPolicies_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (ValidationHelper.IsDgvEmptyOrNull(dgvPolicies))
                 return;
@@ -98,7 +86,6 @@ namespace ClinicSystem.Policies
             ViewPolicyInfo viewPolicy = new ViewPolicyInfo(policyId);
             viewPolicy.ShowDialog();
         }
-
         private async void LoadPoliciesInfo()
         {
             Policies = await Policy.GetPolicies();
@@ -108,21 +95,18 @@ namespace ClinicSystem.Policies
                 dgvPolicies.Columns["PolicyID"].HeaderText = "Policy no.";
             }
 
+            lblSubTitle.Text = $"Policies — {Policy.PolicySummary.PolicyCount} total · {Policy.PolicySummary.ActivePolicies} active · {Policy.PolicySummary.SuspendedPolicies} suspended";
             RefreshFilter(0);
         }
-
         private async void ManagePolcies_Load(object sender, System.EventArgs e)
         {
             await SetUp();
             LoadPoliciesInfo();
         }
-
-        private void cbFilterBy_KeyPress(
-            object sender, KeyPressEventArgs e)
+        private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void SetControlEnableStatus(bool status)
         {
             updatePolicyToolStripMenuItem.Enabled = status;
@@ -131,9 +115,7 @@ namespace ClinicSystem.Policies
             suspendToolStripMenuItem.Enabled = status;
             archiveToolStripMenuItem.Enabled = status;
         }
-
-        private async void cmsPolicies_Opening(
-            object sender, CancelEventArgs e)
+        private async void cmsPolicies_Opening(object sender, CancelEventArgs e)
         {
             bool EmptyDGV = ValidationHelper.IsDgvEmptyOrNull(dgvPolicies);
             SetControlEnableStatus(!EmptyDGV);
@@ -170,21 +152,17 @@ namespace ClinicSystem.Policies
                 }
             }
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
-
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
-        private void txtFilter_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
 
             ValidationHelper.HandleInputType(e, true, false);
         }
-
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -197,7 +175,6 @@ namespace ClinicSystem.Policies
 
             CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
         }
-
         private async void archiveToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
@@ -210,7 +187,6 @@ namespace ClinicSystem.Policies
             MessageBox.Show("Policy got archive successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
             RefreshDgv(await Policy.FindPolicyByID(policyId));
         }
-
         private async void suspendToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
@@ -223,7 +199,6 @@ namespace ClinicSystem.Policies
             MessageBox.Show("Policy got suspend successfully", "Archived", MessageBoxButtons.OK, MessageBoxIcon.Information);
             RefreshDgv(await Policy.FindPolicyByID(policyId));
         }
-
         private async Task LoadPolicyStatuses()
         {
             cbPolicyStatus.DataSource =
@@ -231,13 +206,11 @@ namespace ClinicSystem.Policies
 
             cbPolicyStatus.SelectedIndex = 0;
         }
-
         private void cbPolicyStatus_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             List<object> temp = CommonOperations.FilterData(Policies, "Status", cbPolicyStatus.Text);
             CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
         }
-
         private async void approveToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;
