@@ -2,9 +2,11 @@
 using Business;
 using ClinicSystem.AppointmentReminder;
 using ClinicSystem.Helpers;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace ClinicSystem.Appointments
@@ -12,6 +14,7 @@ namespace ClinicSystem.Appointments
     public partial class ManageAppointments : FormsDefaultSettings
     {
         private BindingList<AppointmentList> Appointments { get; set; }
+        private int PageNumber = 0;
         public ManageAppointments()
         {
             InitializeComponent();
@@ -33,30 +36,52 @@ namespace ClinicSystem.Appointments
         }
         private void SetUp()
         {
-            cbFilterBy.Items.AddRange(new object[] { "None", "AppointmentID", "Patient", "Doctor", "Status" });
+            cbFilterBy.Items.AddRange(new object[] { "None", "AppointmentID", "Patient", "Doctor", "Status", "CalenderDay" });
             cbFilterBy.SelectedIndex = 0;
+
+            SetCalenderDayRange();
+        }
+
+        private void SetCalenderDayRange()
+        {
+            dtpCalenderDay.MinDate = DateTime.Now.AddMonths(-1);
+            dtpCalenderDay.MaxDate = DateTime.Now.AddMonths(1);
         }
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvAppointments, Appointments, lblRecords, null);
+            if (CommonOperations.GetFilterName(cbFilterBy) == "CalenderDay")
+            {
+                dtpCalenderDay.Visible = true;
+                return;
+            }
+            dtpCalenderDay.Visible = false;
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
         private async void LoadAppointments()
         {
-            Appointments = await AppointmentList.GetAppointment();
-            CommonOperations.LoadDataToDGV(dgvAppointments, Appointments, lblRecords);
-            RefreshFilter(0);
+            try
+            {
+                Appointments = await AppointmentList.GetAppointment(PageNumber);
+                CommonOperations.LoadDataToDGV(dgvAppointments, Appointments, lblRecords);
+                RefreshFilter(0);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to Load appointments", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "Manage Appointment", "Application", EventLogEntryType.Error));
+            }
+        }
+        private void SetNextPreviousButtons(bool status)
+        {
+            BtnPrevious.Visible = status;
+            BtnNext.Visible = status;
         }
         private void ManageAppointments_Load(object sender, EventArgs e)
         {
-            if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Doctor, EnRole.Owner))
-            {
-                Close();
-                return;
-            }
-
+            SetNextPreviousButtons(ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner));
             SetUp();
             LoadAppointments();
         }
@@ -208,6 +233,18 @@ namespace ClinicSystem.Appointments
                 return;
 
             RefreshDgv(appointment);
+        }
+
+        private void BtnNext_Click(object sender, EventArgs e)
+        {
+            if (dgvAppointments.RowCount <= 1 || ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+            {
+                MessageBox.Show("You have reached the end of appointments", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            PageNumber++;
+            ManageAppointments_Load(sender, e);
         }
     }
 }

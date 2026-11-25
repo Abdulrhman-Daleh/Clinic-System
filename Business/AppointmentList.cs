@@ -1,6 +1,7 @@
 ﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.ListingDTOs;
+using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -29,15 +30,19 @@ namespace Business
                 Doctor = appointmentList.Doctor
             };
         }
-        public static async Task<BindingList<AppointmentList>> GetAppointment()
+        private static int PageNumber = 0;
+        private static int RowsPerPage = 2;
+        private static int RowsToSkip => PageNumber * RowsPerPage;
+        public static async Task<BindingList<AppointmentList>> GetAppointment(int pageNumber)
         {
+            PageNumber = pageNumber;
             BindingList<AppointmentList> appointments = new BindingList<AppointmentList>();
             var AppointmentList = new BindingList<AppointmentListDto>();
 
-            if (Util.CanAccessForm(AppEnums.cs.EnRole.Owner, EnRole.Receptionist).IsSuccess)
-                AppointmentList = await AppointmentData.GetAllAppointments();
+            if (Util.CanAccessForm(EnRole.Owner, EnRole.Receptionist).IsSuccess)
+                AppointmentList = await AppointmentData.GetAllAppointments(RowsPerPage, RowsToSkip);
             else
-                AppointmentList = await AppointmentData.GetStaffAppointments(Global.CurrentLoggedInStaff.StaffId);
+                AppointmentList = await AppointmentData.GetStaffAppointments(Global.CurrentLoggedInStaff.StaffId, DateTime.Now);
 
             foreach (var appo in AppointmentList)
                 appointments.Add(FromDto(appo));

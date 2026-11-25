@@ -122,28 +122,38 @@ namespace Data_Access
                 Status = (string)reader["Status"]
             };
         }
-        public static async Task<BindingList<AppointmentListDto>> GetStaffAppointments(int doctorId)
+        public static async Task<BindingList<AppointmentListDto>> GetStaffAppointments(int doctorId, DateTime CalenderDay)
         {
             BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
-                new SqlParameter("@DoctorId", SqlDbType.Int) {Value = doctorId}
+                new SqlParameter("@DoctorId", SqlDbType.Int) {Value = doctorId},
+                new SqlParameter("@CalenderDay", SqlDbType.DateTime) {Value = CalenderDay}
             };
 
-            string query = @"select * From GetAppointmentsList(@DoctorId)";
+            string query = @"select * From GetAppointmentsList(@DoctorId) where CalenderDay = @CalenderDay";
 
             appointments = await DataAccessHelper.ExecuteObjectList(query, parameters, AppointmentListDtoMapper);
 
             return appointments;
         }
-        public static async Task<BindingList<AppointmentListDto>> GetAllAppointments()
+        public static async Task<BindingList<AppointmentListDto>> GetAllAppointments(int RowsPerPage, int RowsToSkip)
         {
             BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
 
-            string query = @"select * From GetAppointmentsListNoParams";
+            string query = @"select * From GetAppointmentsListNoParams
+                order by AppointmentID
+                offset @RowsToSkip rows
+                fetch next @RowsPerPage rows only";
 
-            appointments = await DataAccessHelper.ExecuteObjectList(query, null, AppointmentListDtoMapper);
+            List<SqlParameter> parameters = new List<SqlParameter>()
+            {
+                new SqlParameter("@RowsToSkip", SqlDbType.Int) {Value = RowsToSkip},
+                new SqlParameter("@RowsPerPage", SqlDbType.Int) {Value = RowsPerPage}
+            };
+
+            appointments = await DataAccessHelper.ExecuteObjectList(query, parameters, AppointmentListDtoMapper);
 
             return appointments;
         }
