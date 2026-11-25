@@ -25,7 +25,14 @@ namespace ClinicSystem.Insurance
                 dgvInsurances.Columns["InsuranceID"].HeaderText = "#";
             }
 
+            UpdateInsuranceSummary();
             RefreshFilter(0);
+        }
+
+        private void UpdateInsuranceSummary()
+        {
+            (int InsuranceCount, int ActiveCount, int ExpiredCount) ins = InsuranceList.InsuranceSummary;
+            lblSubTitle.Text = $"Insurance — {ins.InsuranceCount} Insurance · {ins.ActiveCount} active · {ins.ExpiredCount} expired";
         }
         private void RefreshFilter(int newFilterIndex)
         {
