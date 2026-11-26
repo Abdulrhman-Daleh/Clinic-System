@@ -221,6 +221,7 @@
             this.BtnPrevious.TabIndex = 37;
             this.BtnPrevious.Text = "Previous";
             this.BtnPrevious.UseVisualStyleBackColor = true;
+            this.BtnPrevious.Click += new System.EventHandler(this.BtnPrevious_Click);
             // 
             // BtnNext
             // 

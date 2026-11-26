@@ -58,7 +58,7 @@ namespace Data_Access
                 new SqlParameter("@ProccessById", SqlDbType.Int) {Value = paymentDto.ProccessByID },
                 new SqlParameter("@PaymentAmount", SqlDbType.Decimal) {Value = paymentDto.PaymentAmount },
                 new SqlParameter("@penaltyAppointmentId", SqlDbType.Int) {Value = penalty.AppointmentID ?? (object)DBNull.Value },
-                new SqlParameter("@PenaltyStatusID", SqlDbType.Int) {Value = penalty.PenaltyStatusID },
+                new SqlParameter("@PenaltyStatusID", SqlDbType.Int) {Value = penalty.PenaltyStatus },
                 new SqlParameter("@PenaltyAmount", SqlDbType.Decimal) {Value = penalty.PenaltyAmount },
                 new SqlParameter("@PolicyID", SqlDbType.Int) {Value = penalty.PolicyID <= 0 ? (object)DBNull.Value : penalty.PolicyID },
                 new SqlParameter("@PenaltyDueDate", SqlDbType.DateTime) {Value = penalty.PenaltyDueDate == DateTime.MinValue ? (object)DBNull.Value :  penalty.PenaltyDueDate},
@@ -122,17 +122,16 @@ namespace Data_Access
                 Status = (string)reader["Status"]
             };
         }
-        public static async Task<BindingList<AppointmentListDto>> GetStaffAppointments(int doctorId, DateTime CalenderDay)
+        public static async Task<BindingList<AppointmentListDto>> GetStaffAppointments(int doctorId)
         {
             BindingList<AppointmentListDto> appointments = new BindingList<AppointmentListDto>();
 
             List<SqlParameter> parameters = new List<SqlParameter>()
             {
                 new SqlParameter("@DoctorId", SqlDbType.Int) {Value = doctorId},
-                new SqlParameter("@CalenderDay", SqlDbType.DateTime) {Value = CalenderDay}
             };
 
-            string query = @"select * From GetAppointmentsList(@DoctorId) where CalenderDay = @CalenderDay";
+            string query = @"select * From GetAppointmentsList(@DoctorId)";
 
             appointments = await DataAccessHelper.ExecuteObjectList(query, parameters, AppointmentListDtoMapper);
 

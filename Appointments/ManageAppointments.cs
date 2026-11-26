@@ -69,7 +69,8 @@ namespace ClinicSystem.Appointments
         }
         private void ManageAppointments_Load(object sender, EventArgs e)
         {
-            SetNextPreviousButtons(ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner));
+            SetNextPreviousButtons(Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess);
+
             SetUp();
             LoadAppointments();
         }
@@ -225,13 +226,25 @@ namespace ClinicSystem.Appointments
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments) && PageNumber > 0)
             {
                 MessageBox.Show("You have reached the end of appointments", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
             PageNumber++;
+            ManageAppointments_Load(sender, e);
+        }
+
+        private void BtnPrevious_Click(object sender, EventArgs e)
+        {
+            if (PageNumber <= 0 && ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+            {
+                MessageBox.Show("There is no previous page", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            PageNumber--;
             ManageAppointments_Load(sender, e);
         }
     }

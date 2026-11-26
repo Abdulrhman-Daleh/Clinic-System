@@ -430,6 +430,9 @@ namespace Business
                     false);
             }
 
+            if (AppointmentDate <= DateTime.Now)
+                return new OperationResult("Cannot add an appointment in the past", "Invalid", false);
+
             if (!NoOverlapWithLastAppointment())
             {
                 return new OperationResult(

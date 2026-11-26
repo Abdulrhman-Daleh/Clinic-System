@@ -1,7 +1,6 @@
 ﻿using AppEnums.cs;
 using Data_Access;
 using Data_Access.ListingDTOs;
-using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 
@@ -45,7 +44,7 @@ namespace Business
             if (Util.CanAccessForm(EnRole.Owner, EnRole.Receptionist).IsSuccess)
                 AppointmentList = await AppointmentData.GetAllAppointments(RowsPerPage, RowsToSkip);
             else
-                AppointmentList = await AppointmentData.GetStaffAppointments(Global.CurrentLoggedInStaff.StaffId, DateTime.Now);
+                AppointmentList = await AppointmentData.GetStaffAppointments(Global.CurrentLoggedInStaff.StaffId);
 
             foreach (var appo in AppointmentList)
             {
