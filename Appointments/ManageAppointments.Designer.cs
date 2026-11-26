@@ -44,11 +44,11 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblRecords = new System.Windows.Forms.Label();
-            this.dtpCalenderDay = new System.Windows.Forms.DateTimePicker();
             this.BtnPrevious = new System.Windows.Forms.Button();
             this.BtnNext = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAppointments)).BeginInit();
             this.cmsAppointments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -186,7 +186,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(93, 14);
+            this.lblTitle.Location = new System.Drawing.Point(83, 9);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(361, 38);
             this.lblTitle.TabIndex = 26;
@@ -211,20 +211,13 @@
             this.lblRecords.Size = new System.Drawing.Size(0, 25);
             this.lblRecords.TabIndex = 32;
             // 
-            // dtpCalenderDay
-            // 
-            this.dtpCalenderDay.Location = new System.Drawing.Point(215, 73);
-            this.dtpCalenderDay.Name = "dtpCalenderDay";
-            this.dtpCalenderDay.Size = new System.Drawing.Size(200, 30);
-            this.dtpCalenderDay.TabIndex = 35;
-            // 
             // BtnPrevious
             // 
             this.BtnPrevious.Image = global::ClinicSystem.Properties.Resources.arrow_left_32;
             this.BtnPrevious.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.BtnPrevious.Location = new System.Drawing.Point(521, 41);
+            this.BtnPrevious.Location = new System.Drawing.Point(521, 72);
             this.BtnPrevious.Name = "BtnPrevious";
-            this.BtnPrevious.Size = new System.Drawing.Size(160, 66);
+            this.BtnPrevious.Size = new System.Drawing.Size(160, 35);
             this.BtnPrevious.TabIndex = 37;
             this.BtnPrevious.Text = "Previous";
             this.BtnPrevious.UseVisualStyleBackColor = true;
@@ -233,9 +226,9 @@
             // 
             this.BtnNext.Image = global::ClinicSystem.Properties.Resources.arrow_right_32;
             this.BtnNext.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.BtnNext.Location = new System.Drawing.Point(687, 41);
+            this.BtnNext.Location = new System.Drawing.Point(687, 72);
             this.BtnNext.Name = "BtnNext";
-            this.BtnNext.Size = new System.Drawing.Size(160, 66);
+            this.BtnNext.Size = new System.Drawing.Size(160, 35);
             this.BtnNext.TabIndex = 36;
             this.BtnNext.Text = "Next";
             this.BtnNext.UseVisualStyleBackColor = true;
@@ -255,7 +248,7 @@
             // 
             // pbModeImage
             // 
-            this.pbModeImage.Image = global::ClinicSystem.Properties.Resources.People_32;
+            this.pbModeImage.Image = global::ClinicSystem.Properties.Resources.manage_appointment_32;
             this.pbModeImage.Location = new System.Drawing.Point(12, 7);
             this.pbModeImage.Name = "pbModeImage";
             this.pbModeImage.Size = new System.Drawing.Size(65, 52);
@@ -263,14 +256,22 @@
             this.pbModeImage.TabIndex = 25;
             this.pbModeImage.TabStop = false;
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(83, 47);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 38;
+            // 
             // ManageAppointments
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(861, 536);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.BtnPrevious);
             this.Controls.Add(this.BtnNext);
-            this.Controls.Add(this.dtpCalenderDay);
             this.Controls.Add(this.dgvAppointments);
             this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.label1);
@@ -310,8 +311,8 @@
         private System.Windows.Forms.ToolStripMenuItem cancelAppointmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sendReminderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewAppointmentRemindersToolStripMenuItem;
-        private System.Windows.Forms.DateTimePicker dtpCalenderDay;
         private System.Windows.Forms.Button BtnNext;
         private System.Windows.Forms.Button BtnPrevious;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }

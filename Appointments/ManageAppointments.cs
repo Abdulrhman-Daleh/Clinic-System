@@ -38,25 +38,11 @@ namespace ClinicSystem.Appointments
         {
             cbFilterBy.Items.AddRange(new object[] { "None", "AppointmentID", "Patient", "Doctor", "Status", "CalenderDay" });
             cbFilterBy.SelectedIndex = 0;
-
-            SetCalenderDayRange();
-        }
-
-        private void SetCalenderDayRange()
-        {
-            dtpCalenderDay.MinDate = DateTime.Now.AddMonths(-1);
-            dtpCalenderDay.MaxDate = DateTime.Now.AddMonths(1);
         }
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvAppointments, Appointments, lblRecords, null);
-            if (CommonOperations.GetFilterName(cbFilterBy) == "CalenderDay")
-            {
-                dtpCalenderDay.Visible = true;
-                return;
-            }
-            dtpCalenderDay.Visible = false;
             ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 50);
         }
@@ -67,6 +53,8 @@ namespace ClinicSystem.Appointments
                 Appointments = await AppointmentList.GetAppointment(PageNumber);
                 CommonOperations.LoadDataToDGV(dgvAppointments, Appointments, lblRecords);
                 RefreshFilter(0);
+
+                lblSubTitle.Text = $"Appointments -- {AppointmentList.AppointmentSummary.BookingCount} booked · {AppointmentList.AppointmentSummary.CompletedCount} completed · {AppointmentList.AppointmentSummary.CancelledCount} cancelled";
             }
             catch (Exception ex)
             {
@@ -237,7 +225,7 @@ namespace ClinicSystem.Appointments
 
         private void BtnNext_Click(object sender, EventArgs e)
         {
-            if (dgvAppointments.RowCount <= 1 || ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
+            if (ValidationHelper.IsDgvEmptyOrNull(dgvAppointments))
             {
                 MessageBox.Show("You have reached the end of appointments", "Not Allowed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
