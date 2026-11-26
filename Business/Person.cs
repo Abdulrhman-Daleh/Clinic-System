@@ -14,6 +14,8 @@ namespace Business
         public string Lastname { get; set; } = string.Empty;
         public EnGender Gender { get; set; } = EnGender.Male;
         public BindingList<PersonContact> Contacts { get; set; }
+
+        public static (int PeopleCount, int PatientCount, int StaffCount) PeopleSummary = (0, 0, 0);
         public static async Task<Person> FromDto(PersonDto personDto)
         {
             if (personDto == null) return null;
@@ -118,10 +120,15 @@ namespace Business
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
                 return people;
 
+            PeopleSummary = (0, 0, 0);
             BindingList<PersonDto> peopleDto = await PersonData.GetPeople(Global.CurrentLoggedInStaff.PersonId);
 
             foreach (PersonDto row in peopleDto)
                 people.Add(await FromDto(row));
+
+            PeopleSummary.PeopleCount = people.Count;
+            PeopleSummary.PatientCount = Patient.GetTotalPatientsCount();
+            PeopleSummary.StaffCount = Staff.GetTotalStaffCount();
 
             return people;
         }

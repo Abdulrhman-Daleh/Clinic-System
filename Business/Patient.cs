@@ -129,5 +129,10 @@ namespace Business
 
             return null;
         }
+
+        public static int GetTotalPatientsCount()
+        {
+            return PatientData.GetTotalPatientsCount();
+        }
     }
 }

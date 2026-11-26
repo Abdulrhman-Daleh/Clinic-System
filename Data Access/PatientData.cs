@@ -199,5 +199,18 @@ namespace Data_Access
 
             return 0;
         }
+        public static int GetTotalPatientsCount()
+        {
+            string query = @"select 
+    	    Count(PersonID) as TotalPatientsCount
+            from Patients";
+
+            object result = DataAccessHelper.ExecuteScalar(query, null);
+
+            if (result != null && int.TryParse(result.ToString(), out int total))
+                return total;
+
+            return 0;
+        }
     }
 }

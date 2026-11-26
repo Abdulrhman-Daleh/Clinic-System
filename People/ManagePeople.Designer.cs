@@ -44,6 +44,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPeople)).BeginInit();
             this.cmsPeople.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -55,7 +56,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(93, 24);
+            this.lblTitle.Location = new System.Drawing.Point(84, 21);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(257, 38);
             this.lblTitle.TabIndex = 5;
@@ -210,11 +211,20 @@
             this.pbModeImage.TabIndex = 4;
             this.pbModeImage.TabStop = false;
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(83, 58);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 15;
+            // 
             // ManagePeople
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(811, 562);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.cbGender);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btnClose);
@@ -255,5 +265,6 @@
         private System.Windows.Forms.ToolStripMenuItem updatePersonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewPersonToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addPersonContactToolStripMenuItem;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }

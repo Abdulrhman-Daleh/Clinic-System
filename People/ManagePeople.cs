@@ -25,6 +25,8 @@ namespace ClinicSystem.People
                 dgvPeople.Columns["PersonID"].HeaderText = "#";
             }
 
+            lblSubTitle.Text = $"People -- {Person.PeopleSummary.PeopleCount} people · {Person.PeopleSummary.PatientCount} patients · {Person.PeopleSummary.StaffCount} staff";
+
             RefreshFilter(0);
         }
         private void RefreshFilter(int newFilterIndex)
