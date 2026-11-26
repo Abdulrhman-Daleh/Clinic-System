@@ -1,9 +1,11 @@
 ﻿using AppEnums.cs;
 using Business;
 using ClinicSystem.Helpers;
+using Log;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace ClinicSystem.MedicalRecord
@@ -47,11 +49,19 @@ namespace ClinicSystem.MedicalRecord
         }
         private async void LoadMedicalRecordInfo()
         {
-            MedicalRecords = await Business.MedicalRecordList.GetMedicalRecords();
+            try
+            {
+                MedicalRecords = await Business.MedicalRecordList.GetMedicalRecords();
+                CommonOperations.LoadDataToDGV(dgvMedicalRecords, MedicalRecords, lblRecords);
+                RefreshFilter(0);
 
-            CommonOperations.LoadDataToDGV(dgvMedicalRecords, MedicalRecords, lblRecords);
-
-            RefreshFilter(0);
+                lblSubTitle.Text = $"Medical Records — {MedicalRecordList.MedicalRecordsSummary.TotalMedicalRecords} · {MedicalRecordList.MedicalRecordsSummary.MissingConsent} missing consent";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occured couldn't be able to get medical record", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "ManageMedicalRecord", "Application", EventLogEntryType.Error));
+            }
         }
         private void ManageMedicalRecord_Load(object sender, EventArgs e)
         {

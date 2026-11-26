@@ -43,6 +43,7 @@
             this.lblRecords = new System.Windows.Forms.Label();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.cbConsentToCare = new System.Windows.Forms.ComboBox();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMedicalRecords)).BeginInit();
             this.cmsRecord.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
@@ -75,7 +76,7 @@
             this.viewToolStripMenuItem});
             this.cmsRecord.Name = "cmsPeople";
             this.cmsRecord.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsRecord.Size = new System.Drawing.Size(322, 146);
+            this.cmsRecord.Size = new System.Drawing.Size(322, 118);
             this.cmsRecord.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMedicalRecords_Opening);
             // 
             // addMedicalRecordToolStripMenuItem
@@ -140,7 +141,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(83, 17);
+            this.lblTitle.Location = new System.Drawing.Point(83, 10);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(409, 38);
             this.lblTitle.TabIndex = 27;
@@ -197,11 +198,20 @@
             this.cbConsentToCare.SelectedIndexChanged += new System.EventHandler(this.cbConsentToCare_SelectedIndexChanged);
             this.cbConsentToCare.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.cbFilterBy_KeyPress);
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(85, 48);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 36;
+            // 
             // ManageMedicalRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 540);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.cbConsentToCare);
             this.Controls.Add(this.dgvMedicalRecords);
             this.Controls.Add(this.txtFilter);
@@ -239,5 +249,6 @@
         private System.Windows.Forms.ToolStripMenuItem updateMedicalRecordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbConsentToCare;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }

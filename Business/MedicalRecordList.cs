@@ -29,6 +29,8 @@ namespace Business
                 ConsentToCare = recordDto.ConsentToCare
             };
         }
+
+        public static (int TotalMedicalRecords, int MissingConsent) MedicalRecordsSummary = (0, 0);
         public static async Task<BindingList<MedicalRecordList>> GetMedicalRecords()
         {
             if (!Util.CanAccessForm(EnRole.Doctor, EnRole.Owner).IsSuccess)
@@ -37,13 +39,25 @@ namespace Business
             BindingList<MedicalRecordListDto> recordDtos =
                 await MedicalRecordData.GetMedicalRecords(Global.CurrentLoggedInStaff.StaffId);
 
+            MedicalRecordsSummary = (0, 0);
+
             BindingList<MedicalRecordList> medicalRecords =
                 new BindingList<MedicalRecordList>();
 
             foreach (MedicalRecordListDto recordDto in recordDtos)
+            {
                 medicalRecords.Add(FromDto(recordDto));
+                UpdateMissingConsentCount(recordDto);
+            }
 
+            MedicalRecordsSummary.TotalMedicalRecords = medicalRecords.Count;
             return medicalRecords;
+        }
+
+        private static void UpdateMissingConsentCount(MedicalRecordListDto medicalRecord)
+        {
+            if (!medicalRecord.ConsentToCare)
+                MedicalRecordsSummary.MissingConsent++;
         }
     }
 }
