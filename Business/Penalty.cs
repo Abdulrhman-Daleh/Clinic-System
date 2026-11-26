@@ -7,7 +7,7 @@ namespace Business
     public class Penalty
     {
         public int PenaltyID { get; set; }
-        public int PenaltyStatusID { get; set; }
+        public EnPenaltyStatuses PenaltyStatus { get; set; }
         public int? AppointmentID { get; set; }
         public Appointment Appointment { get; set; }
         public decimal PenaltyAmount { get; set; }
@@ -19,7 +19,7 @@ namespace Business
         public Penalty()
         {
             PenaltyID = -1;
-            PenaltyStatusID = -1;
+            PenaltyStatus = 0;
             AppointmentID = null;
             PenaltyClosedDate = null;
         }
@@ -31,7 +31,7 @@ namespace Business
             return new PenaltyDto()
             {
                 PenaltyID = penalty.PenaltyID,
-                PenaltyStatusID = penalty.PenaltyStatusID,
+                PenaltyStatus = penalty.PenaltyStatus,
                 AppointmentID = penalty.AppointmentID,
                 PenaltyAmount = penalty.PenaltyAmount,
                 PenaltyWrittenDate = penalty.PenaltyWrittenDate,
@@ -64,10 +64,10 @@ namespace Business
 
             penalty.Appointment.AppointmentStatuses = EnAppointmentStatuses.NoShow;
             penalty.PenaltyAmount = policy.NoShowFee ?? 0;
-            penalty.AppointmentID = AppointmentID;
             penalty.PenaltyWrittenDate = DateTime.Now;
             penalty.PenaltyDueDate = DateTime.Now.AddDays(7);
             penalty.PolicyID = policy.PolicyID;
+            penalty.PenaltyStatus = EnPenaltyStatuses.Unpaid;
 
             return penalty;
         }

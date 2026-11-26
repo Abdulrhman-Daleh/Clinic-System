@@ -14,4 +14,5 @@
     public enum EnTestStatuses { Ordered = 1, Scheduled, Collected, InProgress, Pending, Completed }
     public enum EnReferralUrgencies { Immediate = 1, Urgent, Priority, Routine }
     public enum EnPaymentStatuses { Pending = 1, Completed, Cancelled, Declined }
+    public enum EnPenaltyStatuses { Unpaid = 1, Paid, Overdue, Suspended };
 }
