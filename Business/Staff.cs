@@ -251,5 +251,9 @@ namespace Business
                 "Invalid",
                 false);
         }
+        public static int GetTotalStaffCount()
+        {
+            return StaffData.GetTotalPatientsCount();
+        }
     }
 }

@@ -36,6 +36,7 @@
             this.btnEdit = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
+            this.lblSubtitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +45,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(93, 19);
+            this.lblTitle.Location = new System.Drawing.Point(83, 11);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(235, 38);
             this.lblTitle.TabIndex = 13;
@@ -123,11 +124,20 @@
             this.pbModeImage.TabIndex = 12;
             this.pbModeImage.TabStop = false;
             // 
+            // lblSubtitle
+            // 
+            this.lblSubtitle.AutoSize = true;
+            this.lblSubtitle.Location = new System.Drawing.Point(83, 49);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubtitle.TabIndex = 20;
+            // 
             // ViewStaffInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(697, 926);
+            this.Controls.Add(this.lblSubtitle);
             this.Controls.Add(this.BtnDeactivate);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnClose);
@@ -154,5 +164,6 @@
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button BtnDeactivate;
+        private System.Windows.Forms.Label lblSubtitle;
     }
 }

@@ -18,6 +18,8 @@ namespace Business
         public string Username { get; set; }
         public DateTime HireDate { get; set; }
         public string Status { get; set; }
+
+        public static (int StaffCount, int DoctorCount, int NurseCount, int Receptionist) StaffSummary = (0, 0, 0, 0);
         private static StaffList FromDto(StaffListingDto listDto)
         {
             return new StaffList()
@@ -38,14 +40,34 @@ namespace Business
             if (!Util.CanAccessForm(EnRole.Receptionist, EnRole.Owner).IsSuccess)
                 return null;
 
-            BindingList<StaffList> list = new BindingList<StaffList>();
+            BindingList<StaffList> staff = new BindingList<StaffList>();
+            StaffSummary = (0, 0, 0, 0);
 
-            foreach (var l in await StaffData.GetStaff())
+            foreach (StaffListingDto s in await StaffData.GetStaff())
             {
-                list.Add(FromDto(l));
+                staff.Add(FromDto(s));
+                UpdateStaffSummary(s);
             }
 
-            return list;
+            StaffSummary.StaffCount = staff.Count;
+            return staff;
+        }
+        private static void UpdateStaffSummary(StaffListingDto staff)
+        {
+            switch (staff.RoleName)
+            {
+                case nameof(EnRole.Doctor):
+                    StaffSummary.DoctorCount++;
+                    break;
+
+                case nameof(EnRole.Nurse):
+                    StaffSummary.NurseCount++;
+                    break;
+
+                case nameof(EnRole.Receptionist):
+                    StaffSummary.Receptionist++;
+                    break;
+            }
         }
         public static async Task<StaffList> FindStaffById(int staffId)
         {

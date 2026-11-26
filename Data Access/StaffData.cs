@@ -313,5 +313,18 @@ namespace Data_Access
 
             return false;
         }
+        public static int GetTotalPatientsCount()
+        {
+            string query = @"select 
+	    Count(PersonID) as TotalStaffCount
+        from Staff";
+
+            object result = DataAccessHelper.ExecuteScalar(query, null);
+
+            if (result != null && int.TryParse(result.ToString(), out int total))
+                return total;
+
+            return 0;
+        }
     }
 }

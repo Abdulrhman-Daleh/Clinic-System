@@ -107,6 +107,8 @@ namespace ClinicSystem.Staff
                 dgvStaff.Columns["StaffID"].HeaderText = "Staff no.";
             }
 
+            lblSubTitle.Text = $"Staff -- {Business.StaffList.StaffSummary.StaffCount} staff · {Business.StaffList.StaffSummary.DoctorCount} doctors · {Business.StaffList.StaffSummary.NurseCount} nurses · {Business.StaffList.StaffSummary.Receptionist} front desk";
+
             RefreshFilter(0);
         }
         private void ManageStaff_Load(object sender, System.EventArgs e)

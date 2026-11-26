@@ -43,6 +43,7 @@
             this.lblRecords = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
+            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaff)).BeginInit();
             this.cmsStaff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -76,7 +77,7 @@
             this.viewStaffToolStripMenuItem});
             this.cmsStaff.Name = "cmsPeople";
             this.cmsStaff.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsStaff.Size = new System.Drawing.Size(240, 146);
+            this.cmsStaff.Size = new System.Drawing.Size(240, 118);
             this.cmsStaff.Opening += new System.ComponentModel.CancelEventHandler(this.cmsStaff_Opening);
             // 
             // addNewStaffToolStripMenuItem
@@ -141,7 +142,7 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(93, 19);
+            this.lblTitle.Location = new System.Drawing.Point(83, 12);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(222, 38);
             this.lblTitle.TabIndex = 16;
@@ -198,11 +199,20 @@
             this.pbModeImage.TabIndex = 15;
             this.pbModeImage.TabStop = false;
             // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(83, 48);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 25;
+            // 
             // ManageStaff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(813, 542);
+            this.Controls.Add(this.lblSubTitle);
             this.Controls.Add(this.dgvStaff);
             this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.label1);
@@ -242,5 +252,6 @@
         private System.Windows.Forms.ToolStripMenuItem addNewStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateStaffToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewStaffToolStripMenuItem;
+        private System.Windows.Forms.Label lblSubTitle;
     }
 }

@@ -50,6 +50,7 @@ namespace ClinicSystem.Staff
                 return;
             }
 
+            lblSubtitle.Text = $"{staffInfo.StaffNumber} — {staffInfo.GetFullName()}";
             viewPersonInfoCtrl1.SetData(staffInfo);
             viewPersonContacts1.LoadUpPersonContact(staffInfo.PersonId);
             btnEdit.Enabled = true;
