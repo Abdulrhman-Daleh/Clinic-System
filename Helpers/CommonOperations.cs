@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -82,41 +83,33 @@ namespace ClinicSystem.Helpers
         {
             return cbFilterBy.Text;
         }
-        public static List<object> FilterData<T>(BindingList<T> list, string columnName, object valueToCheck)
+        public static List<object> FilterData<T>(BindingList<T> list, string columnName, string valueToCheck)
         {
             List<object> temp = new List<object>();
 
             if (ValidationHelper.IsEmptyOrNull(list))
                 return temp;
 
-            foreach (T item in list)
+            PropertyInfo property = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase).FirstOrDefault(x => x.Name == columnName);
+
+            try
             {
-                PropertyInfo prop = item.GetType().GetProperty(columnName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-
-                if (prop == null)
+                if (property != null)
                 {
-                    return null;
-                }
-
-                object currentValue = prop.GetValue(item);
-
-                if (ValidationHelper.IsEmptyOrNull(currentValue) && ValidationHelper.IsEmptyOrNull(valueToCheck))
-                    return null;
-
-                try
-                {
-                    object convertedValue = Convert.ChangeType(valueToCheck, prop.PropertyType);
-
-                    if (currentValue.Equals(convertedValue))
+                    foreach (T item in list)
                     {
-                        temp.Add(item);
+                        string propertyValue = property.GetValue(item).ToString();
+
+                        if (propertyValue.Contains(valueToCheck))
+                            temp.Add(item);
                     }
                 }
-                catch (Exception ex)
-                {
-                    Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "CommonOperations", "Application", EventLogEntryType.Error));
-                    return null;
-                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger.LogMessage(new LoggerMessage.LogMessageInformation(ex.Message, "CommonOperations", "Application", EventLogEntryType.Error));
+                return new List<object>();
             }
 
             return temp;

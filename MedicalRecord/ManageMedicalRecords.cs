@@ -104,7 +104,7 @@ namespace ClinicSystem.MedicalRecord
                 return;
 
             object value = cbConsentToCare.Text.Trim();
-            List<object> temp = CommonOperations.FilterData(MedicalRecords, filterName, cbConsentToCare.Text.ToLower() == "yes" ? true : false);
+            List<object> temp = CommonOperations.FilterData(MedicalRecords, filterName, cbConsentToCare.Text.ToLower() == "yes" ? "True" : "False");
             CommonOperations.LoadDataToDGV(dgvMedicalRecords, temp, lblRecords);
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -125,7 +125,7 @@ namespace ClinicSystem.MedicalRecord
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
-            object value = txtFilter.Text.Trim();
+            string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvMedicalRecords, MedicalRecords, lblRecords, value.ToString()))
                 return;

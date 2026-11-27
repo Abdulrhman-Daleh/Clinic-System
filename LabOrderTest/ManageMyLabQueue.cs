@@ -84,7 +84,7 @@ namespace ClinicSystem.LabOrderTest
             object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
-            object value = txtFilter.Text.Trim();
+            string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(
                 dgvLabQueue, labTests, lblRecords, value.ToString()))

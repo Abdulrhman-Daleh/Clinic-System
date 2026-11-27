@@ -22,7 +22,7 @@ namespace ClinicSystem.Appointments
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
-            object value = txtFilter.Text.Trim();
+            string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvAppointments, Appointments, lblRecords, value.ToString()))
                 return;

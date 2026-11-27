@@ -75,9 +75,11 @@
     <Compile Include="ListingDTOs\LabTestQueueListingDto.cs" />
     <Compile Include="ListingDTOs\PatientListingDto.cs" />
     <Compile Include="ListingDTOs\PaymentListDto.cs" />
+    <Compile Include="ListingDTOs\PenaltyListDto.cs" />
     <Compile Include="ListingDTOs\PrescriptionItemListingDto.cs" />
     <Compile Include="MedicineData.cs" />
     <Compile Include="PaymentData.cs" />
+    <Compile Include="PenaltyData.cs" />
     <Compile Include="PrescriptionData.cs" />
     <Compile Include="PrescriptionItemData.cs" />
     <Compile Include="ReferralData.cs" />

@@ -90,7 +90,7 @@ namespace ClinicSystem.Staff
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
-            object value = txtFilter.Text.Trim();
+            string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvStaff, StaffList, lblRecords, value.ToString()))
                 return;

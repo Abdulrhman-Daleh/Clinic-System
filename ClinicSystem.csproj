@@ -341,6 +341,12 @@
     <Compile Include="Payment\ViewPayment.Designer.cs">
       <DependentUpon>ViewPayment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Penaltes\ManagePenalties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Penaltes\ManagePenalties.Designer.cs">
+      <DependentUpon>ManagePenalties.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\AddPersonContacts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -607,6 +613,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Payment\ViewPayment.resx">
       <DependentUpon>ViewPayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Penaltes\ManagePenalties.resx">
+      <DependentUpon>ManagePenalties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\AddPersonContacts.resx">
       <DependentUpon>AddPersonContacts.cs</DependentUpon>
@@ -937,5 +946,6 @@
   <ItemGroup>
     <None Include="Resources\arrow-right_32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

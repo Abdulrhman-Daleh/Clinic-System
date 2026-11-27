@@ -22,7 +22,7 @@ namespace ClinicSystem.People
 
             if (CommonOperations.LoadDataToDGV(dgvPeople, People, lblRecords))
             {
-                dgvPeople.Columns["PersonID"].HeaderText = "#";
+                dgvPeople.Columns["PersonId"].HeaderText = "#";
             }
 
             lblSubTitle.Text = $"People -- {Person.PeopleSummary.PeopleCount} people · {Person.PeopleSummary.PatientCount} patients · {Person.PeopleSummary.StaffCount} staff";
@@ -33,7 +33,7 @@ namespace ClinicSystem.People
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, cbGender, txtFilter, dgvPeople, People, lblRecords, "Gender");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PersonID" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PersonId" }, CommonOperations.GetFilterName(cbFilterBy),
                 5, 10);
         }
         private void SetUp()
@@ -41,7 +41,7 @@ namespace ClinicSystem.People
             cbGender.Items.AddRange(new object[] { "Both", "Male", "Female" });
             cbGender.SelectedIndex = 0;
 
-            cbFilterBy.Items.AddRange(new object[] { "None", "PersonID", "Firstname", "Lastname", "Gender" });
+            cbFilterBy.Items.AddRange(new object[] { "None", "PersonId", "Firstname", "Lastname", "Gender" });
         }
         private void btnClose_Click(object sender, EventArgs e) => Close();
         private void ManagePeople_Load(object sender, EventArgs e)
@@ -61,7 +61,7 @@ namespace ClinicSystem.People
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
 
-            if (filterName == "PersonID")
+            if (filterName == "PersonId")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
@@ -70,7 +70,7 @@ namespace ClinicSystem.People
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterName = CommonOperations.GetFilterName(cbFilterBy);
-            object value = txtFilter.Text.Trim();
+            string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvPeople, People, lblRecords, value.ToString()))
                 return;
@@ -92,7 +92,7 @@ namespace ClinicSystem.People
                 return;
 
             object value = cbGender.Text.Trim();
-            List<object> temp = CommonOperations.FilterData(People, filterName, value.Equals("Male") ? EnGender.Male : EnGender.Female);
+            List<object> temp = CommonOperations.FilterData(People, filterName, value.Equals("Male") ? nameof(EnGender.Male) : nameof(EnGender.Female));
             CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
         }
         private void SetControlEnableStatus(bool status)
@@ -110,9 +110,9 @@ namespace ClinicSystem.People
             if (ValidationHelper.IsDgvEmptyOrNull(dgvPeople))
                 return;
 
-            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+            int PersonId = (int)dgvPeople.CurrentRow.Cells["PersonId"].Value;
 
-            ViewPerson viewPerson = new ViewPerson(personId);
+            ViewPerson viewPerson = new ViewPerson(PersonId);
             viewPerson.OnEdit += RefreshDgv;
             viewPerson.ShowDialog();
         }
@@ -126,9 +126,9 @@ namespace ClinicSystem.People
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
-            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+            int PersonId = (int)dgvPeople.CurrentRow.Cells["PersonId"].Value;
 
-            AddUpdatePerson updatePerson = new AddUpdatePerson(personId);
+            AddUpdatePerson updatePerson = new AddUpdatePerson(PersonId);
             updatePerson.SendPersonInfo += RefreshDgv;
             updatePerson.ShowDialog();
         }
@@ -137,9 +137,9 @@ namespace ClinicSystem.People
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
-            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+            int PersonId = (int)dgvPeople.CurrentRow.Cells["PersonId"].Value;
 
-            ViewPerson viewPerson = new ViewPerson(personId);
+            ViewPerson viewPerson = new ViewPerson(PersonId);
             viewPerson.OnEdit += RefreshDgv;
             viewPerson.ShowDialog();
         }
@@ -148,9 +148,9 @@ namespace ClinicSystem.People
             if (!ValidationHelper.CheckAccess(EnRole.Receptionist, EnRole.Owner))
                 return;
 
-            int personId = (int)dgvPeople.CurrentRow.Cells["PersonID"].Value;
+            int PersonId = (int)dgvPeople.CurrentRow.Cells["PersonId"].Value;
 
-            AddPersonContacts addContact = new AddPersonContacts(personId);
+            AddPersonContacts addContact = new AddPersonContacts(PersonId);
             addContact.ShowDialog();
         }
     }
