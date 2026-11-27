@@ -15,11 +15,12 @@ namespace ClinicSystem.Patients
             InitializeComponent();
         }
 
+        private string filterName { get; set; }
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, cbStatus, txtFilter, dgvPatients, Patients, lblRecords, "Status");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PatientID" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PatientID" }, filterName,
                 5, 30);
         }
         private void SetUp()
@@ -29,24 +30,20 @@ namespace ClinicSystem.Patients
 
             cbFilterBy.Items.AddRange(new object[] { "None", "PatientID", "FullName", "InsuranceName", "Status" });
         }
-
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
 
             if (filterName == "PatientID")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvPatients, Patients, lblRecords, value.ToString()))
@@ -57,8 +54,6 @@ namespace ClinicSystem.Patients
         }
         private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy).ToLower();
-
             if (CommonOperations.ResetDataGrid(dgvPatients, Patients, lblRecords, cbStatus.Text.ToLower()))
                 return;
 
@@ -66,7 +61,6 @@ namespace ClinicSystem.Patients
             List<object> temp = CommonOperations.FilterData(Patients, filterName, cbStatus.Text);
             CommonOperations.LoadDataToDGV(dgvPatients, temp, lblRecords);
         }
-
         private async void LoadPatientInfo()
         {
             Patients = await PatientList.GetPatientListingDatas();
@@ -75,7 +69,6 @@ namespace ClinicSystem.Patients
             UpdatePatientSummary();
             RefreshFilter(0);
         }
-
         private void UpdatePatientSummary()
         {
             if (ValidationHelper.IsDgvEmptyOrNull(dgvPatients))
@@ -95,30 +88,26 @@ namespace ClinicSystem.Patients
 
             lblSubTitle.Text = $"Patients — {Patients.Count} registered · {frozenPatients} frozen · {unPaidPatients} unpaid";
         }
-
         private void ManagePatient_Load(object sender, System.EventArgs e)
         {
             LoadPatientInfo();
             SetUp();
             UpdatePatientSummary();
         }
-
         private void btnClose_Click(object sender, EventArgs e) => Close();
-
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void SetControlEnableStatus(bool status)
         {
             viewPatientToolStripMenuItem.Enabled = status;
         }
-
         private void cmsPatient_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPatients));
         }
-
         private async void RefreshDgv(Patient p)
         {
             PatientList patient = await PatientList.FindPatientByIdList(p.PatientId);
@@ -126,14 +115,12 @@ namespace ClinicSystem.Patients
             CommonOperations.UpdateAfterAdding(Patients, patient, targetIndex);
             lblRecords.Text = $"{dgvPatients.Rows.Count} records";
         }
-
         private void addNewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RegisterPatient register = new RegisterPatient();
             register.OnRegisterSave += RefreshDgv;
             register.ShowDialog();
         }
-
         private void viewPatientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (ValidationHelper.IsDgvEmptyOrNull(dgvPatients))
@@ -144,7 +131,6 @@ namespace ClinicSystem.Patients
             ViewPatient viewPatient = new ViewPatient(patientId);
             viewPatient.ShowDialog();
         }
-
         private void dgvPatients_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (ValidationHelper.IsDgvEmptyOrNull(dgvPatients))

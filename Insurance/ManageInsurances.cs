@@ -12,6 +12,7 @@ namespace ClinicSystem.Insurance
     public partial class ManageInsurances : FormsDefaultSettings
     {
         private BindingList<InsuranceList> Insurances { get; set; }
+        private string filterName { get; set; }
         public ManageInsurances()
         {
             InitializeComponent();
@@ -40,7 +41,7 @@ namespace ClinicSystem.Insurance
 
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvInsurances, Insurances, lblRecords, null);
 
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "#", "Members" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "#", "Members" }, filterName,
                 5, 25);
         }
         private void SetUp()
@@ -70,6 +71,7 @@ namespace ClinicSystem.Insurance
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -77,8 +79,6 @@ namespace ClinicSystem.Insurance
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
-
             if (filterName == "PolicyNumber")
             {
                 ValidationHelper.HandleInputType(e, true, true);
@@ -93,7 +93,6 @@ namespace ClinicSystem.Insurance
         }
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(

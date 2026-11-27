@@ -13,7 +13,7 @@ namespace ClinicSystem.Medicine.Controls
             InitializeComponent();
             SetUp();
         }
-
+        private string FilterName { get; set; }
         private void SetUp()
         {
             cbFindBy.Items.Add("MedicineID");
@@ -57,9 +57,7 @@ namespace ClinicSystem.Medicine.Controls
         }
         private async Task FindFilterHelper()
         {
-            string findBy = CommonOperations.GetFilterName(cbFindBy);
-
-            if (findBy.ToLower() == "medicineid")
+            if (FilterName.ToLower() == "medicineid")
                 viewMedicineCtrl1.LoadMedicineInfo(await Business.Medicine.FindMedicineByID(Convert.ToInt32(txtFindBy.Text.Trim())));
             else
                 viewMedicineCtrl1.LoadMedicineInfo(await Business.Medicine.FindMedicineByDrugName(txtFindBy.Text.Trim()));
@@ -91,12 +89,11 @@ namespace ClinicSystem.Medicine.Controls
         {
             txtFindBy.Text = string.Empty;
             txtFindBy.Focus();
+            FilterName = CommonOperations.GetFilterName(cbFindBy);
         }
         private void txtFindBy_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string findBy = CommonOperations.GetFilterName(cbFindBy);
-
-            if (findBy.ToLower() == "medicineid")
+            if (FilterName.ToLower() == "medicineid")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);

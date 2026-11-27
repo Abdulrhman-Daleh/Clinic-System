@@ -17,11 +17,12 @@ namespace ClinicSystem.MedicalRecord
         {
             InitializeComponent();
         }
+        private string filterName { get; set; }
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, cbConsentToCare, txtFilter, dgvMedicalRecords, MedicalRecords, lblRecords, "ConsentToCare");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicalRecordID" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicalRecordID" }, filterName,
                 5, 30);
         }
         private void SetUp()
@@ -89,11 +90,11 @@ namespace ClinicSystem.MedicalRecord
                 "ConsentToCare");
 
             RefreshFilter(cbFilterBy.SelectedIndex);
+
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void cbConsentToCare_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy).ToLower();
-
             if (cbConsentToCare.Text == "All")
             {
                 CommonOperations.LoadDataToDGV(dgvMedicalRecords, MedicalRecords, lblRecords);
@@ -113,7 +114,6 @@ namespace ClinicSystem.MedicalRecord
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
 
             if (filterName == "MedicalRecordID")
                 ValidationHelper.HandleInputType(e, true, false);
@@ -124,7 +124,6 @@ namespace ClinicSystem.MedicalRecord
         }
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvMedicalRecords, MedicalRecords, lblRecords, value.ToString()))

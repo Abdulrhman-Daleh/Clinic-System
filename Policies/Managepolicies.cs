@@ -11,6 +11,7 @@ namespace ClinicSystem.Policies
     public partial class Managepolicies : FormsDefaultSettings
     {
         BindingList<Policy> Policies = new BindingList<Policy>();
+        private string filterName { get; set; }
         public Managepolicies()
         {
             InitializeComponent();
@@ -24,7 +25,7 @@ namespace ClinicSystem.Policies
             ValidationHelper.SetApproperiteMaxLength(
                 txtFilter,
                 new List<string> { "PolicyID", "OwnerID" },
-                CommonOperations.GetFilterName(cbFilterBy),
+                filterName,
                 5, 50);
         }
         private async Task SetUp()
@@ -156,16 +157,14 @@ namespace ClinicSystem.Policies
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
-
             ValidationHelper.HandleInputType(e, true, false);
         }
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvPolicies, Policies, lblRecords, value.ToString()))

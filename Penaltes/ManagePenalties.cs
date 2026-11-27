@@ -14,14 +14,11 @@ namespace ClinicSystem.Penaltes
         {
             InitializeComponent();
         }
-
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
-
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
@@ -31,16 +28,14 @@ namespace ClinicSystem.Penaltes
             ValidationHelper.SetApproperiteMaxLength(
                 txtFilter,
                 new List<string> { "PenaltyID", "AppointmentID" },
-                CommonOperations.GetFilterName(cbFilterBy),
+                FilterName,
                 5, 50);
-
-            FilterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
         }
-
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (FilterName == "PenaltyID" || FilterName == "AppointmentID")
@@ -48,7 +43,6 @@ namespace ClinicSystem.Penaltes
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
             string value = txtFilter.Text.Trim();

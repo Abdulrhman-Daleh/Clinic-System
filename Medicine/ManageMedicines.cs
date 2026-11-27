@@ -10,6 +10,7 @@ namespace ClinicSystem.Medicine
     public partial class ManageMedicines : FormsDefaultSettings
     {
         private BindingList<Business.Medicine> Medicines { get; set; }
+        private string filterName { get; set; }
         public ManageMedicines()
         {
             InitializeComponent();
@@ -18,7 +19,7 @@ namespace ClinicSystem.Medicine
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvMedicines, Medicines, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicineID" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicineID" }, filterName,
                 5, 10);
         }
         private void SetUp()
@@ -40,8 +41,6 @@ namespace ClinicSystem.Medicine
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
-
             if (filterName == "MedicineID")
                 ValidationHelper.HandleInputType(e, true, false);
             else
@@ -49,7 +48,6 @@ namespace ClinicSystem.Medicine
         }
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(
@@ -86,6 +84,7 @@ namespace ClinicSystem.Medicine
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void SetControlEnableStatus(bool status)
         {

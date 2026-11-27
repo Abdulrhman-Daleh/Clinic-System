@@ -8,14 +8,12 @@ namespace ClinicSystem.Payment
     public partial class ManagePayments : FormsDefaultSettings
     {
         BindingList<PaymentList> payments = new BindingList<PaymentList>();
-        private string FilterName = "None";
+        private string FilterName { get; set; }
         public ManagePayments()
         {
             InitializeComponent();
         }
-
         private void cbFilterBy_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e) => ValidationHelper.LockComboBox(e);
-
         private void SetToolTipControlStatus(bool status)
         {
             viewPaymentToolStripMenuItem.Enabled = status;
@@ -24,9 +22,7 @@ namespace ClinicSystem.Payment
         {
             SetToolTipControlStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvPayments));
         }
-
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
-
         private async void ManagePayments_Load(object sender, System.EventArgs e)
         {
             cbFilterBy.Items.AddRange(new object[]
@@ -35,7 +31,6 @@ namespace ClinicSystem.Payment
             payments = await PaymentList.GetPaymentLists();
             cbFilterBy.SelectedIndex = 0;
         }
-
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             FilterName = CommonOperations.GetFilterName(cbFilterBy);
@@ -45,7 +40,6 @@ namespace ClinicSystem.Payment
 
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvPayments, payments, lblRecords, null);
         }
-
         private void txtFilter_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             if (FilterName == "PaymentID" || FilterName == "AppointmentID")
@@ -53,7 +47,6 @@ namespace ClinicSystem.Payment
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
             string value = txtFilter.Text.Trim();

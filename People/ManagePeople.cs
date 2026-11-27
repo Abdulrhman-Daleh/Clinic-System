@@ -12,6 +12,7 @@ namespace ClinicSystem.People
     public partial class ManagePeople : FormsDefaultSettings
     {
         private BindingList<Person> People { get; set; }
+        private string FilterName { get; set; }
         public ManagePeople()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace ClinicSystem.People
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, cbGender, txtFilter, dgvPeople, People, lblRecords, "Gender");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PersonId" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PersonId" }, FilterName,
                 5, 10);
         }
         private void SetUp()
@@ -52,6 +53,7 @@ namespace ClinicSystem.People
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -59,9 +61,7 @@ namespace ClinicSystem.People
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
-
-            if (filterName == "PersonId")
+            if (FilterName == "PersonId")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
@@ -69,19 +69,22 @@ namespace ClinicSystem.People
         }
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
+            if (CommonOperations.HandleFilterOnEmptySource(People, "There are no people to filter", "There are 0 person"))
+            {
+                RefreshFilter(0);
+                return;
+            }
+
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvPeople, People, lblRecords, value.ToString()))
                 return;
 
-            List<object> temp = CommonOperations.FilterData(People, filterName, value);
+            List<object> temp = CommonOperations.FilterData(People, FilterName, value);
             CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
         }
         private void cbGender_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy).ToLower();
-
             if (cbGender.Text == "Both")
             {
                 CommonOperations.LoadDataToDGV(dgvPeople, People, lblRecords);
@@ -92,7 +95,7 @@ namespace ClinicSystem.People
                 return;
 
             object value = cbGender.Text.Trim();
-            List<object> temp = CommonOperations.FilterData(People, filterName, value.Equals("Male") ? nameof(EnGender.Male) : nameof(EnGender.Female));
+            List<object> temp = CommonOperations.FilterData(People, FilterName, value.Equals("Male") ? nameof(EnGender.Male) : nameof(EnGender.Female));
             CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
         }
         private void SetControlEnableStatus(bool status)

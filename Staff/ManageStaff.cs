@@ -10,6 +10,7 @@ namespace ClinicSystem.Staff
     public partial class ManageStaff : FormsDefaultSettings
     {
         BindingList<StaffList> StaffList = new BindingList<StaffList>();
+        private string filterName { get; set; }
         public ManageStaff()
         {
             InitializeComponent();
@@ -17,8 +18,10 @@ namespace ClinicSystem.Staff
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
+
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvStaff, StaffList, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, filterName,
                 5, 50);
         }
         private void SetUp()
@@ -89,7 +92,6 @@ namespace ClinicSystem.Staff
         }
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvStaff, StaffList, lblRecords, value.ToString()))
@@ -124,8 +126,6 @@ namespace ClinicSystem.Staff
         }
         private void txtFilter_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
-
             if (filterName == "StaffID")
                 ValidationHelper.HandleInputType(e, true, false);
             else

@@ -11,6 +11,7 @@ namespace ClinicSystem.LabOrderTest
     {
         BindingList<LabTestListing> labTests = new BindingList<LabTestListing>();
         private readonly int? _appointmentId;
+        private string filterName { get; set; }
         public ManageLabTests()
         {
             InitializeComponent();
@@ -67,16 +68,16 @@ namespace ClinicSystem.LabOrderTest
         {
             cbFilterBy.SelectedIndex = index;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvLabTests, labTests, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "LabID" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "LabID" }, filterName,
               5, 40);
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(

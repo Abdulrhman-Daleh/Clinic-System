@@ -7,6 +7,7 @@ namespace ClinicSystem.Schedule
     public partial class ManageSchedules : FormsDefaultSettings
     {
         private BindingList<Business.Schedule> Schedules;
+        private string filterName { get; set; }
         public ManageSchedules()
         {
             InitializeComponent();
@@ -15,8 +16,9 @@ namespace ClinicSystem.Schedule
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvSchedules, Schedules, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, filterName,
                 5, 20);
         }
         private void SetUp()
@@ -41,7 +43,6 @@ namespace ClinicSystem.Schedule
         }
         private void txtFilter_TextChanged(object sender, System.EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvSchedules, Schedules, lblRecords, value.ToString()))

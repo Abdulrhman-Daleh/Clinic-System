@@ -15,13 +15,13 @@ namespace ClinicSystem.Appointments
     {
         private BindingList<AppointmentList> Appointments { get; set; }
         private int PageNumber = 0;
+        private string filterName { get; set; }
         public ManageAppointments()
         {
             InitializeComponent();
         }
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
             string value = txtFilter.Text.Trim();
 
             if (CommonOperations.ResetDataGrid(dgvAppointments, Appointments, lblRecords, value.ToString()))
@@ -43,7 +43,7 @@ namespace ClinicSystem.Appointments
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvAppointments, Appointments, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, CommonOperations.GetFilterName(cbFilterBy),
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, filterName,
                 5, 50);
         }
         private async void LoadAppointments()
@@ -77,6 +77,7 @@ namespace ClinicSystem.Appointments
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             RefreshFilter(cbFilterBy.SelectedIndex);
+            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
