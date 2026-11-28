@@ -17,12 +17,12 @@ namespace ClinicSystem.MedicalRecord
         {
             InitializeComponent();
         }
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, cbConsentToCare, txtFilter, dgvMedicalRecords, MedicalRecords, lblRecords, "ConsentToCare");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicalRecordID" }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicalRecordID" }, FilterName,
                 5, 30);
         }
         private void SetUp()
@@ -77,21 +77,9 @@ namespace ClinicSystem.MedicalRecord
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (MedicalRecords == null)
-                return;
-
-            CommonOperations.HandleSwitchingFilter(
-                cbFilterBy,
-                cbConsentToCare,
-                txtFilter,
-                dgvMedicalRecords,
-                MedicalRecords,
-                lblRecords,
-                "ConsentToCare");
-
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
 
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void cbConsentToCare_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -105,7 +93,7 @@ namespace ClinicSystem.MedicalRecord
                 return;
 
             object value = cbConsentToCare.Text.Trim();
-            List<object> temp = CommonOperations.FilterData(MedicalRecords, filterName, cbConsentToCare.Text.ToLower() == "yes" ? "True" : "False");
+            List<object> temp = CommonOperations.FilterData(MedicalRecords, FilterName, cbConsentToCare.Text.ToLower() == "yes" ? "True" : "False");
             CommonOperations.LoadDataToDGV(dgvMedicalRecords, temp, lblRecords);
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
@@ -115,22 +103,36 @@ namespace ClinicSystem.MedicalRecord
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
 
-            if (filterName == "MedicalRecordID")
+            if (FilterName == "MedicalRecordID")
                 ValidationHelper.HandleInputType(e, true, false);
-            else if (filterName == "MedicalNumber")
+            else if (FilterName == "MedicalNumber")
                 ValidationHelper.HandleInputType(e, true, true);
             else
                 ValidationHelper.HandleInputType(e, true, false);
         }
-        private void txtFilter_TextChanged(object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(dgvMedicalRecords, MedicalRecords, lblRecords, value.ToString()))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvMedicalRecords, MedicalRecords, lblRecords, value.ToString()))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(MedicalRecords, filterName, value);
-            CommonOperations.LoadDataToDGV(dgvMedicalRecords, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(MedicalRecords, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvMedicalRecords, temp, lblRecords);
+            }
         }
         private void btnClose_Click(object sender, EventArgs e) => Close();
         private void SetControlEnableStatus(bool status)

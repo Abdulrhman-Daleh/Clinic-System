@@ -39,11 +39,11 @@
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
             this.lblRecords = new System.Windows.Forms.Label();
+            this.lblSubTitle = new System.Windows.Forms.Label();
+            this.btnClose = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
-            this.lblSubTitle = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaff)).BeginInit();
             this.cmsStaff.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -115,7 +115,7 @@
             this.txtFilter.Size = new System.Drawing.Size(150, 30);
             this.txtFilter.TabIndex = 18;
             this.txtFilter.Visible = false;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
+            this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilter_KeyPress);
             // 
             // label1
@@ -159,6 +159,22 @@
             this.label2.TabIndex = 24;
             this.label2.Text = "double-click = select";
             // 
+            // lblRecords
+            // 
+            this.lblRecords.AutoSize = true;
+            this.lblRecords.Location = new System.Drawing.Point(18, 501);
+            this.lblRecords.Name = "lblRecords";
+            this.lblRecords.Size = new System.Drawing.Size(0, 25);
+            this.lblRecords.TabIndex = 22;
+            // 
+            // lblSubTitle
+            // 
+            this.lblSubTitle.AutoSize = true;
+            this.lblSubTitle.Location = new System.Drawing.Point(83, 48);
+            this.lblSubTitle.Name = "lblSubTitle";
+            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
+            this.lblSubTitle.TabIndex = 25;
+            // 
             // btnClose
             // 
             this.btnClose.Image = global::ClinicSystem.Properties.Resources.x_32;
@@ -170,14 +186,6 @@
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // lblRecords
-            // 
-            this.lblRecords.AutoSize = true;
-            this.lblRecords.Location = new System.Drawing.Point(18, 501);
-            this.lblRecords.Name = "lblRecords";
-            this.lblRecords.Size = new System.Drawing.Size(0, 25);
-            this.lblRecords.TabIndex = 22;
             // 
             // pictureBox1
             // 
@@ -198,14 +206,6 @@
             this.pbModeImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbModeImage.TabIndex = 15;
             this.pbModeImage.TabStop = false;
-            // 
-            // lblSubTitle
-            // 
-            this.lblSubTitle.AutoSize = true;
-            this.lblSubTitle.Location = new System.Drawing.Point(83, 48);
-            this.lblSubTitle.Name = "lblSubTitle";
-            this.lblSubTitle.Size = new System.Drawing.Size(0, 25);
-            this.lblSubTitle.TabIndex = 25;
             // 
             // ManageStaff
             // 

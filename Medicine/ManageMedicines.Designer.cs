@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvMedicines = new System.Windows.Forms.DataGridView();
+            this.cmsMedicine = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addNewMedicineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.updateMedicineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
@@ -38,12 +41,9 @@
             this.lblRecords = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
-            this.cmsMedicine = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.updateMedicineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addNewMedicineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMedicines)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             this.cmsMedicine.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvMedicines
@@ -63,6 +63,36 @@
             this.dgvMedicines.TabIndex = 31;
             this.dgvMedicines.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMedicines_CellDoubleClick);
             // 
+            // cmsMedicine
+            // 
+            this.cmsMedicine.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmsMedicine.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cmsMedicine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewMedicineToolStripMenuItem,
+            this.updateMedicineToolStripMenuItem});
+            this.cmsMedicine.Name = "cmsPeople";
+            this.cmsMedicine.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.cmsMedicine.Size = new System.Drawing.Size(281, 80);
+            this.cmsMedicine.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMedicine_Opening);
+            // 
+            // addNewMedicineToolStripMenuItem
+            // 
+            this.addNewMedicineToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_policy_32;
+            this.addNewMedicineToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addNewMedicineToolStripMenuItem.Name = "addNewMedicineToolStripMenuItem";
+            this.addNewMedicineToolStripMenuItem.Size = new System.Drawing.Size(280, 38);
+            this.addNewMedicineToolStripMenuItem.Text = "Add New Medicine";
+            this.addNewMedicineToolStripMenuItem.Click += new System.EventHandler(this.addNewMedicineToolStripMenuItem_Click);
+            // 
+            // updateMedicineToolStripMenuItem
+            // 
+            this.updateMedicineToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
+            this.updateMedicineToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.updateMedicineToolStripMenuItem.Name = "updateMedicineToolStripMenuItem";
+            this.updateMedicineToolStripMenuItem.Size = new System.Drawing.Size(280, 38);
+            this.updateMedicineToolStripMenuItem.Text = "Update Medicine";
+            this.updateMedicineToolStripMenuItem.Click += new System.EventHandler(this.updateMedicineToolStripMenuItem_Click);
+            // 
             // txtFilter
             // 
             this.txtFilter.Location = new System.Drawing.Point(214, 71);
@@ -71,7 +101,7 @@
             this.txtFilter.Size = new System.Drawing.Size(150, 30);
             this.txtFilter.TabIndex = 28;
             this.txtFilter.Visible = false;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
+            this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             this.txtFilter.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilter_KeyPress);
             // 
             // label1
@@ -145,36 +175,6 @@
             this.pbModeImage.TabIndex = 26;
             this.pbModeImage.TabStop = false;
             // 
-            // cmsMedicine
-            // 
-            this.cmsMedicine.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmsMedicine.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cmsMedicine.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addNewMedicineToolStripMenuItem,
-            this.updateMedicineToolStripMenuItem});
-            this.cmsMedicine.Name = "cmsPeople";
-            this.cmsMedicine.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsMedicine.Size = new System.Drawing.Size(281, 80);
-            this.cmsMedicine.Opening += new System.ComponentModel.CancelEventHandler(this.cmsMedicine_Opening);
-            // 
-            // updateMedicineToolStripMenuItem
-            // 
-            this.updateMedicineToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.update_32;
-            this.updateMedicineToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.updateMedicineToolStripMenuItem.Name = "updateMedicineToolStripMenuItem";
-            this.updateMedicineToolStripMenuItem.Size = new System.Drawing.Size(280, 38);
-            this.updateMedicineToolStripMenuItem.Text = "Update Medicine";
-            this.updateMedicineToolStripMenuItem.Click += new System.EventHandler(this.updateMedicineToolStripMenuItem_Click);
-            // 
-            // addNewMedicineToolStripMenuItem
-            // 
-            this.addNewMedicineToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.add_policy_32;
-            this.addNewMedicineToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.addNewMedicineToolStripMenuItem.Name = "addNewMedicineToolStripMenuItem";
-            this.addNewMedicineToolStripMenuItem.Size = new System.Drawing.Size(280, 38);
-            this.addNewMedicineToolStripMenuItem.Text = "Add New Medicine";
-            this.addNewMedicineToolStripMenuItem.Click += new System.EventHandler(this.addNewMedicineToolStripMenuItem_Click);
-            // 
             // ManageMedicines
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -193,8 +193,8 @@
             this.Text = "Manage Medicines";
             this.Load += new System.EventHandler(this.ManageMedicines_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMedicines)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             this.cmsMedicine.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbModeImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

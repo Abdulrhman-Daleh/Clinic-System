@@ -11,8 +11,8 @@ namespace ClinicSystem.LabOrderTest
 {
     public partial class ManageMyLabQueue : FormsDefaultSettings
     {
-        BindingList<LabTestQueueListing> labTests =
-            new BindingList<LabTestQueueListing>();
+        private string FilterName { get; set; }
+        BindingList<LabTestQueueListing> labTests = new BindingList<LabTestQueueListing>();
         public ManageMyLabQueue()
         {
             InitializeComponent();
@@ -45,15 +45,11 @@ namespace ClinicSystem.LabOrderTest
         }
         private void btnClose_Click(object sender, EventArgs e)
             => Close();
-        private void cbFilterBy_KeyPress(
-            object sender, KeyPressEventArgs e)
-            => ValidationHelper.LockComboBox(e);
-        private void cmsLabQueue_Opening(
-            object sender, CancelEventArgs e)
+        private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e) => ValidationHelper.LockComboBox(e);
+        private void cmsLabQueue_Opening(object sender, CancelEventArgs e)
             => viewLabTestToolStripMenuItem.Enabled =
                 !ValidationHelper.IsDgvEmptyOrNull(dgvLabQueue);
-        private void dgvLabQueue_CellDoubleClick(
-            object sender, DataGridViewCellEventArgs e)
+        private void dgvLabQueue_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0 || dgvLabQueue.CurrentRow == null)
                 return;
@@ -75,31 +71,35 @@ namespace ClinicSystem.LabOrderTest
                 5,
                 40);
         }
-        private void cbFilterBy_SelectedIndexChanged(
-            object sender, EventArgs e)
+        private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-        private void txtFilter_TextChanged(
-            object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
-            string filterName = CommonOperations.GetFilterName(cbFilterBy);
-            string value = txtFilter.Text.Trim();
-
-            if (CommonOperations.ResetDataGrid(
-                dgvLabQueue, labTests, lblRecords, value.ToString()))
+            if (e.KeyCode == Keys.Enter)
             {
-                return;
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
             }
-
-            List<object> temp = CommonOperations.FilterData(
-                labTests, filterName, value);
-
-            CommonOperations.LoadDataToDGV(
-                dgvLabQueue, temp, lblRecords);
         }
-        private void viewLabTestToolStripMenuItem_Click(
-            object sender, EventArgs e)
+        private void PerformFilter()
+        {
+            string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                if (CommonOperations.ResetDataGrid(dgvLabQueue, labTests, lblRecords, value.ToString()))
+                    return;
+
+                List<object> temp = CommonOperations.FilterData(labTests, FilterName, value);
+
+                CommonOperations.LoadDataToDGV(dgvLabQueue, temp, lblRecords);
+            }
+        }
+        private void viewLabTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ViewSelectedLabTest();
         }

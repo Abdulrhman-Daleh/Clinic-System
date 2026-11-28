@@ -74,7 +74,7 @@
             this.updateScheduleToolStripMenuItem});
             this.cmsSchedules.Name = "cmsPeople";
             this.cmsSchedules.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsSchedules.Size = new System.Drawing.Size(279, 108);
+            this.cmsSchedules.Size = new System.Drawing.Size(279, 80);
             this.cmsSchedules.Opening += new System.ComponentModel.CancelEventHandler(this.cmsSchedules_Opening);
             // 
             // addNewScheduleToolStripMenuItem
@@ -103,7 +103,7 @@
             this.txtFilter.Size = new System.Drawing.Size(150, 30);
             this.txtFilter.TabIndex = 18;
             this.txtFilter.Visible = false;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
+            this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             // 
             // label1
             // 

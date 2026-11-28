@@ -11,7 +11,7 @@ namespace ClinicSystem.Policies
     public partial class Managepolicies : FormsDefaultSettings
     {
         BindingList<Policy> Policies = new BindingList<Policy>();
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public Managepolicies()
         {
             InitializeComponent();
@@ -25,7 +25,7 @@ namespace ClinicSystem.Policies
             ValidationHelper.SetApproperiteMaxLength(
                 txtFilter,
                 new List<string> { "PolicyID", "OwnerID" },
-                filterName,
+                FilterName,
                 5, 50);
         }
         private async Task SetUp()
@@ -156,24 +156,37 @@ namespace ClinicSystem.Policies
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.HandleInputType(e, true, false);
         }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                if (CommonOperations.ResetDataGrid(dgvPolicies, Policies, lblRecords, value.ToString()))
+                    return;
 
-            if (CommonOperations.ResetDataGrid(dgvPolicies, Policies, lblRecords, value.ToString()))
-                return;
+                List<object> temp = CommonOperations.FilterData(Policies, FilterName, value);
 
-            List<object> temp = CommonOperations.FilterData(Policies, filterName, value);
-
-            CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
+                CommonOperations.LoadDataToDGV(dgvPolicies, temp, lblRecords);
+            }
         }
+
         private async void archiveToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             int policyId = (int)dgvPolicies.CurrentRow.Cells[0].Value;

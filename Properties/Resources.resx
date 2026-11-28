@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="manage_staff_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\manage_staff_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="note_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\note_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -157,14 +160,14 @@
   <data name="forgot-password_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\forgot-password_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow-left_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arrow-left_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="time-management_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\time-management_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="password_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\password_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="login_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\login_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Referral_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Referral_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -175,8 +178,8 @@
   <data name="shield_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\shield_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="perf_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\perf_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="arrow-right_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrow-right_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="money" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\money.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,14 +214,14 @@
   <data name="Manage_Policy_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Manage_Policy_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="view_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\view_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="atm-card_321" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atm-card_321.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="view_current_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\view_current_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ring_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ring_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="save_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\save_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -262,9 +265,6 @@
   <data name="snowflake_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\snowflake_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="clinic_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\clinic_background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="calendar_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calendar_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -283,11 +283,11 @@
   <data name="schedule_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\schedule_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="money_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\money_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="arrow-left_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\arrow-left_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="login_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\login_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="add_appointment" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_appointment.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -304,9 +304,6 @@
   <data name="find_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\find_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="deactivite_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\deactivite_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="hash_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\hash_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -316,8 +313,8 @@
   <data name="find_policy_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\find_policy_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="manage_staff_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\manage_staff_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="clinic_background" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clinic_background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="warning_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\warning_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -328,14 +325,20 @@
   <data name="Scène clinique moderne et apaisante" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Scène clinique moderne et apaisante.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="add_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\add_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="atm-card_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\atm-card_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="refresh_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\refresh_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ring_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ring_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="perf_64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\perf_64.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="money_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\money_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="show_password_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\show_password_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -361,8 +364,8 @@
   <data name="add_mdeical_record_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\add_mdeical_record_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="add_staff_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\add_staff_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="view_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\view_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="key_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\key_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -370,7 +373,7 @@
   <data name="cancel_appointment_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\cancel_appointment_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="arrow-right_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\arrow-right_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="filter_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

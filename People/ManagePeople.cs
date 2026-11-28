@@ -52,8 +52,8 @@ namespace ClinicSystem.People
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshFilter(cbFilterBy.SelectedIndex);
             FilterName = CommonOperations.GetFilterName(cbFilterBy);
+            RefreshFilter(cbFilterBy.SelectedIndex);
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -67,21 +67,29 @@ namespace ClinicSystem.People
                 ValidationHelper.HandleInputType(e, false, true);
 
         }
-        private void txtFilter_TextChanged(object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
         {
-            if (CommonOperations.HandleFilterOnEmptySource(People, "There are no people to filter", "There are 0 person"))
+            if (e.KeyCode == Keys.Enter)
             {
-                RefreshFilter(0);
-                return;
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
             }
-
+        }
+        private void PerformFilter()
+        {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(dgvPeople, People, lblRecords, value.ToString()))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvPeople, People, lblRecords, value.ToString()))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(People, FilterName, value);
-            CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(People, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvPeople, temp, lblRecords);
+            }
         }
         private void cbGender_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -33,8 +33,8 @@ namespace ClinicSystem.Penaltes
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            RefreshFilter(cbFilterBy.SelectedIndex);
             FilterName = CommonOperations.GetFilterName(cbFilterBy);
+            RefreshFilter(cbFilterBy.SelectedIndex);
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -43,16 +43,30 @@ namespace ClinicSystem.Penaltes
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(dgvPenalties, Penalties, lblRecords, value))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvPenalties, Penalties, lblRecords, value))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(Penalties, FilterName, value);
+                List<object> temp = CommonOperations.FilterData(Penalties, FilterName, value);
 
-            CommonOperations.LoadDataToDGV(dgvPenalties, temp, lblRecords);
+                CommonOperations.LoadDataToDGV(dgvPenalties, temp, lblRecords);
+            }
         }
     }
 }

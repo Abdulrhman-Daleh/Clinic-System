@@ -1,13 +1,14 @@
 ﻿using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Schedule
 {
     public partial class ManageSchedules : FormsDefaultSettings
     {
         private BindingList<Business.Schedule> Schedules;
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public ManageSchedules()
         {
             InitializeComponent();
@@ -16,9 +17,8 @@ namespace ClinicSystem.Schedule
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvSchedules, Schedules, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, FilterName,
                 5, 20);
         }
         private void SetUp()
@@ -41,21 +41,33 @@ namespace ClinicSystem.Schedule
         {
             ValidationHelper.LockComboBox(e);
         }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                if (CommonOperations.ResetDataGrid(dgvSchedules, Schedules, lblRecords, value.ToString()))
+                    return;
 
-            if (CommonOperations.ResetDataGrid(dgvSchedules, Schedules, lblRecords, value.ToString()))
-                return;
-
-            List<object> temp = CommonOperations.FilterData(Schedules, filterName, value);
-            CommonOperations.LoadDataToDGV(dgvSchedules, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(Schedules, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvSchedules, temp, lblRecords);
+            }
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
-
         private void RefreshDgv(Business.Schedule schedule)
         {
             int targetIndex = CommonOperations.FindTargetIndexOfObj(Schedules, "ScheduleId", schedule.ScheduleId);

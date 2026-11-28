@@ -31,14 +31,14 @@
             this.components = new System.ComponentModel.Container();
             this.dgvReminders = new System.Windows.Forms.DataGridView();
             this.cmsReminder = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.sendReminderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewAppointmentRemindersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.lblTitle = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblRecords = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
-            this.sendReminderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewAppointmentRemindersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnClose = new System.Windows.Forms.Button();
             this.pbModeImage = new System.Windows.Forms.PictureBox();
             this.viewAppointmentInfoCtrl1 = new ClinicSystem.Appointments.Controls.ViewAppointmentInfoCtrl();
@@ -72,7 +72,24 @@
             this.viewAppointmentRemindersToolStripMenuItem});
             this.cmsReminder.Name = "cmsPeople";
             this.cmsReminder.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.cmsReminder.Size = new System.Drawing.Size(384, 108);
+            this.cmsReminder.Size = new System.Drawing.Size(384, 80);
+            // 
+            // sendReminderToolStripMenuItem
+            // 
+            this.sendReminderToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.remainder_32;
+            this.sendReminderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.sendReminderToolStripMenuItem.Name = "sendReminderToolStripMenuItem";
+            this.sendReminderToolStripMenuItem.Size = new System.Drawing.Size(383, 38);
+            this.sendReminderToolStripMenuItem.Text = "Add New Reminder";
+            this.sendReminderToolStripMenuItem.Click += new System.EventHandler(this.sendReminderToolStripMenuItem_Click);
+            // 
+            // viewAppointmentRemindersToolStripMenuItem
+            // 
+            this.viewAppointmentRemindersToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_record_32;
+            this.viewAppointmentRemindersToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.viewAppointmentRemindersToolStripMenuItem.Name = "viewAppointmentRemindersToolStripMenuItem";
+            this.viewAppointmentRemindersToolStripMenuItem.Size = new System.Drawing.Size(383, 38);
+            this.viewAppointmentRemindersToolStripMenuItem.Text = "View Appointment Reminders";
             // 
             // label1
             // 
@@ -131,24 +148,7 @@
             this.txtFilter.Size = new System.Drawing.Size(150, 30);
             this.txtFilter.TabIndex = 37;
             this.txtFilter.Visible = false;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
-            // 
-            // sendReminderToolStripMenuItem
-            // 
-            this.sendReminderToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.remainder_32;
-            this.sendReminderToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.sendReminderToolStripMenuItem.Name = "sendReminderToolStripMenuItem";
-            this.sendReminderToolStripMenuItem.Size = new System.Drawing.Size(383, 38);
-            this.sendReminderToolStripMenuItem.Text = "Add New Reminder";
-            this.sendReminderToolStripMenuItem.Click += new System.EventHandler(this.sendReminderToolStripMenuItem_Click);
-            // 
-            // viewAppointmentRemindersToolStripMenuItem
-            // 
-            this.viewAppointmentRemindersToolStripMenuItem.Image = global::ClinicSystem.Properties.Resources.view_record_32;
-            this.viewAppointmentRemindersToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.viewAppointmentRemindersToolStripMenuItem.Name = "viewAppointmentRemindersToolStripMenuItem";
-            this.viewAppointmentRemindersToolStripMenuItem.Size = new System.Drawing.Size(383, 38);
-            this.viewAppointmentRemindersToolStripMenuItem.Text = "View Appointment Reminders";
+            this.txtFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             // 
             // btnClose
             // 

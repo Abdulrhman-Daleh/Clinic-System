@@ -12,7 +12,7 @@ namespace ClinicSystem.Insurance
     public partial class ManageInsurances : FormsDefaultSettings
     {
         private BindingList<InsuranceList> Insurances { get; set; }
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public ManageInsurances()
         {
             InitializeComponent();
@@ -41,7 +41,7 @@ namespace ClinicSystem.Insurance
 
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvInsurances, Insurances, lblRecords, null);
 
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "#", "Members" }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "#", "Members" }, FilterName,
                 5, 25);
         }
         private void SetUp()
@@ -70,8 +70,8 @@ namespace ClinicSystem.Insurance
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -79,35 +79,40 @@ namespace ClinicSystem.Insurance
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (filterName == "PolicyNumber")
+            if (FilterName == "PolicyNumber")
             {
                 ValidationHelper.HandleInputType(e, true, true);
                 return;
             }
 
-            if (filterName == "#" ||
-                filterName == "Members")
+            if (FilterName == "InsuranceID" ||
+                FilterName == "Members")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-        private void txtFilter_TextChanged(object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
-
-            if (CommonOperations.ResetDataGrid(
-                dgvInsurances, Insurances, lblRecords, value.ToString()))
+            if (PreviousText != value)
             {
-                return;
+                PreviousText = value;
+                if (CommonOperations.ResetDataGrid(dgvInsurances, Insurances, lblRecords, value.ToString()))
+                    return;
+
+                List<object> temp = CommonOperations.FilterData(Insurances, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvInsurances, temp, lblRecords);
             }
-
-            if (filterName == "#")
-                filterName = "InsuranceID";
-
-            List<object> temp = CommonOperations.FilterData(
-                Insurances, filterName, value);
-
-            CommonOperations.LoadDataToDGV(dgvInsurances, temp, lblRecords);
         }
         private void SetControlEnableStatus(bool status)
         {

@@ -4,13 +4,14 @@ using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Staff
 {
     public partial class ManageStaff : FormsDefaultSettings
     {
         BindingList<StaffList> StaffList = new BindingList<StaffList>();
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public ManageStaff()
         {
             InitializeComponent();
@@ -18,10 +19,8 @@ namespace ClinicSystem.Staff
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
-
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvStaff, StaffList, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "Staff no." }, FilterName,
                 5, 50);
         }
         private void SetUp()
@@ -32,6 +31,7 @@ namespace ClinicSystem.Staff
         private void btnClose_Click(object sender, System.EventArgs e) => Close();
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
         }
         private async void RefreshDgv(int staffId)
@@ -76,7 +76,7 @@ namespace ClinicSystem.Staff
             viewStaff.OnChange += RefreshDgv;
             viewStaff.ShowDialog();
         }
-        private void dgvStaff_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        private void dgvStaff_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (!ValidationHelper.CheckAccess(EnRole.Owner))
                 return;
@@ -89,16 +89,6 @@ namespace ClinicSystem.Staff
             ViewStaffInfo viewStaff = new ViewStaffInfo(staffId);
             viewStaff.OnChange += RefreshDgv;
             viewStaff.ShowDialog();
-        }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
-        {
-            string value = txtFilter.Text.Trim();
-
-            if (CommonOperations.ResetDataGrid(dgvStaff, StaffList, lblRecords, value.ToString()))
-                return;
-
-            List<object> temp = CommonOperations.FilterData(StaffList, filterName, value);
-            CommonOperations.LoadDataToDGV(dgvStaff, temp, lblRecords);
         }
         private async void LoadStaffInfo()
         {
@@ -124,14 +114,14 @@ namespace ClinicSystem.Staff
             SetUp();
             LoadStaffInfo();
         }
-        private void txtFilter_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (filterName == "StaffID")
+            if (FilterName == "StaffID")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-        private void cbFilterBy_KeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
+        private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
             ValidationHelper.LockComboBox(e);
         }
@@ -143,6 +133,30 @@ namespace ClinicSystem.Staff
         private void cmsStaff_Opening(object sender, CancelEventArgs e)
         {
             SetControlEnableStatus(!ValidationHelper.IsDgvEmptyOrNull(dgvStaff));
+        }
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
+        {
+            string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
+
+                if (CommonOperations.ResetDataGrid(dgvStaff, StaffList, lblRecords, value.ToString()))
+                    return;
+
+                List<object> temp = CommonOperations.FilterData(StaffList, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvStaff, temp, lblRecords);
+            }
         }
     }
 }

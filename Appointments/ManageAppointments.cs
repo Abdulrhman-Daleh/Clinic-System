@@ -15,20 +15,34 @@ namespace ClinicSystem.Appointments
     {
         private BindingList<AppointmentList> Appointments { get; set; }
         private int PageNumber = 0;
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public ManageAppointments()
         {
             InitializeComponent();
         }
-        private void txtFilter_TextChanged(object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(dgvAppointments, Appointments, lblRecords, value.ToString()))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvAppointments, Appointments, lblRecords, value.ToString()))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(Appointments, filterName, value);
-            CommonOperations.LoadDataToDGV(dgvAppointments, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(Appointments, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvAppointments, temp, lblRecords);
+            }
         }
         private void cbFilterBy_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -43,7 +57,7 @@ namespace ClinicSystem.Appointments
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvAppointments, Appointments, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "AppointmentID" }, FilterName,
                 5, 50);
         }
         private async void LoadAppointments()
@@ -76,8 +90,8 @@ namespace ClinicSystem.Appointments
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {

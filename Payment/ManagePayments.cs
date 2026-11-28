@@ -2,6 +2,7 @@
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace ClinicSystem.Payment
 {
@@ -47,16 +48,30 @@ namespace ClinicSystem.Payment
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            List<object> temp = CommonOperations.FilterData(payments, FilterName, value);
+                List<object> temp = CommonOperations.FilterData(payments, FilterName, value);
 
-            if (CommonOperations.ResetDataGrid(dgvPayments, payments, lblRecords, value))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvPayments, payments, lblRecords, value))
+                    return;
 
-            CommonOperations.LoadDataToDGV(dgvPayments, temp, lblRecords);
+                CommonOperations.LoadDataToDGV(dgvPayments, temp, lblRecords);
+            }
         }
     }
 }

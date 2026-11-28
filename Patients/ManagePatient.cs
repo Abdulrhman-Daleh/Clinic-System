@@ -15,12 +15,12 @@ namespace ClinicSystem.Patients
             InitializeComponent();
         }
 
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         private void RefreshFilter(int newFilterIndex)
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, cbStatus, txtFilter, dgvPatients, Patients, lblRecords, "Status");
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PatientID" }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "PatientID" }, FilterName,
                 5, 30);
         }
         private void SetUp()
@@ -37,20 +37,34 @@ namespace ClinicSystem.Patients
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
 
-            if (filterName == "PatientID")
+            if (FilterName == "PatientID")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-        private void txtFilter_TextChanged(object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(dgvPatients, Patients, lblRecords, value.ToString()))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvPatients, Patients, lblRecords, value.ToString()))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(Patients, filterName, value);
-            CommonOperations.LoadDataToDGV(dgvPatients, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(Patients, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvPatients, temp, lblRecords);
+            }
         }
         private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -58,7 +72,7 @@ namespace ClinicSystem.Patients
                 return;
 
             object value = cbStatus.Text.Trim();
-            List<object> temp = CommonOperations.FilterData(Patients, filterName, cbStatus.Text);
+            List<object> temp = CommonOperations.FilterData(Patients, FilterName, cbStatus.Text);
             CommonOperations.LoadDataToDGV(dgvPatients, temp, lblRecords);
         }
         private async void LoadPatientInfo()
@@ -97,8 +111,8 @@ namespace ClinicSystem.Patients
         private void btnClose_Click(object sender, EventArgs e) => Close();
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void SetControlEnableStatus(bool status)
         {

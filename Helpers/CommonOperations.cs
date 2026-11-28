@@ -90,7 +90,7 @@ namespace ClinicSystem.Helpers
             if (ValidationHelper.IsEmptyOrNull(list))
                 return temp;
 
-            PropertyInfo property = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase).FirstOrDefault(x => x.Name == columnName);
+            PropertyInfo property = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase).FirstOrDefault(x => x.Name.ToLower() == columnName.ToLower());
 
             try
             {

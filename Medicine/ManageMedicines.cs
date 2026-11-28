@@ -10,7 +10,7 @@ namespace ClinicSystem.Medicine
     public partial class ManageMedicines : FormsDefaultSettings
     {
         private BindingList<Business.Medicine> Medicines { get; set; }
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public ManageMedicines()
         {
             InitializeComponent();
@@ -19,7 +19,7 @@ namespace ClinicSystem.Medicine
         {
             cbFilterBy.SelectedIndex = newFilterIndex;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvMedicines, Medicines, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicineID" }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "MedicineID" }, FilterName,
                 5, 10);
         }
         private void SetUp()
@@ -41,24 +41,34 @@ namespace ClinicSystem.Medicine
         }
         private void txtFilter_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (filterName == "MedicineID")
+            if (FilterName == "MedicineID")
                 ValidationHelper.HandleInputType(e, true, false);
             else
                 ValidationHelper.HandleInputType(e, false, true);
         }
-        private void txtFilter_TextChanged(object sender, EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(
-                dgvMedicines, Medicines, lblRecords, value.ToString()))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvMedicines, Medicines, lblRecords, value.ToString()))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(
-                Medicines, filterName, value);
-
-            CommonOperations.LoadDataToDGV(
-                dgvMedicines, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(Medicines, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvMedicines, temp, lblRecords);
+            }
         }
         private async void LoadMedicineInfo()
         {
@@ -83,8 +93,8 @@ namespace ClinicSystem.Medicine
         private void btnClose_Click(object sender, EventArgs e) => Close();
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
         private void SetControlEnableStatus(bool status)
         {

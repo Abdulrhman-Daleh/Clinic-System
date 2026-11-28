@@ -4,6 +4,7 @@ using Business;
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace ClinicSystem.LabOrderTest
 {
@@ -11,7 +12,7 @@ namespace ClinicSystem.LabOrderTest
     {
         BindingList<LabTestListing> labTests = new BindingList<LabTestListing>();
         private readonly int? _appointmentId;
-        private string filterName { get; set; }
+        private string FilterName { get; set; }
         public ManageLabTests()
         {
             InitializeComponent();
@@ -68,28 +69,37 @@ namespace ClinicSystem.LabOrderTest
         {
             cbFilterBy.SelectedIndex = index;
             CommonOperations.HandleSwitchingFilter(cbFilterBy, null, txtFilter, dgvLabTests, labTests, lblRecords, null);
-            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "LabID" }, filterName,
+            ValidationHelper.SetApproperiteMaxLength(txtFilter, new List<string> { "LabID" }, FilterName,
               5, 40);
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
+            FilterName = CommonOperations.GetFilterName(cbFilterBy);
             RefreshFilter(cbFilterBy.SelectedIndex);
-            filterName = CommonOperations.GetFilterName(cbFilterBy);
         }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
-
-            if (CommonOperations.ResetDataGrid(
-                dgvLabTests, labTests, lblRecords, value.ToString()))
+            if (PreviousText != value)
             {
-                return;
+                PreviousText = value;
+
+                if (CommonOperations.ResetDataGrid(dgvLabTests, labTests, lblRecords, value.ToString()))
+                    return;
+
+                List<object> temp = CommonOperations.FilterData(labTests, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvLabTests, temp, lblRecords);
             }
-
-            List<object> temp = CommonOperations.FilterData(
-                labTests, filterName, value);
-
-            CommonOperations.LoadDataToDGV(dgvLabTests, temp, lblRecords);
         }
         private void viewLabTestToolStripMenuItem_Click(object sender, System.EventArgs e)
         {

@@ -2,6 +2,7 @@
 using ClinicSystem.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace ClinicSystem.AppointmentReminder
 {
@@ -42,18 +43,32 @@ namespace ClinicSystem.AppointmentReminder
         }
         private void cbFilterBy_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            RefreshFilter(cbFilterBy.SelectedIndex);
             FilterName = CommonOperations.GetFilterName(cbFilterBy);
+            RefreshFilter(cbFilterBy.SelectedIndex);
         }
-        private void txtFilter_TextChanged(object sender, System.EventArgs e)
+        private string PreviousText { get; set; } = string.Empty;
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+                PerformFilter();
+            }
+        }
+        private void PerformFilter()
         {
             string value = txtFilter.Text.Trim();
+            if (PreviousText != value)
+            {
+                PreviousText = value;
 
-            if (CommonOperations.ResetDataGrid(dgvReminders, AppointmentReminders, lblRecords, value.ToString()))
-                return;
+                if (CommonOperations.ResetDataGrid(dgvReminders, AppointmentReminders, lblRecords, value.ToString()))
+                    return;
 
-            List<object> temp = CommonOperations.FilterData(AppointmentReminders, FilterName, value);
-            CommonOperations.LoadDataToDGV(dgvReminders, temp, lblRecords);
+                List<object> temp = CommonOperations.FilterData(AppointmentReminders, FilterName, value);
+                CommonOperations.LoadDataToDGV(dgvReminders, temp, lblRecords);
+            }
         }
         private void RefreshDgv(Business.AppointmentReminder reminder)
         {
